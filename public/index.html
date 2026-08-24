@@ -1305,7 +1305,11 @@ h1,h2,h3,h4{ font-family:var(--display); font-weight:600; line-height:1.06; lett
     </div>
 
     <div class="fcard rv">
-      <form id="form" action="mailto:contact@up2front.com" novalidate>
+      <form id="form" action="https://api.web3forms.com/submit" method="post" novalidate>
+        <input type="hidden" name="access_key" value="a5a08ec1-eccc-40ed-b291-78ad8011fb4b">
+        <input type="hidden" name="subject" id="f-subject" value="Nouvelle demande depuis up2front.com">
+        <input type="hidden" name="from_name" value="Site Up2Front">
+        <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none">
         <input type="hidden" name="devis" id="f-devis" value="">
         <div class="frow">
           <div class="fld"><label for="f-nom">Nom et prénom</label><input type="text" id="f-nom" name="nom" autocomplete="name"></div>
@@ -1346,8 +1350,8 @@ h1,h2,h3,h4{ font-family:var(--display); font-weight:600; line-height:1.06; lett
           <span><b id="rTot">590.—</b> puis <b id="rMo">15.—</b>/mois</span>
         </div>
 
-        <button type="submit" class="btn btn--blue btn--block" id="fSend"><s>Préparer mon email</s></button>
-        <p class="tiny" id="fMsg" style="margin-top:12px;text-align:center">Votre messagerie s'ouvrira avec les informations préremplies.</p>
+        <button type="submit" class="btn btn--blue btn--block" id="fSend"><s>Envoyer ma demande</s></button>
+        <p class="tiny" id="fMsg" style="margin-top:12px;text-align:center">Envoi direct et sécurisé. Réponse sous 24 h ouvrables.</p>
       </form>
 
       <div class="done" id="done">
@@ -1641,13 +1645,27 @@ $$('.ac').forEach(item=>{
 })();
 
 /* ============================================================
-   11. Formulaire — préparation d'un email (compatible GitHub Pages)
+   11. Formulaire — envoi direct par Web3Forms
    ============================================================ */
 (function form(){
   const f = $('#form'), msg = $('#fMsg'), send = $('#fSend');
   if (!f) return;
 
-  f.addEventListener('submit', e=>{
+  function ok(){
+    gsap.to(f, {opacity:0, y:-10, duration:.35, ease:'power2.in', onComplete(){
+      f.style.display='none'; $('#done').classList.add('on');
+      gsap.from('#done', {opacity:0, y:14, duration:.5, ease:'power3.out'});
+    }});
+  }
+
+  function fail(txt){
+    msg.textContent = txt;
+    msg.style.color = '#D93A3E';
+    send.disabled = false;
+    send.querySelector('s').textContent = 'Réessayer';
+  }
+
+  f.addEventListener('submit', async e=>{
     e.preventDefault();
     const tests = [
       ['#f-nom',  v=> v.trim().length > 1],
@@ -1669,45 +1687,27 @@ $$('.ac').forEach(item=>{
                      ($('#rTot')?.textContent || '') + ' puis ' +
                      ($('#rMo')?.textContent || '') + '/mois';
 
-    const val = sel=> ($(sel)?.value || '').trim();
-    const nom = val('#f-nom');
-    const entreprise = val('#f-ent');
-    const whatsapp = val('#f-tel');
-    const devis = val('#f-devis');
-    const sujet = 'Demande de site — ' + (entreprise || nom);
-    const corps = [
-      'Bonjour Up2Front,',
-      '',
-      'Je souhaite recevoir une proposition pour mon site.',
-      '',
-      'Nom : ' + nom,
-      'Commerce : ' + (entreprise || 'Non indiqué'),
-      'Email : ' + val('#f-mail'),
-      'WhatsApp : ' + (whatsapp || 'Non indiqué'),
-      'Métier : ' + (val('#f-met') || 'Non indiqué'),
-      'Contenus : ' + (val('#f-cont') || 'Non indiqué'),
-      'Devis affiché : ' + (devis || 'Non indiqué'),
-      '',
-      'Besoin :',
-      val('#f-msg') || 'Non indiqué',
-      '',
-      whatsapp
-        ? 'Vous pouvez me répondre par email ou WhatsApp.'
-        : 'Merci de me répondre par email.'
-    ].join('\n');
+    const nom = ($('#f-nom')?.value || '').trim();
+    const entreprise = ($('#f-ent')?.value || '').trim();
+    const subject = $('#f-subject');
+    if (subject) subject.value = 'Demande de site — ' + (entreprise || nom);
 
     send.disabled = true;
-    send.querySelector('s').textContent = 'Ouverture…';
-    msg.style.color = ''; msg.textContent = 'Ouverture de votre messagerie…';
-    location.href = 'mailto:contact@up2front.com?subject=' + encodeURIComponent(sujet) +
-                    '&body=' + encodeURIComponent(corps);
+    send.querySelector('s').textContent = 'Envoi…';
+    msg.style.color = ''; msg.textContent = 'Envoi sécurisé en cours…';
 
-    setTimeout(()=>{
-      send.disabled = false;
-      send.querySelector('s').textContent = 'Préparer mon email';
-      msg.style.color = '#167A52';
-      msg.textContent = "Votre messagerie est ouverte. Il reste à envoyer l'email.";
-    }, 800);
+    try{
+      const r = await fetch(f.action, {
+        method:'POST',
+        body:new FormData(f),
+        headers:{Accept:'application/json'}
+      });
+      const j = await r.json().catch(()=> ({success:false}));
+      if (r.ok && j.success) ok();
+      else fail("L'envoi a échoué. Réessayez ou écrivez à contact@up2front.com.");
+    }catch(err){
+      fail("Connexion impossible. Réessayez ou écrivez à contact@up2front.com.");
+    }
   });
 
   $$('#form input, #form select').forEach(i=>

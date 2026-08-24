@@ -7,7 +7,7 @@ Site de `up2front.com`, versionné et hébergé sur GitHub Pages. Le domaine et 
 - `public/` contient les fichiers du site publiés.
 - `public/CNAME` relie le site au domaine `up2front.com`.
 - `.github/workflows/deploy.yml` publie automatiquement `public/` après chaque modification de la branche `main`.
-- Le formulaire prépare un email adressé à `contact@up2front.com`, car GitHub Pages ne peut pas exécuter PHP.
+- Le formulaire transmet directement les demandes à `contact@up2front.com` avec Web3Forms, car GitHub Pages ne peut pas exécuter PHP.
 
 ## Activer GitHub Pages
 
@@ -31,5 +31,5 @@ Chaque envoi de code sur la branche `main` déclenche une publication. Son avanc
 ## Vérification
 
 1. Ouvrir `https://up2front.com`.
-2. Remplir le formulaire et vérifier que la messagerie s'ouvre avec un email prérempli pour `contact@up2front.com`.
-3. Envoyer l'email et vérifier sa réception.
+2. Envoyer une demande avec le formulaire.
+3. Vérifier l'affichage du message de réussite et la réception dans `contact@up2front.com`.
