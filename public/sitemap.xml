@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://up2front.com/</loc>
+    <lastmod>2026-08-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-CH" href="https://up2front.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://up2front.com/en/" />
   </url>
   <url>
     <loc>https://up2front.com/en/</loc>
+    <lastmod>2026-08-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-CH" href="https://up2front.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://up2front.com/en/" />
   </url>
 </urlset>

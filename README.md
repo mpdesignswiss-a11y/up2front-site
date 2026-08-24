@@ -31,6 +31,10 @@ Après propagation du DNS, activer **Enforce HTTPS** dans **Settings → Pages**
 
 Chaque envoi de code sur la branche `main` déclenche une publication. Son avancement est visible dans l'onglet **Actions** du dépôt.
 
+## Référencement
+
+Le site comprend des titres et descriptions propres à chaque langue, des adresses canoniques, les liens linguistiques `hreflang`, un plan de site XML, les consignes d'indexation, des données structurées et une image de partage pour les réseaux sociaux. Le plan de site à déclarer dans Google Search Console est `https://up2front.com/sitemap.xml`.
+
 ## Vérification
 
 1. Ouvrir `https://up2front.com`.
