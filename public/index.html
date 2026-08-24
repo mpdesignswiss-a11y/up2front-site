@@ -1,0 +1,1759 @@
+<!DOCTYPE html>
+<html lang="fr-CH">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Empêche les WebView iOS/Android d'inverser la page en mode sombre -->
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
+<meta name="theme-color" content="#FBFBFA">
+<title>Up2Front — Votre site en ligne en dix jours. 590.- tout compris.</title>
+<meta name="description" content="Sites vitrine à prix fixe pour les commerces et indépendants de Suisse romande. 590.- tout compris, sans abonnement obligatoire. Domaine et hébergement compris la première année. Livré en dix jours ouvrables.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Familjen+Grotesk:wght@400..700&amp;family=Public+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   UP2FRONT — reconstruction mobile-first
+   Règle absolue : le défaut est UNE colonne.
+   Les colonnes s'ajoutent en min-width, jamais l'inverse.
+   ============================================================ */
+:root{
+  color-scheme: light only;
+
+  --paper:  #FBFBFA;
+  --panel:  #F1F2F5;
+  --ink:    #0E1013;
+  --ink-2:  #4E555E;
+  --ink-3:  #7C838C;
+  --rule:   #DDDFE4;
+  --rule-2: #BFC4CC;
+
+  --blue:   #2B44FF;
+  --blue-d: #1B2ECC;
+  --blue-p: #E9ECFF;
+  --navy:   #0A0E28;
+  --yellow: #FFC400;
+  --green:  #0E9F6E;
+
+  --display:'Familjen Grotesk', system-ui, sans-serif;
+  --body:   'Public Sans', system-ui, sans-serif;
+  --mono:   'DM Mono', ui-monospace, monospace;
+
+  --gut: 20px;
+  --maxw: 1280px;
+  --ease: cubic-bezier(.22,1,.36,1);
+}
+@media (min-width:700px){ :root{ --gut:38px; } }
+@media (min-width:1100px){ :root{ --gut:60px; } }
+
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+
+html{
+  background:var(--paper);
+  -webkit-text-size-adjust:100%;
+  overflow-x:hidden;
+}
+body{
+  font-family:var(--body);
+  background:var(--paper);
+  color:var(--ink);
+  font-size:16.5px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  overflow-wrap:break-word;
+}
+body.lock{ overflow:hidden; height:100svh; }
+
+img,svg{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+button{ font:inherit; color:inherit; background:none; border:none; cursor:pointer; }
+::selection{ background:var(--yellow); color:var(--ink); }
+:focus-visible{ outline:3px solid var(--blue); outline-offset:3px; border-radius:2px; }
+
+/* ---------- Typographie : plancher lisible sur petit écran ---------- */
+h1,h2,h3,h4{ font-family:var(--display); font-weight:600; line-height:1.06; letter-spacing:-.03em; }
+
+/* Wordmark : une seule ligne, toujours. La taille définitive est
+   calculée en JS par mesure réelle ; le clamp n'est qu'un repli
+   volontairement prudent avant que les polices soient chargées. */
+.mark-xl{
+  display:block;
+  font-family:var(--display); font-weight:700;
+  font-size:clamp(2.2rem, 15.5vw, 12.5rem);
+  line-height:.86; letter-spacing:-.05em;
+  overflow:hidden;
+  padding-bottom:.04em;
+}
+.mark-in{
+  display:inline-block;
+  white-space:nowrap;
+  vertical-align:top;
+}
+.mark-in .fl{ display:inline-block; }
+.h2{ font-size:clamp(1.85rem, 5.4vw, 3.3rem); line-height:1.04; }
+.h3{ font-size:clamp(1.12rem, 2.4vw, 1.42rem); line-height:1.16; }
+
+.lead{ font-size:clamp(1.02rem, 2.1vw, 1.16rem); color:var(--ink-2); max-width:52ch; }
+.small{ font-size:.95rem; color:var(--ink-2); }
+.tiny{ font-size:.86rem; color:var(--ink-3); line-height:1.5; }
+
+/* Labels : 12px minimum, interlettrage réduit — 10.5px était illisible */
+.lab{
+  font-family:var(--mono);
+  font-size:12px; line-height:1.4;
+  letter-spacing:.08em; text-transform:uppercase;
+  color:var(--ink-3);
+}
+.lab--blue{ color:var(--blue); }
+.num, .price, .tot{ font-variant-numeric:tabular-nums; font-feature-settings:"tnum"; }
+
+/* ---------- Grille ---------- */
+.wrap{ width:100%; max-width:var(--maxw); margin-inline:auto; padding-inline:var(--gut); }
+.sec{ padding-block:64px; }
+@media (min-width:700px){ .sec{ padding-block:92px; } }
+@media (min-width:1100px){ .sec{ padding-block:126px; } }
+
+/* Duo générique : une colonne par défaut, deux à partir de 900px */
+.duo{ display:grid; gap:32px; }
+@media (min-width:900px){ .duo{ grid-template-columns:1fr 1fr; gap:clamp(34px,4vw,64px); } }
+
+.sec-head{ max-width:60ch; }
+.sec-head .h2{ margin-top:14px; }
+.sec-head .lead{ margin-top:16px; }
+
+/* ---------- Boutons : 52px de haut minimum, cible tactile ---------- */
+.btn{
+  position:relative;
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  min-height:54px; padding:14px 26px;
+  font-family:var(--body); font-weight:600; font-size:1rem; line-height:1.2;
+  border:2px solid var(--ink); border-radius:4px;
+  background:var(--ink); color:var(--paper);
+  overflow:hidden; text-align:center;
+  transition:color .3s var(--ease), border-color .3s var(--ease);
+}
+.btn s{ position:relative; z-index:2; text-decoration:none; }
+.btn::before{
+  content:""; position:absolute; inset:0; z-index:1;
+  background:var(--blue); transform:translateY(101%);
+  transition:transform .42s var(--ease);
+}
+.btn:hover::before{ transform:translateY(0); }
+.btn--blue{ background:var(--blue); border-color:var(--blue); color:#fff; }
+.btn--blue::before{ background:var(--ink); }
+.btn--blue:hover{ border-color:var(--ink); }
+.btn--ghost{ background:transparent; color:var(--ink); border-color:var(--rule-2); }
+.btn--ghost:hover{ color:var(--paper); border-color:var(--blue); }
+.btn--block{ width:100%; }
+.btn-row{ display:flex; flex-direction:column; gap:12px; }
+@media (min-width:560px){ .btn-row{ flex-direction:row; flex-wrap:wrap; } }
+
+/* ============================================================
+   NAV
+   ============================================================ */
+#nav{
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  border-bottom:1px solid transparent;
+  transition:background .3s var(--ease), border-color .3s var(--ease);
+}
+#nav.stuck{ background:rgba(251,251,250,.94); backdrop-filter:blur(12px); border-bottom-color:var(--rule); }
+.nav-in{
+  width:100%; max-width:var(--maxw); margin-inline:auto; padding-inline:var(--gut);
+  height:66px; display:flex; align-items:center; justify-content:space-between; gap:16px;
+}
+@media (min-width:900px){ .nav-in{ height:76px; } }
+.brand{ font-family:var(--display); font-weight:700; font-size:1.16rem; letter-spacing:-.03em; display:flex; align-items:center; gap:9px; }
+.brand i{ width:12px; height:12px; background:var(--blue); border-radius:2px; flex:none; transition:transform .45s var(--ease), background .3s; }
+.brand:hover i{ transform:rotate(45deg); background:var(--yellow); }
+
+.nav-links{ display:none; }
+@media (min-width:980px){
+  .nav-links{ display:flex; gap:28px; align-items:center; }
+  .nav-links a{ font-size:.94rem; color:var(--ink-2); position:relative; padding:6px 0; transition:color .25s; }
+  .nav-links a::after{
+    content:""; position:absolute; left:0; bottom:0; width:100%; height:2px;
+    background:var(--blue); transform:scaleX(0); transform-origin:right; transition:transform .38s var(--ease);
+  }
+  .nav-links a:hover{ color:var(--ink); }
+  .nav-links a:hover::after{ transform:scaleX(1); transform-origin:left; }
+}
+.nav-right{ display:flex; align-items:center; gap:10px; }
+.nav-cta{ display:none; }
+@media (min-width:980px){ .nav-cta{ display:inline-flex; min-height:46px; padding:11px 20px; font-size:.94rem; } }
+
+.burger{
+  width:48px; height:48px; flex:none;
+  border:1px solid var(--rule-2); border-radius:4px; position:relative; background:var(--paper);
+}
+@media (min-width:980px){ .burger{ display:none; } }
+.burger i{ position:absolute; left:14px; width:20px; height:2px; background:var(--ink); transition:transform .35s var(--ease); }
+.burger i:nth-child(1){ top:19px; }
+.burger i:nth-child(2){ top:27px; }
+.burger.on i:nth-child(1){ transform:translateY(4px) rotate(45deg); }
+.burger.on i:nth-child(2){ transform:translateY(-4px) rotate(-45deg); }
+
+#drawer{
+  position:fixed; inset:0; z-index:190; background:var(--paper);
+  padding:90px var(--gut) calc(var(--gut) + env(safe-area-inset-bottom));
+  display:flex; flex-direction:column; justify-content:space-between; gap:24px;
+  transform:translateY(-100%); visibility:hidden;
+  overflow-y:auto;
+}
+.dr-links a{
+  font-family:var(--display); font-weight:600;
+  font-size:clamp(1.6rem, 7vw, 2.4rem); letter-spacing:-.03em; line-height:1.1;
+  padding:16px 0; border-bottom:1px solid var(--rule);
+  display:flex; justify-content:space-between; align-items:center; gap:14px;
+}
+.dr-links a u{ font-family:var(--mono); font-size:.8rem; color:var(--ink-3); text-decoration:none; }
+.dr-foot{ display:flex; flex-direction:column; gap:12px; }
+
+/* ============================================================
+   HERO — wordmark massif
+   ============================================================ */
+#hero{ padding-top:98px; padding-bottom:44px; }
+@media (min-width:900px){ #hero{ padding-top:150px; padding-bottom:64px; } }
+
+.hero-top{ display:flex; flex-wrap:wrap; gap:10px 18px; align-items:baseline; }
+.hero-mark{ margin:20px 0 0; }
+.hero-line{
+  margin-top:22px; padding-top:20px; border-top:2px solid var(--ink);
+  display:grid; gap:22px;
+}
+@media (min-width:900px){
+  .hero-line{ grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:48px; align-items:start; }
+}
+.hero-claim{ font-family:var(--display); font-weight:600; font-size:clamp(1.5rem,4.6vw,2.5rem); line-height:1.1; letter-spacing:-.028em; }
+.hero-claim em{ font-style:normal; color:var(--blue); }
+.hero-sub{ margin-top:16px; }
+.hero-cta{ margin-top:26px; }
+.hero-avail{ display:flex; align-items:center; gap:10px; margin-top:18px; }
+.hero-avail i{ width:8px; height:8px; border-radius:50%; background:var(--green); flex:none; box-shadow:0 0 0 4px rgba(14,159,110,.16); }
+
+/* Bloc prix : la thèse, lisible dès 320px */
+.pricebox{
+  background:#fff; border:1px solid var(--rule); border-radius:6px;
+  box-shadow:0 14px 36px -22px rgba(14,16,19,.3);
+  overflow:hidden;
+}
+.pb-head{ padding:14px 18px; border-bottom:1px dashed var(--rule-2); display:flex; justify-content:space-between; gap:12px; }
+.pb-rows{ padding:4px 18px; }
+.pb-r{
+  display:flex; justify-content:space-between; align-items:baseline; gap:14px;
+  padding:12px 0; border-bottom:1px solid var(--rule); font-size:.95rem;
+}
+.pb-r:last-child{ border-bottom:0; }
+.pb-r span{ color:var(--ink-2); flex:1; min-width:0; }
+.pb-r b{ font-family:var(--mono); font-weight:400; white-space:nowrap; flex:none; }
+.pb-r b.free{ color:var(--green); }
+.pb-tot{ padding:16px 18px; border-top:2px solid var(--ink); display:flex; justify-content:space-between; align-items:flex-end; gap:14px; }
+.pb-tot .tot{ font-family:var(--display); font-weight:700; font-size:clamp(2.2rem,8vw,3rem); line-height:.9; letter-spacing:-.04em; }
+.pb-then{ background:var(--ink); color:var(--paper); padding:14px 18px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+.pb-then b{ font-family:var(--mono); color:var(--yellow); font-size:1.02rem; }
+
+/* ============================================================
+   BANDEAU
+   ============================================================ */
+.strip{ background:var(--ink); color:var(--paper); padding:14px 0; overflow:hidden; display:flex; }
+.strip-row{ display:flex; flex:none; gap:36px; padding-right:36px; will-change:transform; }
+.strip-i{ font-family:var(--mono); font-size:.84rem; white-space:nowrap; display:flex; align-items:center; gap:11px; }
+.strip-i::before{ content:""; width:6px; height:6px; background:var(--yellow); border-radius:1px; flex:none; }
+
+/* ============================================================
+   COMPRIS / PAS COMPRIS — cartes à cases
+   ============================================================ */
+.cards{ display:grid; gap:18px; margin-top:38px; }
+@media (min-width:820px){ .cards{ grid-template-columns:1fr 1fr; gap:22px; } }
+.card{
+  background:#fff; border:1px solid var(--rule); border-radius:6px;
+  padding:24px 20px; display:flex; flex-direction:column;
+}
+@media (min-width:700px){ .card{ padding:30px 28px; } }
+.card-h{ display:flex; align-items:center; gap:12px; padding-bottom:16px; border-bottom:2px solid var(--ink); }
+.card-h b{ font-family:var(--display); font-weight:600; font-size:1.14rem; letter-spacing:-.02em; }
+.mk{ width:26px; height:26px; border-radius:50%; display:grid; place-items:center; flex:none; color:#fff; font-size:14px; line-height:1; }
+.mk--y{ background:var(--green); }
+.mk--n{ background:var(--ink-3); }
+.card ul{ list-style:none; }
+.card li{
+  display:flex; gap:12px; align-items:flex-start;
+  padding:13px 0; border-bottom:1px solid var(--rule); font-size:.95rem;
+}
+.card li:last-child{ border-bottom:0; }
+.card li .ic{ flex:none; width:18px; height:18px; margin-top:3px; }
+.card li .tx{ flex:1; min-width:0; }
+.card li .pr{
+  flex:none; font-family:var(--mono); font-size:.82rem; color:var(--blue);
+  white-space:nowrap; align-self:center;
+}
+.card--n li .tx{ color:var(--ink-2); }
+
+/* ============================================================
+   CONFIGURATEUR
+   ============================================================ */
+#devis{ background:var(--panel); border-block:1px solid var(--rule); }
+.cf{ display:grid; gap:28px; margin-top:36px; }
+@media (min-width:980px){
+  .cf{ grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr); gap:44px; }
+  .cf > .cf-left{ align-self:start; }
+}
+.cf-block + .cf-block{ margin-top:26px; }
+.cf-block > .lab{ display:block; margin-bottom:12px; }
+.opts{ display:grid; gap:10px; }
+.opt{
+  display:flex; align-items:flex-start; gap:14px; width:100%; text-align:left;
+  background:#fff; border:1px solid var(--rule); border-radius:5px;
+  padding:16px; min-height:64px;
+  transition:border-color .22s var(--ease), background .22s var(--ease);
+}
+.opt:hover{ border-color:var(--rule-2); }
+.opt.on{ border-color:var(--blue); background:var(--blue-p); }
+.opt-box{ width:22px; height:22px; flex:none; margin-top:2px; border:2px solid var(--rule-2); border-radius:4px; position:relative; transition:border-color .22s, background .22s; }
+.opt.on .opt-box{ border-color:var(--blue); background:var(--blue); }
+.opt-box::after{
+  content:""; position:absolute; left:6px; top:2px; width:6px; height:11px;
+  border-right:2px solid #fff; border-bottom:2px solid #fff;
+  transform:rotate(45deg) scale(0); transition:transform .26s var(--ease);
+}
+.opt.on .opt-box::after{ transform:rotate(45deg) scale(1); }
+.opt--r .opt-box{ border-radius:50%; }
+.opt--r .opt-box::after{ left:4px; top:4px; width:10px; height:10px; border:0; background:#fff; border-radius:50%; transform:scale(0); }
+.opt.on.opt--r .opt-box::after{ transform:scale(1); }
+.opt-txt{ flex:1; min-width:0; }
+.opt-txt strong{ display:block; font-weight:600; font-size:1rem; }
+.opt-txt span{ display:block; font-size:.88rem; color:var(--ink-3); margin-top:3px; line-height:1.45; }
+.opt-p{ flex:none; font-family:var(--mono); font-size:.88rem; color:var(--ink-2); white-space:nowrap; margin-top:2px; }
+.opt.on .opt-p{ color:var(--blue); }
+
+.q-card{ background:#fff; border:1px solid var(--rule); border-radius:6px; box-shadow:0 14px 36px -24px rgba(14,16,19,.35); overflow:hidden; }
+@media (min-width:980px){ .q-card{ position:sticky; top:96px; } }
+.q-head{ padding:15px 18px; border-bottom:1px dashed var(--rule-2); display:flex; justify-content:space-between; gap:12px; }
+.q-lines{ padding:4px 18px; }
+.q-l{ display:flex; justify-content:space-between; align-items:baseline; gap:14px; padding:11px 0; border-bottom:1px solid var(--rule); font-size:.93rem; }
+.q-l:last-child{ border-bottom:0; }
+.q-l span{ color:var(--ink-2); flex:1; min-width:0; }
+.q-l b{ font-family:var(--mono); font-weight:400; white-space:nowrap; flex:none; }
+.q-l.dim span,.q-l.dim b{ color:var(--ink-3); }
+.q-sum{ padding:16px 18px; border-top:2px solid var(--ink); display:flex; justify-content:space-between; align-items:flex-end; gap:12px; }
+.q-sum .tot{ font-family:var(--display); font-weight:700; font-size:clamp(2rem,7vw,2.6rem); line-height:.9; letter-spacing:-.04em; }
+.q-mo{ background:var(--ink); color:var(--paper); padding:14px 18px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+.q-mo b{ font-family:var(--mono); color:var(--yellow); font-size:1.04rem; }
+.q-act{ padding:18px; border-top:1px solid var(--rule); }
+.q-act .tiny{ margin-top:12px; text-align:center; }
+
+/* ============================================================
+   ABONNEMENTS — marine
+   ============================================================ */
+#abo{ background:var(--navy); color:var(--paper); }
+#abo .lab{ color:rgba(251,251,250,.55); }
+#abo .lab--blue{ color:#8E9CFF; }
+#abo .lead{ color:rgba(251,251,250,.72); }
+.plans{ display:grid; gap:16px; margin-top:38px; }
+@media (min-width:860px){ .plans{ grid-template-columns:repeat(3,1fr); } }
+.plan{
+  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.15);
+  border-radius:6px; padding:24px 22px; display:flex; flex-direction:column;
+  transition:border-color .3s var(--ease), transform .3s var(--ease);
+}
+.plan:hover{ border-color:rgba(255,255,255,.34); }
+@media (min-width:860px){ .plan:hover{ transform:translateY(-5px); } }
+.plan.reco{ background:var(--paper); color:var(--ink); border-color:var(--paper); }
+.plan-tag{
+  align-self:flex-start; font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+  background:var(--yellow); color:var(--ink); padding:6px 10px; border-radius:3px; margin-bottom:14px;
+}
+.plan h3{ font-size:1.32rem; }
+.plan-p{ display:flex; align-items:baseline; gap:6px; margin-top:12px; }
+.plan-p .price{ font-family:var(--display); font-weight:700; font-size:2.6rem; line-height:.9; letter-spacing:-.045em; }
+.plan-p u{ text-decoration:none; font-family:var(--mono); font-size:.84rem; opacity:.65; }
+.plan-d{ margin-top:12px; font-size:.94rem; opacity:.75; }
+.plan ul{ list-style:none; margin-top:18px; padding-top:16px; border-top:1px solid rgba(255,255,255,.15); display:grid; gap:10px; flex:1; align-content:start; }
+.plan.reco ul{ border-top-color:var(--rule); }
+.plan li{ font-size:.94rem; display:flex; gap:10px; align-items:flex-start; }
+.plan li::before{ content:"✓"; color:var(--yellow); flex:none; }
+.plan.reco li::before{ color:var(--blue); }
+.plan .btn{ margin-top:20px; }
+.plan:not(.reco) .btn{ background:transparent; border-color:rgba(255,255,255,.3); color:var(--paper); }
+.abo-note{ margin-top:24px; font-size:.9rem; color:rgba(251,251,250,.6); max-width:64ch; }
+
+/* ============================================================
+   DIX JOURS — tableau réglé
+   ============================================================ */
+.tbl{ margin-top:34px; border-top:2px solid var(--ink); }
+.tbl-hd{ display:none; }
+@media (min-width:820px){
+  .tbl-hd{
+    display:grid; grid-template-columns:130px minmax(0,1fr) minmax(0,1.5fr) 130px;
+    gap:22px; padding:12px 0; border-bottom:1px solid var(--rule);
+  }
+}
+.row{
+  display:grid; gap:6px 22px; padding:20px 0;
+  border-bottom:1px solid var(--rule); position:relative;
+}
+@media (min-width:820px){
+  .row{ grid-template-columns:130px minmax(0,1fr) minmax(0,1.5fr) 130px; gap:22px; align-items:start; padding:22px 0; }
+}
+.row::after{ content:""; position:absolute; left:0; bottom:-1px; height:2px; width:0; background:var(--blue); transition:width .5s var(--ease); }
+.row:hover::after{ width:100%; }
+.row-k{ font-family:var(--mono); font-size:.86rem; color:var(--blue); }
+.row-t{ font-family:var(--display); font-weight:600; font-size:1.16rem; letter-spacing:-.02em; }
+.row-d{ font-size:.95rem; color:var(--ink-2); }
+.row-y{ font-family:var(--mono); font-size:.82rem; color:var(--ink-3); }
+@media (min-width:820px){ .row-y{ text-align:right; } }
+.tbl-end{ border-bottom:2px solid var(--ink); }
+
+/* ============================================================
+   CHIFFRES
+   ============================================================ */
+.stats{ display:grid; gap:1px; background:var(--rule); border-block:1px solid var(--rule); margin-top:34px; }
+@media (min-width:640px){ .stats{ grid-template-columns:1fr 1fr; } }
+@media (min-width:980px){ .stats{ grid-template-columns:repeat(4,1fr); } }
+.stat{ background:var(--paper); padding:26px 20px; }
+.stat b{ display:block; font-family:var(--display); font-weight:700; font-size:clamp(2.2rem,7vw,3.2rem); line-height:.92; letter-spacing:-.045em; }
+.stat b u{ text-decoration:none; color:var(--blue); font-size:.5em; }
+.stat span{ display:block; margin-top:10px; }
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+.acc{ border-top:2px solid var(--ink); }
+.ac{ border-bottom:1px solid var(--rule); }
+.ac-q{
+  width:100%; display:flex; justify-content:space-between; align-items:center; gap:18px;
+  padding:20px 0; min-height:64px; text-align:left;
+  font-family:var(--display); font-weight:600; font-size:clamp(1.02rem,2.4vw,1.2rem);
+  line-height:1.3; letter-spacing:-.018em; transition:color .25s;
+}
+.ac-q:hover{ color:var(--blue); }
+.ac-ic{ position:relative; width:16px; height:16px; flex:none; }
+.ac-ic::before,.ac-ic::after{ content:""; position:absolute; background:var(--blue); transition:transform .38s var(--ease); }
+.ac-ic::before{ left:0; top:7px; width:16px; height:2px; }
+.ac-ic::after{ left:7px; top:0; width:2px; height:16px; }
+.ac.on .ac-ic::after{ transform:scaleY(0); }
+.ac-a{ overflow:hidden; height:0; }
+.ac-a p{ padding-bottom:22px; max-width:64ch; color:var(--ink-2); font-size:.97rem; }
+
+/* ============================================================
+   FORMULAIRE
+   ============================================================ */
+#start{ background:var(--panel); border-top:1px solid var(--rule); }
+.steps{ margin-top:26px; border-top:1px solid var(--rule-2); }
+.steps div{ display:flex; gap:14px; padding:14px 0; border-bottom:1px solid var(--rule-2); font-size:.95rem; }
+.steps b{ font-family:var(--mono); font-size:.82rem; color:var(--blue); flex:none; }
+.fcard{ background:#fff; border:1px solid var(--rule); border-radius:6px; padding:22px 20px; }
+@media (min-width:700px){ .fcard{ padding:32px 30px; } }
+.fld{ margin-bottom:14px; }
+.fld label{ display:block; font-family:var(--mono); font-size:12px; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-3); margin-bottom:7px; }
+.fld input,.fld select,.fld textarea{
+  width:100%; font-family:var(--body); font-size:16px; color:var(--ink); line-height:1.4;
+  background:var(--paper); border:1px solid var(--rule); border-radius:4px;
+  padding:14px; min-height:52px; outline:none;
+  transition:border-color .2s, box-shadow .2s, background .2s;
+}
+.fld textarea{ resize:vertical; min-height:96px; }
+.fld select{ cursor:pointer; -webkit-appearance:none; appearance:none; }
+.fld input:focus,.fld select:focus,.fld textarea:focus{ border-color:var(--blue); background:#fff; box-shadow:0 0 0 3px var(--blue-p); }
+.fld input.err,.fld select.err{ border-color:#D93A3E; box-shadow:0 0 0 3px rgba(217,58,62,.12); }
+.frow{ display:grid; gap:14px; }
+@media (min-width:600px){ .frow{ grid-template-columns:1fr 1fr; } }
+.fsel{ position:relative; }
+.fsel::after{
+  content:""; position:absolute; right:16px; bottom:22px; width:8px; height:8px;
+  border-right:2px solid var(--ink-3); border-bottom:2px solid var(--ink-3);
+  transform:rotate(45deg); pointer-events:none;
+}
+.recap{
+  background:var(--blue-p); border:1px solid rgba(43,68,255,.22); border-radius:4px;
+  padding:14px; margin:6px 0 18px;
+  font-family:var(--mono); font-size:.85rem; color:var(--blue-d); line-height:1.5;
+  display:flex; flex-direction:column; gap:6px;
+}
+@media (min-width:560px){ .recap{ flex-direction:row; justify-content:space-between; gap:14px; } }
+.done{ display:none; text-align:center; padding:26px 8px; }
+.done.on{ display:block; }
+.done .tick{ width:56px; height:56px; margin:0 auto 18px; border-radius:50%; background:var(--green); color:#fff; display:grid; place-items:center; font-size:26px; }
+
+/* ============================================================
+   PIED DE PAGE
+   ============================================================ */
+#foot{ background:var(--ink); color:var(--paper); padding-top:56px; }
+.ft-top{ display:grid; gap:30px; padding-bottom:38px; }
+@media (min-width:760px){ .ft-top{ grid-template-columns:2fr 1fr 1fr; gap:36px; } }
+#foot .lab{ color:rgba(251,251,250,.48); }
+#foot a{ color:rgba(251,251,250,.78); font-size:.95rem; transition:color .25s, padding-left .25s; display:inline-block; padding:3px 0; }
+#foot a:hover{ color:var(--yellow); padding-left:5px; }
+.ft-col ul{ list-style:none; margin-top:14px; display:grid; gap:6px; }
+.ft-mark{
+  display:block;
+  font-family:var(--display); font-weight:700;
+  font-size:clamp(2rem, 15vw, 12rem); line-height:.86; letter-spacing:-.05em;
+  color:rgba(251,251,250,.11);
+  padding-bottom:.06em; overflow:hidden; user-select:none;
+}
+.ft-in{ display:inline-block; white-space:nowrap; vertical-align:top; }
+.ft-mark .fl{ display:inline-block; transition:color .4s var(--ease); }
+.ft-bar{ border-top:1px solid rgba(251,251,250,.16); padding:18px 0 26px; display:grid; gap:8px; }
+@media (min-width:600px){ .ft-bar{ grid-auto-flow:column; justify-content:space-between; } }
+.ft-bar p{ color:rgba(251,251,250,.5); font-size:.85rem; }
+
+/* ============================================================
+   OFFRES — trois paliers, colonnes alignées
+   Mobile : onglets, une colonne à la fois. Desktop : matrice complète.
+   ============================================================ */
+.brand em{ font-style:normal; color:var(--blue); }
+
+.pk{ margin-top:30px; }
+.pk-tabs{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:6px;
+  position:sticky; top:66px; z-index:30;
+  background:var(--paper); padding:10px 0;
+}
+.pk-tab{
+  min-height:52px; padding:10px 6px; border:1px solid var(--rule); border-radius:5px;
+  font-family:var(--mono); font-size:.78rem; line-height:1.3; background:#fff;
+  transition:background .2s, color .2s, border-color .2s;
+}
+.pk-tab b{ display:block; font-family:var(--display); font-size:.95rem; font-weight:600; }
+.pk-tab.on{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
+.pk-tab.on b{ color:var(--paper); }
+
+.pk-c[data-t]{ display:none; }
+.pk-c[data-t].show{ display:block; }
+
+.pk-head{ padding:20px 0 22px; border-bottom:2px solid var(--ink); }
+.pk-card{ display:flex; flex-direction:column; }
+.pk-name{ font-family:var(--display); font-weight:600; font-size:1.34rem; letter-spacing:-.025em; }
+.pk-price{ font-family:var(--display); font-weight:700; font-size:clamp(2.3rem,9vw,2.9rem); line-height:.92; letter-spacing:-.045em; margin-top:8px; }
+.pk-desc{ font-size:.93rem; color:var(--ink-2); margin-top:10px; min-height:0; }
+.pk-card .btn{ margin-top:16px; }
+.pk-reco{
+  display:inline-block; align-self:flex-start; margin-bottom:10px;
+  font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+  background:var(--yellow); color:var(--ink); padding:5px 9px; border-radius:3px;
+}
+.pk-row{
+  display:flex; justify-content:space-between; align-items:center; gap:16px;
+  padding:13px 0; border-bottom:1px solid var(--rule);
+}
+.pk-lbl{ flex:1; min-width:0; font-size:.94rem; color:var(--ink-2); }
+.pk-v{ flex:none; font-family:var(--mono); font-size:.9rem; text-align:right; }
+.pk-v.yes{ color:var(--green); }
+.pk-v.no{ color:var(--rule-2); }
+.pk-end{ border-bottom:2px solid var(--ink); }
+.pk-note{ margin-top:18px; }
+
+@media (min-width:960px){
+  .pk-tabs{ display:none; }
+  .pk-head, .pk-row{
+    display:grid; grid-template-columns:minmax(0,1.45fr) repeat(3, minmax(0,1fr));
+    gap:24px; align-items:center;
+  }
+  .pk-head{ align-items:end; }
+  .pk-c[data-t]{ display:block; }
+  .pk-v{ text-align:center; }
+  .pk-card{ height:100%; justify-content:flex-end; }
+  .pk-row:hover{ background:rgba(43,68,255,.035); }
+  .pk-lbl{ padding-left:4px; }
+}
+
+/* ============================================================
+   RÉALISATIONS — maquettes vectorielles
+   ============================================================ */
+.works{ display:grid; gap:22px; margin-top:36px; }
+@media (min-width:560px){ .works{ grid-template-columns:1fr 1fr; } }
+@media (min-width:1000px){ .works{ grid-template-columns:repeat(3,1fr); gap:26px; } }
+
+.work{ display:flex; flex-direction:column; }
+.work-fr{
+  border:1px solid var(--rule); border-radius:8px; overflow:hidden;
+  background:var(--panel); padding:18px 18px 0;
+  transition:border-color .35s var(--ease), transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+.work:hover .work-fr{
+  border-color:var(--rule-2); transform:translateY(-5px);
+  box-shadow:0 22px 44px -26px rgba(14,16,19,.4);
+}
+.work-fr svg{ width:100%; height:auto; display:block; }
+.work-meta{ display:flex; align-items:baseline; justify-content:space-between; gap:14px; padding-top:16px; }
+.work-meta b{ font-family:var(--display); font-weight:600; font-size:1.1rem; letter-spacing:-.02em; }
+.work p{ font-size:.92rem; color:var(--ink-2); margin-top:6px; }
+.work-tag{
+  display:inline-flex; align-items:center; gap:7px;
+  font-family:var(--mono); font-size:11px; color:var(--ink-3); white-space:nowrap;
+}
+.work-tag i{ width:8px; height:8px; border-radius:2px; flex:none; }
+.works-note{ margin-top:26px; }
+
+/* Puces dessinées dans les listes compris / pas compris */
+.card li::before{
+  content:""; flex:none; width:19px; height:19px; margin-top:2px;
+  background-repeat:no-repeat; background-position:center; background-size:contain;
+}
+.card:not(.card--n) li::before{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='9' fill='%230E9F6E' fill-opacity='.12'/%3E%3Cpath d='M6 10.4l2.6 2.6L14 7.6' fill='none' stroke='%230E9F6E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.card--n li::before{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='9' fill='%237C838C' fill-opacity='.13'/%3E%3Cpath d='M6.6 10h6.8' fill='none' stroke='%237C838C' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* ---------- Utilitaires ---------- */
+.rv{ opacity:0; transform:translateY(18px); }
+#prog{ position:fixed; top:0; left:0; right:0; height:3px; background:var(--blue); z-index:300; transform:scaleX(0); transform-origin:left; }
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
+  .rv{ opacity:1; transform:none; }
+}
+</style>
+</head>
+<body>
+
+<noscript><style>.rv{opacity:1!important;transform:none!important}.ac-a{height:auto!important}</style></noscript>
+<div id="prog"></div>
+
+<!-- ===================== NAV ===================== -->
+<header id="nav">
+  <div class="nav-in">
+    <a href="#hero" class="brand"><i></i>UP<em>2</em>FRONT</a>
+    <nav class="nav-links">
+      <a href="#offres">Offres</a>
+      <a href="#compris">Ce qui est compris</a>
+      <a href="#works">Exemples</a>
+      <a href="#devis">À la carte</a>
+      <a href="#abo">Abonnements</a>
+      <a href="#delai">Délai</a>
+      <a href="#faq">Questions</a>
+    </nav>
+    <div class="nav-right">
+      <a href="#start" class="btn nav-cta"><s>Démarrer</s></a>
+      <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false"><i></i><i></i></button>
+    </div>
+  </div>
+</header>
+
+<div id="drawer">
+  <nav class="dr-links">
+    <a href="#offres">Offres<u>01</u></a>
+    <a href="#compris">Ce qui est compris<u>02</u></a>
+    <a href="#works">Exemples<u>03</u></a>
+    <a href="#devis">À la carte<u>04</u></a>
+    <a href="#abo">Après 12 mois<u>05</u></a>
+    <a href="#delai">Délai<u>06</u></a>
+    <a href="#faq">Questions<u>07</u></a>
+  </nav>
+  <div class="dr-foot">
+    <p class="lab">590.- tout compris — sans abonnement</p>
+    <a href="#start" class="btn btn--blue btn--block"><s>Démarrer mon site</s></a>
+  </div>
+</div>
+
+<main>
+<!-- ===================== HERO ===================== -->
+<section id="hero">
+  <div class="wrap">
+    <div class="hero-top">
+      <p class="lab lab--blue">Sites vitrine — Suisse romande</p>
+      <p class="lab">Dès 590.—</p>
+    </div>
+
+    <h1 class="mark-xl hero-mark"><span class="mark-in" id="heroMark">UP2FRONT</span></h1>
+
+    <div class="hero-line">
+      <div>
+        <p class="hero-claim rv">Votre site en ligne en <em>dix jours</em>, au prix annoncé.</p>
+        <p class="lead hero-sub rv">
+          Pas de devis à négocier, pas d'abonnement obligatoire, pas de surprise à la
+          facture. Nom de domaine, hébergement et mise en ligne compris la première année.
+          Après, vous faites ce que vous voulez — y compris partir avec tout.
+        </p>
+        <div class="btn-row hero-cta rv">
+          <a href="#devis" class="btn btn--blue"><s>Composer mon devis</s></a>
+          <a href="#compris" class="btn btn--ghost"><s>Ce qui est compris</s></a>
+        </div>
+        <p class="hero-avail rv"><i></i><span class="small">Trois créneaux libres ce mois-ci</span></p>
+      </div>
+
+      <aside class="pricebox rv">
+        <div class="pb-head">
+          <span class="lab">Devis type</span>
+          <span class="lab">CHF</span>
+        </div>
+        <div class="pb-rows">
+          <div class="pb-r"><span>Design et intégration</span><b>590.—</b></div>
+          <div class="pb-r"><span>Domaine .ch, 1<sup>re</sup> année</span><b class="free">compris</b></div>
+          <div class="pb-r"><span>Hébergement Infomaniak, 1<sup>re</sup> année</span><b class="free">compris</b></div>
+          <div class="pb-r"><span>SSL et sauvegardes</span><b class="free">compris</b></div>
+          <div class="pb-r"><span>Mise en ligne et corrections</span><b class="free">compris</b></div>
+        </div>
+        <div class="pb-tot">
+          <span class="lab">Total à la création</span>
+          <span class="tot"><span class="num" data-to="590">0</span>.—</span>
+        </div>
+        <div class="pb-then">
+          <span class="small" style="color:rgba(251,251,250,.75)">Après 12 mois</span>
+          <b>vous êtes libre</b>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BANDEAU ===================== -->
+<div class="strip" id="strip">
+  <div class="strip-row">
+    <span class="strip-i">Prix fixe, écrit noir sur blanc</span>
+    <span class="strip-i">Dix jours ouvrables</span>
+    <span class="strip-i">Domaine .ch compris</span>
+    <span class="strip-i">Hébergement en Suisse</span>
+    <span class="strip-i">Aucun abonnement obligatoire</span>
+    <span class="strip-i">Vous repartez avec vos fichiers</span>
+  </div>
+</div>
+
+<!-- ===================== COMPRIS ===================== -->
+<section id="compris" class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="lab lab--blue rv">Sans zone d'ombre</p>
+      <h2 class="h2 rv">Ce qui est compris, et ce qui ne l'est pas.</h2>
+      <p class="lead rv">
+        La deuxième colonne est aussi longue que la première. C'est voulu :
+        vous devez pouvoir dire non en connaissance de cause.
+      </p>
+    </div>
+
+    <div class="cards">
+      <article class="card rv">
+        <div class="card-h"><span class="mk mk--y">✓</span><b>Compris dans les 590.-</b></div>
+        <ul>
+          <li><span class="tx">Design sur mesure, pas un gabarit repeint</span></li>
+          <li><span class="tx">Adapté au téléphone, à la tablette et à l'ordinateur</span></li>
+          <li><span class="tx">Nom de domaine .ch, première année</span></li>
+          <li><span class="tx">Hébergement Infomaniak en Suisse, première année</span></li>
+          <li><span class="tx">Certificat SSL et sauvegardes automatiques</span></li>
+          <li><span class="tx">Formulaire de contact relié à votre boîte mail</span></li>
+          <li><span class="tx">Fiche Google Business créée et renseignée</span></li>
+          <li><span class="tx">Bases du référencement local</span></li>
+          <li><span class="tx">Un tour de corrections avant mise en ligne</span></li>
+        </ul>
+      </article>
+
+      <article class="card card--n rv">
+        <div class="card-h"><span class="mk mk--n">✕</span><b>Pas compris</b></div>
+        <ul>
+          <li><span class="tx">Photos professionnelles — on vous met en lien</span><span class="pr">dès 450.-</span></li>
+          <li><span class="tx">Rédaction complète de vos textes</span><span class="pr">+ 250.-</span></li>
+          <li><span class="tx">Version dans une deuxième langue</span><span class="pr">+ 300.-</span></li>
+          <li><span class="tx">Création de logo</span><span class="pr">+ 350.-</span></li>
+          <li><span class="tx">Réservation en ligne</span><span class="pr">+ 200.-</span></li>
+          <li><span class="tx">Boutique en ligne et paiement</span><span class="pr">on oriente</span></li>
+          <li><span class="tx">Publicité et réseaux sociaux</span><span class="pr">non</span></li>
+          <li><span class="tx">Modifier le site vous-même — c'est un choix</span><span class="pr">voir FAQ</span></li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== OFFRES ===================== -->
+<section id="offres" class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="lab lab--blue rv">Les trois offres</p>
+      <h2 class="h2 rv">Choisissez une colonne. Tout est dedans.</h2>
+      <p class="lead rv">
+        Le même travail, trois niveaux d'ampleur. Rien n'est caché sous un astérisque,
+        et le prix affiché est celui de la facture.
+      </p>
+    </div>
+
+    <div class="pk rv">
+      <div class="pk-tabs" role="tablist">
+        <button class="pk-tab on" data-tab="0" role="tab" aria-selected="true">Essentiel<b>590.—</b></button>
+        <button class="pk-tab" data-tab="1" role="tab" aria-selected="false">Complet<b>799.—</b></button>
+        <button class="pk-tab" data-tab="2" role="tab" aria-selected="false">Intégral<b>999.—</b></button>
+      </div>
+
+      <div class="pk-head">
+        <span class="pk-lbl" style="color:var(--ink-3)"></span>
+        <div class="pk-c show" data-t="0">
+          <div class="pk-card">
+            <span class="pk-name">Essentiel</span>
+            <span class="pk-price">590.—</span>
+            <p class="pk-desc">Une page qui dit qui vous êtes, où vous êtes et comment vous joindre. Suffit à neuf commerces sur dix.</p>
+            <a href="#start" class="btn btn--ghost"><s>Choisir Essentiel</s></a>
+          </div>
+        </div>
+        <div class="pk-c" data-t="1">
+          <div class="pk-card">
+            <span class="pk-reco">Le plus choisi</span>
+            <span class="pk-name">Complet</span>
+            <span class="pk-price">799.—</span>
+            <p class="pk-desc">Trois pages et la prise de rendez-vous en ligne. Pour ceux qui ont des prestations à détailler.</p>
+            <a href="#start" class="btn btn--blue"><s>Choisir Complet</s></a>
+          </div>
+        </div>
+        <div class="pk-c" data-t="2">
+          <div class="pk-card">
+            <span class="pk-name">Intégral</span>
+            <span class="pk-price">999.—</span>
+            <p class="pk-desc">Cinq pages, textes rédigés et site en deux langues. Vous ne fournissez que vos photos.</p>
+            <a href="#start" class="btn btn--ghost"><s>Choisir Intégral</s></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pk-row">
+        <span class="pk-lbl">Pages</span>
+        <span class="pk-c" data-t="0"><span class="pk-v">1</span></span>
+        <span class="pk-c" data-t="1"><span class="pk-v">3</span></span>
+        <span class="pk-c" data-t="2"><span class="pk-v">5</span></span>
+      </div>
+      <div class="pk-row">
+        <span class="pk-lbl">Délai de livraison</span>
+        <span class="pk-c" data-t="0"><span class="pk-v">10 jours</span></span>
+        <span class="pk-c" data-t="1"><span class="pk-v">12 jours</span></span>
+        <span class="pk-c" data-t="2"><span class="pk-v">15 jours</span></span>
+      </div>
+      <div class="pk-row">
+        <span class="pk-lbl">Design sur mesure</span>
+        <span class="pk-c" data-t="0"><span class="pk-v yes">✓</span></span>
+        <span class="pk-c" data-t="1"><span class="pk-v yes">✓</span></span>
+        <span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span>
+      </div>
+      <div class="pk-row">
+        <span class="pk-lbl">Mobile, tablette, ordinateur</span>
+        <span class="pk-c" data-t="0"><span class="pk-v yes">✓</span></span>
+        <span class="pk-c" data-t="1"><span class="pk-v yes">✓</span></span>
+        <span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span>
+      </div>
+      <div class="pk-row">
+        <span class="pk-lbl">Domaine .ch, 1<sup>re</sup> année</span>
+        <span class="pk-c" data-t="0"><span class="pk-v yes">✓</span></span>
+        <span class="pk-c" data-t="1"><span class="pk-v yes">✓</span></span>
+        <span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span>
+      </div>
+      <div class="pk-row">
+        <span class="pk-lbl">Hébergement en Suisse, 1<sup>re</sup> année</span>
+        <span class="pk-c" data-t="0"><span class="pk-v yes">✓</span></span>
+        <span class="pk-c" data-t="1"><span class="pk-v yes">✓</span></span>
+        <span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span>
+      </div>
+      <div class="pk-row">
+        <span class="pk-lbl">Certificat SSL et sauvegardes</span>
+        <span class="pk-c" data-t="0"><span class="pk-v yes">✓</span></span>
+        <span class="pk-c" data-t="1"><span class="pk-v yes">✓</span></span>
+        <span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span>
+      </div>
+      <div class="pk-row">
+        <span class="pk-lbl">Formulaire de contact</span>
+        <span class="pk-c" data-t="0"><span class="pk-v yes">✓</span></span>
+        <span class="pk-c" data-t="1"><span class="pk-v yes">✓</span></span>
+        <span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span>
+      </div>
+      <div class="pk-row">
+        <span class="pk-lbl">Fiche Google Business</span>
+        <span class="pk-c" data-t="0"><span class="pk-v yes">✓</span></span>
+        <span class="pk-c" data-t="1"><span class="pk-v yes">✓</span></span>
+        <span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span>
+      </div>
+      <div class="pk-row">
+        <span class="pk-lbl">Référencement local</span>
+        <span class="pk-c" data-t="0"><span class="pk-v">base</span></span>
+        <span class="pk-c" data-t="1"><span class="pk-v">avancé</span></span>
+        <span class="pk-c" data-t="2"><span class="pk-v">avancé</span></span>
+      </div>
+      <div class="pk-row">
+        <span class="pk-lbl">Prise de rendez-vous en ligne</span>
+        <span class="pk-c" data-t="0"><span class="pk-v no">—</span></span>
+        <span class="pk-c" data-t="1"><span class="pk-v yes">✓</span></span>
+        <span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span>
+      </div>
+      <div class="pk-row">
+        <span class="pk-lbl">Rédaction de vos textes</span>
+        <span class="pk-c" data-t="0"><span class="pk-v no">—</span></span>
+        <span class="pk-c" data-t="1"><span class="pk-v no">—</span></span>
+        <span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span>
+      </div>
+      <div class="pk-row">
+        <span class="pk-lbl">Site en deux langues</span>
+        <span class="pk-c" data-t="0"><span class="pk-v no">—</span></span>
+        <span class="pk-c" data-t="1"><span class="pk-v no">—</span></span>
+        <span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span>
+      </div>
+      <div class="pk-row">
+        <span class="pk-lbl">Création de logo</span>
+        <span class="pk-c" data-t="0"><span class="pk-v">+ 350.—</span></span>
+        <span class="pk-c" data-t="1"><span class="pk-v">+ 350.—</span></span>
+        <span class="pk-c" data-t="2"><span class="pk-v">+ 350.—</span></span>
+      </div>
+      <div class="pk-row">
+        <span class="pk-lbl">Tours de corrections</span>
+        <span class="pk-c" data-t="0"><span class="pk-v">1</span></span>
+        <span class="pk-c" data-t="1"><span class="pk-v">2</span></span>
+        <span class="pk-c" data-t="2"><span class="pk-v">3</span></span>
+      </div>
+      <div class="pk-row pk-end">
+        <span class="pk-lbl">Engagement après 12 mois</span>
+        <span class="pk-c" data-t="0"><span class="pk-v yes">aucun</span></span>
+        <span class="pk-c" data-t="1"><span class="pk-v yes">aucun</span></span>
+        <span class="pk-c" data-t="2"><span class="pk-v yes">aucun</span></span>
+      </div>
+
+      <p class="tiny pk-note">
+        Aucun abonnement n'est imposé, ni la première année ni après. Deux suppléments seulement
+        sont disponibles — logo et troisième langue — et ils sont chiffrés juste en dessous.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== RÉALISATIONS ===================== -->
+<section id="works" class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="lab lab--blue rv">À quoi ça ressemble</p>
+      <h2 class="h2 rv">Trois métiers, trois sites qui ne se ressemblent pas.</h2>
+      <p class="lead rv">
+        Le socle technique est le même pour tout le monde — c'est ce qui permet le prix.
+        Ce qui change à chaque fois, c'est le dessin, les couleurs et l'ordre des choses.
+      </p>
+    </div>
+
+    <div class="works">
+      <article class="work rv">
+        <div class="work-fr"><svg viewBox="0 0 440 340" role="img" aria-label="Maquette de site — boulangerie">
+  <g>
+    <rect x="0" y="0" width="380" height="270" rx="9" fill="#fff" stroke="#DDDFE4"/>
+    <path d="M0 9a9 9 0 0 1 9-9h362a9 9 0 0 1 9 9v21H0z" fill="#F1F2F5"/>
+    <circle cx="16" cy="16" r="3.4" fill="#C9CDD4"/><circle cx="28" cy="16" r="3.4" fill="#C9CDD4"/><circle cx="40" cy="16" r="3.4" fill="#C9CDD4"/>
+    <rect x="54" y="10" width="128" height="12" rx="6" fill="#E4E6EA"/>
+    <rect x="60" y="14" width="42" height="4" rx="2" fill="#C9CDD4"/>
+    <rect x="0" y="30" width="380" height="1" fill="#E4E6EA"/>
+    <rect x="12" y="42" width="356" height="96" fill="#F7EDE4"/>
+    <rect x="30" y="62" width="118" height="10" rx="5" fill="#C2703D"/>
+    <rect x="30" y="80" width="164" height="10" rx="5" fill="#C2703D" opacity=".55"/>
+    <rect x="30" y="104" width="74" height="20" rx="10" fill="#C2703D"/>
+    <rect x="238" y="56" width="118" height="68" rx="6" fill="#C2703D" opacity=".3"/>
+    <circle cx="272" cy="82" r="11" fill="#C2703D" opacity=".5"/>
+    <rect x="12" y="152" width="110" height="66" rx="6" fill="#EDEEF1"/>
+    <rect x="135" y="152" width="110" height="66" rx="6" fill="#EDEEF1"/>
+    <rect x="258" y="152" width="110" height="66" rx="6" fill="#EDEEF1"/>
+    <rect x="24" y="164" width="52" height="7" rx="3.5" fill="#C2703D" opacity=".6"/>
+    <rect x="147" y="164" width="52" height="7" rx="3.5" fill="#C2703D" opacity=".6"/>
+    <rect x="270" y="164" width="52" height="7" rx="3.5" fill="#C2703D" opacity=".6"/>
+    <rect x="24" y="180" width="80" height="5" rx="2.5" fill="#C9CDD4"/>
+    <rect x="147" y="180" width="80" height="5" rx="2.5" fill="#C9CDD4"/>
+    <rect x="270" y="180" width="80" height="5" rx="2.5" fill="#C9CDD4"/>
+    <rect x="12" y="234" width="356" height="24" rx="5" fill="#E4E6EA"/>
+  </g>
+  <g transform="translate(300,138)">
+    <rect x="0" y="0" width="110" height="196" rx="14" fill="#fff" stroke="#DDDFE4" stroke-width="1.5"/>
+    <rect x="40" y="8" width="30" height="5" rx="2.5" fill="#E4E6EA"/>
+      <rect x="12" y="26" width="86" height="52" fill="#F7EDE4"/>
+      <rect x="22" y="40" width="48" height="7" rx="3.5" fill="#C2703D"/>
+      <rect x="22" y="53" width="34" height="12" rx="6" fill="#C2703D"/>
+      <rect x="12" y="88" width="86" height="34" rx="4" fill="#EDEEF1"/>
+      <rect x="12" y="130" width="86" height="34" rx="4" fill="#EDEEF1"/>
+    <rect x="42" y="180" width="26" height="4" rx="2" fill="#E4E6EA"/>
+  </g>
+</svg></div>
+        <div class="work-meta"><b>Boulangerie</b><span class="work-tag"><i style="background:#C2703D"></i>Une page</span></div>
+        <p>Les produits en vitrine, les horaires visibles sans chercher, l'adresse cliquable vers l'itinéraire.</p>
+      </article>
+
+      <article class="work rv">
+        <div class="work-fr"><svg viewBox="0 0 440 340" role="img" aria-label="Maquette de site — artisan">
+  <g>
+    <rect x="0" y="0" width="380" height="270" rx="9" fill="#fff" stroke="#DDDFE4"/>
+    <path d="M0 9a9 9 0 0 1 9-9h362a9 9 0 0 1 9 9v21H0z" fill="#F1F2F5"/>
+    <circle cx="16" cy="16" r="3.4" fill="#C9CDD4"/><circle cx="28" cy="16" r="3.4" fill="#C9CDD4"/><circle cx="40" cy="16" r="3.4" fill="#C9CDD4"/>
+    <rect x="54" y="10" width="128" height="12" rx="6" fill="#E4E6EA"/>
+    <rect x="60" y="14" width="42" height="4" rx="2" fill="#C9CDD4"/>
+    <rect x="0" y="30" width="380" height="1" fill="#E4E6EA"/>
+    <rect x="12" y="42" width="172" height="122" fill="#E8F0EB"/>
+    <rect x="28" y="62" width="96" height="11" rx="5.5" fill="#2F6B4F"/>
+    <rect x="28" y="82" width="132" height="11" rx="5.5" fill="#2F6B4F" opacity=".5"/>
+    <rect x="28" y="106" width="120" height="5" rx="2.5" fill="#B9BEC6"/>
+    <rect x="28" y="118" width="96" height="5" rx="2.5" fill="#B9BEC6"/>
+    <rect x="28" y="134" width="70" height="18" rx="9" fill="#2F6B4F"/>
+    <rect x="196" y="42" width="172" height="122" rx="6" fill="#2F6B4F" opacity=".26"/>
+    <path d="M232 130 L266 88 L300 130 Z" fill="#2F6B4F" opacity=".55"/>
+    <circle cx="322" cy="76" r="13" fill="#2F6B4F" opacity=".45"/>
+    <rect x="12" y="180" width="84" height="8" rx="4" fill="#2F6B4F" opacity=".7"/>
+    <rect x="12" y="198" width="356" height="1" fill="#DDDFE4"/>
+    <rect x="12" y="210" width="356" height="1" fill="#DDDFE4"/>
+    <rect x="12" y="222" width="356" height="1" fill="#DDDFE4"/>
+    <rect x="12" y="234" width="356" height="1" fill="#DDDFE4"/>
+    <rect x="20" y="202" width="104" height="5" rx="2.5" fill="#C9CDD4"/>
+    <rect x="20" y="214" width="140" height="5" rx="2.5" fill="#C9CDD4"/>
+    <rect x="20" y="226" width="118" height="5" rx="2.5" fill="#C9CDD4"/>
+  </g>
+  <g transform="translate(300,138)">
+    <rect x="0" y="0" width="110" height="196" rx="14" fill="#fff" stroke="#DDDFE4" stroke-width="1.5"/>
+    <rect x="40" y="8" width="30" height="5" rx="2.5" fill="#E4E6EA"/>
+      <rect x="12" y="26" width="86" height="60" rx="4" fill="#2F6B4F" opacity=".26"/>
+      <path d="M36 74 L55 50 L74 74 Z" fill="#2F6B4F" opacity=".55"/>
+      <rect x="12" y="96" width="60" height="8" rx="4" fill="#2F6B4F"/>
+      <rect x="12" y="112" width="86" height="1" fill="#DDDFE4"/>
+      <rect x="12" y="126" width="86" height="1" fill="#DDDFE4"/>
+      <rect x="12" y="140" width="86" height="1" fill="#DDDFE4"/>
+    <rect x="42" y="180" width="26" height="4" rx="2" fill="#E4E6EA"/>
+  </g>
+</svg></div>
+        <div class="work-meta"><b>Menuisier</b><span class="work-tag"><i style="background:#2F6B4F"></i>Trois pages</span></div>
+        <p>Les réalisations d'abord, le devis en un clic, et la zone d'intervention indiquée noir sur blanc.</p>
+      </article>
+
+      <article class="work rv">
+        <div class="work-fr"><svg viewBox="0 0 440 340" role="img" aria-label="Maquette de site — therapeute">
+  <g>
+    <rect x="0" y="0" width="380" height="270" rx="9" fill="#fff" stroke="#DDDFE4"/>
+    <path d="M0 9a9 9 0 0 1 9-9h362a9 9 0 0 1 9 9v21H0z" fill="#F1F2F5"/>
+    <circle cx="16" cy="16" r="3.4" fill="#C9CDD4"/><circle cx="28" cy="16" r="3.4" fill="#C9CDD4"/><circle cx="40" cy="16" r="3.4" fill="#C9CDD4"/>
+    <rect x="54" y="10" width="128" height="12" rx="6" fill="#E4E6EA"/>
+    <rect x="60" y="14" width="42" height="4" rx="2" fill="#C9CDD4"/>
+    <rect x="0" y="30" width="380" height="1" fill="#E4E6EA"/>
+    <rect x="12" y="42" width="356" height="118" fill="#EDEBFA"/>
+    <circle cx="190" cy="76" r="17" fill="#6B5BD6" opacity=".4"/>
+    <rect x="118" y="104" width="144" height="11" rx="5.5" fill="#6B5BD6"/>
+    <rect x="146" y="124" width="88" height="6" rx="3" fill="#6B5BD6" opacity=".5"/>
+    <rect x="152" y="140" width="76" height="16" rx="8" fill="#6B5BD6"/>
+    <rect x="12" y="176" width="172" height="52" rx="6" fill="#EDEEF1"/>
+    <rect x="196" y="176" width="172" height="52" rx="6" fill="#EDEEF1"/>
+    <rect x="26" y="190" width="60" height="7" rx="3.5" fill="#6B5BD6" opacity=".65"/>
+    <rect x="210" y="190" width="60" height="7" rx="3.5" fill="#6B5BD6" opacity=".65"/>
+    <rect x="26" y="204" width="122" height="5" rx="2.5" fill="#C9CDD4"/>
+    <rect x="210" y="204" width="122" height="5" rx="2.5" fill="#C9CDD4"/>
+    <rect x="26" y="214" width="94" height="5" rx="2.5" fill="#C9CDD4"/>
+    <rect x="210" y="214" width="94" height="5" rx="2.5" fill="#C9CDD4"/>
+    <rect x="140" y="240" width="100" height="18" rx="9" fill="#6B5BD6" opacity=".75"/>
+  </g>
+  <g transform="translate(300,138)">
+    <rect x="0" y="0" width="110" height="196" rx="14" fill="#fff" stroke="#DDDFE4" stroke-width="1.5"/>
+    <rect x="40" y="8" width="30" height="5" rx="2.5" fill="#E4E6EA"/>
+      <rect x="12" y="26" width="86" height="64" fill="#EDEBFA"/>
+      <circle cx="55" cy="46" r="11" fill="#6B5BD6" opacity=".4"/>
+      <rect x="26" y="64" width="58" height="7" rx="3.5" fill="#6B5BD6"/>
+      <rect x="34" y="77" width="42" height="10" rx="5" fill="#6B5BD6"/>
+      <rect x="12" y="100" width="86" height="26" rx="4" fill="#EDEEF1"/>
+      <rect x="12" y="134" width="86" height="26" rx="4" fill="#EDEEF1"/>
+    <rect x="42" y="180" width="26" height="4" rx="2" fill="#E4E6EA"/>
+  </g>
+</svg></div>
+        <div class="work-meta"><b>Thérapeute</b><span class="work-tag"><i style="background:#6B5BD6"></i>Trois pages</span></div>
+        <p>Un ton apaisé, la prise de rendez-vous en évidence, les tarifs annoncés sans détour.</p>
+      </article>
+    </div>
+
+    <p class="tiny works-note rv">
+      Maquettes de démonstration — remplacées par de vraies captures dès nos premiers sites livrés.
+    </p>
+  </div>
+</section>
+
+<!-- ===================== DEVIS ===================== -->
+<section id="devis" class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="lab lab--blue rv">Le devis en direct</p>
+      <h2 class="h2 rv">Ou composez à la carte.</h2>
+      <p class="lead rv">
+        Pas besoin d'un rendez-vous pour connaître un prix. Cochez, le devis se construit,
+        et il se reporte tout seul dans le formulaire.
+      </p>
+    </div>
+
+    <div class="cf">
+      <div class="cf-left">
+        <div class="cf-block">
+          <span class="lab">01 — Le site</span>
+          <div class="opts" data-group="site" data-mode="radio">
+            <button class="opt opt--r on" data-p="0" data-n="Une page">
+              <span class="opt-box"></span>
+              <span class="opt-txt"><strong>Une page</strong><span>Tout sur un seul écran déroulant. Le format qui convient à neuf commerces sur dix.</span></span>
+              <span class="opt-p">compris</span>
+            </button>
+            <button class="opt opt--r" data-p="200" data-n="Trois pages">
+              <span class="opt-box"></span>
+              <span class="opt-txt"><strong>Trois pages</strong><span>Accueil, prestations, contact. Utile si vous avez beaucoup à expliquer.</span></span>
+              <span class="opt-p">+ 200.—</span>
+            </button>
+            <button class="opt opt--r" data-p="420" data-n="Cinq pages">
+              <span class="opt-box"></span>
+              <span class="opt-txt"><strong>Cinq pages</strong><span>Pour une équipe, plusieurs métiers ou plusieurs lieux.</span></span>
+              <span class="opt-p">+ 420.—</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="cf-block">
+          <span class="lab">02 — Options</span>
+          <div class="opts" data-group="opt" data-mode="check">
+            <button class="opt" data-p="290" data-n="Troisième langue">
+              <span class="opt-box"></span>
+              <span class="opt-txt"><strong>Troisième langue</strong><span>Une langue de plus que celles déjà prévues dans votre offre.</span></span>
+              <span class="opt-p">+ 290.—</span>
+            </button>
+            <button class="opt" data-p="350" data-n="Logo">
+              <span class="opt-box"></span>
+              <span class="opt-txt"><strong>Logo</strong><span>Simple et lisible, décliné pour l'enseigne et les réseaux.</span></span>
+              <span class="opt-p">+ 350.—</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="cf-block">
+          <span class="lab">03 — Après 12 mois <span style="color:var(--ink-3)">(facultatif)</span></span>
+          <div class="opts" data-group="abo" data-mode="radio">
+            <button class="opt opt--r" data-m="0" data-n="Rien">
+              <span class="opt-box"></span>
+              <span class="opt-txt"><strong>Rien du tout</strong><span>On vous remet les fichiers et le domaine. Vous hébergez où vous voulez.</span></span>
+              <span class="opt-p">0.—</span>
+            </button>
+            <button class="opt opt--r on" data-m="15" data-n="Hébergement">
+              <span class="opt-box"></span>
+              <span class="opt-txt"><strong>Hébergement seul</strong><span>Le site reste en ligne, domaine renouvelé, sauvegardé. Rien d'autre.</span></span>
+              <span class="opt-p">15.—/mois</span>
+            </button>
+            <button class="opt opt--r" data-m="49" data-n="Hébergement + suivi">
+              <span class="opt-box"></span>
+              <span class="opt-txt"><strong>Hébergement + suivi</strong><span>Plus une heure de modifications par mois, sans devis.</span></span>
+              <span class="opt-p">49.—/mois</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="q-card">
+          <div class="q-head"><span class="lab">Votre devis</span><span class="lab">CHF</span></div>
+          <div class="q-lines" id="qLines"></div>
+          <div class="q-sum"><span class="lab">Total à la création</span><span class="tot" id="qTotal">590.—</span></div>
+          <div class="q-mo"><span class="small" style="color:rgba(251,251,250,.75)">Ensuite, par mois</span><b id="qMonth">15.—</b></div>
+          <div class="q-act">
+            <a href="#start" class="btn btn--blue btn--block"><s>Envoyer ce devis</s></a>
+            <p class="tiny">Sans engagement. Réponse sous 24 h ouvrables.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ABONNEMENTS ===================== -->
+<section id="abo" class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="lab lab--blue rv">Après douze mois</p>
+      <h2 class="h2 rv">Aucun abonnement obligatoire. Jamais.</h2>
+      <p class="lead rv">
+        La première année est comprise dans les 590.-. Ensuite vous choisissez, et
+        partir est une option affichée au même titre que les autres — pas une clause
+        cachée qu'il faut aller chercher.
+      </p>
+    </div>
+
+    <div class="plans">
+      <article class="plan rv">
+        <h3>Vous partez</h3>
+        <div class="plan-p"><span class="price">0.—</span></div>
+        <p class="plan-d">On vous rend tout et on se serre la main. Sans frais, sans condition.</p>
+        <ul>
+          <li>Fichiers du site remis</li>
+          <li>Nom de domaine transféré à votre nom</li>
+          <li>Marche à suivre pour l'héberger ailleurs</li>
+          <li>Aucun frais de sortie</li>
+        </ul>
+        <a href="#faq" class="btn btn--block"><s>Comment ça marche</s></a>
+      </article>
+
+      <article class="plan rv">
+        <h3>Hébergement seul</h3>
+        <div class="plan-p"><span class="price">15.—</span><u>/mois</u></div>
+        <p class="plan-d">Le site reste en ligne sans que vous ayez à y penser. Rien de plus.</p>
+        <ul>
+          <li>Hébergement Infomaniak en Suisse</li>
+          <li>Nom de domaine renouvelé</li>
+          <li>Certificat SSL et sauvegardes</li>
+          <li>Surveillance de la disponibilité</li>
+        </ul>
+        <a href="#start" class="btn btn--block"><s>Choisir l'hébergement</s></a>
+      </article>
+
+      <article class="plan reco rv">
+        <span class="plan-tag">Le plus pratique</span>
+        <h3>Hébergement + suivi</h3>
+        <div class="plan-p"><span class="price">49.—</span><u>/mois</u></div>
+        <p class="plan-d">Vous écrivez, on modifie. Sans devis, dans la journée.</p>
+        <ul>
+          <li>Tout l'hébergement</li>
+          <li>Une heure de modifications par mois</li>
+          <li>Horaires, photos, textes, promotions</li>
+          <li>Priorité sur vos demandes</li>
+        </ul>
+        <a href="#start" class="btn btn--blue btn--block"><s>Choisir hébergement + suivi</s></a>
+      </article>
+    </div>
+
+    <p class="abo-note rv">
+      Sans engagement ni reconduction piégeuse : vous arrêtez à n'importe quelle échéance
+      annuelle et vous repartez avec tout. Une modification ponctuelle sans formule ?
+      90.- de l'heure, une demi-heure minimum.
+    </p>
+  </div>
+</section>
+
+<!-- ===================== DÉLAI ===================== -->
+<section id="delai" class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="lab lab--blue rv">Le délai</p>
+      <h2 class="h2 rv">Dix jours ouvrables, jour par jour.</h2>
+      <p class="lead rv">
+        Le compteur démarre quand on a vos contenus, pas quand vous signez.
+        C'est la seule chose qui dépend de vous.
+      </p>
+    </div>
+
+    <div class="tbl">
+      <div class="tbl-hd">
+        <span class="lab">Quand</span><span class="lab">Étape</span><span class="lab">Ce qui se passe</span><span class="lab" style="text-align:right">Votre temps</span>
+      </div>
+      <div class="row rv"><span class="row-k">Jour 0</span><span class="row-t">Un questionnaire, par écrit</span><span class="row-d">On vous envoie une liste de questions courtes par email ou WhatsApp. Vous répondez quand ça vous arrange, en une fois ou en plusieurs.</span><span class="row-y">20 min</span></div>
+      <div class="row rv"><span class="row-k">Jours 1–3</span><span class="row-t">La maquette</span><span class="row-d">On dessine le site entier avec vos vrais textes et vos vraies photos. Pas de faux contenu : vous voyez le résultat final.</span><span class="row-y">aucun</span></div>
+      <div class="row rv"><span class="row-k">Jour 4</span><span class="row-t">Vous tranchez</span><span class="row-d">Vous validez ou vous demandez des changements. Un tour de corrections est compris, et il est large.</span><span class="row-y">45 min</span></div>
+      <div class="row rv"><span class="row-k">Jours 5–8</span><span class="row-t">Fabrication</span><span class="row-d">On construit pour de vrai. Vitesse, affichage mobile, formulaire, référencement local, fiche Google.</span><span class="row-y">aucun</span></div>
+      <div class="row rv"><span class="row-k">Jour 9</span><span class="row-t">Relecture</span><span class="row-d">On vous envoie un lien privé. Vous nous listez ce qui cloche, on corrige dans la foulée.</span><span class="row-y">20 min</span></div>
+      <div class="row tbl-end rv"><span class="row-k">Jour 10</span><span class="row-t">En ligne</span><span class="row-d">Domaine branché, site publié, fiche Google active. Vous recevez vos accès et vos fichiers.</span><span class="row-y">aucun</span></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat rv"><b><span class="num" data-to="10">0</span><u> j</u></b><span class="lab">Du premier message à la mise en ligne</span></div>
+      <div class="stat rv"><b><span class="num" data-to="85">0</span><u> min</u></b><span class="lab">Votre temps, au total</span></div>
+      <div class="stat rv"><b><span class="num" data-to="1">0</span></b><span class="lab">Tour de corrections compris</span></div>
+      <div class="stat rv"><b><span class="num" data-to="0">0</span></b><span class="lab">Frais caché à la facture</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section id="faq" class="sec">
+  <div class="wrap duo">
+    <div>
+      <p class="lab lab--blue rv">Les vraies questions</p>
+      <h2 class="h2 rv" style="margin-top:14px">On répond même quand ça nous arrange pas.</h2>
+      <p class="small rv" style="margin-top:18px;max-width:32ch">
+        Une question qui n'est pas là ? Écrivez, on répond sous 24 h ouvrables.
+      </p>
+    </div>
+
+    <div class="acc">
+      <div class="ac">
+        <button class="ac-q">Pourquoi seulement 590.- ?<span class="ac-ic"></span></button>
+        <div class="ac-a"><p>Parce qu'on fait une seule chose. Un type de site, un socle technique éprouvé, un processus rodé en dix jours. Pas de commercial, pas de chef de projet, pas de bureau à payer. Une agence à 5 000.- ne vous vend pas un meilleur site, elle vous vend sa structure.</p></div>
+      </div>
+      <div class="ac">
+        <button class="ac-q">Je pourrai modifier mon site moi-même ?<span class="ac-ic"></span></button>
+        <div class="ac-a"><p>Non, et c'est assumé. Nos sites n'ont pas d'interface d'administration : c'est ce qui les rend très rapides, impossibles à pirater et bon marché. En contrepartie, chaque modification passe par nous. Avec l'abonnement Suivi, vous écrivez et c'est fait dans la journée, sans devis. Si vous tenez à tout gérer vous-même, Wix ou Squarespace sont plus adaptés — on vous le dira franchement.</p></div>
+      </div>
+      <div class="ac">
+        <button class="ac-q">L'abonnement est obligatoire ?<span class="ac-ic"></span></button>
+        <div class="ac-a"><p>Non. C'est la question qu'on nous pose le plus et la réponse est non, sans astérisque. Les 590.- comprennent douze mois d'hébergement et de domaine. Après, soit vous reprenez tout gratuitement, soit vous nous laissez l'hébergement pour 15.- par mois. Rien d'autre ne vous est imposé, jamais.</p></div>
+      </div>
+      <div class="ac">
+        <button class="ac-q">Concrètement, si je reprends tout, je fais quoi ?<span class="ac-ic"></span></button>
+        <div class="ac-a"><p>On vous envoie les fichiers du site et on transfère le domaine à votre nom, sans frais. Il vous reste à ouvrir un hébergement — comptez une centaine de francs par an chez Infomaniak — et à y déposer les fichiers. On vous fournit la marche à suivre, et si vous préférez confier ça à quelqu'un, n'importe quel informaticien le fait en une heure. Rien n'est verrouillé de notre côté.</p></div>
+      </div>
+      <div class="ac">
+        <button class="ac-q">C'est un template ?<span class="ac-ic"></span></button>
+        <div class="ac-a"><p>Non. Le design est fait pour vous, à partir de vos couleurs, vos photos et votre métier. Ce qui est standardisé, c'est le socle technique et la méthode — pas l'apparence. C'est justement ce qui permet le prix.</p></div>
+      </div>
+      <div class="ac">
+        <button class="ac-q">Combien de temps ça me prend, à moi ?<span class="ac-ic"></span></button>
+        <div class="ac-a"><p>Environ une heure et demie en tout, répartie sur les dix jours, et entièrement par écrit. Le gros du travail pour vous, c'est de rassembler vos photos et vos textes au départ. Si vous n'avez ni l'un ni l'autre, on s'en charge en option.</p></div>
+      </div>
+      <div class="ac">
+        <button class="ac-q">Vous faites des boutiques en ligne ?<span class="ac-ic"></span></button>
+        <div class="ac-a"><p>Non. Vendre en ligne demande une gestion de stock, de paiement et de logistique qui n'a rien à voir avec un site vitrine. On préfère vous orienter vers quelqu'un dont c'est le métier plutôt que de mal le faire.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DÉMARRER ===================== -->
+<section id="start" class="sec">
+  <div class="wrap duo">
+    <div>
+      <p class="lab lab--blue rv">Démarrer</p>
+      <h2 class="h2 rv" style="margin-top:14px">Dites-nous l'essentiel.</h2>
+      <p class="lead rv" style="margin-top:16px">
+        Trois minutes de formulaire, et on vous répond par écrit avec un prix ferme.
+        Tout se fait par email ou WhatsApp — aucun appel, aucune relance commerciale.
+        Si ça ne colle pas, on vous le dit et on s'arrête là.
+      </p>
+      <div class="steps rv">
+        <div><b>01</b><span>Vous remplissez ce formulaire</span></div>
+        <div><b>02</b><span>On vous répond sous 24 h ouvrables, par écrit</span></div>
+        <div><b>03</b><span>Quelques messages pour caler les détails, prix ferme confirmé</span></div>
+        <div><b>04</b><span>Le compteur des dix jours démarre</span></div>
+      </div>
+    </div>
+
+    <div class="fcard rv">
+      <form id="form" action="contact.php" method="post" novalidate>
+        <!-- Pot de miel : invisible pour un humain, rempli par les robots -->
+        <div style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true">
+          <label for="f-site">Ne pas remplir</label>
+          <input type="text" id="f-site" name="site" tabindex="-1" autocomplete="off">
+        </div>
+        <input type="hidden" name="ts" id="f-ts" value="0">
+        <input type="hidden" name="devis" id="f-devis" value="">
+        <div class="frow">
+          <div class="fld"><label for="f-nom">Nom et prénom</label><input type="text" id="f-nom" name="nom" autocomplete="name"></div>
+          <div class="fld"><label for="f-ent">Votre commerce</label><input type="text" id="f-ent" name="entreprise" autocomplete="organization"></div>
+        </div>
+        <div class="frow">
+          <div class="fld"><label for="f-mail">Email</label><input type="email" id="f-mail" name="email" autocomplete="email" inputmode="email"></div>
+          <div class="fld"><label for="f-tel">WhatsApp <span style="text-transform:none;letter-spacing:0">(facultatif)</span></label><input type="tel" id="f-tel" name="whatsapp" autocomplete="tel" inputmode="tel" placeholder="+41 79 000 00 00"></div>
+        </div>
+        <div class="frow">
+          <div class="fld fsel"><label for="f-met">Votre métier</label>
+            <select id="f-met" name="metier">
+              <option value="">Choisir…</option>
+              <option>Restaurant, café, bar</option>
+              <option>Artisan, bâtiment</option>
+              <option>Santé, thérapie, bien-être</option>
+              <option>Commerce de détail</option>
+              <option>Services aux entreprises</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="fld fsel"><label for="f-cont">Vos contenus</label>
+            <select id="f-cont" name="contenus">
+              <option value="">Choisir…</option>
+              <option>Photos et textes prêts</option>
+              <option>Photos oui, textes non</option>
+              <option>Ni l'un ni l'autre</option>
+            </select>
+          </div>
+        </div>
+        <p class="tiny" style="margin:-6px 0 16px">On répond par email par défaut. Laissez votre WhatsApp si vous préférez cette voie.</p>
+        <div class="fld"><label for="f-msg">Ce que le site doit faire pour vous</label>
+          <textarea id="f-msg" name="message" placeholder="Être trouvé sur Google, afficher les horaires, recevoir des réservations…"></textarea>
+        </div>
+
+        <div class="recap">
+          <span id="rTxt">Devis : une page, Suivi</span>
+          <span><b id="rTot">590.—</b> puis <b id="rMo">15.—</b>/mois</span>
+        </div>
+
+        <button type="submit" class="btn btn--blue btn--block" id="fSend"><s>Envoyer ma demande</s></button>
+        <p class="tiny" id="fMsg" style="margin-top:12px;text-align:center">Réponse sous 24 h ouvrables.</p>
+      </form>
+
+      <div class="done" id="done">
+        <div class="tick">✓</div>
+        <h3 class="h3">C'est parti.</h3>
+        <p class="small" style="margin-top:10px">On vous répond sous 24 h ouvrables, par email ou WhatsApp, avec un prix ferme et une date de mise en ligne.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ===================== PIED DE PAGE ===================== -->
+<footer id="foot">
+  <div class="wrap">
+    <div class="ft-top">
+      <div class="ft-col">
+        <span class="lab">Up2Front</span>
+        <p style="margin-top:14px;max-width:36ch;color:rgba(251,251,250,.78);font-size:.96rem">
+          Sites vitrine à prix fixe pour les commerces et indépendants de Suisse romande.
+          Le prix est écrit en gros. C'est déjà une différence.
+        </p>
+      </div>
+      <div class="ft-col">
+        <span class="lab">Le site</span>
+        <ul>
+          <li><a href="#offres">Les trois offres</a></li>
+          <li><a href="#compris">Ce qui est compris</a></li>
+          <li><a href="#works">Exemples</a></li>
+          <li><a href="#devis">Composer un devis</a></li>
+          <li><a href="#abo">Abonnements</a></li>
+          <li><a href="#delai">Délai</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <span class="lab">Contact</span>
+        <ul>
+          <li><a href="mailto:contact@up2front.com">contact@up2front.com</a></li>
+          <li><a href="#start">WhatsApp — via le formulaire</a></li>
+          <li><a href="#start">Formulaire</a></li>
+          <li><span class="tiny" style="color:rgba(251,251,250,.5)">Pas d'appels — on répond par écrit</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-mark"><span class="ft-in" id="ftMark">UP2FRONT</span></div>
+    <div class="ft-bar">
+      <p>© 2026 Up2Front — Suisse romande</p>
+      <p>Conditions générales — Protection des données</p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+"use strict";
+const RM   = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const FINE = matchMedia('(hover:hover) and (pointer:fine)').matches;
+const $  = (s,c)=> (c||document).querySelector(s);
+const $$ = (s,c)=> Array.from((c||document).querySelectorAll(s));
+const lerp = (a,b,t)=> a+(b-a)*t;
+const chf  = v => v.toLocaleString('fr-CH').replace(/[\u00A0\u202F]/g,'\u2009') + '.—';
+
+/* ============================================================
+   1. CONFIGURATEUR — fonctionne même sans GSAP
+   ============================================================ */
+(function devis(){
+  const lines = $('#qLines'), tot = $('#qTotal'), mo = $('#qMonth');
+  if (!lines) return;
+
+  function render(anim){
+    const s = $('.opts[data-group="site"] .opt.on');
+    const a = $('.opts[data-group="abo"] .opt.on');
+    const site = s ? {n:s.dataset.n, p:+s.dataset.p} : {n:'Une page', p:0};
+    const abo  = a ? {n:a.dataset.n, m:+a.dataset.m} : {n:'Hébergement', m:15};
+    const opts = $$('.opts[data-group="opt"] .opt.on').map(o=> ({n:o.dataset.n, p:+o.dataset.p}));
+    const total = 590 + site.p + opts.reduce((x,o)=> x+o.p, 0);
+
+    const rows = [
+      {n:'Création du site', p:590},
+      {n:site.n, p:site.p, dim:!site.p},
+      ...opts.map(o=> ({n:o.n, p:o.p})),
+      {n:'Domaine et hébergement, 1ʳᵉ année', p:0, dim:true}
+    ];
+    lines.innerHTML = rows.map(r=>
+      '<div class="q-l' + (r.dim?' dim':'') + '"><span>' + r.n + '</span><b>' +
+      (r.p ? chf(r.p) : 'compris') + '</b></div>').join('');
+
+    if (anim && window.gsap && !RM)
+      gsap.from($$('.q-l', lines), {opacity:0, x:-10, duration:.35, stagger:.04, ease:'power2.out'});
+
+    count(tot, total); count(mo, abo.m);
+
+    const t = $('#rTxt');
+    if (t){
+      const ex = opts.length ? ' + ' + opts.length + ' option' + (opts.length>1?'s':'') : '';
+      t.textContent = 'Devis : ' + site.n.toLowerCase() + ex + ' — après 12 mois : ' + abo.n.toLowerCase();
+      $('#rTot').textContent = chf(total);
+      $('#rMo').textContent  = chf(abo.m);
+    }
+  }
+
+  function count(el, target){
+    const from = parseFloat(el.dataset.v || 0) || 0;
+    el.dataset.v = target;
+    if (!window.gsap || RM || from === target){ el.textContent = chf(target); return; }
+    const o = {v:from};
+    gsap.to(o, {v:target, duration:.5, ease:'power2.out',
+      onUpdate(){ el.textContent = chf(Math.round(o.v)); }});
+  }
+
+  $$('.opts').forEach(g=>{
+    const radio = g.dataset.mode === 'radio';
+    g.setAttribute('role', radio ? 'radiogroup' : 'group');
+    $$('.opt', g).forEach(b=>{
+      b.setAttribute('role', radio ? 'radio' : 'checkbox');
+      b.setAttribute('aria-checked', b.classList.contains('on'));
+      b.addEventListener('click', ()=>{
+        if (radio){
+          $$('.opt', g).forEach(o=>{ o.classList.remove('on'); o.setAttribute('aria-checked','false'); });
+          b.classList.add('on');
+        } else b.classList.toggle('on');
+        b.setAttribute('aria-checked', b.classList.contains('on'));
+        render(true);
+      });
+    });
+  });
+
+  render(false);
+})();
+
+/* ============================================================
+   2. WORDMARKS — filet de sécurité, rien de plus
+   La taille vient du CSS. Ce garde-fou ne fait que RÉDUIRE si le
+   mot déborde malgré tout (police inattendue, langue plus longue).
+   Il n'agrandit jamais : le rendu reste celui prévu au design.
+   ============================================================ */
+function fitText(el){
+  if (!el || !el.parentElement) return;
+  el.style.fontSize = '';                       // on repart de la valeur CSS
+  const avail = el.parentElement.clientWidth;
+  const w = el.getBoundingClientRect().width;
+  if (!avail || !w || w <= avail) return;       // ça tient : on ne touche à rien
+  const cur = parseFloat(getComputedStyle(el).fontSize);
+  el.style.fontSize = (cur * avail / w * 0.97).toFixed(2) + 'px';
+}
+function fitAll(){ [$('#heroMark'), $('#ftMark')].forEach(fitText); }
+
+fitAll();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitAll);
+addEventListener('load', fitAll);
+let fitTimer;
+addEventListener('resize', ()=>{ clearTimeout(fitTimer); fitTimer = setTimeout(fitAll, 120); });
+addEventListener('orientationchange', ()=> setTimeout(fitAll, 220));
+
+/* ============================================================
+   3. Repli si GSAP absent — tout reste lisible
+   ============================================================ */
+if (!window.gsap || !window.ScrollTrigger){
+  $$('.rv').forEach(e=>{ e.style.opacity=1; e.style.transform='none'; });
+  $$('.ac-a').forEach(e=> e.style.height='auto');
+  $$('.ac-q').forEach(b=> b.addEventListener('click', ()=> b.closest('.ac').classList.toggle('on')));
+  $$('.pk-tab').forEach((t,i,all)=> t.addEventListener('click', ()=>{
+    all.forEach((x,k)=> x.classList.toggle('on', k===i));
+    $$('.pk-c[data-t]').forEach(c=> c.classList.toggle('show', c.dataset.t === String(i)));
+  }));
+  return;
+}
+gsap.registerPlugin(ScrollTrigger);
+
+/* ============================================================
+   4. Nav + tiroir
+   ============================================================ */
+(function nav(){
+  addEventListener('scroll', ()=> $('#nav').classList.toggle('stuck', scrollY > 24), {passive:true});
+
+  const b = $('#burger'), dr = $('#drawer');
+  let open = false;
+  const tl = gsap.timeline({paused:true});
+  tl.set(dr, {visibility:'visible'})
+    .to(dr, {y:'0%', duration:.55, ease:'expo.inOut'})
+    .from('.dr-links a, .dr-foot > *', {y:26, opacity:0, duration:.45, stagger:.05, ease:'power3.out'}, '-=.28');
+
+  function toggle(state){
+    open = state;
+    b.classList.toggle('on', open);
+    b.setAttribute('aria-expanded', open);
+    document.body.classList.toggle('lock', open);
+    open ? tl.play() : tl.reverse();
+  }
+  b && b.addEventListener('click', ()=> toggle(!open));
+  $$('#drawer a').forEach(a=> a.addEventListener('click', ()=> toggle(false)));
+  addEventListener('keydown', e=>{ if (e.key === 'Escape' && open) toggle(false); });
+})();
+
+/* ============================================================
+   5. Entrée — le wordmark s'installe
+   ============================================================ */
+(function intro(){
+  const mark = $('#heroMark');
+  if (mark && !RM){
+    mark.innerHTML = Array.from(mark.textContent.trim())
+      .map(c=>'<span class="fl">'+c+'</span>').join('');
+    fitText(mark);
+    gsap.from($$('.fl', mark), {yPercent:108, opacity:0, duration:1, stagger:.045, ease:'expo.out'});
+  }
+  if (RM) gsap.set('.rv', {opacity:1, y:0});
+  else gsap.to('#hero .rv', {opacity:1, y:0, duration:.8, stagger:.09, ease:'power3.out', delay:.4});
+})();
+
+/* ============================================================
+   6. Révélations
+   ============================================================ */
+$$('.rv').forEach(el=>{
+  if (el.closest('#hero')) return;
+  gsap.to(el, {opacity:1, y:0, duration:.8, ease:'power3.out',
+    scrollTrigger:{trigger:el, start:'top 92%', once:true}});
+});
+
+/* ============================================================
+   7. Compteurs
+   ============================================================ */
+$$('.num').forEach(el=>{
+  const to = parseFloat(el.dataset.to);
+  ScrollTrigger.create({trigger:el, start:'top 95%', once:true, onEnter(){
+    if (RM){ el.textContent = to; return; }
+    gsap.to({v:0}, {v:to, duration:1.4, ease:'power3.out',
+      onUpdate(){ el.textContent = Math.round(this.targets()[0].v); }});
+  }});
+});
+
+/* ============================================================
+   8. Bandeau défilant
+   ============================================================ */
+(function strip(){
+  const box = $('#strip'), row = $('.strip-row', box);
+  if (!row || RM) return;
+  const need = Math.ceil(innerWidth / row.scrollWidth) + 1;
+  for (let i=0;i<need;i++) box.appendChild(row.cloneNode(true));
+  const rows = $$('.strip-row', box), w = row.scrollWidth;
+  let x = 0, prev = scrollY, v = 0;
+  (function raf(){
+    requestAnimationFrame(raf);
+    v = lerp(v, (scrollY - prev) * .04, .1); prev = scrollY;
+    x -= .45 + Math.abs(v);
+    if (x <= -w) x += w;
+    rows.forEach(r=> r.style.transform = 'translate3d(' + x + 'px,0,0)');
+  })();
+})();
+
+/* ============================================================
+   9. FAQ
+   ============================================================ */
+$$('.ac').forEach(item=>{
+  const q = $('.ac-q', item), a = $('.ac-a', item);
+  q.setAttribute('aria-expanded','false');
+  q.addEventListener('click', ()=>{
+    const was = item.classList.contains('on');
+    $$('.ac.on').forEach(o=>{
+      o.classList.remove('on');
+      $('.ac-q', o).setAttribute('aria-expanded','false');
+      gsap.to($('.ac-a', o), {height:0, duration:.4, ease:'power3.inOut'});
+    });
+    if (!was){
+      item.classList.add('on');
+      q.setAttribute('aria-expanded','true');
+      gsap.to(a, {height:'auto', duration:.45, ease:'power3.inOut',
+        onComplete:()=> ScrollTrigger.refresh()});
+    }
+  });
+});
+
+/* ============================================================
+   10. Onglets des offres (mobile)
+   ============================================================ */
+(function packs(){
+  const tabs = $$('.pk-tab');
+  if (!tabs.length) return;
+  function show(i){
+    tabs.forEach((t,k)=>{
+      t.classList.toggle('on', k === i);
+      t.setAttribute('aria-selected', k === i);
+    });
+    $$('.pk-c[data-t]').forEach(c=>
+      c.classList.toggle('show', c.dataset.t === String(i)));
+  }
+  tabs.forEach((t,i)=> t.addEventListener('click', ()=> show(i)));
+  show(0);
+})();
+
+/* ============================================================
+   11. Formulaire — envoi réel vers contact.php
+   ============================================================ */
+(function form(){
+  const f = $('#form'), msg = $('#fMsg'), send = $('#fSend');
+  if (!f) return;
+  const ts = $('#f-ts');
+  if (ts) ts.value = String(Math.floor(Date.now()/1000));
+
+  const DEMO = location.protocol === 'file:';
+
+  function ok(){
+    gsap.to(f, {opacity:0, y:-10, duration:.35, ease:'power2.in', onComplete(){
+      f.style.display='none'; $('#done').classList.add('on');
+      gsap.from('#done', {opacity:0, y:14, duration:.5, ease:'power3.out'});
+    }});
+  }
+  function fail(txt){
+    msg.textContent = txt;
+    msg.style.color = '#D93A3E';
+    send.disabled = false;
+    send.querySelector('s').textContent = 'Envoyer ma demande';
+  }
+
+  f.addEventListener('submit', async e=>{
+    e.preventDefault();
+    const tests = [
+      ['#f-nom',  v=> v.trim().length > 1],
+      ['#f-mail', v=> /.+@.+\..+/.test(v.trim())]
+    ];
+    let bad = null;
+    tests.forEach(([sel, test])=>{
+      const el = $(sel), good = test(el.value);
+      el.classList.toggle('err', !good);
+      if (!good && !bad) bad = el;
+    });
+    if (bad){
+      gsap.fromTo(f, {x:-6}, {x:0, duration:.45, ease:'elastic.out(1,.35)'});
+      bad.focus(); return;
+    }
+
+    const d = $('#f-devis');
+    if (d) d.value = ($('#rTxt')?.textContent || '') + ' — ' +
+                     ($('#rTot')?.textContent || '') + ' puis ' +
+                     ($('#rMo')?.textContent || '') + '/mois';
+
+    send.disabled = true;
+    send.querySelector('s').textContent = 'Envoi…';
+    msg.style.color = ''; msg.textContent = 'Envoi en cours…';
+
+    if (DEMO){ setTimeout(ok, 500); return; }
+
+    try{
+      const r = await fetch(f.action, {method:'POST', body:new FormData(f),
+                                       headers:{'X-Requested-With':'fetch'}});
+      const j = await r.json().catch(()=> ({ok:r.ok}));
+      if (r.ok && j.ok) ok();
+      else fail("L'envoi a échoué. Écrivez-nous directement à contact@up2front.com");
+    }catch(err){
+      fail("Connexion impossible. Écrivez-nous à contact@up2front.com");
+    }
+  });
+
+  $$('#form input, #form select').forEach(i=>
+    i.addEventListener('input', ()=> i.classList.remove('err')));
+})();
+
+/* ============================================================
+   12. Ancres, progression, wordmark de pied
+   ============================================================ */
+$$('a[href^="#"]').forEach(a=> a.addEventListener('click', e=>{
+  const id = a.getAttribute('href');
+  if (id.length < 2) return;
+  const t = $(id);
+  if (!t) return;
+  e.preventDefault();
+  const go = ()=> scrollTo({top: t.getBoundingClientRect().top + scrollY - 8,
+                            behavior: RM ? 'auto' : 'smooth'});
+  a.closest('#drawer') ? setTimeout(go, 400) : go();
+}));
+
+gsap.to('#prog', {scaleX:1, ease:'none',
+  scrollTrigger:{trigger:document.body, start:'top top', end:'bottom bottom', scrub:.3}});
+
+(function ft(){
+  const el = $('#ftMark');
+  if (!el) return;
+  const ls = Array.from(el.textContent.trim());
+  el.innerHTML = ls.map(c=>'<span class="fl">'+c+'</span>').join('');
+  const sp = $$('.fl', el);
+  fitText(el);
+  gsap.from(sp, {yPercent:105, opacity:0, duration:.85, ease:'expo.out', stagger:.04,
+    scrollTrigger:{trigger:el, start:'top 96%', once:true}});
+  if (!FINE || RM) return;
+  el.addEventListener('mousemove', e=>{
+    sp.forEach(l=>{
+      const r = l.getBoundingClientRect();
+      const k = Math.max(0, 1 - Math.abs(e.clientX - (r.left + r.width/2)) / 220);
+      gsap.to(l, {y:-k*14, color: k>.5 ? '#FFC400' : 'rgba(251,251,250,.11)',
+                  duration:.5, ease:'power3.out'});
+    });
+  });
+  el.addEventListener('mouseleave', ()=>
+    gsap.to(sp, {y:0, color:'rgba(251,251,250,.11)', duration:.8, ease:'elastic.out(1,.5)'}));
+})();
+
+addEventListener('load', ()=> ScrollTrigger.refresh());
+})();
+</script>
+</body>
+</html>

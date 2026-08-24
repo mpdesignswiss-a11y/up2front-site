@@ -1,0 +1,60 @@
+name: Déployer sur Infomaniak
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: production-up2front
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Mettre up2front.com en ligne
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://up2front.com
+
+    steps:
+      - name: Récupérer le site
+        uses: actions/checkout@v7
+
+      - name: Installer le client FTP sécurisé
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends lftp
+
+      - name: Déployer par FTPES
+        env:
+          FTP_HOST: ${{ secrets.INFOMANIAK_FTP_HOST }}
+          FTP_USER: ${{ secrets.INFOMANIAK_FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.INFOMANIAK_FTP_PASSWORD }}
+        run: |
+          test -n "$FTP_HOST"
+          test -n "$FTP_USER"
+          test -n "$FTP_PASSWORD"
+
+          umask 077
+          printf 'machine %s\nlogin %s\npassword %s\n' \
+            "$FTP_HOST" "$FTP_USER" "$FTP_PASSWORD" > "$HOME/.netrc"
+
+          lftp -e "
+            set netrc:use yes;
+            set ftp:ssl-force yes;
+            set ftp:ssl-protect-data yes;
+            set ssl:verify-certificate yes;
+            set net:max-retries 2;
+            set net:timeout 20;
+            open \"$FTP_HOST\";
+            mirror --reverse --delete --verbose \
+              --exclude-glob contact-config.php \
+              --exclude-glob .well-known/** \
+              public/ /;
+            bye
+          "
