@@ -1,45 +1,35 @@
 # Up2Front
 
-Site commercial de `up2front.com`, versionné sur GitHub et déployé automatiquement sur l'hébergement Web Infomaniak.
+Site de `up2front.com`, versionné et hébergé sur GitHub Pages. Le domaine et l'adresse `contact@up2front.com` restent gérés chez Infomaniak.
 
 ## Organisation
 
-- `public/` contient uniquement les fichiers mis en ligne.
-- `.github/workflows/deploy.yml` déploie `public/` après chaque modification de la branche `main`.
-- `public/contact-config.php` contient le secret SMTP uniquement sur Infomaniak. Il est ignoré par Git et préservé lors des déploiements.
+- `public/` contient les fichiers du site publiés.
+- `public/CNAME` relie le site au domaine `up2front.com`.
+- `.github/workflows/deploy.yml` publie automatiquement `public/` après chaque modification de la branche `main`.
+- Le formulaire prépare un email adressé à `contact@up2front.com`, car GitHub Pages ne peut pas exécuter PHP.
 
-## Préparer Infomaniak
+## Activer GitHub Pages
 
-1. Ajouter `up2front.com` comme site vierge sur l'hébergement Web.
-2. Créer l'adresse `contact@up2front.com` et définir son mot de passe.
-3. Dans **FTP / SSH**, créer un compte **FTP uniquement**, limité au dossier du site `up2front.com`.
-4. Noter le serveur FTP, l'utilisateur et le mot de passe de ce compte.
-5. Dans le Web FTP, créer `contact-config.php` à la racine du site avec ce contenu :
+1. Le dépôt doit être **Public** avec l'offre gratuite GitHub, ou privé avec une offre GitHub compatible.
+2. Dans **Settings → Pages**, choisir **GitHub Actions** comme source.
+3. Dans **Custom domain**, saisir `up2front.com` puis enregistrer.
 
-```php
-<?php
+## Relier le domaine Infomaniak
 
-defined('UP2FRONT_INTERNAL') || exit;
+Dans la zone DNS de `up2front.com`, conserver tous les enregistrements email (`MX`, SPF, DKIM et DMARC) et modifier uniquement les enregistrements Web :
 
-return [
-    'smtp_password' => 'MOT_DE_PASSE_DE_CONTACT_UP2FRONT_COM',
-];
-```
+- quatre enregistrements `A` pour le domaine racine : `185.199.108.153`, `185.199.109.153`, `185.199.110.153` et `185.199.111.153` ;
+- un `CNAME` pour `www` vers `mpdesignswiss-a11y.github.io`.
 
-Le mot de passe SMTP ne doit jamais être ajouté au dépôt GitHub.
+Après propagation du DNS, activer **Enforce HTTPS** dans **Settings → Pages**.
 
-## Configurer GitHub
+## Publication
 
-Dans **Settings → Secrets and variables → Actions**, créer ces trois secrets :
-
-- `INFOMANIAK_FTP_HOST` : serveur du type `xxxx.ftp.infomaniak.com`
-- `INFOMANIAK_FTP_USER` : utilisateur FTP limité au site
-- `INFOMANIAK_FTP_PASSWORD` : mot de passe de cet utilisateur FTP
-
-Le premier envoi sur la branche `main` déclenche automatiquement la mise en ligne. Les exécutions sont visibles dans l'onglet **Actions** du dépôt.
+Chaque envoi de code sur la branche `main` déclenche une publication. Son avancement est visible dans l'onglet **Actions** du dépôt.
 
 ## Vérification
 
 1. Ouvrir `https://up2front.com`.
-2. Envoyer une demande avec le formulaire.
-3. Vérifier la réception dans `contact@up2front.com` et répondre au visiteur avec l'adresse placée en `Reply-To`.
+2. Remplir le formulaire et vérifier que la messagerie s'ouvre avec un email prérempli pour `contact@up2front.com`.
+3. Envoyer l'email et vérifier sa réception.

@@ -1,4 +1,4 @@
-name: Déployer sur Infomaniak
+name: Publier sur GitHub Pages
 
 on:
   push:
@@ -7,54 +7,34 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: production-up2front
+  group: pages
   cancel-in-progress: true
 
 permissions:
   contents: read
+  pages: write
+  id-token: write
 
 jobs:
   deploy:
     name: Mettre up2front.com en ligne
     runs-on: ubuntu-latest
     environment:
-      name: production
-      url: https://up2front.com
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Récupérer le site
         uses: actions/checkout@v7
 
-      - name: Installer le client FTP sécurisé
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends lftp
+      - name: Configurer GitHub Pages
+        uses: actions/configure-pages@v6
 
-      - name: Déployer par FTPES
-        env:
-          FTP_HOST: ${{ secrets.INFOMANIAK_FTP_HOST }}
-          FTP_USER: ${{ secrets.INFOMANIAK_FTP_USER }}
-          FTP_PASSWORD: ${{ secrets.INFOMANIAK_FTP_PASSWORD }}
-        run: |
-          test -n "$FTP_HOST"
-          test -n "$FTP_USER"
-          test -n "$FTP_PASSWORD"
+      - name: Préparer les fichiers du site
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: public
 
-          umask 077
-          printf 'machine %s\nlogin %s\npassword %s\n' \
-            "$FTP_HOST" "$FTP_USER" "$FTP_PASSWORD" > "$HOME/.netrc"
-
-          lftp -e "
-            set netrc:use yes;
-            set ftp:ssl-force yes;
-            set ftp:ssl-protect-data yes;
-            set ssl:verify-certificate yes;
-            set net:max-retries 2;
-            set net:timeout 20;
-            open \"$FTP_HOST\";
-            mirror --reverse --delete --verbose \
-              --exclude-glob contact-config.php \
-              --exclude-glob .well-known/** \
-              public/ /;
-            bye
-          "
+      - name: Publier le site
+        id: deployment
+        uses: actions/deploy-pages@v5
