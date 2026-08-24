@@ -5,9 +5,12 @@ Site de `up2front.com`, versionné et hébergé sur GitHub Pages. Le domaine et 
 ## Organisation
 
 - `public/` contient les fichiers du site publiés.
+- `public/index.html` contient la version française et détecte la langue du navigateur à la première visite.
+- `public/en/index.html` contient la version anglaise complète.
+- Le bouton **FR / EN** mémorise ensuite le choix du visiteur.
 - `public/CNAME` relie le site au domaine `up2front.com`.
 - `.github/workflows/deploy.yml` publie automatiquement `public/` après chaque modification de la branche `main`.
-- Le formulaire transmet directement les demandes à `contact@up2front.com` avec Web3Forms, car GitHub Pages ne peut pas exécuter PHP.
+- Les deux formulaires transmettent directement les demandes à `contact@up2front.com` avec Web3Forms et précisent la langue utilisée, car GitHub Pages ne peut pas exécuter PHP.
 
 ## Activer GitHub Pages
 
