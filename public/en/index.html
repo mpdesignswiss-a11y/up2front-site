@@ -702,7 +702,7 @@ h1,h2,h3,h4{ font-family:var(--display); font-weight:600; line-height:1.06; lett
   box-shadow:0 22px 44px -26px rgba(14,16,19,.4);
 }
 .work-fr svg{ width:100%; height:auto; display:block; }
-.work-meta{ display:flex; align-items:basicline; justify-content:space-between; gap:14px; padding-top:16px; }
+.work-meta{ display:flex; align-items:baseline; justify-content:space-between; gap:14px; padding-top:16px; }
 .work-meta b{ font-family:var(--display); font-weight:600; font-size:1.1rem; letter-spacing:-.02em; }
 .work p{ font-size:.92rem; color:var(--ink-2); margin-top:6px; }
 .work-tag{
@@ -1046,40 +1046,80 @@ h1,h2,h3,h4{ font-family:var(--display); font-weight:600; line-height:1.06; lett
 
     <div class="works">
       <article class="work rv">
-        <div class="work-fr"><svg viewBox="0 0 440 340" role="img" aria-label="Website design — bakery">
+        <div class="work-fr"><svg viewBox="0 0 440 340" role="img" aria-label="Website design for a bakery: a single page, with the bread on offer, the day&#8217;s products and opening hours" text-rendering="geometricPrecision">
   <g>
-    <rect x="0" y="0" width="380" height="270" rx="9" fill="#fff" stroke="#DDDFE4"/>
+  <rect x="0" y="0" width="380" height="270" rx="9" fill="#fff" stroke="#DDDFE4"/>
     <path d="M0 9a9 9 0 0 1 9-9h362a9 9 0 0 1 9 9v21H0z" fill="#F1F2F5"/>
     <circle cx="16" cy="16" r="3.4" fill="#C9CDD4"/><circle cx="28" cy="16" r="3.4" fill="#C9CDD4"/><circle cx="40" cy="16" r="3.4" fill="#C9CDD4"/>
-    <rect x="54" y="10" width="128" height="12" rx="6" fill="#E4E6EA"/>
-    <rect x="60" y="14" width="42" height="4" rx="2" fill="#C9CDD4"/>
+    <rect x="54" y="9.5" width="150" height="13" rx="6.5" fill="#E4E6EA"/>
+    <text x="63" y="18.6" font-family="DM Mono, ui-monospace, monospace" font-size="6.4" fill="#8A9099">lepetrin.ch</text>
     <rect x="0" y="30" width="380" height="1" fill="#E4E6EA"/>
-    <rect x="12" y="42" width="356" height="96" fill="#F7EDE4"/>
-    <rect x="30" y="62" width="118" height="10" rx="5" fill="#C2703D"/>
-    <rect x="30" y="80" width="164" height="10" rx="5" fill="#C2703D" opacity=".55"/>
-    <rect x="30" y="104" width="74" height="20" rx="10" fill="#C2703D"/>
-    <rect x="238" y="56" width="118" height="68" rx="6" fill="#C2703D" opacity=".3"/>
-    <circle cx="272" cy="82" r="11" fill="#C2703D" opacity=".5"/>
-    <rect x="12" y="152" width="110" height="66" rx="6" fill="#EDEEF1"/>
-    <rect x="135" y="152" width="110" height="66" rx="6" fill="#EDEEF1"/>
-    <rect x="258" y="152" width="110" height="66" rx="6" fill="#EDEEF1"/>
-    <rect x="24" y="164" width="52" height="7" rx="3.5" fill="#C2703D" opacity=".6"/>
-    <rect x="147" y="164" width="52" height="7" rx="3.5" fill="#C2703D" opacity=".6"/>
-    <rect x="270" y="164" width="52" height="7" rx="3.5" fill="#C2703D" opacity=".6"/>
-    <rect x="24" y="180" width="80" height="5" rx="2.5" fill="#C9CDD4"/>
-    <rect x="147" y="180" width="80" height="5" rx="2.5" fill="#C9CDD4"/>
-    <rect x="270" y="180" width="80" height="5" rx="2.5" fill="#C9CDD4"/>
-    <rect x="12" y="234" width="356" height="24" rx="5" fill="#E4E6EA"/>
+
+    <!-- barre du site : une seule page, donc des ancres -->
+    <text x="14" y="42.5" font-family="DM Mono, ui-monospace, monospace" font-size="6.6" letter-spacing="1.1" fill="#2A211B">LE PÉTRIN</text>
+    <text x="260.5" y="42.5" font-family="Public Sans, system-ui, sans-serif" font-size="6.2" fill="#8A7F76">Our bread</text>
+    <text x="296.5" y="42.5" font-family="Public Sans, system-ui, sans-serif" font-size="6.2" fill="#8A7F76">Opening hours</text>
+    <text x="345.4" y="42.5" font-family="Public Sans, system-ui, sans-serif" font-size="6.2" fill="#8A7F76">Find us</text>
+
+    <!-- bandeau d'accueil -->
+    <rect x="0" y="50" width="380" height="106" fill="#FDF4EA"/>
+    <text x="22" y="70" font-family="DM Mono, ui-monospace, monospace" font-size="5.6" letter-spacing="1" fill="#C2703D">ARTISAN BAKERY — CAROUGE, GENEVA</text>
+    <text x="22" y="94" font-family="Familjen Grotesk, system-ui, sans-serif" font-size="19" font-weight="700" fill="#2A211B">Bread still warm</text>
+    <text x="22" y="114" font-family="Familjen Grotesk, system-ui, sans-serif" font-size="19" font-weight="700" fill="#2A211B">from the oven.</text>
+    <text x="22" y="130" font-family="Public Sans, system-ui, sans-serif" font-size="6.4" fill="#7C6E63">Natural sourdough, stone-ground Swiss flour, baking from 5 a.m.</text>
+    <rect x="22" y="137" width="66" height="15" rx="7.5" fill="#C2703D"/>
+    <text x="55" y="147" text-anchor="middle" font-family="Public Sans, system-ui, sans-serif" font-size="6.4" font-weight="600" fill="#fff">See our bread</text>
+
+    <!-- vitrine -->
+    <rect x="246" y="62" width="112" height="82" rx="5" fill="#EFD9C2"/>
+    <ellipse cx="302" cy="112" rx="40" ry="23" fill="#C2703D" opacity=".42"/>
+    <ellipse cx="302" cy="106" rx="32" ry="18" fill="#C2703D" opacity=".62"/>
+    <path d="M286 100c4-5 10-7 16-7s12 2 16 7" fill="none" stroke="#FDF4EA" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M290 108c4-5 8-6 12-6s8 1 12 6" fill="none" stroke="#FDF4EA" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="266" cy="80" r="7" fill="#C2703D" opacity=".3"/>
+
+    <!-- produits -->
+    <text x="14" y="174" font-family="DM Mono, ui-monospace, monospace" font-size="5.6" letter-spacing="1" fill="#B0A499">ON THE COUNTER THIS MORNING</text>
+    <rect x="12" y="180" width="114" height="50" rx="5" fill="#FBF7F3" stroke="#EDE3D8"/>
+    <rect x="133" y="180" width="114" height="50" rx="5" fill="#FBF7F3" stroke="#EDE3D8"/>
+    <rect x="254" y="180" width="114" height="50" rx="5" fill="#FBF7F3" stroke="#EDE3D8"/>
+    <rect x="24" y="190" width="30" height="16" rx="3" fill="#C2703D" opacity=".28"/>
+    <rect x="145" y="190" width="30" height="16" rx="3" fill="#C2703D" opacity=".28"/>
+    <rect x="266" y="190" width="30" height="16" rx="3" fill="#C2703D" opacity=".28"/>
+    <text x="24" y="217" font-family="Public Sans, system-ui, sans-serif" font-size="7" font-weight="600" fill="#2A211B">Sourdough loaf</text>
+    <text x="145" y="217" font-family="Public Sans, system-ui, sans-serif" font-size="7" font-weight="600" fill="#2A211B">Butter croissant</text>
+    <text x="266" y="217" font-family="Public Sans, system-ui, sans-serif" font-size="7" font-weight="600" fill="#2A211B">Sunday braid</text>
+    <text x="24" y="226" font-family="DM Mono, ui-monospace, monospace" font-size="6.4" fill="#C2703D">5.—</text>
+    <text x="145" y="226" font-family="DM Mono, ui-monospace, monospace" font-size="6.4" fill="#C2703D">2.20</text>
+    <text x="266" y="226" font-family="DM Mono, ui-monospace, monospace" font-size="6.4" fill="#C2703D">8.—</text>
+
+    <!-- horaires -->
+    <rect x="0" y="242" width="380" height="28" fill="#2A211B"/>
+    <text x="22" y="259.5" font-family="Public Sans, system-ui, sans-serif" font-size="6.6" fill="#F6EBDF">Tuesday to Saturday 6.30 – 18.30   ·   Sunday 7.00 – 12.00</text>
+    <text x="368" y="259.5" text-anchor="end" font-family="DM Mono, ui-monospace, monospace" font-size="6.2" fill="#C2703D">022 300 11 40</text>
   </g>
+
+  <!-- téléphone -->
   <g transform="translate(300,138)">
     <rect x="0" y="0" width="110" height="196" rx="14" fill="#fff" stroke="#DDDFE4" stroke-width="1.5"/>
     <rect x="40" y="8" width="30" height="5" rx="2.5" fill="#E4E6EA"/>
-      <rect x="12" y="26" width="86" height="52" fill="#F7EDE4"/>
-      <rect x="22" y="40" width="48" height="7" rx="3.5" fill="#C2703D"/>
-      <rect x="22" y="53" width="34" height="12" rx="6" fill="#C2703D"/>
-      <rect x="12" y="88" width="86" height="34" rx="4" fill="#EDEEF1"/>
-      <rect x="12" y="130" width="86" height="34" rx="4" fill="#EDEEF1"/>
-    <rect x="42" y="180" width="26" height="4" rx="2" fill="#E4E6EA"/>
+    <text x="12" y="26" font-family="DM Mono, ui-monospace, monospace" font-size="5.4" letter-spacing=".8" fill="#2A211B">LE PÉTRIN</text>
+    <rect x="90" y="21" width="9" height="1.4" fill="#8A7F76"/><rect x="90" y="24" width="9" height="1.4" fill="#8A7F76"/>
+    <rect x="6" y="32" width="98" height="66" rx="4" fill="#FDF4EA"/>
+    <text x="14" y="52" font-family="Familjen Grotesk, system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#2A211B">Bread still</text>
+    <text x="14" y="63" font-family="Familjen Grotesk, system-ui, sans-serif" font-size="9.4" font-weight="700" fill="#2A211B">warm from the oven.</text>
+    <rect x="14" y="72" width="54" height="13" rx="6.5" fill="#C2703D"/>
+    <text x="41" y="81" text-anchor="middle" font-family="Public Sans, system-ui, sans-serif" font-size="5.8" font-weight="600" fill="#fff">See our bread</text>
+    <rect x="6" y="104" width="98" height="26" rx="4" fill="#FBF7F3" stroke="#EDE3D8"/>
+    <rect x="6" y="134" width="98" height="26" rx="4" fill="#FBF7F3" stroke="#EDE3D8"/>
+    <rect x="12" y="110" width="18" height="14" rx="2.5" fill="#C2703D" opacity=".28"/>
+    <rect x="12" y="140" width="18" height="14" rx="2.5" fill="#C2703D" opacity=".28"/>
+    <text x="36" y="118" font-family="Public Sans, system-ui, sans-serif" font-size="5.6" font-weight="600" fill="#2A211B">Sourdough loaf</text>
+    <text x="36" y="125.5" font-family="DM Mono, ui-monospace, monospace" font-size="5.4" fill="#C2703D">5.—</text>
+    <text x="36" y="148" font-family="Public Sans, system-ui, sans-serif" font-size="5.6" font-weight="600" fill="#2A211B">Butter croissant</text>
+    <text x="36" y="155.5" font-family="DM Mono, ui-monospace, monospace" font-size="5.4" fill="#C2703D">2.20</text>
+    <rect x="6" y="166" width="98" height="16" rx="4" fill="#2A211B"/>
+    <text x="14" y="176.5" font-family="Public Sans, system-ui, sans-serif" font-size="5.6" fill="#F6EBDF">Open · 6.30 – 18.30</text>
   </g>
 </svg></div>
         <div class="work-meta"><b>Bakery</b><span class="work-tag"><i style="background:#C2703D"></i>One page</span></div>
@@ -1087,85 +1127,164 @@ h1,h2,h3,h4{ font-family:var(--display); font-weight:600; line-height:1.06; lett
       </article>
 
       <article class="work rv">
-        <div class="work-fr"><svg viewBox="0 0 440 340" role="img" aria-label="Website design — tradesperson">
+        <div class="work-fr"><svg viewBox="0 0 440 340" role="img" aria-label="Website design for a carpenter: five pages, a grid of completed projects and a quote request" text-rendering="geometricPrecision">
   <g>
-    <rect x="0" y="0" width="380" height="270" rx="9" fill="#fff" stroke="#DDDFE4"/>
+  <rect x="0" y="0" width="380" height="270" rx="9" fill="#fff" stroke="#DDDFE4"/>
     <path d="M0 9a9 9 0 0 1 9-9h362a9 9 0 0 1 9 9v21H0z" fill="#F1F2F5"/>
     <circle cx="16" cy="16" r="3.4" fill="#C9CDD4"/><circle cx="28" cy="16" r="3.4" fill="#C9CDD4"/><circle cx="40" cy="16" r="3.4" fill="#C9CDD4"/>
-    <rect x="54" y="10" width="128" height="12" rx="6" fill="#E4E6EA"/>
-    <rect x="60" y="14" width="42" height="4" rx="2" fill="#C9CDD4"/>
+    <rect x="54" y="9.5" width="150" height="13" rx="6.5" fill="#E4E6EA"/>
+    <text x="63" y="18.6" font-family="DM Mono, ui-monospace, monospace" font-size="6.4" fill="#8A9099">atelier-roulin.ch</text>
     <rect x="0" y="30" width="380" height="1" fill="#E4E6EA"/>
-    <rect x="12" y="42" width="172" height="122" fill="#E8F0EB"/>
-    <rect x="28" y="62" width="96" height="11" rx="5.5" fill="#2F6B4F"/>
-    <rect x="28" y="82" width="132" height="11" rx="5.5" fill="#2F6B4F" opacity=".5"/>
-    <rect x="28" y="106" width="120" height="5" rx="2.5" fill="#B9BEC6"/>
-    <rect x="28" y="118" width="96" height="5" rx="2.5" fill="#B9BEC6"/>
-    <rect x="28" y="134" width="70" height="18" rx="9" fill="#2F6B4F"/>
-    <rect x="196" y="42" width="172" height="122" rx="6" fill="#2F6B4F" opacity=".26"/>
-    <path d="M232 130 L266 88 L300 130 Z" fill="#2F6B4F" opacity=".55"/>
-    <circle cx="322" cy="76" r="13" fill="#2F6B4F" opacity=".45"/>
-    <rect x="12" y="180" width="84" height="8" rx="4" fill="#2F6B4F" opacity=".7"/>
-    <rect x="12" y="198" width="356" height="1" fill="#DDDFE4"/>
-    <rect x="12" y="210" width="356" height="1" fill="#DDDFE4"/>
-    <rect x="12" y="222" width="356" height="1" fill="#DDDFE4"/>
-    <rect x="12" y="234" width="356" height="1" fill="#DDDFE4"/>
-    <rect x="20" y="202" width="104" height="5" rx="2.5" fill="#C9CDD4"/>
-    <rect x="20" y="214" width="140" height="5" rx="2.5" fill="#C9CDD4"/>
-    <rect x="20" y="226" width="118" height="5" rx="2.5" fill="#C9CDD4"/>
+
+    <!-- accueil sombre, navigation à cinq entrées -->
+    <rect x="0" y="31" width="380" height="125" fill="#14181A"/>
+    <text x="14" y="45" font-family="DM Mono, ui-monospace, monospace" font-size="6.6" letter-spacing="1.1" fill="#F2F4F3">ATELIER ROULIN</text>
+    <text x="233.0" y="45" font-family="Public Sans, system-ui, sans-serif" font-size="6" fill="#5FA383">Home</text>
+    <text x="253.5" y="45" font-family="Public Sans, system-ui, sans-serif" font-size="6" fill="#8F9895">Projects</text>
+    <text x="286.5" y="45" font-family="Public Sans, system-ui, sans-serif" font-size="6" fill="#8F9895">The craft</text>
+    <text x="322.6" y="45" font-family="Public Sans, system-ui, sans-serif" font-size="6" fill="#8F9895">Quote</text>
+    <text x="346.2" y="45" font-family="Public Sans, system-ui, sans-serif" font-size="6" fill="#8F9895">Contact</text>
+    <rect x="233.0" y="49" width="12.5" height="1.4" fill="#2F6B4F"/>
+
+    <!-- motif bois -->
+    <g opacity=".5">
+      <path d="M258 62 L352 62" stroke="#2F6B4F" stroke-width="1.2"/>
+      <path d="M252 76 L358 76" stroke="#2F6B4F" stroke-width="1.2"/>
+      <path d="M258 90 L352 90" stroke="#2F6B4F" stroke-width="1.2"/>
+      <path d="M246 104 L364 104" stroke="#2F6B4F" stroke-width="1.2"/>
+      <path d="M258 118 L352 118" stroke="#2F6B4F" stroke-width="1.2"/>
+      <path d="M252 132 L358 132" stroke="#2F6B4F" stroke-width="1.2"/>
+    </g>
+    <path d="M282 74 L330 74 L318 122 L294 122 Z" fill="#2F6B4F" opacity=".45"/>
+
+    <text x="14" y="72" font-family="DM Mono, ui-monospace, monospace" font-size="5.6" letter-spacing="1" fill="#5FA383">BESPOKE JOINERY — CANTON OF VAUD</text>
+    <text x="14" y="96" font-family="Familjen Grotesk, system-ui, sans-serif" font-size="19" font-weight="700" fill="#F2F4F3">Timber, straight</text>
+    <text x="14" y="116" font-family="Familjen Grotesk, system-ui, sans-serif" font-size="19" font-weight="700" fill="#F2F4F3">and true.</text>
+    <text x="14" y="131" font-family="Public Sans, system-ui, sans-serif" font-size="6.2" fill="#9AA4A0">Kitchens, staircases and fitted joinery, drawn and installed in-house.</text>
+    <rect x="14" y="138" width="76" height="15" rx="2" fill="#2F6B4F"/>
+    <text x="52" y="148" text-anchor="middle" font-family="Public Sans, system-ui, sans-serif" font-size="6.4" font-weight="600" fill="#fff">Request a quote</text>
+    <rect x="96" y="138" width="52" height="15" rx="2" fill="none" stroke="#4A5350"/>
+    <text x="122" y="148" text-anchor="middle" font-family="Public Sans, system-ui, sans-serif" font-size="6.4" fill="#C7CECB">Projects</text>
+
+    <!-- réalisations -->
+    <text x="14" y="172" font-family="DM Mono, ui-monospace, monospace" font-size="5.6" letter-spacing="1" fill="#8A9095">RECENT WORK</text>
+    <text x="368" y="172" text-anchor="end" font-family="Public Sans, system-ui, sans-serif" font-size="6" fill="#2F6B4F">View all</text>
+    <rect x="12" y="178" width="114" height="54" rx="3" fill="#E7ECE9"/>
+    <rect x="133" y="178" width="114" height="54" rx="3" fill="#E7ECE9"/>
+    <rect x="254" y="178" width="114" height="54" rx="3" fill="#E7ECE9"/>
+    <path d="M34 214 L56 190 L78 214 Z" fill="#2F6B4F" opacity=".5"/>
+    <path d="M28 214 L104 214" stroke="#2F6B4F" stroke-width="1.4" opacity=".5"/>
+    <rect x="152" y="190" width="34" height="24" fill="#2F6B4F" opacity=".42"/>
+    <rect x="192" y="190" width="34" height="24" fill="#2F6B4F" opacity=".26"/>
+    <rect x="272" y="188" width="78" height="6" fill="#2F6B4F" opacity=".45"/>
+    <rect x="272" y="199" width="78" height="6" fill="#2F6B4F" opacity=".34"/>
+    <rect x="272" y="210" width="78" height="6" fill="#2F6B4F" opacity=".23"/>
+    <text x="12" y="243" font-family="Public Sans, system-ui, sans-serif" font-size="6.6" font-weight="600" fill="#14181A">Solid oak staircase</text>
+    <text x="133" y="243" font-family="Public Sans, system-ui, sans-serif" font-size="6.6" font-weight="600" fill="#14181A">Walnut kitchen</text>
+    <text x="254" y="243" font-family="Public Sans, system-ui, sans-serif" font-size="6.6" font-weight="600" fill="#14181A">Fitted bookcase</text>
+    <text x="12" y="252" font-family="DM Mono, ui-monospace, monospace" font-size="5.8" fill="#8A9095">Morges · 2026</text>
+    <text x="133" y="252" font-family="DM Mono, ui-monospace, monospace" font-size="5.8" fill="#8A9095">Lausanne · 2025</text>
+    <text x="254" y="252" font-family="DM Mono, ui-monospace, monospace" font-size="5.8" fill="#8A9095">Nyon · 2025</text>
   </g>
+
+  <!-- téléphone -->
   <g transform="translate(300,138)">
     <rect x="0" y="0" width="110" height="196" rx="14" fill="#fff" stroke="#DDDFE4" stroke-width="1.5"/>
     <rect x="40" y="8" width="30" height="5" rx="2.5" fill="#E4E6EA"/>
-      <rect x="12" y="26" width="86" height="60" rx="4" fill="#2F6B4F" opacity=".26"/>
-      <path d="M36 74 L55 50 L74 74 Z" fill="#2F6B4F" opacity=".55"/>
-      <rect x="12" y="96" width="60" height="8" rx="4" fill="#2F6B4F"/>
-      <rect x="12" y="112" width="86" height="1" fill="#DDDFE4"/>
-      <rect x="12" y="126" width="86" height="1" fill="#DDDFE4"/>
-      <rect x="12" y="140" width="86" height="1" fill="#DDDFE4"/>
-    <rect x="42" y="180" width="26" height="4" rx="2" fill="#E4E6EA"/>
+    <rect x="6" y="18" width="98" height="88" rx="4" fill="#14181A"/>
+    <text x="13" y="31" font-family="DM Mono, ui-monospace, monospace" font-size="5" letter-spacing=".8" fill="#F2F4F3">ATELIER ROULIN</text>
+    <rect x="89" y="27" width="9" height="1.3" fill="#8F9895"/><rect x="89" y="30" width="9" height="1.3" fill="#8F9895"/>
+    <text x="13" y="55" font-family="Familjen Grotesk, system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#F2F4F3">Timber, straight</text>
+    <text x="13" y="66" font-family="Familjen Grotesk, system-ui, sans-serif" font-size="10.5" font-weight="700" fill="#F2F4F3">and true.</text>
+    <rect x="13" y="76" width="62" height="13" rx="2" fill="#2F6B4F"/>
+    <text x="44" y="85" text-anchor="middle" font-family="Public Sans, system-ui, sans-serif" font-size="5.6" font-weight="600" fill="#fff">Request a quote</text>
+    <rect x="6" y="112" width="98" height="40" rx="3" fill="#E7ECE9"/>
+    <path d="M28 144 L46 124 L64 144 Z" fill="#2F6B4F" opacity=".5"/>
+    <text x="6" y="163" font-family="Public Sans, system-ui, sans-serif" font-size="5.8" font-weight="600" fill="#14181A">Solid oak staircase</text>
+    <text x="6" y="171" font-family="DM Mono, ui-monospace, monospace" font-size="5.2" fill="#8A9095">Morges · 2026</text>
+    <rect x="6" y="177" width="98" height="13" rx="2" fill="#14181A"/>
+    <text x="13" y="186" font-family="Public Sans, system-ui, sans-serif" font-size="5.4" fill="#C7CECB">Quote within 48 h</text>
   </g>
 </svg></div>
-        <div class="work-meta"><b>Carpenter</b><span class="work-tag"><i style="background:#2F6B4F"></i>Three pages</span></div>
+        <div class="work-meta"><b>Carpenter</b><span class="work-tag"><i style="background:#2F6B4F"></i>Five pages</span></div>
         <p>Previous projects first, a quote in one click and the service area stated clearly.</p>
       </article>
 
       <article class="work rv">
-        <div class="work-fr"><svg viewBox="0 0 440 340" role="img" aria-label="Website design — therapist">
+        <div class="work-fr"><svg viewBox="0 0 440 340" role="img" aria-label="Website design for a therapist: seven pages, online appointment booking and rates" text-rendering="geometricPrecision">
   <g>
-    <rect x="0" y="0" width="380" height="270" rx="9" fill="#fff" stroke="#DDDFE4"/>
+  <rect x="0" y="0" width="380" height="270" rx="9" fill="#fff" stroke="#DDDFE4"/>
     <path d="M0 9a9 9 0 0 1 9-9h362a9 9 0 0 1 9 9v21H0z" fill="#F1F2F5"/>
     <circle cx="16" cy="16" r="3.4" fill="#C9CDD4"/><circle cx="28" cy="16" r="3.4" fill="#C9CDD4"/><circle cx="40" cy="16" r="3.4" fill="#C9CDD4"/>
-    <rect x="54" y="10" width="128" height="12" rx="6" fill="#E4E6EA"/>
-    <rect x="60" y="14" width="42" height="4" rx="2" fill="#C9CDD4"/>
+    <rect x="54" y="9.5" width="150" height="13" rx="6.5" fill="#E4E6EA"/>
+    <text x="63" y="18.6" font-family="DM Mono, ui-monospace, monospace" font-size="6.4" fill="#8A9099">cabinet-aubier.ch</text>
     <rect x="0" y="30" width="380" height="1" fill="#E4E6EA"/>
-    <rect x="12" y="42" width="356" height="118" fill="#EDEBFA"/>
-    <circle cx="190" cy="76" r="17" fill="#6B5BD6" opacity=".4"/>
-    <rect x="118" y="104" width="144" height="11" rx="5.5" fill="#6B5BD6"/>
-    <rect x="146" y="124" width="88" height="6" rx="3" fill="#6B5BD6" opacity=".5"/>
-    <rect x="152" y="140" width="76" height="16" rx="8" fill="#6B5BD6"/>
-    <rect x="12" y="176" width="172" height="52" rx="6" fill="#EDEEF1"/>
-    <rect x="196" y="176" width="172" height="52" rx="6" fill="#EDEEF1"/>
-    <rect x="26" y="190" width="60" height="7" rx="3.5" fill="#6B5BD6" opacity=".65"/>
-    <rect x="210" y="190" width="60" height="7" rx="3.5" fill="#6B5BD6" opacity=".65"/>
-    <rect x="26" y="204" width="122" height="5" rx="2.5" fill="#C9CDD4"/>
-    <rect x="210" y="204" width="122" height="5" rx="2.5" fill="#C9CDD4"/>
-    <rect x="26" y="214" width="94" height="5" rx="2.5" fill="#C9CDD4"/>
-    <rect x="210" y="214" width="94" height="5" rx="2.5" fill="#C9CDD4"/>
-    <rect x="140" y="240" width="100" height="18" rx="9" fill="#6B5BD6" opacity=".75"/>
+
+    <!-- navigation à sept entrées -->
+    <circle cx="17" cy="42" r="5" fill="#6B5BD6" opacity=".22"/>
+    <circle cx="17" cy="42" r="2.1" fill="#6B5BD6"/>
+    <text x="26" y="44.4" font-family="Familjen Grotesk, system-ui, sans-serif" font-size="7.6" font-weight="600" fill="#26232E">Cabinet Aubier</text>
+    <text x="151.7" y="44" font-family="Public Sans, system-ui, sans-serif" font-size="5.8" fill="#8B8797">Approach</text>
+    <text x="182.3" y="44" font-family="Public Sans, system-ui, sans-serif" font-size="5.8" fill="#8B8797">Sessions</text>
+    <text x="213.0" y="44" font-family="Public Sans, system-ui, sans-serif" font-size="5.8" fill="#8B8797">Rates</text>
+    <text x="234.6" y="44" font-family="Public Sans, system-ui, sans-serif" font-size="5.8" fill="#8B8797">The practice</text>
+    <text x="277.2" y="44" font-family="Public Sans, system-ui, sans-serif" font-size="5.8" fill="#8B8797">Questions</text>
+    <text x="310.9" y="44" font-family="Public Sans, system-ui, sans-serif" font-size="5.8" fill="#8B8797">Writing</text>
+    <rect x="340" y="36.5" width="28" height="12" rx="6" fill="#6B5BD6"/>
+    <text x="354" y="44.4" text-anchor="middle" font-family="Public Sans, system-ui, sans-serif" font-size="5.2" font-weight="600" fill="#fff">Contact</text>
+    <rect x="0" y="52" width="380" height="1" fill="#EDEBF4"/>
+
+    <!-- accueil centré -->
+    <rect x="0" y="53" width="380" height="103" fill="#F5F3FC"/>
+    <text x="190" y="74" text-anchor="middle" font-family="DM Mono, ui-monospace, monospace" font-size="5.6" letter-spacing="1.1" fill="#6B5BD6">PERSON-CENTRED THERAPY — GENEVA</text>
+    <text x="190" y="99" text-anchor="middle" font-family="Familjen Grotesk, system-ui, sans-serif" font-size="18" font-weight="600" fill="#26232E">A space to</text>
+    <text x="190" y="118" text-anchor="middle" font-family="Familjen Grotesk, system-ui, sans-serif" font-size="18" font-weight="600" fill="#26232E">catch your breath.</text>
+    <text x="190" y="132" text-anchor="middle" font-family="Public Sans, system-ui, sans-serif" font-size="6.4" fill="#6E6A7B">Adults and young adults. Sessions held in English and French.</text>
+    <rect x="148" y="139" width="84" height="15" rx="7.5" fill="#6B5BD6"/>
+    <text x="190" y="149" text-anchor="middle" font-family="Public Sans, system-ui, sans-serif" font-size="6.4" font-weight="600" fill="#fff">Book an appointment</text>
+
+    <!-- deux cartes -->
+    <rect x="12" y="168" width="174" height="52" rx="6" fill="#fff" stroke="#EAE7F3"/>
+    <rect x="194" y="168" width="174" height="52" rx="6" fill="#fff" stroke="#EAE7F3"/>
+    <circle cx="28" cy="184" r="6.5" fill="#6B5BD6" opacity=".16"/>
+    <circle cx="210" cy="184" r="6.5" fill="#6B5BD6" opacity=".16"/>
+    <text x="41" y="186.4" font-family="Public Sans, system-ui, sans-serif" font-size="7" font-weight="600" fill="#26232E">Individual session</text>
+    <text x="223" y="186.4" font-family="Public Sans, system-ui, sans-serif" font-size="7" font-weight="600" fill="#26232E">First meeting</text>
+    <text x="24" y="201" font-family="Public Sans, system-ui, sans-serif" font-size="6.2" fill="#6E6A7B">Sixty minutes, at the practice or online.</text>
+    <text x="206" y="201" font-family="Public Sans, system-ui, sans-serif" font-size="6.2" fill="#6E6A7B">Thirty minutes to get acquainted.</text>
+    <text x="24" y="213" font-family="DM Mono, ui-monospace, monospace" font-size="6.6" fill="#6B5BD6">140.— per session</text>
+    <text x="206" y="213" font-family="DM Mono, ui-monospace, monospace" font-size="6.6" fill="#6B5BD6">Free of charge</text>
+
+    <!-- disponibilités -->
+    <rect x="12" y="230" width="356" height="28" rx="6" fill="#F5F3FC"/>
+    <text x="26" y="247.5" font-family="Public Sans, system-ui, sans-serif" font-size="6.4" fill="#4C4857">Monday to Friday, 8.00 – 19.00   ·   Rue du Rhône 42, 1204 Geneva</text>
+    <text x="354" y="247.5" text-anchor="end" font-family="DM Mono, ui-monospace, monospace" font-size="6.2" fill="#6B5BD6">Reply within 24 h</text>
   </g>
+
+  <!-- téléphone -->
   <g transform="translate(300,138)">
     <rect x="0" y="0" width="110" height="196" rx="14" fill="#fff" stroke="#DDDFE4" stroke-width="1.5"/>
     <rect x="40" y="8" width="30" height="5" rx="2.5" fill="#E4E6EA"/>
-      <rect x="12" y="26" width="86" height="64" fill="#EDEBFA"/>
-      <circle cx="55" cy="46" r="11" fill="#6B5BD6" opacity=".4"/>
-      <rect x="26" y="64" width="58" height="7" rx="3.5" fill="#6B5BD6"/>
-      <rect x="34" y="77" width="42" height="10" rx="5" fill="#6B5BD6"/>
-      <rect x="12" y="100" width="86" height="26" rx="4" fill="#EDEEF1"/>
-      <rect x="12" y="134" width="86" height="26" rx="4" fill="#EDEEF1"/>
-    <rect x="42" y="180" width="26" height="4" rx="2" fill="#E4E6EA"/>
+    <circle cx="16" cy="26" r="4" fill="#6B5BD6" opacity=".22"/>
+    <circle cx="16" cy="26" r="1.7" fill="#6B5BD6"/>
+    <text x="24" y="28" font-family="Familjen Grotesk, system-ui, sans-serif" font-size="6.2" font-weight="600" fill="#26232E">Cabinet Aubier</text>
+    <rect x="90" y="23" width="9" height="1.3" fill="#8B8797"/><rect x="90" y="26" width="9" height="1.3" fill="#8B8797"/>
+    <rect x="6" y="36" width="98" height="72" rx="5" fill="#F5F3FC"/>
+    <text x="55" y="58" text-anchor="middle" font-family="Familjen Grotesk, system-ui, sans-serif" font-size="9.6" font-weight="600" fill="#26232E">A space to</text>
+    <text x="55" y="69" text-anchor="middle" font-family="Familjen Grotesk, system-ui, sans-serif" font-size="9.6" font-weight="600" fill="#26232E">catch your breath.</text>
+    <text x="55" y="80" text-anchor="middle" font-family="Public Sans, system-ui, sans-serif" font-size="5" fill="#6E6A7B">Person-centred therapy — Geneva</text>
+    <rect x="20" y="87" width="70" height="13" rx="6.5" fill="#6B5BD6"/>
+    <text x="55" y="96" text-anchor="middle" font-family="Public Sans, system-ui, sans-serif" font-size="5.6" font-weight="600" fill="#fff">Book an appointment</text>
+    <rect x="6" y="116" width="98" height="30" rx="5" fill="#fff" stroke="#EAE7F3"/>
+    <circle cx="20" cy="128" r="5" fill="#6B5BD6" opacity=".16"/>
+    <text x="30" y="130" font-family="Public Sans, system-ui, sans-serif" font-size="5.8" font-weight="600" fill="#26232E">Session, 60 min</text>
+    <text x="30" y="139" font-family="DM Mono, ui-monospace, monospace" font-size="5.4" fill="#6B5BD6">140.—</text>
+    <rect x="6" y="152" width="98" height="30" rx="5" fill="#F5F3FC"/>
+    <text x="14" y="166" font-family="Public Sans, system-ui, sans-serif" font-size="5.4" fill="#4C4857">Mon – Fri, 8.00 – 19.00</text>
+    <text x="14" y="176" font-family="Public Sans, system-ui, sans-serif" font-size="5.4" fill="#4C4857">Rue du Rhône 42, Geneva</text>
   </g>
 </svg></div>
-        <div class="work-meta"><b>Therapist</b><span class="work-tag"><i style="background:#6B5BD6"></i>Three pages</span></div>
+        <div class="work-meta"><b>Therapist</b><span class="work-tag"><i style="background:#6B5BD6"></i>Seven pages</span></div>
         <p>A calm tone, prominent appointment booking and clearly stated prices.</p>
       </article>
     </div>
