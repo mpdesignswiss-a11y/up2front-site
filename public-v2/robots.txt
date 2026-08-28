@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /merci/
+Disallow: /en/thank-you/
+
+Sitemap: https://up2front.com/sitemap.xml

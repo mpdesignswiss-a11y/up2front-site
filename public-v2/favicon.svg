@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Up2Front">
+  <rect width="512" height="512" rx="82" fill="#2B44FF"/>
+  <rect x="350" y="48" width="112" height="112" rx="18" fill="#FFC400"/>
+  <text x="52" y="330" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="222" font-weight="700" letter-spacing="-18">U2</text>
+  <text x="58" y="416" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="78" font-weight="700" letter-spacing="6">FRONT</text>
+</svg>

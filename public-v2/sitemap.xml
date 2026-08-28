@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://up2front.com/</loc>
+    <lastmod>2026-08-28</lastmod>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="fr-CH" href="https://up2front.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://up2front.com/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://up2front.com/" />
+  </url>
+  <url>
+    <loc>https://up2front.com/en/</loc>
+    <lastmod>2026-08-28</lastmod>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="fr-CH" href="https://up2front.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://up2front.com/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://up2front.com/" />
+  </url>
+  <url>
+    <loc>https://up2front.com/cgv/</loc>
+    <lastmod>2026-08-28</lastmod>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="fr-CH" href="https://up2front.com/cgv/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://up2front.com/en/terms/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://up2front.com/cgv/" />
+  </url>
+  <url>
+    <loc>https://up2front.com/en/terms/</loc>
+    <lastmod>2026-08-28</lastmod>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="fr-CH" href="https://up2front.com/cgv/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://up2front.com/en/terms/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://up2front.com/cgv/" />
+  </url>
+  <url>
+    <loc>https://up2front.com/mentions-legales/</loc>
+    <lastmod>2026-08-28</lastmod>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="fr-CH" href="https://up2front.com/mentions-legales/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://up2front.com/en/legal-notice/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://up2front.com/mentions-legales/" />
+  </url>
+  <url>
+    <loc>https://up2front.com/en/legal-notice/</loc>
+    <lastmod>2026-08-28</lastmod>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="fr-CH" href="https://up2front.com/mentions-legales/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://up2front.com/en/legal-notice/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://up2front.com/mentions-legales/" />
+  </url>
+  <url>
+    <loc>https://up2front.com/confidentialite/</loc>
+    <lastmod>2026-08-28</lastmod>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="fr-CH" href="https://up2front.com/confidentialite/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://up2front.com/en/privacy/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://up2front.com/confidentialite/" />
+  </url>
+  <url>
+    <loc>https://up2front.com/en/privacy/</loc>
+    <lastmod>2026-08-28</lastmod>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="fr-CH" href="https://up2front.com/confidentialite/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://up2front.com/en/privacy/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://up2front.com/confidentialite/" />
+  </url>
+</urlset>
