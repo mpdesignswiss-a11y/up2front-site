@@ -632,7 +632,7 @@ h1,h2,h3,h4{ font-family:var(--display); font-weight:600; line-height:1.06; lett
 
 .pk{ margin-top:30px; }
 .pk-tabs{
-  display:grid; grid-template-columns:repeat(3,1fr); gap:6px;
+  display:grid; grid-template-columns:repeat(2,1fr); gap:6px; /* SURMESURE-MASQUE : 3 -> 2 */
   position:sticky; top:66px; z-index:30;
   background:var(--paper); padding:10px 0;
 }
@@ -673,7 +673,7 @@ h1,h2,h3,h4{ font-family:var(--display); font-weight:600; line-height:1.06; lett
 @media (min-width:960px){
   .pk-tabs{ display:none; }
   .pk-head, .pk-row{
-    display:grid; grid-template-columns:minmax(0,1.45fr) repeat(3, minmax(0,1fr));
+    display:grid; grid-template-columns:minmax(0,1.45fr) repeat(2, minmax(0,1fr)); /* SURMESURE-MASQUE : 3 -> 2 */
     gap:24px; align-items:center;
   }
   .pk-head{ align-items:end; }
@@ -852,7 +852,7 @@ h1,h2,h3,h4{ font-family:var(--display); font-weight:600; line-height:1.06; lett
 
     <div class="cards">
       <article class="card rv">
-        <div class="card-h"><span class="mk mk--y">✓</span><b>Included in all three packages</b></div>
+        <div class="card-h"><span class="mk mk--y">✓</span><b>Included in both packages</b></div>
         <ul>
           <li><span class="tx">A design shaped around your line of business</span></li>
           <li><span class="tx">Optimised for phones, tablets and computers</span></li>
@@ -887,7 +887,7 @@ h1,h2,h3,h4{ font-family:var(--display); font-weight:600; line-height:1.06; lett
 <section id="offres" class="sec">
   <div class="wrap">
     <div class="sec-head">
-      <p class="lab lab--blue rv">Three packages</p>
+      <p class="lab lab--blue rv">Two packages</p>
       <h2 class="h2 rv">Choose a column. Everything is included.</h2>
       <p class="lead rv">
         The same quality of work at three different scales. Nothing is hidden behind an asterisk, and the displayed price is the price on the invoice.
@@ -898,7 +898,7 @@ h1,h2,h3,h4{ font-family:var(--display); font-weight:600; line-height:1.06; lett
       <div class="pk-tabs" role="tablist">
         <button class="pk-tab on" data-tab="0" role="tab" aria-selected="true">Landing Pro<b>290.—</b></button>
         <button class="pk-tab" data-tab="1" role="tab" aria-selected="false">Site Complet<b>490.—</b></button>
-        <button class="pk-tab" data-tab="2" role="tab" aria-selected="false">Site Sur-Mesure<b>690.—</b></button>
+        <template data-masque="surmesure"><button class="pk-tab" data-tab="2" role="tab" aria-selected="false">Site Sur-Mesure<b>690.—</b></button></template>
       </div>
 
       <div class="pk-head">
@@ -920,6 +920,7 @@ h1,h2,h3,h4{ font-family:var(--display); font-weight:600; line-height:1.06; lett
             <a href="#start" class="btn btn--blue"><s>Choose Site Complet</s></a>
           </div>
         </div>
+        <template data-masque="surmesure">
         <div class="pk-c" data-t="2">
           <div class="pk-card">
             <span class="pk-name">Site Sur-Mesure</span>
@@ -928,86 +929,90 @@ h1,h2,h3,h4{ font-family:var(--display); font-weight:600; line-height:1.06; lett
             <a href="#start" class="btn btn--ghost"><s>Choose Site Sur-Mesure</s></a>
           </div>
         </div>
+        </template>
       </div>
 
       <div class="pk-row">
         <span class="pk-lbl">Pages</span>
         <span class="pk-c" data-t="0"><span class="pk-v">1</span></span>
         <span class="pk-c" data-t="1"><span class="pk-v">5</span></span>
-        <span class="pk-c" data-t="2"><span class="pk-v">7</span></span>
+        <template data-masque="surmesure"><span class="pk-c" data-t="2"><span class="pk-v">7</span></span></template>
       </div>
       <div class="pk-row">
         <span class="pk-lbl">Indicative delivery time</span>
         <span class="pk-c" data-t="0"><span class="pk-v">3 days</span></span>
         <span class="pk-c" data-t="1"><span class="pk-v">5 days</span></span>
-        <span class="pk-c" data-t="2"><span class="pk-v">7 days</span></span>
+        <template data-masque="surmesure"><span class="pk-c" data-t="2"><span class="pk-v">7 days</span></span></template>
       </div>
+      <template data-masque="surmesure">
       <div class="pk-row">
         <span class="pk-lbl">Fully bespoke design</span>
         <span class="pk-c" data-t="0"><span class="pk-v no">—</span></span>
         <span class="pk-c" data-t="1"><span class="pk-v no">—</span></span>
         <span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span>
       </div>
+      </template>
       <div class="pk-row">
         <span class="pk-lbl">Phone, tablet and computer</span>
         <span class="pk-c" data-t="0"><span class="pk-v yes">✓</span></span>
         <span class="pk-c" data-t="1"><span class="pk-v yes">✓</span></span>
-        <span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span>
+        <template data-masque="surmesure"><span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span></template>
       </div>
       <div class="pk-row">
         <span class="pk-lbl">.ch domain, 1<sup>st</sup> year</span>
         <span class="pk-c" data-t="0"><span class="pk-v yes">✓</span></span>
         <span class="pk-c" data-t="1"><span class="pk-v yes">✓</span></span>
-        <span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span>
+        <template data-masque="surmesure"><span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span></template>
       </div>
       <div class="pk-row">
         <span class="pk-lbl">Hosting, 1<sup>st</sup> year</span>
         <span class="pk-c" data-t="0"><span class="pk-v yes">✓</span></span>
         <span class="pk-c" data-t="1"><span class="pk-v yes">✓</span></span>
-        <span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span>
+        <template data-masque="surmesure"><span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span></template>
       </div>
       <div class="pk-row">
         <span class="pk-lbl">SSL certificate and backups</span>
         <span class="pk-c" data-t="0"><span class="pk-v yes">✓</span></span>
         <span class="pk-c" data-t="1"><span class="pk-v yes">✓</span></span>
-        <span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span>
+        <template data-masque="surmesure"><span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span></template>
       </div>
       <div class="pk-row">
         <span class="pk-lbl">Contact form</span>
         <span class="pk-c" data-t="0"><span class="pk-v yes">✓</span></span>
         <span class="pk-c" data-t="1"><span class="pk-v yes">✓</span></span>
-        <span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span>
+        <template data-masque="surmesure"><span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span></template>
       </div>
       <div class="pk-row">
         <span class="pk-lbl">Google Business Profile</span>
         <span class="pk-c" data-t="0"><span class="pk-v yes">✓</span></span>
         <span class="pk-c" data-t="1"><span class="pk-v yes">✓</span></span>
-        <span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span>
+        <template data-masque="surmesure"><span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span></template>
       </div>
       <div class="pk-row">
         <span class="pk-lbl">Local SEO</span>
         <span class="pk-c" data-t="0"><span class="pk-v">basic</span></span>
         <span class="pk-c" data-t="1"><span class="pk-v">advanced</span></span>
-        <span class="pk-c" data-t="2"><span class="pk-v">advanced</span></span>
+        <template data-masque="surmesure"><span class="pk-c" data-t="2"><span class="pk-v">advanced</span></span></template>
       </div>
       <div class="pk-row">
         <span class="pk-lbl">Newsletter pop-up</span>
         <span class="pk-c" data-t="0"><span class="pk-v no">—</span></span>
         <span class="pk-c" data-t="1"><span class="pk-v yes">✓</span></span>
-        <span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span>
+        <template data-masque="surmesure"><span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span></template>
       </div>
       <div class="pk-row">
         <span class="pk-lbl">Copywriting</span>
         <span class="pk-c" data-t="0"><span class="pk-v yes">✓</span></span>
         <span class="pk-c" data-t="1"><span class="pk-v yes">✓</span></span>
-        <span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span>
+        <template data-masque="surmesure"><span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span></template>
       </div>
       <div class="pk-row">
         <span class="pk-lbl">Email integration</span>
         <span class="pk-c" data-t="0"><span class="pk-v no">—</span></span>
         <span class="pk-c" data-t="1"><span class="pk-v yes">✓</span></span>
-        <span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span>
+        <template data-masque="surmesure"><span class="pk-c" data-t="2"><span class="pk-v yes">✓</span></span></template>
       </div>
+      <template data-masque="surmesure">
       <div class="pk-row">
         <span class="pk-lbl">API integration</span>
         <span class="pk-c" data-t="0"><span class="pk-v no">—</span></span>
@@ -1020,23 +1025,24 @@ h1,h2,h3,h4{ font-family:var(--display); font-weight:600; line-height:1.06; lett
         <span class="pk-c" data-t="1"><span class="pk-v no">—</span></span>
         <span class="pk-c" data-t="2"><span class="pk-v">30 days</span></span>
       </div>
+      </template>
       <div class="pk-row">
         <span class="pk-lbl">Logo design</span>
         <span class="pk-c" data-t="0"><span class="pk-v">+ 350.—</span></span>
         <span class="pk-c" data-t="1"><span class="pk-v">+ 350.—</span></span>
-        <span class="pk-c" data-t="2"><span class="pk-v">+ 350.—</span></span>
+        <template data-masque="surmesure"><span class="pk-c" data-t="2"><span class="pk-v">+ 350.—</span></span></template>
       </div>
       <div class="pk-row">
         <span class="pk-lbl">Rounds of revisions included</span>
         <span class="pk-c" data-t="0"><span class="pk-v">1</span></span>
         <span class="pk-c" data-t="1"><span class="pk-v">1</span></span>
-        <span class="pk-c" data-t="2"><span class="pk-v">1</span></span>
+        <template data-masque="surmesure"><span class="pk-c" data-t="2"><span class="pk-v">1</span></span></template>
       </div>
       <div class="pk-row pk-end">
         <span class="pk-lbl">Commitment after 12 months</span>
         <span class="pk-c" data-t="0"><span class="pk-v yes">none</span></span>
         <span class="pk-c" data-t="1"><span class="pk-v yes">none</span></span>
-        <span class="pk-c" data-t="2"><span class="pk-v yes">none</span></span>
+        <template data-masque="surmesure"><span class="pk-c" data-t="2"><span class="pk-v yes">none</span></span></template>
       </div>
 
       <p class="tiny pk-note">
@@ -1331,11 +1337,13 @@ h1,h2,h3,h4{ font-family:var(--display); font-weight:600; line-height:1.06; lett
               <span class="opt-txt"><strong>Site Complet</strong><span>Up to five pages, a newsletter pop-up and email integration.</span></span>
               <span class="opt-p">490.—</span>
             </button>
+            <template data-masque="surmesure">
             <button class="opt opt--r" data-p="690" data-n="Site Sur-Mesure">
               <span class="opt-box"></span>
               <span class="opt-txt"><strong>Site Sur-Mesure</strong><span>Up to seven pages, a fully bespoke design and API integration.</span></span>
               <span class="opt-p">690.—</span>
             </button>
+            </template>
           </div>
         </div>
 
@@ -1441,7 +1449,7 @@ h1,h2,h3,h4{ font-family:var(--display); font-weight:600; line-height:1.06; lett
       <p class="lab lab--blue rv">Timeline</p>
       <h2 class="h2 rv">Five working days, day by day.</h2>
       <p class="lead rv">
-        The clock starts when we receive your content, not when you sign. That is the only part that depends on you. Below is the Site Complet schedule; allow three days for Landing Pro and seven for Site Sur-Mesure. These times are indicative.
+        The clock starts when we receive your content, not when you sign. That is the only part that depends on you. Below is the Site Complet schedule; allow three days for Landing Pro. These times are indicative.
       </p>
     </div>
 
@@ -1496,11 +1504,11 @@ h1,h2,h3,h4{ font-family:var(--display); font-weight:600; line-height:1.06; lett
       </div>
       <div class="ac">
         <button class="ac-q">Is it a template?<span class="ac-ic"></span></button>
-        <div class="ac-a"><p>No. The design is adapted to you using your colours, photos and line of business. The technical foundation and process are standardised. If you want a design drawn entirely for you, that is the Site Sur-Mesure package at CHF 690.</p></div>
+        <div class="ac-a"><p>No. The design is adapted to you using your colours, photos and line of business. The technical foundation and process are standardised, and that is precisely what keeps the price and the timescale firm.</p></div>
       </div>
       <div class="ac">
         <button class="ac-q">How much of my time will it take?<span class="ac-ic"></span></button>
-        <div class="ac-a"><p>About ninety minutes in total, spread across the project and handled entirely in writing. Your main task is to gather your photos. We write the copy from an eight-question brief — that is included in all three packages.</p></div>
+        <div class="ac-a"><p>About ninety minutes in total, spread across the project and handled entirely in writing. Your main task is to gather your photos. We write the copy from an eight-question brief — that is included in both packages.</p></div>
       </div>
       <div class="ac">
         <button class="ac-q">Do you build online shops?<span class="ac-ic"></span></button>
@@ -1601,7 +1609,7 @@ h1,h2,h3,h4{ font-family:var(--display); font-weight:600; line-height:1.06; lett
       <div class="ft-col">
         <span class="lab">The website</span>
         <ul>
-          <li><a href="#offres">Three packages</a></li>
+          <li><a href="#offres">Two packages</a></li>
           <li><a href="#included">What is included</a></li>
           <li><a href="#works">Examples</a></li>
           <li><a href="#devis">Build a quote</a></li>
