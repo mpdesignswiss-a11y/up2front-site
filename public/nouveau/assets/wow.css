@@ -1,0 +1,651 @@
+/* ============================================================
+   UP2FRONT — couche d'effet
+   Repeinte le 2 septembre 2026 sur la nouvelle direction
+   artistique : nuit presque noire, un seul accent citron.
+
+   style.css tient la mise en forme : couleurs, grilles, tailles.
+   Ce fichier-ci ne tient que le spectacle. Il ne redéfinit aucune
+   largeur, aucune marge de section, aucune taille de texte du
+   corps — il ajoute des états et des surcouches.
+
+   Règle de sûreté, la même que pour motion.js : toutes les
+   classes utilisées ici sont posées par wow.js. Sans JavaScript,
+   aucune n'existe, donc aucune de ces règles ne s'applique et la
+   page reste exactement celle de style.css.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. Rideau — ouverture et passage d'une page à l'autre
+   ------------------------------------------------------------
+   Cinq colonnes de nuit qui se retirent vers le haut, décalées
+   les unes des autres. C'est la première seconde du site : elle
+   doit donner le ton avant même que le titre soit lisible.
+------------------------------------------------------------ */
+.curtain{
+  position:fixed;inset:0;z-index:10000;pointer-events:none;
+  display:grid;grid-template-columns:repeat(5,1fr);
+}
+.curtain i{
+  display:block;background:var(--navy);
+  transform:translateY(0);
+  transition:transform 1.05s cubic-bezier(.76,0,.24,1);
+}
+.curtain i:nth-child(1){transition-delay:.00s}
+.curtain i:nth-child(2){transition-delay:.06s}
+.curtain i:nth-child(3){transition-delay:.12s}
+.curtain i:nth-child(4){transition-delay:.18s}
+.curtain i:nth-child(5){transition-delay:.24s}
+
+/* Le carré citron du logo, seul au centre, le temps du rideau. */
+.curtain b{
+  position:absolute;inset:0;margin:auto;width:18px;height:18px;
+  background:var(--acc);border-radius:4px;
+  box-shadow:0 0 60px 6px var(--acc-glow);
+  animation:curtain-mark 1.4s var(--ease) infinite;
+  transition:opacity .3s linear;
+}
+@keyframes curtain-mark{
+  0%,100%{transform:rotate(0) scale(1)}
+  50%    {transform:rotate(135deg) scale(1.5)}
+}
+
+/* Ouverture : les colonnes montent et disparaissent. */
+.curtain.up i{transform:translateY(-101%)}
+.curtain.up b{opacity:0}
+
+/* Sortie : elles redescendent depuis le haut avant la navigation. */
+.curtain.down i{transform:translateY(0)}
+.curtain.down{pointer-events:all}
+
+/* ------------------------------------------------------------
+   2. Curseur
+   ------------------------------------------------------------
+   Un point qui suit la main sans retard — la précision du clic
+   ne doit jamais être sacrifiée — et un anneau qui traîne
+   derrière lui. L'anneau est en différence : il s'inverse sur le
+   fond, noir sur le papier, blanc sur les blocs de nuit.
+------------------------------------------------------------ */
+@media (hover:hover) and (pointer:fine){
+  html.cur, html.cur *{cursor:none}
+  /* Sauf là où la forme du curseur porte une information. */
+  html.cur input,html.cur textarea,html.cur select,
+  html.cur [contenteditable]{cursor:auto}
+
+  .cur-dot,.cur-ring{
+    position:fixed;top:0;left:0;z-index:10001;pointer-events:none;
+    border-radius:50%;will-change:transform;
+  }
+  .cur-dot{
+    width:7px;height:7px;margin:-3.5px 0 0 -3.5px;background:var(--acc);
+    box-shadow:0 0 14px 2px var(--acc-glow);
+    transition:opacity .25s var(--ease),transform .25s var(--ease);
+  }
+  .cur-ring{
+    width:34px;height:34px;margin:-17px 0 0 -17px;
+    border:1px solid currentColor;color:var(--ink);
+    mix-blend-mode:difference;
+    transition:width .4s var(--ease),height .4s var(--ease),
+               margin .4s var(--ease),background .4s var(--ease),
+               opacity .3s var(--ease);
+  }
+  /* Au-dessus d'une cible : l'anneau s'ouvre, le point s'efface. */
+  html.cur-on .cur-ring{
+    width:66px;height:66px;margin:-33px 0 0 -33px;
+    background:rgba(188,234,62,.18);
+  }
+  html.cur-on .cur-dot{transform:scale(.4);opacity:.5}
+  /* Pendant l'appui. */
+  html.cur-press .cur-ring{width:26px;height:26px;margin:-13px 0 0 -13px}
+  /* Hors de la fenêtre. */
+  html.cur-out .cur-dot,html.cur-out .cur-ring{opacity:0}
+}
+
+/* ------------------------------------------------------------
+   3. Fil de lecture
+------------------------------------------------------------ */
+.prog{
+  position:fixed;top:0;left:0;right:0;height:2px;z-index:9000;
+  transform-origin:0 50%;transform:scaleX(0);
+  background:linear-gradient(90deg,var(--acc-d),var(--acc-2));
+  box-shadow:0 0 18px var(--acc-glow);
+  pointer-events:none;
+}
+
+/* ------------------------------------------------------------
+   4. Titres découpés mot à mot
+   ------------------------------------------------------------
+   Chaque mot est enfermé dans une fenêtre qui le coupe, puis
+   remonte à sa place. Le texte n'est pas modifié : wow.js ne
+   fait qu'emballer les mots existants, un par un, espaces
+   compris. Rien n'est ajouté, rien n'est retiré.
+------------------------------------------------------------ */
+.split{overflow:hidden}
+/* Le titre lui-même ne bouge plus : ce sont ses mots qui entrent. */
+.split.rv,.split.rv-l{opacity:1;transform:none}
+/* La fenêtre déborde volontairement sous la ligne de base : sans
+   cette marge, les jambages des g, p et q se font couper. */
+.split .w{
+  display:inline-block;overflow:hidden;vertical-align:top;
+  padding-bottom:.16em;margin-bottom:-.16em;
+}
+.split .w>i{
+  display:inline-block;font-style:inherit;
+  transform:translateY(112%) rotate(3deg);transform-origin:0 100%;
+  transition:transform 1.05s cubic-bezier(.19,1,.22,1);
+}
+.split.is-in .w>i{transform:none}
+
+/* ------------------------------------------------------------
+   5. Maquettes : ouverture par volet
+   ------------------------------------------------------------
+   L'aperçu ne fond pas, il se dévoile : un volet remonte et
+   découvre l'image. Plus net, plus « produit ».
+------------------------------------------------------------ */
+.rv-clip{
+  clip-path:inset(0 0 100% 0);
+  transition:clip-path 1.1s cubic-bezier(.76,0,.24,1);
+}
+.rv-clip.is-in{clip-path:inset(0 0 0 0)}
+
+/* ------------------------------------------------------------
+   6. Cale sous le curseur
+   ------------------------------------------------------------
+   Les blocs cliquables prennent une lumière qui suit la souris
+   et s'inclinent de deux degrés et demi. C'est peu ; c'est ce
+   qui sépare une carte d'un rectangle.
+
+   La lumière est un vrai élément, pas un ::after : plusieurs
+   blocs de style.css se servent déjà de leur ::after (la
+   pastille « capture à remplacer » des maquettes, notamment) et
+   deux règles sur le même pseudo-élément se marcheraient dessus.
+------------------------------------------------------------ */
+.tilt{
+  position:relative;
+  transition:transform .5s var(--ease),box-shadow .5s var(--ease);
+}
+.tilt>.glow{
+  position:absolute;inset:0;border-radius:inherit;z-index:0;
+  pointer-events:none;opacity:0;transition:opacity .45s var(--ease);
+  background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%),
+             rgba(188,234,62,.16),transparent 68%);
+}
+.tilt.hot>.glow{opacity:1}
+.tilt.hot{box-shadow:0 30px 70px -40px rgba(8,13,13,.45)}
+/* Sur fond de nuit, la lumière est plus franche encore. */
+.plan.pop>.glow,.sec-dark .tilt>.glow,.dark>.glow,.hero .tilt>.glow{
+  background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%),
+             rgba(188,234,62,.20),transparent 68%);
+}
+/* Dans un bouton, elle est plus serrée et plus claire. */
+.btn>.glow,.rnd>.glow{
+  background:radial-gradient(130px circle at var(--mx,50%) var(--my,50%),
+             rgba(255,255,255,.26),transparent 62%);
+}
+/* Sauf sur le bouton citron, où il faut assombrir et non éclaircir. */
+.btn-b>.glow{
+  background:radial-gradient(130px circle at var(--mx,50%) var(--my,50%),
+             rgba(8,13,13,.14),transparent 62%);
+}
+
+/* ------------------------------------------------------------
+   7. Élan
+   ------------------------------------------------------------
+   La vitesse de défilement est publiée en --vel (entre -1 et 1).
+   Les bandeaux et les maquettes s'inclinent très légèrement dans
+   le sens du mouvement, puis se remettent d'aplomb. On ne le
+   remarque pas ; on sent que la page a du poids.
+------------------------------------------------------------ */
+.marquee-track{
+  transform-origin:50% 50%;
+  will-change:transform;
+}
+.velo .marquee-track{
+  skew:0 calc(var(--vel,0) * 2.2deg);
+}
+.velo .mock{
+  scale:calc(1 - (var(--vel-abs,0) * .012));
+  transition:scale .35s var(--ease);
+}
+
+/* ------------------------------------------------------------
+   8. Liens de navigation : le mot roule
+   ------------------------------------------------------------
+   La fenêtre qui coupe est le <span class="roll-m"> intérieur,
+   jamais le lien lui-même : le lien porte un rembourrage de
+   8 px en haut et en bas (style.css), et si la coupe était
+   posée sur lui, le mot remonté resterait visible dans ce
+   rembourrage au lieu de disparaître. La fenêtre épouse donc
+   la ligne de texte, et rien d'autre.
+------------------------------------------------------------ */
+.roll{display:inline-flex}
+.roll .roll-m{
+  position:relative;display:block;overflow:hidden;
+  padding-bottom:.14em;margin-bottom:-.14em;   /* jambages */
+}
+.roll .roll-m>span{
+  display:block;transition:transform .5s var(--ease);
+}
+.roll .roll-m::after{
+  content:attr(data-roll);position:absolute;left:0;top:100%;
+  white-space:nowrap;color:var(--acc);
+  transition:transform .5s var(--ease);
+}
+.roll:hover .roll-m>span,
+.roll:focus-visible .roll-m>span{transform:translateY(-100%)}
+.roll:hover .roll-m::after,
+.roll:focus-visible .roll-m::after{transform:translateY(-100%)}
+
+/* ------------------------------------------------------------
+   9. Le remplissage à la lecture
+   ------------------------------------------------------------
+   C'est la signature du site de référence, et le seul effet de
+   cette page qui se déclenche à la lecture plutôt qu'à l'entrée
+   en vue : les mots d'une grande phrase s'allument un à un à
+   mesure qu'on descend. Ce qui est lu est net ; ce qui reste à
+   lire est encore éteint.
+
+   Sûreté : la couleur éteinte n'est pas transparente mais un
+   gris à fort contraste. Si le JavaScript s'arrête au milieu,
+   la phrase reste parfaitement lisible.
+------------------------------------------------------------ */
+.fill .fw{
+  color:var(--ink-3);
+  transition:color .45s var(--ease-2);
+}
+.fill .fw.on{color:var(--ink)}
+/* Sur la nuit, on éteint vers le gris froid et on allume en blanc. */
+.hero .fill .fw,.sec-dark .fill .fw,.dark .fill .fw{color:rgba(255,255,255,.26)}
+.hero .fill .fw.on,.sec-dark .fill .fw.on,.dark .fill .fw.on{color:var(--snow)}
+
+/* ------------------------------------------------------------
+   10. Éclats
+   ------------------------------------------------------------
+   Quatre petites croix citron scintillent très lentement au
+   fond du hero. Purement décoratives, hors flux, sans effet sur
+   la lecture ni sur les lecteurs d'écran.
+------------------------------------------------------------ */
+.spark{
+  position:absolute;z-index:0;pointer-events:none;
+  width:14px;height:14px;opacity:0;
+  background:
+    linear-gradient(var(--acc),var(--acc)) center/100% 1.4px no-repeat,
+    linear-gradient(var(--acc),var(--acc)) center/1.4px 100% no-repeat;
+  animation:spark 5.5s var(--ease) infinite;
+}
+.spark:nth-of-type(1){top:16%;left:8%;animation-delay:0s}
+.spark:nth-of-type(2){top:64%;left:23%;animation-delay:1.4s;width:9px;height:9px}
+.spark:nth-of-type(3){top:26%;right:14%;animation-delay:2.7s;width:18px;height:18px}
+.spark:nth-of-type(4){top:78%;right:26%;animation-delay:3.9s}
+@keyframes spark{
+  0%,72%,100%{opacity:0;transform:scale(.4) rotate(0deg)}
+  82%        {opacity:.85;transform:scale(1) rotate(45deg)}
+}
+
+/* ------------------------------------------------------------
+   11. Un cran de plus sur le hero
+   ------------------------------------------------------------
+   Seul endroit où ce fichier touche à une taille : le titre
+   d'accueil gagne en présence. La mesure (max-width en ch) est
+   inchangée, donc le nombre de lignes ne bouge pas.
+------------------------------------------------------------ */
+.hero h1{
+  font-size:clamp(50px,9.2vw,152px);
+  letter-spacing:-.055em;
+  font-weight:700;
+}
+.hero::before{opacity:1;filter:blur(58px)}
+
+/* La carte de tarif mise en avant reçoit un halo citron : c'est
+   le seul endroit de la page où le clic vaut de l'argent. */
+.plan.pop.tilt.hot{box-shadow:0 44px 90px -46px rgba(188,234,62,.42)}
+
+/* ------------------------------------------------------------
+   12. Retour au calme
+   ------------------------------------------------------------
+   Même contrat que style.css : qui demande moins d'animation
+   obtient une page fixe, complète et lisible.
+------------------------------------------------------------ */
+@media (prefers-reduced-motion:reduce){
+  .curtain{display:none}
+  .cur-dot,.cur-ring,.prog{display:none}
+  html.cur,html.cur *{cursor:auto}
+  .split .w>i{transform:none}
+  .rv-clip{clip-path:none}
+  .velo .marquee-track{skew:0}
+  .velo .mock{scale:1}
+  .tilt{transform:none!important}
+  .tilt>.glow{display:none}
+  .spark{display:none}
+  .fill .fw{color:inherit}
+  .hero .fill .fw,.sec-dark .fill .fw,.dark .fill .fw{color:inherit}
+}
+
+
+
+
+/* ============================================================
+   13.  IMAGERIE — le jeu d'illustrations
+   ------------------------------------------------------------
+   Tout ce qui suit est dessiné en SVG et injecté par le CSS, en
+   fond d'éléments qui existent déjà dans le HTML d'Alex. Aucune
+   balise <img> n'est ajoutée : la structure et le texte des 45
+   pages restent rigoureusement intacts.
+
+   La grammaire est celle du modèle : fond de nuit (#080D0D vers
+   #111616), traits de 1,5 px aux extrémités arrondies, une seule
+   couleur d'accent (#BCEA3E) posée sur un seul élément par image,
+   et des angles vifs — le modèle compte 150 images à rayon nul
+   contre 2 arrondies : c'est le conteneur qui porte le rayon.
+============================================================ */
+
+/* Les six aperçus de maquette. */
+.mock-a .mock-h{background-color:var(--navy);background-size:cover;background-repeat:no-repeat;background-position:center;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 140' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='ga' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23080D0D'/%3E%3Cstop offset='1' stop-color='%23111616'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='320' height='140' fill='url(%23ga)'/%3E%3Cpath d='M28 112 H292' fill='none' stroke='%23899698' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='.42'/%3E%3Crect x='43' y='86' width='18' height='26' rx='0' fill='%23899698' opacity='.38'/%3E%3Crect x='79' y='70' width='18' height='42' rx='0' fill='%23899698' opacity='.38'/%3E%3Crect x='115' y='78' width='18' height='34' rx='0' fill='%23899698' opacity='.38'/%3E%3Crect x='151' y='54' width='18' height='58' rx='0' fill='%23899698' opacity='.38'/%3E%3Crect x='187' y='62' width='18' height='50' rx='0' fill='%23899698' opacity='.38'/%3E%3Crect x='223' y='38' width='18' height='74' rx='0' fill='%23BCEA3E' opacity='1'/%3E%3Crect x='259' y='22' width='18' height='90' rx='0' fill='%23BCEA3E' opacity='1'/%3E%3Ccircle cx='268' cy='22' r='4' fill='%23BCEA3E'/%3E%3Cpath d='M28 40 H96' fill='none' stroke='%23899698' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='.42'/%3E%3C/svg%3E")}
+.mock-b .mock-h{background-color:var(--navy);background-size:cover;background-repeat:no-repeat;background-position:center;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 140' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='gb' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23080D0D'/%3E%3Cstop offset='1' stop-color='%23111616'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='320' height='140' fill='url(%23gb)'/%3E%3Cpath d='M28 96 L72 78 L112 88 L152 52 L196 64 L240 34 L292 44 L292 118 L28 118 Z' fill='%23BCEA3E' opacity='.10' stroke='none'/%3E%3Cpath d='M28 96 L72 78 L112 88 L152 52 L196 64 L240 34 L292 44' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='72' cy='78' r='3.5' fill='%23080D0D'/%3E%3Ccircle cx='72' cy='78' r='3.5' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='152' cy='52' r='3.5' fill='%23080D0D'/%3E%3Ccircle cx='152' cy='52' r='3.5' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='240' cy='34' r='3.5' fill='%23080D0D'/%3E%3Ccircle cx='240' cy='34' r='3.5' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M28 118 H292' fill='none' stroke='%23899698' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='.42'/%3E%3C/svg%3E")}
+.mock-c .mock-h{background-color:var(--navy);background-size:cover;background-repeat:no-repeat;background-position:center;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 140' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='gc' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23080D0D'/%3E%3Cstop offset='1' stop-color='%23111616'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='320' height='140' fill='url(%23gc)'/%3E%3Ccircle cx='160' cy='70' r='24' fill='none' stroke='%23BCEA3E' stroke-width='1.5' opacity='.9'/%3E%3Ccircle cx='160' cy='70' r='44' fill='none' stroke='%23BCEA3E' stroke-width='1.5' opacity='.5'/%3E%3Ccircle cx='160' cy='70' r='64' fill='none' stroke='%23BCEA3E' stroke-width='1.5' opacity='.28'/%3E%3Ccircle cx='160' cy='70' r='84' fill='none' stroke='%23BCEA3E' stroke-width='1.5' opacity='.14'/%3E%3Ccircle cx='160' cy='70' r='6' fill='%23BCEA3E'/%3E%3Cpath d='M160 70 L214 34' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M52 70 H96 M224 70 H268' fill='none' stroke='%23899698' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='.42'/%3E%3C/svg%3E")}
+.mock-d .mock-h{background-color:var(--navy);background-size:cover;background-repeat:no-repeat;background-position:center;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 140' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='gd' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23080D0D'/%3E%3Cstop offset='1' stop-color='%23111616'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='320' height='140' fill='url(%23gd)'/%3E%3Crect x='30' y='26' width='34' height='26' fill='none' stroke='%23899698' stroke-width='1.5' opacity='.26'/%3E%3Crect x='74' y='26' width='34' height='26' fill='none' stroke='%23899698' stroke-width='1.5' opacity='.26'/%3E%3Crect x='118' y='26' width='34' height='26' fill='none' stroke='%23899698' stroke-width='1.5' opacity='.26'/%3E%3Crect x='162' y='26' width='34' height='26' fill='none' stroke='%23899698' stroke-width='1.5' opacity='.26'/%3E%3Crect x='206' y='26' width='34' height='26' fill='none' stroke='%23899698' stroke-width='1.5' opacity='.26'/%3E%3Crect x='250' y='26' width='34' height='26' fill='none' stroke='%23899698' stroke-width='1.5' opacity='.26'/%3E%3Crect x='30' y='62' width='34' height='26' fill='none' stroke='%23899698' stroke-width='1.5' opacity='.26'/%3E%3Crect x='74' y='62' width='34' height='26' fill='none' stroke='%23899698' stroke-width='1.5' opacity='.26'/%3E%3Crect x='118' y='62' width='34' height='26' fill='%23BCEA3E'/%3E%3Crect x='162' y='62' width='34' height='26' fill='none' stroke='%23899698' stroke-width='1.5' opacity='.26'/%3E%3Crect x='206' y='62' width='34' height='26' fill='none' stroke='%23899698' stroke-width='1.5' opacity='.26'/%3E%3Crect x='250' y='62' width='34' height='26' fill='none' stroke='%23899698' stroke-width='1.5' opacity='.26'/%3E%3Crect x='30' y='98' width='34' height='26' fill='none' stroke='%23899698' stroke-width='1.5' opacity='.26'/%3E%3Crect x='74' y='98' width='34' height='26' fill='none' stroke='%23899698' stroke-width='1.5' opacity='.26'/%3E%3Crect x='118' y='98' width='34' height='26' fill='none' stroke='%23899698' stroke-width='1.5' opacity='.26'/%3E%3Crect x='162' y='98' width='34' height='26' fill='none' stroke='%23899698' stroke-width='1.5' opacity='.26'/%3E%3Crect x='206' y='98' width='34' height='26' fill='none' stroke='%23899698' stroke-width='1.5' opacity='.26'/%3E%3Crect x='250' y='98' width='34' height='26' fill='none' stroke='%23899698' stroke-width='1.5' opacity='.26'/%3E%3C/svg%3E")}
+.mock-e .mock-h{background-color:var(--navy);background-size:cover;background-repeat:no-repeat;background-position:center;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 140' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='ge' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23080D0D'/%3E%3Cstop offset='1' stop-color='%23111616'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='320' height='140' fill='url(%23ge)'/%3E%3Cpath d='M26 66 V74' stroke='%23899698' stroke-width='3' stroke-linecap='round' opacity='.3'/%3E%3Cpath d='M37 55 V85' stroke='%23899698' stroke-width='3' stroke-linecap='round' opacity='.3'/%3E%3Cpath d='M48 47 V93' stroke='%23899698' stroke-width='3' stroke-linecap='round' opacity='.3'/%3E%3Cpath d='M59 45 V95' stroke='%23899698' stroke-width='3' stroke-linecap='round' opacity='.3'/%3E%3Cpath d='M70 49 V91' stroke='%23899698' stroke-width='3' stroke-linecap='round' opacity='.3'/%3E%3Cpath d='M81 58 V82' stroke='%23899698' stroke-width='3' stroke-linecap='round' opacity='.3'/%3E%3Cpath d='M92 63 V77' stroke='%23899698' stroke-width='3' stroke-linecap='round' opacity='.3'/%3E%3Cpath d='M103 52 V88' stroke='%23899698' stroke-width='3' stroke-linecap='round' opacity='.3'/%3E%3Cpath d='M114 46 V94' stroke='%23899698' stroke-width='3' stroke-linecap='round' opacity='.3'/%3E%3Cpath d='M125 45 V95' stroke='%23BCEA3E' stroke-width='3' stroke-linecap='round' opacity='1'/%3E%3Cpath d='M136 51 V89' stroke='%23BCEA3E' stroke-width='3' stroke-linecap='round' opacity='1'/%3E%3Cpath d='M147 61 V79' stroke='%23BCEA3E' stroke-width='3' stroke-linecap='round' opacity='1'/%3E%3Cpath d='M158 60 V80' stroke='%23BCEA3E' stroke-width='3' stroke-linecap='round' opacity='1'/%3E%3Cpath d='M169 50 V90' stroke='%23BCEA3E' stroke-width='3' stroke-linecap='round' opacity='1'/%3E%3Cpath d='M180 45 V95' stroke='%23BCEA3E' stroke-width='3' stroke-linecap='round' opacity='1'/%3E%3Cpath d='M191 46 V94' stroke='%23BCEA3E' stroke-width='3' stroke-linecap='round' opacity='1'/%3E%3Cpath d='M202 54 V86' stroke='%23899698' stroke-width='3' stroke-linecap='round' opacity='.3'/%3E%3Cpath d='M213 65 V75' stroke='%23899698' stroke-width='3' stroke-linecap='round' opacity='.3'/%3E%3Cpath d='M224 56 V84' stroke='%23899698' stroke-width='3' stroke-linecap='round' opacity='.3'/%3E%3Cpath d='M235 48 V92' stroke='%23899698' stroke-width='3' stroke-linecap='round' opacity='.3'/%3E%3Cpath d='M246 45 V95' stroke='%23899698' stroke-width='3' stroke-linecap='round' opacity='.3'/%3E%3Cpath d='M257 48 V92' stroke='%23899698' stroke-width='3' stroke-linecap='round' opacity='.3'/%3E%3Cpath d='M268 57 V83' stroke='%23899698' stroke-width='3' stroke-linecap='round' opacity='.3'/%3E%3Cpath d='M279 65 V75' stroke='%23899698' stroke-width='3' stroke-linecap='round' opacity='.3'/%3E%3Cpath d='M290 53 V87' stroke='%23899698' stroke-width='3' stroke-linecap='round' opacity='.3'/%3E%3Cpath d='M301 46 V94' stroke='%23899698' stroke-width='3' stroke-linecap='round' opacity='.3'/%3E%3C/svg%3E")}
+.mock-f .mock-h{background-color:var(--navy);background-size:cover;background-repeat:no-repeat;background-position:center;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 140' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='gf' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23080D0D'/%3E%3Cstop offset='1' stop-color='%23111616'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='320' height='140' fill='url(%23gf)'/%3E%3Ccircle cx='160' cy='70' r='42' fill='none' stroke='%23899698' stroke-width='12' opacity='.22'/%3E%3Ccircle cx='160' cy='70' r='42' fill='none' stroke='%23BCEA3E' stroke-width='12' stroke-linecap='round' stroke-dasharray='190 264' transform='rotate(-90 160 70)'/%3E%3Ccircle cx='160' cy='70' r='20' fill='none' stroke='%23899698' stroke-width='1.5' opacity='.5'/%3E%3Cpath d='M232 44 H286 M232 70 H268 M232 96 H278' fill='none' stroke='%23899698' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='.42'/%3E%3C/svg%3E")}
+/* L'image deborde le rembourrage pour toucher les bords : c'est ce  */
+/* qui fait lire la maquette comme une vraie capture. Angles vifs :   */
+/* dans le modele, 150 images sur 152 ont un rayon nul.               */
+.mock-h{background-color:var(--navy);background-size:cover;background-position:center;border-radius:0;margin:-18px -18px 6px;height:54%}
+/* Dans une tuile, la maquette se lit comme une image : on l ouvre. */
+.tile .mock-h{height:64%}
+
+/* Portraits. Quatre cadrages, distribués par rang pour éviter la répétition. */
+.face{background-size:cover;background-position:center top}
+.face{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='p0' x1='.2' y1='0' x2='.8' y2='1'%3E%3Cstop offset='0' stop-color='%231A2020'/%3E%3Cstop offset='1' stop-color='%23080D0D'/%3E%3C/linearGradient%3E%3CradialGradient id='r0' cx='.72' cy='.24' r='.62'%3E%3Cstop offset='0' stop-color='%23BCEA3E' stop-opacity='.30'/%3E%3Cstop offset='1' stop-color='%23BCEA3E' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='240' height='240' fill='url(%23p0)'/%3E%3Crect width='240' height='240' fill='url(%23r0)'/%3E%3Cpath d='M42 240 c0 -40 34 -66 78 -66 s78 26 78 66' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='.85'/%3E%3Ccircle cx='120' cy='96' r='42' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M150 78 a42 42 0 0 1 34 -34' fill='none' stroke='%23D0FF7A' stroke-width='1.5' stroke-linecap='round' opacity='.55'/%3E%3Ccircle cx='196' cy='44' r='3' fill='%23BCEA3E'/%3E%3C/svg%3E")}
+.face-card:nth-of-type(4n+2) .face{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='p1' x1='.2' y1='0' x2='.8' y2='1'%3E%3Cstop offset='0' stop-color='%231A2020'/%3E%3Cstop offset='1' stop-color='%23080D0D'/%3E%3C/linearGradient%3E%3CradialGradient id='r1' cx='.72' cy='.24' r='.62'%3E%3Cstop offset='0' stop-color='%23BCEA3E' stop-opacity='.30'/%3E%3Cstop offset='1' stop-color='%23BCEA3E' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='240' height='240' fill='url(%23p1)'/%3E%3Crect width='240' height='240' fill='url(%23r1)'/%3E%3Cpath d='M48 236 c0 -40 34 -66 78 -66 s78 26 78 66' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='.85'/%3E%3Ccircle cx='126' cy='92' r='42' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M156 74 a42 42 0 0 1 34 -34' fill='none' stroke='%23D0FF7A' stroke-width='1.5' stroke-linecap='round' opacity='.55'/%3E%3Ccircle cx='202' cy='40' r='3' fill='%23BCEA3E'/%3E%3C/svg%3E")}
+.face-card:nth-of-type(4n+3) .face{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='p2' x1='.2' y1='0' x2='.8' y2='1'%3E%3Cstop offset='0' stop-color='%231A2020'/%3E%3Cstop offset='1' stop-color='%23080D0D'/%3E%3C/linearGradient%3E%3CradialGradient id='r2' cx='.72' cy='.24' r='.62'%3E%3Cstop offset='0' stop-color='%23BCEA3E' stop-opacity='.30'/%3E%3Cstop offset='1' stop-color='%23BCEA3E' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='240' height='240' fill='url(%23p2)'/%3E%3Crect width='240' height='240' fill='url(%23r2)'/%3E%3Cpath d='M37 243 c0 -40 34 -66 78 -66 s78 26 78 66' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='.85'/%3E%3Ccircle cx='115' cy='99' r='42' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M145 81 a42 42 0 0 1 34 -34' fill='none' stroke='%23D0FF7A' stroke-width='1.5' stroke-linecap='round' opacity='.55'/%3E%3Ccircle cx='191' cy='47' r='3' fill='%23BCEA3E'/%3E%3C/svg%3E")}
+.face-card:nth-of-type(4n+4) .face{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='p3' x1='.2' y1='0' x2='.8' y2='1'%3E%3Cstop offset='0' stop-color='%231A2020'/%3E%3Cstop offset='1' stop-color='%23080D0D'/%3E%3C/linearGradient%3E%3CradialGradient id='r3' cx='.72' cy='.24' r='.62'%3E%3Cstop offset='0' stop-color='%23BCEA3E' stop-opacity='.30'/%3E%3Cstop offset='1' stop-color='%23BCEA3E' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='240' height='240' fill='url(%23p3)'/%3E%3Crect width='240' height='240' fill='url(%23r3)'/%3E%3Cpath d='M46 246 c0 -40 34 -66 78 -66 s78 26 78 66' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='.85'/%3E%3Ccircle cx='124' cy='102' r='42' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M154 84 a42 42 0 0 1 34 -34' fill='none' stroke='%23D0FF7A' stroke-width='1.5' stroke-linecap='round' opacity='.55'/%3E%3Ccircle cx='200' cy='50' r='3' fill='%23BCEA3E'/%3E%3C/svg%3E")}
+.face::before{display:none}
+.face span{position:absolute;top:9px;left:9px;font-size:12px;line-height:1;color:var(--acc);background:rgba(8,13,13,.62);border:1px solid rgba(188,234,62,.3);border-radius:999px;padding:5px 8px;letter-spacing:0}
+
+/* Vignettes de projet, par secteur. Les tuiles de la page d'accueil */
+/* portent une maquette : on y remplace la scene par celle du metier. */
+.tile[data-cat="commerce"] .mock-h{background-color:var(--navy);background-size:cover;background-repeat:no-repeat;background-position:center;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 140' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='sc' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23080D0D'/%3E%3Cstop offset='1' stop-color='%23111616'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='320' height='140' fill='url(%23sc)'/%3E%3Cpath d='M126 56 h68 v58 h-68 z' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M144 56 v-9 a16 16 0 0 1 32 0 v9' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M26 122 h268' fill='none' stroke='%23899698' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='.3'/%3E%3Ccircle cx='160' cy='84' r='4' fill='%23BCEA3E'/%3E%3Cpath d='M26 40 h72 M222 40 h72 M26 62 h48 M246 62 h48' fill='none' stroke='%23899698' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='.3'/%3E%3C/svg%3E")}
+.tile[data-cat="artisan"] .mock-h{background-color:var(--navy);background-size:cover;background-repeat:no-repeat;background-position:center;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 140' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='sa' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23080D0D'/%3E%3Cstop offset='1' stop-color='%23111616'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='320' height='140' fill='url(%23sa)'/%3E%3Cpath d='M118 106 l40 -40' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M158 66 l22 -22 a20 20 0 0 0 -28 -28 l-22 22' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Crect x='188' y='62' width='46' height='46' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M26 122 h268 M26 40 h64' fill='none' stroke='%23899698' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='.3'/%3E%3Ccircle cx='256' cy='40' r='4' fill='%23BCEA3E'/%3E%3C/svg%3E")}
+.tile[data-cat="sante"] .mock-h{background-color:var(--navy);background-size:cover;background-repeat:no-repeat;background-position:center;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 140' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='ss' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23080D0D'/%3E%3Cstop offset='1' stop-color='%23111616'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='320' height='140' fill='url(%23ss)'/%3E%3Cpath d='M34 78 h44 l14 -30 l20 64 l16 -34 h158' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='160' cy='70' r='56' fill='none' stroke='%23899698' stroke-width='1.5' opacity='.24'/%3E%3Cpath d='M26 122 h268' fill='none' stroke='%23899698' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='.3'/%3E%3Ccircle cx='286' cy='78' r='4' fill='%23BCEA3E'/%3E%3C/svg%3E")}
+.tile[data-cat="services"] .mock-h{background-color:var(--navy);background-size:cover;background-repeat:no-repeat;background-position:center;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 140' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='ss' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23080D0D'/%3E%3Cstop offset='1' stop-color='%23111616'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='320' height='140' fill='url(%23ss)'/%3E%3Cpath d='M74 114 V78 M118 114 V56 M162 114 V88 M206 114 V44 M250 114 V66' stroke='%23899698' stroke-width='3' stroke-linecap='round' opacity='.32'/%3E%3Cpath d='M206 44 V114' stroke='%23BCEA3E' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M26 122 h268' fill='none' stroke='%23899698' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='.3'/%3E%3Cpath d='M74 62 l44 -22 l44 32 l44 -34' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='206' cy='38' r='4' fill='%23BCEA3E'/%3E%3C/svg%3E")}
+
+/* Vignettes carrees, la ou le HTML utilise .thumb. */
+.tile .thumb{background-size:cover;background-position:center}
+.tile[data-cat="commerce"] .thumb{background-color:var(--navy);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='t' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23111616'/%3E%3Cstop offset='1' stop-color='%23080D0D'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23t)'/%3E%3Cpath d='M150 118 h100 v104 h-100 z' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M176 118 v-14 a24 24 0 0 1 48 0 v14' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M92 250 h216' fill='none' stroke='%23899698' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='.3'/%3E%3Ccircle cx='200' cy='166' r='5' fill='%23BCEA3E'/%3E%3Cpath d='M92 76 h60 M248 76 h60' fill='none' stroke='%23899698' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='.3'/%3E%3C/svg%3E")}
+.tile[data-cat="artisan"] .thumb{background-color:var(--navy);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='t' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23111616'/%3E%3Cstop offset='1' stop-color='%23080D0D'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23t)'/%3E%3Cpath d='M132 200 l52 -52' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M184 148 l30 -30 a26 26 0 0 0 -36 -36 l-30 30' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Crect x='214' y='168' width='58' height='58' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M92 250 h216 M92 74 h84' fill='none' stroke='%23899698' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='.3'/%3E%3Ccircle cx='268' cy='96' r='5' fill='%23BCEA3E'/%3E%3C/svg%3E")}
+.tile[data-cat="sante"] .thumb{background-color:var(--navy);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='t' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23111616'/%3E%3Cstop offset='1' stop-color='%23080D0D'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23t)'/%3E%3Cpath d='M108 168 h52 l18 -40 l26 84 l20 -44 h68' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='200' cy='168' r='72' fill='none' stroke='%23899698' stroke-width='1.5' opacity='.28'/%3E%3Cpath d='M92 254 h216' fill='none' stroke='%23899698' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='.3'/%3E%3Ccircle cx='292' cy='168' r='5' fill='%23BCEA3E'/%3E%3C/svg%3E")}
+.tile[data-cat="services"] .thumb{background-color:var(--navy);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='t' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23111616'/%3E%3Cstop offset='1' stop-color='%23080D0D'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23t)'/%3E%3Cpath d='M116 220 V150 M164 220 V116 M212 220 V172 M260 220 V96' stroke='%23899698' stroke-width='3' stroke-linecap='round' opacity='.34'/%3E%3Cpath d='M260 96 V220' stroke='%23BCEA3E' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M92 244 h216' fill='none' stroke='%23899698' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='.3'/%3E%3Cpath d='M116 128 l48 -34 l48 56 l48 -62' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='260' cy='88' r='5' fill='%23BCEA3E'/%3E%3C/svg%3E")}
+.tile .thumb{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='t' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23111616'/%3E%3Cstop offset='1' stop-color='%23080D0D'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23t)'/%3E%3Cpath d='M116 220 V150 M164 220 V116 M212 220 V172 M260 220 V96' stroke='%23899698' stroke-width='3' stroke-linecap='round' opacity='.34'/%3E%3Cpath d='M260 96 V220' stroke='%23BCEA3E' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M92 244 h216' fill='none' stroke='%23899698' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='.3'/%3E%3Cpath d='M116 128 l48 -34 l48 56 l48 -62' fill='none' stroke='%23BCEA3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='260' cy='88' r='5' fill='%23BCEA3E'/%3E%3C/svg%3E")}
+
+/* Petites vignettes d'avis. */
+.rev-who .ava{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='p1' x1='.2' y1='0' x2='.8' y2='1'%3E%3Cstop offset='0' stop-color='%231A2020'/%3E%3Cstop offset='1' stop-color='%23080D0D'/%3E%3C/linearGradient%3E%3CradialGradient id='r1' cx='.72' cy='.24' r='.62'%3E%3Cstop offset='0' stop-color='%23BCEA3E' stop-opacity='.30'/%3E%3Cstop offset='1' stop-color='%23BCEA3E' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='96' height='96' fill='url(%23p1)'/%3E%3Crect width='96' height='96' fill='url(%23r1)'/%3E%3Cpath d='M48 236 c0 -40 34 -66 78 -66 s78 26 78 66' fill='none' stroke='%23BCEA3E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' opacity='.85'/%3E%3Ccircle cx='126' cy='92' r='42' fill='none' stroke='%23BCEA3E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M156 74 a42 42 0 0 1 34 -34' fill='none' stroke='%23D0FF7A' stroke-width='3' stroke-linecap='round' opacity='.55'/%3E%3Ccircle cx='202' cy='40' r='3' fill='%23BCEA3E'/%3E%3C/svg%3E");background-size:cover;background-position:center}
+.rev:nth-child(2n) .rev-who .ava{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='p2' x1='.2' y1='0' x2='.8' y2='1'%3E%3Cstop offset='0' stop-color='%231A2020'/%3E%3Cstop offset='1' stop-color='%23080D0D'/%3E%3C/linearGradient%3E%3CradialGradient id='r2' cx='.72' cy='.24' r='.62'%3E%3Cstop offset='0' stop-color='%23BCEA3E' stop-opacity='.30'/%3E%3Cstop offset='1' stop-color='%23BCEA3E' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='96' height='96' fill='url(%23p2)'/%3E%3Crect width='96' height='96' fill='url(%23r2)'/%3E%3Cpath d='M37 243 c0 -40 34 -66 78 -66 s78 26 78 66' fill='none' stroke='%23BCEA3E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' opacity='.85'/%3E%3Ccircle cx='115' cy='99' r='42' fill='none' stroke='%23BCEA3E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M145 81 a42 42 0 0 1 34 -34' fill='none' stroke='%23D0FF7A' stroke-width='3' stroke-linecap='round' opacity='.55'/%3E%3Ccircle cx='191' cy='47' r='3' fill='%23BCEA3E'/%3E%3C/svg%3E")}
+.rev:nth-child(3n) .rev-who .ava{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='p3' x1='.2' y1='0' x2='.8' y2='1'%3E%3Cstop offset='0' stop-color='%231A2020'/%3E%3Cstop offset='1' stop-color='%23080D0D'/%3E%3C/linearGradient%3E%3CradialGradient id='r3' cx='.72' cy='.24' r='.62'%3E%3Cstop offset='0' stop-color='%23BCEA3E' stop-opacity='.30'/%3E%3Cstop offset='1' stop-color='%23BCEA3E' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='96' height='96' fill='url(%23p3)'/%3E%3Crect width='96' height='96' fill='url(%23r3)'/%3E%3Cpath d='M46 246 c0 -40 34 -66 78 -66 s78 26 78 66' fill='none' stroke='%23BCEA3E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' opacity='.85'/%3E%3Ccircle cx='124' cy='102' r='42' fill='none' stroke='%23BCEA3E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M154 84 a42 42 0 0 1 34 -34' fill='none' stroke='%23D0FF7A' stroke-width='3' stroke-linecap='round' opacity='.55'/%3E%3Ccircle cx='200' cy='50' r='3' fill='%23BCEA3E'/%3E%3C/svg%3E")}
+
+/* Trame du hero et maille des blocs de nuit. Les pseudo-elements */
+/* sont deja pris (halo flou, arcs, degrades) : on pose donc la      */
+/* trame sur le fond de l'element lui-meme, sans rien deloger.       */
+.hero{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 900'%3E%3Cdefs%3E%3CradialGradient id='h' cx='.5' cy='.1' r='.9'%3E%3Cstop offset='0' stop-color='%23BCEA3E' stop-opacity='.13'/%3E%3Cstop offset='1' stop-color='%23BCEA3E' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cg stroke='%23FFFFFF' stroke-opacity='.055' stroke-width='1'%3E%3Cpath d='M80 0 V900'/%3E%3Cpath d='M160 0 V900'/%3E%3Cpath d='M240 0 V900'/%3E%3Cpath d='M320 0 V900'/%3E%3Cpath d='M400 0 V900'/%3E%3Cpath d='M480 0 V900'/%3E%3Cpath d='M560 0 V900'/%3E%3Cpath d='M640 0 V900'/%3E%3Cpath d='M720 0 V900'/%3E%3Cpath d='M800 0 V900'/%3E%3Cpath d='M880 0 V900'/%3E%3Cpath d='M960 0 V900'/%3E%3Cpath d='M1040 0 V900'/%3E%3Cpath d='M1120 0 V900'/%3E%3Cpath d='M1200 0 V900'/%3E%3Cpath d='M1280 0 V900'/%3E%3Cpath d='M1360 0 V900'/%3E%3Cpath d='M0 80 H1440'/%3E%3Cpath d='M0 160 H1440'/%3E%3Cpath d='M0 240 H1440'/%3E%3Cpath d='M0 320 H1440'/%3E%3Cpath d='M0 400 H1440'/%3E%3Cpath d='M0 480 H1440'/%3E%3Cpath d='M0 560 H1440'/%3E%3Cpath d='M0 640 H1440'/%3E%3Cpath d='M0 720 H1440'/%3E%3Cpath d='M0 800 H1440'/%3E%3Cpath d='M0 880 H1440'/%3E%3C/g%3E%3Ccircle cx='720' cy='190' r='300' fill='none' stroke='%23BCEA3E' stroke-opacity='.16' stroke-width='1'/%3E%3Ccircle cx='720' cy='190' r='440' fill='none' stroke='%23BCEA3E' stroke-opacity='.10' stroke-width='1'/%3E%3Ccircle cx='720' cy='190' r='600' fill='none' stroke='%23BCEA3E' stroke-opacity='.06' stroke-width='1'/%3E%3Crect width='1440' height='900' fill='url(%23h)'/%3E%3C/svg%3E");background-size:cover;background-position:center top;background-repeat:no-repeat}
+.sec-dark{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Ccircle cx='30' cy='30' r='1' fill='%23FFFFFF' fill-opacity='.16'/%3E%3C/svg%3E");background-size:60px 60px;background-repeat:repeat}
+
+/* Couverture du guide : filigrane d'angle, sous le texte. */
+.ebook-cover{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 420'%3E%3Ccircle cx='286' cy='72' r='74' fill='none' stroke='%23BCEA3E' stroke-width='1.5' opacity='.5'/%3E%3Ccircle cx='286' cy='72' r='120' fill='none' stroke='%23BCEA3E' stroke-width='1.5' opacity='.26'/%3E%3Ccircle cx='286' cy='72' r='168' fill='none' stroke='%23BCEA3E' stroke-width='1.5' opacity='.14'/%3E%3Ccircle cx='286' cy='72' r='216' fill='none' stroke='%23BCEA3E' stroke-width='1.5' opacity='.07'/%3E%3Ccircle cx='286' cy='72' r='6' fill='%23BCEA3E' opacity='.7'/%3E%3C/svg%3E");background-size:cover;background-position:right top}
+
+
+/* ============================================================
+   14.  AMPLEUR — la seconde couche de mouvement
+   ------------------------------------------------------------
+   Le modèle déplace ses blocs de 100 à 200 px en 500 ms, pas de
+   20 px : c'est ce qui donne l'impression que la page se monte
+   sous les yeux. On reprend cette amplitude, mais en la réservant
+   aux blocs (cartes, tuiles, maquettes) et en la refusant au
+   texte courant, qui doit rester lisible tout de suite.
+
+   Rien ici n'est écrit dans le HTML : toutes les classes citées
+   sont posées par motion.js et wow.js. Script coupé, la page
+   reste celle de style.css.
+============================================================ */
+
+/* Les blocs viennent de plus loin, et d'un rien plus petit. */
+.card.rv,.tile.rv,.rev.rv,.plan.rv,.mock.rv,.step.rv,.panel.rv,.face-card.rv{
+  transform:translateY(64px) scale(.975);
+  transition:opacity .8s var(--ease),transform .8s var(--ease);
+}
+.card.rv.is-in,.tile.rv.is-in,.rev.rv.is-in,.plan.rv.is-in,
+.mock.rv.is-in,.step.rv.is-in,.panel.rv.is-in,.face-card.rv.is-in{transform:none}
+
+/* Le texte, lui, ne fait qu'un pas. */
+.lede.rv,p.rv,.small.rv,.label.rv{transform:translateY(18px)}
+
+/* ------------------------------------------------------------
+   La maquette respire au survol de sa tuile
+------------------------------------------------------------ */
+.mock-h{transition:transform .9s var(--ease),background-position .9s var(--ease)}
+.tile:hover .mock-h,.pack-cell:hover .mock-h{transform:scale(1.07)}
+.tile .mock{box-shadow:none;border:0;border-radius:0}
+.tile:hover .mock{transform:none}
+
+/* ------------------------------------------------------------
+   Le numéro d'étape reste accroché pendant que le texte défile.
+   C'est le geste des « number wrap » du modèle, en plus sobre.
+------------------------------------------------------------ */
+@media(min-width:900px){
+  .steps .step .n{position:sticky;top:118px}
+  .steps{position:relative}
+  /* Le rail : un trait qui se remplit au fur et à mesure. */
+  .steps::before{
+    content:"";position:absolute;left:0;top:0;width:2px;height:100%;
+    background:var(--rule);border-radius:2px;
+  }
+  .steps::after{
+    content:"";position:absolute;left:0;top:0;width:2px;border-radius:2px;
+    height:calc(var(--rail,0) * 100%);background:var(--acc);
+    box-shadow:0 0 18px var(--acc-glow);
+    transition:height .18s linear;
+  }
+  .sec-dark .steps::before{background:var(--line)}
+}
+
+/* ------------------------------------------------------------
+   Le trait de lumière qui traverse le haut d'un bloc de nuit
+------------------------------------------------------------ */
+.sec-dark::after{
+  content:"";position:absolute;top:0;left:0;height:1px;width:0;
+  background:linear-gradient(90deg,transparent,var(--acc),transparent);
+  transition:width 1.6s var(--ease);pointer-events:none;
+}
+.sec-dark.lit::after{width:100%}
+
+/* ------------------------------------------------------------
+   La carte mise en avant : un liseré citron qui tourne lentement
+------------------------------------------------------------ */
+.plan.pop{position:relative;isolation:isolate}
+.plan.pop::before{
+  content:"";position:absolute;inset:-1px;border-radius:inherit;z-index:-1;
+  background:conic-gradient(from var(--tour,0deg),
+    transparent 0deg,var(--acc) 40deg,transparent 120deg,transparent 360deg);
+  opacity:.55;
+}
+@supports (background:conic-gradient(from 0deg,red,blue)){
+  .plan.pop.is-in::before{animation:tour 7s linear infinite}
+}
+@keyframes tour{to{--tour:360deg}}
+@property --tour{syntax:'<angle>';initial-value:0deg;inherits:false}
+
+/* ------------------------------------------------------------
+   Le bandeau défilant prend le tempo du modèle (30 s)
+------------------------------------------------------------ */
+.marquee-track{animation-duration:30s}
+.hero-strip .marquee-track{animation-duration:46s}
+
+/* ------------------------------------------------------------
+   Le hero se pose : la trame se resserre au chargement
+------------------------------------------------------------ */
+.hero{animation:poser 1.6s var(--ease) both}
+@keyframes poser{from{background-size:118% auto}to{background-size:cover}}
+
+/* ------------------------------------------------------------
+   Les tuiles décalent leur image quand la souris les traverse
+------------------------------------------------------------ */
+.tile{will-change:transform}
+
+@media(prefers-reduced-motion:reduce){
+  .card.rv,.tile.rv,.rev.rv,.plan.rv,.mock.rv,.step.rv,.panel.rv,.face-card.rv{transform:none}
+  .hero{animation:none}
+  .plan.pop.is-in::before{animation:none}
+  .steps .step .n{position:static}
+}
+
+/* ============================================================
+   15.  RESPONSIVE
+   ------------------------------------------------------------
+   Audit sur neuf largeurs — 360 · 390 · 430 · 768 · 834 · 1024
+   · 1280 · 1440 · 1920 — sur quatre gabarits : accueil, étude
+   de cas, tunnel de commande, page légale. Trente-six mesures.
+   Aucun débordement horizontal sauf sur le tunnel en 360 px
+   (36 px) et en 390 px (6 px). Trois défauts à corriger :
+   la grille du tunnel, cinq micro-libellés sous 12 px, et
+   quatre liens de moins de 36 px de haut.
+   ============================================================ */
+
+/* --- 15.1  Le tunnel de commande ne déborde plus -------------
+   La grille se replie bien à 980 px, mais « 1fr » vaut
+   « minmax(auto,1fr) » : la colonne refusait de descendre sous
+   la taille minimale de son contenu — une paire d'options de
+   paiement large de 353 px. On autorise la colonne à rétrécir,
+   et les deux options passent l'une sous l'autre en petit. */
+@media(max-width:980px){
+  .checkout{grid-template-columns:minmax(0,1fr)}
+}
+.checkout>*{min-width:0}
+@media(max-width:560px){
+  .pay{grid-template-columns:1fr}
+  .row-tel{grid-template-columns:104px 1fr}
+}
+
+/* L'en-tête du tunnel porte un badge d'avis large de 208 px,
+   que le 360 px ne peut pas loger à côté du logo. Il s'efface
+   au même seuil que le fil d'étapes, déjà masqué à 860 px. */
+@media(max-width:860px){
+  .nav-right .rating{display:none}
+}
+.nav-in{min-width:0}
+.nav-right{min-width:0}
+
+/* Filet de sécurité : aucune grille ne peut être élargie par
+   la taille minimale de son contenu. */
+.g2>*,.g3>*,.g4>*,.plans>*,.pay>*,.row2>*,.team-row>*{min-width:0}
+
+/* --- 15.2  Plus aucun texte sous 12 px sur mobile ------------
+   Les micro-libellés en capitales tiennent la direction
+   artistique, mais 10 px sur un téléphone ne se lit pas. On
+   remonte à 12 px et on desserre un peu moins l'interlettrage
+   pour que la largeur reste la même. */
+@media(max-width:900px){
+  .ph{font-size:12px;letter-spacing:.09em;padding:5px 12px}
+  .tile .meta span{font-size:12px;letter-spacing:.08em}
+  .label{font-size:12.5px;letter-spacing:.13em}
+  .ebook-kicker{font-size:12px;letter-spacing:.14em}
+  footer.ft h4{font-size:12px;letter-spacing:.12em}
+  .ft-bot{font-size:12px}
+  .field label{font-size:12px;letter-spacing:.11em}
+  .steps-bar{font-size:12px}
+  .badge,.pill-mini{font-size:12px}
+}
+
+/* --- 15.3  36 px minimum sous le doigt -----------------------
+   Les liens posés en plein texte gardent leur hauteur de ligne
+   (WCAG 2.5.8, exception « inline ») ; les liens de navigation,
+   eux, reçoivent une zone de contact franche. */
+@media(max-width:900px){
+  header.nav .logo{min-height:40px;align-items:center}
+  footer.ft .logo{min-height:40px;display:inline-flex;align-items:center}
+  .ft-cols ul{gap:2px}
+  .ft-cols ul a{min-height:36px;display:inline-flex;align-items:center}
+  .ft-bot a{min-height:36px;display:inline-flex;align-items:center}
+  .nav-links a{min-height:40px;display:inline-flex;align-items:center}
+  .filters button,.tabs button{min-height:40px}
+}
+
+/* --- 15.4  Le mouvement coûte moins cher en mobile -----------
+   Un flou de 64 px sur un grand bloc et une bordure conique
+   animée se paient en pixels à repeindre. Sur téléphone, on
+   garde l'image et on coupe le calcul. */
+@media(max-width:760px){
+  .hero::before{filter:blur(38px);animation:none}
+  .plan.pop.is-in::before{animation:none}
+  .hero{animation:none}
+  .tile{will-change:auto}
+  .card.rv,.tile.rv,.rev.rv,.plan.rv,.mock.rv,.step.rv,.panel.rv,.face-card.rv{
+    transform:translateY(34px) scale(.99);
+    transition:opacity .6s var(--ease),transform .6s var(--ease);
+  }
+  .marquee-track{animation-duration:24s}
+}
+
+/* --- 15.5  Les derniers liens trop courts sous le doigt ------
+   Deux liens de contact posés dans un paragraphe du pied de
+   page, et les liens d'action du tunnel. Ils ne sont pas des
+   liens « en plein texte » au sens de la règle : on leur donne
+   une vraie zone de contact. */
+@media(max-width:900px){
+  footer.ft .ft-cols p a{min-height:36px;display:inline-flex;align-items:center}
+  a.small{min-height:36px;display:inline-flex;align-items:center}
+}
+
+/* ============================================================
+   16.  VITESSE
+   ------------------------------------------------------------
+   Le poids n'est pas le problème : 24 ko de CSS et 11 ko de JS
+   une fois compressés, aucune image bitmap, tout le dessin est
+   en SVG dans la feuille de style. Le vrai coût, c'est la
+   fonderie distante et le nombre de sections à peindre.
+   ============================================================ */
+
+/* --- 16.1  Ne peindre que ce qui est à l'écran ---------------
+   Une page d'accueil compte une vingtaine de sections hautes.
+   « content-visibility:auto » demande au navigateur de sauter
+   la mise en page et la peinture de celles qui sont encore
+   hors champ, et « contain-intrinsic-size:auto » lui fait
+   retenir la hauteur réelle une fois mesurée — l'ascenseur ne
+   saute donc pas. On épargne la première peinture sans rien
+   changer à ce qui s'affiche.
+
+   La section d'accueil, le pied de page et tout ce qui porte
+   une barre collante en sont exclus : leur hauteur doit être
+   connue dès le premier rendu. */
+.sec{content-visibility:auto;contain-intrinsic-size:auto 760px}
+.sec:first-of-type,.hero,.sec.no-cv,footer.ft,header.nav,.bar,.hold{
+  content-visibility:visible;
+}
+.sec:has(.steps),.sec:has(.summary),.sec:has(.marquee){content-visibility:visible}
+
+/* --- 16.2  Le mouvement ne réserve la carte graphique
+   que le temps de s'exécuter ---------------------------------
+   « will-change » posé en permanence garde une couche en
+   mémoire pour rien. On ne la demande qu'au survol. */
+.tile{will-change:auto}
+.tile:hover,.pack-cell:hover{will-change:transform}
+
+/* --- 16.3  Le flou du hero est calculé une fois --------------
+   L'animation ne bouge qu'une transformation : la tache floue
+   est rasterisée une seule fois puis simplement recomposée.
+   On le dit explicitement au navigateur. */
+.hero::before{will-change:transform;backface-visibility:hidden}
+
+/* --- 16.4  Les défilements infinis ne repeignent rien -------- */
+.marquee-track,.ticker-track{will-change:transform}
+
+/* --- 16.5  Si la personne préfère moins de mouvement,
+   on ne calcule plus rien du tout ----------------------------- */
+@media(prefers-reduced-motion:reduce){
+  .hero::before{animation:none;will-change:auto}
+  .marquee-track,.ticker-track{animation:none;will-change:auto}
+  .tile:hover,.pack-cell:hover{will-change:auto}
+}
+
+@media print{
+  .curtain,.cur-dot,.cur-ring,.prog,.spark{display:none}
+  .split .w>i{transform:none}
+  .rv-clip{clip-path:none}
+  .fill .fw{color:inherit!important}
+}
