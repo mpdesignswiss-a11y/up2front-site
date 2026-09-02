@@ -3,14 +3,50 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://up2front.com/</loc>
-    <lastmod>2026-08-24</lastmod>
+    <lastmod>2026-09-02</lastmod>
     <xhtml:link rel="alternate" hreflang="fr-CH" href="https://up2front.com/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://up2front.com/en/" />
   </url>
   <url>
     <loc>https://up2front.com/en/</loc>
-    <lastmod>2026-08-24</lastmod>
+    <lastmod>2026-09-02</lastmod>
     <xhtml:link rel="alternate" hreflang="fr-CH" href="https://up2front.com/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://up2front.com/en/" />
+  </url>
+  <url>
+    <loc>https://up2front.com/cgv/</loc>
+    <lastmod>2026-09-02</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-CH" href="https://up2front.com/cgv/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://up2front.com/en/terms/" />
+  </url>
+  <url>
+    <loc>https://up2front.com/en/terms/</loc>
+    <lastmod>2026-09-02</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-CH" href="https://up2front.com/cgv/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://up2front.com/en/terms/" />
+  </url>
+  <url>
+    <loc>https://up2front.com/mentions-legales/</loc>
+    <lastmod>2026-09-02</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-CH" href="https://up2front.com/mentions-legales/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://up2front.com/en/legal-notice/" />
+  </url>
+  <url>
+    <loc>https://up2front.com/en/legal-notice/</loc>
+    <lastmod>2026-09-02</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-CH" href="https://up2front.com/mentions-legales/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://up2front.com/en/legal-notice/" />
+  </url>
+  <url>
+    <loc>https://up2front.com/confidentialite/</loc>
+    <lastmod>2026-09-02</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-CH" href="https://up2front.com/confidentialite/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://up2front.com/en/privacy/" />
+  </url>
+  <url>
+    <loc>https://up2front.com/en/privacy/</loc>
+    <lastmod>2026-09-02</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr-CH" href="https://up2front.com/confidentialite/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://up2front.com/en/privacy/" />
   </url>
 </urlset>
