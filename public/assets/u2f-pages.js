@@ -162,7 +162,128 @@ if(promo){
 }
 
 /* ---------------------------------------------------------------------
-   4 · Année du pied de page, si un jour elle est marquée
+   4 · Sites en ligne — la vignette est le site, pas une capture
+   Le site est chargé dans un cadre de 1440 px puis réduit par homothétie
+   (--k). On ne le charge qu'à l'approche de l'écran, pour ne pas payer
+   trois sites au chargement de la page.
+   --------------------------------------------------------------------- */
+var cadres = qq('[data-cadre]');
+if(cadres.length){
+  var LARGEUR_REF = 1440;
+
+  var ajuster = function(cadre){
+    var k = cadre.clientWidth / LARGEUR_REF;
+    if(!k) return;
+    cadre.style.setProperty('--k', k);
+    var f = q('iframe', cadre);
+    if(f) f.style.height = (cadre.clientHeight / k) + 'px';
+  };
+
+  var charger = function(cadre){
+    var f = q('iframe', cadre);
+    if(!f || f.src) return;
+    f.addEventListener('load', function(){ cadre.classList.add('est-prete'); });
+    f.src = f.getAttribute('data-src');
+  };
+
+  cadres.forEach(ajuster);
+
+  if(window.ResizeObserver){
+    var ro = new ResizeObserver(function(entrees){
+      entrees.forEach(function(e){ ajuster(e.target); });
+    });
+    cadres.forEach(function(c){ ro.observe(c); });
+  }else{
+    window.addEventListener('resize', function(){ cadres.forEach(ajuster); });
+  }
+
+  if(window.IntersectionObserver){
+    var io = new IntersectionObserver(function(entrees, obs){
+      entrees.forEach(function(e){
+        if(!e.isIntersecting) return;
+        charger(e.target);
+        obs.unobserve(e.target);
+      });
+    }, { rootMargin: '400px' });
+    cadres.forEach(function(c){ io.observe(c); });
+  }else{
+    cadres.forEach(charger);
+  }
+}
+
+/* ---------------------------------------------------------------------
+   5 · Aperçu plein écran — voir le site sans quitter le nôtre
+   --------------------------------------------------------------------- */
+var apercu = q('#apercu');
+if(apercu){
+  var vue      = q('[data-vue]', apercu);
+  var nomEl    = q('[data-nom]', apercu);
+  var hoteEl   = q('[data-hote]', apercu);
+  var lienEl   = q('[data-lien]', apercu);
+  var boutLarg = qq('[data-larg]', apercu);
+  var appelant = null;   /* le bouton qui a ouvert : on lui rend le focus */
+
+  var largeur = function(mode){
+    apercu.classList.toggle('est-mobile', mode === 'mobile');
+    boutLarg.forEach(function(b){
+      b.setAttribute('aria-pressed',
+        String(b.getAttribute('data-larg') === mode));
+    });
+  };
+
+  var ouvrir = function(url, nom, hote, source){
+    appelant = source || null;
+    if(nomEl)  nomEl.textContent  = nom  || '';
+    if(hoteEl) hoteEl.textContent = hote || '';
+    if(lienEl) lienEl.href = url;
+    if(vue){
+      vue.setAttribute('title', 'Aperçu du site ' + (nom || ''));
+      vue.src = url;
+    }
+    largeur('bureau');
+    apercu.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    if(window.u2fLenis) window.u2fLenis.stop();
+    requestAnimationFrame(function(){ apercu.classList.add('est-ouvert'); });
+    var x = q('.apercu-x', apercu);
+    if(x) x.focus();
+  };
+
+  var fermer = function(){
+    apercu.classList.remove('est-ouvert');
+    document.documentElement.style.overflow = '';
+    if(window.u2fLenis) window.u2fLenis.start();
+    window.setTimeout(function(){
+      apercu.hidden = true;
+      if(vue) vue.removeAttribute('src');   /* on coupe scripts et sons */
+    }, 320);
+    if(appelant && appelant.focus) appelant.focus();
+    appelant = null;
+  };
+
+  qq('[data-apercu]').forEach(function(b){
+    b.addEventListener('click', function(){
+      ouvrir(b.getAttribute('data-apercu'),
+             b.getAttribute('data-nom'),
+             b.getAttribute('data-hote'), b);
+    });
+  });
+
+  qq('[data-fermer]', apercu).forEach(function(b){
+    b.addEventListener('click', fermer);
+  });
+
+  boutLarg.forEach(function(b){
+    b.addEventListener('click', function(){ largeur(b.getAttribute('data-larg')); });
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && !apercu.hidden) fermer();
+  });
+}
+
+/* ---------------------------------------------------------------------
+   6 · Année du pied de page, si un jour elle est marquée
    --------------------------------------------------------------------- */
 qq('[data-annee]').forEach(function(el){
   el.textContent = String(new Date().getFullYear());

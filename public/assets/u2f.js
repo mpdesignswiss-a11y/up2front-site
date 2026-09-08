@@ -51,6 +51,9 @@ if(window.Lenis){
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add(function(t){ lenis.raf(t * 1000); });
   gsap.ticker.lagSmoothing(0);
+  /* exposé pour u2f-pages.js : une modale doit pouvoir suspendre le
+     défilement lissé, sinon la page continue de glisser derrière. */
+  window.u2fLenis = lenis;
 }
 
 qq('a[href^="#"]').forEach(function(a){
@@ -162,32 +165,35 @@ if(enl){
 /* =====================================================================
    7 · BANDEAUX — vitesse et sens pilotés par le défilement (signature Oryzen)
    ===================================================================== */
-function bandeau(sel, secondes){
+/* La boucle elle-même est en CSS (@keyframes u2f-defile, u2f.css) : elle
+   tourne donc sans JavaScript, sur toutes les pages, même si un CDN tombe.
+   Ce qui reste ici, c'est la seule chose que le CSS ne sait pas faire :
+   accélérer la bande quand on défile vite, et la ramener à son allure de
+   croisière quand on s'arrête. On agit sur playbackRate de l'animation CSS.
+   Le sens ne s'inverse jamais : on repart toujours vers +1, sinon un seul
+   défilement vers le haut laissait la bande à l'envers pour de bon. */
+function bandeau(sel){
   var ul = q(sel);
-  if(!ul) return;
-  var boucle = gsap.to(ul, {
-    xPercent: -50, duration: secondes, ease:'none', repeat:-1,
-    modifiers: { xPercent: gsap.utils.unitize(function(x){ return parseFloat(x) % 50; }, '%') }
-  });
+  if(!ul || !ul.getAnimations) return;
   var repos;
   ScrollTrigger.create({
     onUpdate: function(self){
       var v = self.getVelocity();
       if(!v) return;
-      var sens = v > 0 ? 1 : -1;
-      gsap.to(boucle, {
-        timeScale: sens * gsap.utils.clamp(1, 6, 1 + Math.abs(v)/420),
-        duration: .28, overwrite: true
-      });
+      var anims = ul.getAnimations();
+      if(!anims.length) return;
+      var a = anims[0];
+      a.playbackRate = gsap.utils.clamp(1, 6, 1 + Math.abs(v)/420);
       clearTimeout(repos);
       repos = setTimeout(function(){
-        gsap.to(boucle, {timeScale: sens, duration: .9, overwrite: true});
-      }, 170);
+        var b = ul.getAnimations()[0];
+        if(b) b.playbackRate = 1;
+      }, 380);
     }
   });
 }
-bandeau('.tick ul', 22);
-bandeau('.marq ul', 34);
+bandeau('.tick ul');
+bandeau('.marq ul');
 
 /* =====================================================================
    8 · RÉVÉLATIONS PAR LOTS
@@ -406,8 +412,8 @@ qq('.vign i').forEach(function(v){
 
 /* --- k · le bandeau des moyens de paiement et le mot géant du pied de page
        reprennent la boucle pilotée par la vitesse de défilement --- */
-bandeau('.moyens ul', 26);
-bandeau('.fmarq ul', 30);
+bandeau('.moyens ul');
+bandeau('.fmarq ul');
 
 /* --- l · et, comme sur le template, ce mot géant tire en sens contraire
        de sa propre boucle --- */

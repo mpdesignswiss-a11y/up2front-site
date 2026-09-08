@@ -202,9 +202,97 @@ a.carte:hover{border-color:var(--vert);background:var(--noir-3)}
 .cadre-form iframe{width:100%;height:820px;border:0;display:block}
 
 /* =====================================================================
+   SITES EN LIGNE — vignette vivante et aperçu plein écran
+   La vignette est le site lui-même, chargé dans un cadre et réduit par
+   une homothétie (--k, posée par u2f-pages.js). On ne montre donc jamais
+   une capture arrangée : ce qui est à l'écran est ce qui est en ligne.
+   ===================================================================== */
+.sites{display:flex;flex-flow:column;gap:26px}
+.site{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:26px;
+  align-items:start;border:1px solid var(--bord-2);background:var(--noir-2);padding:22px}
+.site:hover{border-color:var(--bord)}
+
+.site-vue{border:1px solid var(--bord-2);background:var(--noir-3);overflow:hidden}
+.site-barre{display:flex;align-items:center;gap:7px;padding:10px 14px;
+  border-bottom:1px solid var(--bord-2);background:rgba(255,255,255,.03)}
+.site-barre i{width:9px;height:9px;border-radius:50%;background:var(--bord);display:block}
+.site-barre span{margin-left:10px;font-size:12px;color:var(--gris);letter-spacing:.03em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.site-cadre{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--noir-3)}
+.site-cadre iframe{position:absolute;top:0;left:0;width:1440px;height:900px;border:0;
+  transform:scale(var(--k,.28));transform-origin:top left;pointer-events:none;
+  opacity:0;transition:opacity .6s var(--ease)}
+.site-cadre.est-prete iframe{opacity:1}
+.site-voile{position:absolute;inset:0;width:100%;border:0;cursor:pointer;
+  background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.75) 100%);
+  display:flex;align-items:flex-end;justify-content:center;padding-bottom:20px;
+  opacity:0;transition:opacity .35s var(--ease)}
+.site-voile span{font-size:13px;letter-spacing:.08em;text-transform:uppercase;
+  color:#000;background:var(--vert);padding:11px 20px;border-radius:999px}
+.site-vue:hover .site-voile,.site-voile:focus-visible{opacity:1}
+
+.site-txt{display:flex;flex-flow:column;gap:12px;padding:6px 4px}
+.site-meta{display:flex;justify-content:space-between;gap:14px;font-size:12.5px;
+  color:var(--gris);letter-spacing:.06em;text-transform:uppercase}
+.site-meta b{color:var(--vert);font-weight:600}
+.site-txt h3{font-size:clamp(22px,2.2vw,28px);font-weight:600;letter-spacing:-.03em;
+  line-height:1.15}
+.site-txt p{color:var(--gris);font-size:15.5px;line-height:1.6}
+.site-sections{list-style:none;display:flex;flex-wrap:wrap;gap:7px;padding-top:2px}
+.site-sections li{font-size:12.5px;color:var(--gris);border:1px solid var(--bord-2);
+  border-radius:999px;padding:5px 12px}
+.site-specs{display:flex;flex-flow:column;gap:0;border-top:1px solid var(--bord-2);
+  margin-top:6px}
+.site-specs div{display:flex;justify-content:space-between;gap:16px;padding:10px 0;
+  border-bottom:1px solid var(--bord-2);font-size:13.5px}
+.site-specs span{color:var(--gris)}
+.site-specs b{font-weight:600;text-align:right}
+.site-note{font-size:12.5px;line-height:1.5;color:var(--gris);padding-top:10px}
+.site-liens{display:flex;gap:10px;flex-wrap:wrap;padding-top:12px;margin-top:auto}
+
+/* ---------- aperçu plein écran ---------- */
+.apercu[hidden]{display:none}
+.apercu{position:fixed;inset:0;z-index:120;display:flex;align-items:center;
+  justify-content:center;padding:20px}
+.apercu-fond{position:absolute;inset:0;background:rgba(0,0,0,.86);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.apercu-boite{position:relative;width:min(1400px,100%);height:min(880px,100%);
+  display:flex;flex-flow:column;background:var(--noir-2);border:1px solid var(--bord);
+  opacity:0;transform:translateY(14px);transition:opacity .35s var(--ease),transform .35s var(--ease)}
+.apercu.est-ouvert .apercu-boite{opacity:1;transform:none}
+.apercu-tete{display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:13px 16px;border-bottom:1px solid var(--bord-2);flex-wrap:wrap}
+.apercu-nom{display:flex;flex-flow:column;gap:2px;min-width:0}
+.apercu-nom b{font-size:15px;font-weight:600}
+.apercu-nom span{font-size:12px;color:var(--gris)}
+.apercu-outils{display:flex;align-items:center;gap:10px}
+.apercu-larg{display:flex;border:1px solid var(--bord-2);border-radius:999px;overflow:hidden}
+.apercu-larg button{background:none;border:0;color:var(--gris);cursor:pointer;
+  font:inherit;font-size:12.5px;padding:8px 15px;transition:background .25s,color .25s}
+.apercu-larg button[aria-pressed="true"]{background:var(--vert);color:#000}
+.apercu-lien{font-size:12.5px;color:var(--vert);border-bottom:1px solid transparent;
+  transition:border-color .25s}
+.apercu-lien:hover{border-color:var(--vert)}
+.apercu-x{width:38px;height:38px;border-radius:50%;border:1px solid var(--bord);
+  background:none;color:var(--blanc);font-size:22px;line-height:1;cursor:pointer;
+  transition:background .25s,color .25s,border-color .25s}
+.apercu-x:hover{background:var(--vert);color:#000;border-color:var(--vert)}
+.apercu-scene{flex:1;min-height:0;display:flex;justify-content:center;
+  background:var(--noir-3);overflow:hidden}
+.apercu-scene iframe{width:100%;height:100%;border:0;background:#fff;
+  transition:width .45s var(--ease)}
+.apercu.est-mobile .apercu-scene iframe{width:min(390px,100%);
+  border-left:1px solid var(--bord-2);border-right:1px solid var(--bord-2)}
+.apercu-note{padding:9px 16px;border-top:1px solid var(--bord-2);font-size:12px;
+  color:var(--gris)}
+
+/* =====================================================================
    RESPONSIVE
    ===================================================================== */
 @media(max-width:1080px){
+  .site{grid-template-columns:minmax(0,1fr)}
+  .site-liens{margin-top:0}
   .cmd{grid-template-columns:1fr}
   .recap{position:static}
   .g-3{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -228,4 +316,14 @@ a.carte:hover{border-color:var(--vert);background:var(--noir-3)}
   .opt{flex-wrap:wrap}
   .opt .p{margin-left:0;width:100%}
   .cadre-form,.cadre-form iframe{min-height:900px;height:900px}
+  .site{padding:14px;gap:18px}
+  .site-voile{opacity:1;background:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.8) 100%)}
+  .apercu{padding:0}
+  .apercu-boite{height:100%;border:0}
+  .apercu-tete{gap:10px}
+  .apercu-larg{display:none}
+  .site-liens .btn{flex:1;text-align:center}
+}
+@media(prefers-reduced-motion:reduce){
+  .apercu-boite,.apercu-scene iframe,.site-cadre iframe{transition:none}
 }

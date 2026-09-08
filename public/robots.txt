@@ -1,5 +1,11 @@
+# up2front.com — écrit par _construire/construire.py, ne pas éditer à la main.
 User-agent: *
 Allow: /
+
+# /nouveau/ est un aperçu de travail ; les deux autres n'ont de sens
+# qu'une fois un formulaire envoyé.
 Disallow: /nouveau/
+Disallow: /merci.html
+Disallow: /commande-confirmee.html
 
 Sitemap: https://up2front.com/sitemap.xml

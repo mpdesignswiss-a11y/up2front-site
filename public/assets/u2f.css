@@ -53,11 +53,34 @@ header .in{display:flex;align-items:center;justify-content:space-between;
 .topnav a{transition:color .25s}
 .topnav a:hover{color:var(--vert)}
 
+/* ---------- bandeaux défilants ----------
+   Le défilement infini est en CSS, pas en JavaScript. Trois raisons : il
+   démarre même si un CDN ne répond pas, il tourne sur les vingt-deux
+   sous-pages sans qu'un script les connaisse, et il ne se bat plus avec les
+   parallaxes GSAP qui écrivaient la même propriété transform sur le même ul.
+   La liste contient un nombre PAIR de copies : à -50 % on est donc revenu
+   exactement sur une frontière de copie, et la boucle ne montre aucun raccord.
+   Toucher au nombre de copies dans _construire sans garder ce nombre pair
+   rouvre le saut.
+   La boucle écrit « translate », pas « transform » : ce sont deux propriétés
+   distinctes que le navigateur compose. GSAP peut donc continuer à poser sa
+   parallaxe de défilement en « x » (donc en transform) sur le même ul sans
+   que l'une efface l'autre — c'était le bug qui figeait les quatre bandes. */
+@keyframes u2f-defile{
+  from{translate:0 0}
+  to{translate:-50% 0}
+}
+.tick ul,.marq ul,.moyens ul,.fmarq ul{
+  animation:u2f-defile var(--vit,30s) linear infinite}
+@media (prefers-reduced-motion:reduce){
+  .tick ul,.marq ul,.moyens ul,.fmarq ul{animation:none}
+}
+
 /* ---------- ticker ---------- */
 .tick{border-top:1px solid var(--bord);border-bottom:1px solid var(--bord);
   overflow:hidden;margin-top:66px;max-width:420px;margin-left:auto;margin-right:auto}
 .tick ul{display:flex;gap:0;list-style:none;white-space:nowrap;
-  width:max-content;padding:9px 0;will-change:transform}
+  width:max-content;padding:9px 0;will-change:transform,translate;--vit:22s}
 .tick li{font-size:14.5px;color:var(--vert);padding:0 18px;display:flex;align-items:center}
 .tick li::after{content:"";width:6px;height:6px;border-radius:50%;border:1.3px solid var(--vert);margin-left:36px}
 
@@ -134,7 +157,7 @@ h1 .m{color:var(--gris)}
   max-width:17ch}
 .marq{margin-top:62px;border-top:1px solid var(--bord);border-bottom:1px solid var(--bord);
   overflow:hidden;padding:22px 0}
-.marq ul{display:flex;list-style:none;white-space:nowrap;width:max-content;will-change:transform}
+.marq ul{display:flex;list-style:none;white-space:nowrap;width:max-content;will-change:transform,translate;--vit:34s}
 .marq li{font-size:clamp(20px,2.4vw,34px);font-weight:600;letter-spacing:-.02em;color:var(--gris);
   padding:0 30px;display:flex;align-items:center;transition:color .25s}
 .marq li:hover{color:var(--vert)}
@@ -175,10 +198,11 @@ h1 .m{color:var(--gris)}
 .note b{color:var(--vert);font-weight:600}
 /* la profondeur sert au redressement des cartes au défilement (mécanique
    « project-rest-parent » du template : rotationX → 0) */
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:start;
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch;
   perspective:1600px;perspective-origin:50% 0%}
 .plan{background:var(--noir-2);border:1px solid var(--bord);border-radius:20px;padding:34px 28px 32px;
-  position:relative;transition:border-color .5s;will-change:transform}
+  position:relative;transition:border-color .5s;will-change:transform;
+  display:flex;flex-direction:column}
 .plan:hover{border-color:rgba(210,255,197,.5)}
 .plan.best{background:var(--vert);color:#000;border-color:var(--vert)}
 .tag{position:absolute;top:-14px;right:20px;background:#000;color:var(--vert);border:1.5px solid var(--vert);
@@ -215,6 +239,22 @@ h1 .m{color:var(--gris)}
 .plan.best .feat li.no{color:rgba(0,0,0,.32)}
 .feat li.no::before{border-color:#3a3a3a}
 .plan.best .feat li.no::before{border-color:rgba(0,0,0,.25)}
+/* les trois cartes portent les mêmes rubriques, dans le même ordre : rubrique
+   à gauche, valeur à droite, une ligne de séparation entre chacune. C'est ce
+   qui rend les colonnes comparables d'un coup d'œil. */
+.feat li.cmp{display:flex;align-items:baseline;justify-content:space-between;gap:14px;
+  padding:11px 0}
+.feat li.cmp::before{display:none}
+.feat li.cmp+li.cmp{border-top:1px solid var(--bord-2)}
+.plan.best .feat li.cmp+li.cmp{border-top-color:rgba(0,0,0,.11)}
+.feat li.cmp span{font-size:12.5px;letter-spacing:.02em;color:var(--gris);white-space:nowrap}
+.plan.best .feat li.cmp span{color:rgba(0,0,0,.55)}
+.feat li.cmp b{font-weight:500;text-align:right;color:var(--blanc)}
+.plan.best .feat li.cmp b{color:#000}
+.plan .socle{font-size:12.5px;line-height:1.55;color:var(--gris);margin-top:auto;padding-top:20px}
+.plan .socle a{color:var(--vert);border-bottom:1px solid rgba(210,255,197,.38)}
+.plan.best .socle{color:rgba(0,0,0,.62)}
+.plan.best .socle a{color:#000;border-bottom-color:rgba(0,0,0,.35)}
 
 /* =====================================================================
    SECTIONS REPRISES DU FICHIER D'ALEX
@@ -300,7 +340,7 @@ h1 .m{color:var(--gris)}
 .sceau{width:100%;max-width:300px;justify-self:end}
 .moyens{margin-top:60px;border-top:1px solid var(--bord);border-bottom:1px solid var(--bord);
   overflow:hidden;padding:20px 0}
-.moyens ul{display:flex;list-style:none;white-space:nowrap;width:max-content;will-change:transform}
+.moyens ul{display:flex;list-style:none;white-space:nowrap;width:max-content;will-change:transform,translate;--vit:26s}
 .moyens li{font-size:17px;font-weight:600;letter-spacing:.02em;color:var(--gris);padding:0 26px;
   display:flex;align-items:center;transition:color .25s}
 .moyens li:hover{color:var(--vert)}
@@ -391,7 +431,7 @@ footer{border-top:1px solid var(--bord-2);padding-top:86px;padding-bottom:44px}
 .fbas{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-top:74px;
   padding-top:26px;border-top:1px solid var(--bord-2);font-size:13px;color:var(--gris)}
 .fmarq{margin-top:64px;overflow:hidden}
-.fmarq ul{display:flex;list-style:none;white-space:nowrap;width:max-content;will-change:transform}
+.fmarq ul{display:flex;list-style:none;white-space:nowrap;width:max-content;will-change:transform,translate;--vit:30s}
 .fmarq li{font-size:clamp(56px,11vw,168px);font-weight:800;letter-spacing:-.045em;line-height:.94;
   color:#151515;padding-right:44px}
 
