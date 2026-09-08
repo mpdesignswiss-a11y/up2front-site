@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /nouveau/
 
 Sitemap: https://up2front.com/sitemap.xml

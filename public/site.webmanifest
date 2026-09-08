@@ -1,24 +1,17 @@
 {
   "name": "Up2Front",
   "short_name": "Up2Front",
-  "description": "Création de sites web à prix fixe en Suisse romande.",
+  "description": "Sites web professionnels à prix ferme, livrés en trois à sept jours ouvrés. Suisse romande.",
+  "lang": "fr-CH",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#FBFBFA",
-  "theme_color": "#2B44FF",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
   "icons": [
-    {
-      "src": "/logo-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/logo-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    }
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/icone-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icone-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
   ]
 }
