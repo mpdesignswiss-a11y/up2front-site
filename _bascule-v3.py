@@ -71,15 +71,20 @@ def deplacer_assets():
 # 2. redirections des anciennes URL
 # --------------------------------------------------------------------------
 
+# chemin ancien -> (cible, titre, faut-il reporter ?session_id=… )
+#
+# /merci/ était la page « Paiement confirmé » : c'est là que Stripe renvoie le
+# client après paiement, avec ?session_id=… dans l'URL. La redirection doit
+# donc reporter la chaîne de requête, sinon l'identifiant de session est perdu.
 REDIRECTIONS = {
     "cgv/index.html":               ("/legal/conditions.html",
-                                     "Conditions générales de vente"),
+                                     "Conditions générales de vente", False),
     "mentions-legales/index.html":  ("/legal/mentions-legales.html",
-                                     "Mentions légales"),
+                                     "Mentions légales", False),
     "confidentialite/index.html":   ("/legal/confidentialite.html",
-                                     "Politique de confidentialité"),
-    "merci/index.html":             ("/merci.html",
-                                     "Merci"),
+                                     "Politique de confidentialité", False),
+    "merci/index.html":             ("/commande-confirmee.html",
+                                     "Paiement confirmé", True),
 }
 
 GABARIT = """<!doctype html>
@@ -99,7 +104,7 @@ GABARIT = """<!doctype html>
        text-align:center;padding:2rem}}
   a{{color:#f4f4f5}}
 </style>
-<script>location.replace("{cible}");</script>
+<script>location.replace("{cible}"{suffixe});</script>
 </head>
 <body>
 <p>Cette page a déménagé.<br>
@@ -109,11 +114,14 @@ GABARIT = """<!doctype html>
 """
 
 def poser_redirections():
-    for rel, (cible, titre) in REDIRECTIONS.items():
+    for rel, (cible, titre, garder_query) in REDIRECTIONS.items():
         p = PUBLIC / rel
         p.parent.mkdir(parents=True, exist_ok=True)
-        p.write_text(GABARIT.format(cible=cible, titre=titre), encoding="utf-8")
-        print("   %-32s → %s" % ("/" + rel.replace("index.html", ""), cible))
+        suffixe = " + location.search" if garder_query else ""
+        p.write_text(GABARIT.format(cible=cible, titre=titre, suffixe=suffixe),
+                     encoding="utf-8")
+        print("   %-32s → %s%s" % ("/" + rel.replace("index.html", ""), cible,
+                                   "  (+ ?session_id)" if garder_query else ""))
 
 
 # --------------------------------------------------------------------------
