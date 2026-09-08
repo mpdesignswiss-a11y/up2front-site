@@ -297,20 +297,42 @@ h1 .m{color:var(--gris)}
 
 /* ---------- réalisations ---------- */
 .filtres{display:flex;flex-wrap:wrap;gap:9px;margin-top:38px}
-.filtres b{border:1px solid var(--bord);border-radius:999px;padding:8px 16px;font-size:13px;
-  font-weight:500;color:#cfcfcf}
-.filtres b:first-child{background:var(--vert);color:#000;border-color:var(--vert)}
+.filtres button{border:1px solid var(--bord);border-radius:999px;padding:8px 16px;font-size:13px;
+  font-weight:500;color:#cfcfcf;background:none;cursor:pointer;font-family:inherit;
+  display:inline-flex;align-items:center;gap:7px;
+  transition:background .25s,color .25s,border-color .25s}
+.filtres button span{font-size:11px;color:var(--gris);font-variant-numeric:tabular-nums}
+.filtres button:hover{border-color:var(--vert);color:#fff}
+.filtres button[aria-pressed="true"]{background:var(--vert);color:#000;border-color:var(--vert)}
+.filtres button[aria-pressed="true"] span{color:rgba(0,0,0,.55)}
+.filtres button:focus-visible{outline:2px solid var(--vert);outline-offset:3px}
+.cases-vide{margin-top:34px;color:var(--gris);font-size:15px}
 .cases{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:46px}
-.cas{border:1px solid var(--bord);border-radius:20px;overflow:hidden;background:var(--noir-2)}
+.cas{border:1px solid var(--bord);border-radius:20px;overflow:hidden;background:var(--noir-2);
+  transition:border-color .3s,transform .3s}
+.cas:hover{border-color:var(--vert);transform:translateY(-3px)}
+.cas[hidden]{display:none}
 .vign{aspect-ratio:4/3;position:relative;overflow:hidden;background:var(--noir-3);
   display:grid;place-items:center}
-.vign i{display:block;width:22%;height:22%;will-change:width,height}
-.cas:nth-child(3n+1) .vign i{background:var(--lavande)}
-.cas:nth-child(3n+2) .vign i{background:var(--rose)}
-.cas:nth-child(3n+3) .vign i{background:var(--jaune)}
-.cas .meta{padding:20px 22px 24px;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
-.cas .meta b{font-size:16.5px;font-weight:600;letter-spacing:-.02em}
-.cas .meta span{font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gris)}
+.vign svg{width:100%;height:100%;display:block}
+.cas .meta{padding:20px 22px 14px;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.cas .meta b{font-size:16.5px;font-weight:600;letter-spacing:-.02em;line-height:1.3}
+.cas .meta span{font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gris);
+  white-space:nowrap}
+/* second bandeau : l'offre, son prix, son étendue — la carte devient lisible
+   sans avoir à l'ouvrir. */
+.cas .meta-2{margin:0 22px;padding:13px 0 20px;border-top:1px solid var(--bord)}
+.cas .meta-2 span{font-size:12px;letter-spacing:.03em;text-transform:none;white-space:normal}
+/* la vignette d'un site réellement en ligne montre son adresse, pas un dessin :
+   c'est ce qui permet de vérifier avant même de cliquer.
+   Le sélecteur porte deux classes à dessein : u2f-pages.css, chargé après
+   celui-ci, remet « .vign » en display:block. Une seule classe perdrait donc
+   l'arbitrage et l'adresse retomberait dans le coin haut-gauche. */
+.cas .vign-site{display:grid;place-items:center;
+  background:radial-gradient(120% 120% at 50% 0%,rgba(210,255,197,.10),transparent 62%),
+  var(--noir-3)}
+.cas .vign-site span{font-size:15px;color:var(--vert);letter-spacing:.02em;word-break:break-all;
+  padding:0 22px;text-align:center;line-height:1.5}
 
 /* ---------- processus ---------- */
 .etapes{margin-top:62px;border-top:1px solid var(--bord)}

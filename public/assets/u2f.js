@@ -399,16 +399,52 @@ lot('#cas .rv');
 lot('#methode .rv', {duree:1, stagger:.1});
 lot('#faq .rv');
 
-/* --- j · les vignettes de projet grandissent depuis leur pastille : c'est
-       la mécanique « project-inner-parent » du template, reprise telle
-       quelle — width et height de 22 % à 100 %, scrub .8, de top 85 % à
-       bottom 90 %. --- */
-qq('.vign i').forEach(function(v){
-  gsap.fromTo(v,
-    {width:'22%', height:'22%'},
-    {width:'100%', height:'100%', ease:'none',
-     scrollTrigger:{ trigger:v.parentNode, start:'top 85%', end:'bottom 90%', scrub:.8 }});
-});
+/* --- j · le tri par thème.
+
+   Les cinq pastilles étaient jusqu'ici des <b> décoratifs : rien ne les
+   écoutait, et cliquer dessus ne faisait rien. Ce sont maintenant de vrais
+   boutons, et chaque carte porte le thème auquel elle appartient. Le tri se
+   fait donc en comparant deux attributs, sans liste tenue à part qui
+   pourrait se désynchroniser des cartes.
+
+   Trois précautions. On masque avec l'attribut « hidden » plutôt qu'avec un
+   style, pour que la carte sorte aussi de l'arbre d'accessibilité — un lien
+   invisible mais encore tabulable est un piège au clavier. On rejoue une
+   courte apparition sur les cartes qui reviennent, sinon le changement est
+   brutal. Et on prévient ScrollTrigger que les hauteurs ont bougé, faute de
+   quoi les révélations du bas de page se déclenchent au mauvais endroit. --- */
+(function(){
+  var barre = q('.filtres'), grille = q('.cases');
+  if(!barre || !grille) return;
+
+  var boutons = qq('button', barre), cartes = qq('.cas', grille);
+  var vide = q('.cases-vide');
+
+  function trier(theme){
+    var visibles = 0;
+    cartes.forEach(function(c){
+      var garde = (theme === '*' || c.dataset.famille === theme);
+      if(garde){
+        var etait = c.hidden;
+        c.hidden = false;
+        visibles++;
+        if(etait) gsap.fromTo(c, {opacity:0, y:14},
+                              {opacity:1, y:0, duration:.42, ease:E});
+      }else{
+        c.hidden = true;
+      }
+    });
+    boutons.forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.dataset.filtre === theme));
+    });
+    if(vide) vide.hidden = visibles > 0;
+    ScrollTrigger.refresh();
+  }
+
+  boutons.forEach(function(b){
+    b.addEventListener('click', function(){ trier(b.dataset.filtre); });
+  });
+})();
 
 /* --- k · le bandeau des moyens de paiement et le mot géant du pied de page
        reprennent la boucle pilotée par la vitesse de défilement --- */
@@ -560,7 +596,7 @@ if(fin){
   });
 
   qq('a, .plan, .arg, .badges>div, .marq li, .face, .puce, .cas, .mbr, ' +
-     '.qa summary, .fgrid li, .moyens li, .fleches button, .filtres b').forEach(function(el){
+     '.qa summary, .fgrid li, .moyens li, .fleches button, .filtres button').forEach(function(el){
     el.addEventListener('mouseenter', function(){
       gsap.to(an, {scale:1.9, borderColor:'rgba(210,255,197,.9)', duration:.35, ease:E});
       gsap.to(pt, {scale:.4, duration:.35, ease:E});
