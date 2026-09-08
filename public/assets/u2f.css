@@ -49,9 +49,24 @@ header .in{display:flex;align-items:center;justify-content:space-between;
   padding-top:16px;padding-bottom:16px}
 .logo{font-size:27px;font-weight:800;letter-spacing:-.02em;color:var(--vert);line-height:1}
 .logo span{color:var(--blanc)}
-.topnav{display:flex;gap:56px;font-size:13.5px;letter-spacing:.06em;text-transform:uppercase}
+.topnav{display:flex;gap:56px;font-size:13.5px;letter-spacing:.06em;text-transform:uppercase;
+  margin-left:auto}
 .topnav a{transition:color .25s}
 .topnav a:hover{color:var(--vert)}
+
+/* ---------- sélecteur de langue ----------
+   Quatre codes de deux lettres, à droite du menu. La langue affichée n'est
+   pas un lien : elle est en vert et sans survol, pour qu'on voie où l'on est
+   sans avoir à cliquer pour le découvrir.
+   Attention : u2f-pages.css est chargé APRÈS cette feuille. Une règle .lg
+   d'une seule classe y serait prioritaire à spécificité égale — c'est ce qui
+   avait silencieusement écrasé .vign. Ne pas redéclarer .lg ailleurs. */
+.lg{display:flex;gap:2px;align-items:center;margin-left:30px;
+  font-size:11.5px;letter-spacing:.09em;font-weight:600}
+.lg a,.lg .lg-a{padding:5px 7px;border-radius:5px;line-height:1;
+  color:var(--gris);transition:color .25s,background .25s}
+.lg a:hover{color:var(--blanc);background:rgba(255,255,255,.07)}
+.lg .lg-a{color:var(--vert);background:rgba(210,255,197,.09)}
 
 /* ---------- bandeaux défilants ----------
    Le défilement infini est en CSS, pas en JavaScript. Trois raisons : il
@@ -484,6 +499,8 @@ footer{border-top:1px solid var(--bord-2);padding-top:86px;padding-bottom:44px}
 @media(max-width:720px){
   .wrap{padding-left:18px;padding-right:18px}
   .topnav{display:none}
+  .lg{margin-left:auto;margin-right:14px;gap:0;font-size:11px}
+  .lg a,.lg .lg-a{padding:5px 5px}
   .hgrid{grid-template-columns:minmax(0,1fr)}
   .badges{grid-template-columns:1fr 1fr}
   .args{grid-template-columns:1fr}
