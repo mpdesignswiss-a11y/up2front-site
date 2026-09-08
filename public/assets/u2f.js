@@ -395,8 +395,9 @@ lot('#garantie .rv', {duree:1.05, stagger:.1});
 lot('#avis .rv');
 lot('#equipe .h2, #equipe .sub');
 lot('.mbr', {duree:.95, stagger:.06});
-lot('#cas .rv');
-lot('#methode .rv', {duree:1, stagger:.1});
+/* Les sections « cas » et « methode » ont été retirées de l'accueil : la
+   première faisait doublon avec la galerie #realisations, la seconde offrait un
+   guide qui n'existe pas. Leurs lignes d'animation partent avec elles. */
 lot('#faq .rv');
 
 /* --- j · le tri par thème.
@@ -420,10 +421,16 @@ lot('#faq .rv');
   var boutons = qq('button', barre), cartes = qq('.cas', grille);
   var vide = q('.cases-vide');
 
+  /* Une carte porte une ou plusieurs clés, séparées par une barre verticale :
+     « Commerce|En ligne ». Le séparateur n'est ni l'espace ni la virgule parce
+     que les familles en contiennent déjà (« Santé & bien-être »). C'est ce qui
+     permet au filtre « En ligne » de traverser les familles au lieu d'en être
+     une de plus. */
   function trier(theme){
     var visibles = 0;
     cartes.forEach(function(c){
-      var garde = (theme === '*' || c.dataset.famille === theme);
+      var cles = (c.dataset.famille || '').split('|');
+      var garde = (theme === '*' || cles.indexOf(theme) !== -1);
       if(garde){
         var etait = c.hidden;
         c.hidden = false;
@@ -490,26 +497,7 @@ qq('#transformation .col, .bal > div').forEach(function(b){
   });
 });
 
-/* --- p · la bande d'études de cas : les deux flèches la font défiler d'une
-       vignette, et les vignettes dérivent au passage --- */
-var piste = q('.piste');
-if(piste){
-  qq('.fleches button').forEach(function(b){
-    b.addEventListener('click', function(){
-      var c = q('.cas', piste);
-      var pas = c ? c.getBoundingClientRect().width + 18 : 300;
-      piste.scrollBy({left: pas * parseFloat(b.dataset.piste), behavior:'smooth'});
-    });
-  });
-  qq('.piste .cas').forEach(function(c, i){
-    gsap.fromTo(c, {y: 26 - (i % 3) * 18}, {
-      y: -26 + (i % 3) * 18, ease:'none',
-      scrollTrigger:{ trigger:piste, start:'top bottom', end:'bottom top', scrub:.8 }
-    });
-  });
-}
-
-/* --- q · la FAQ : à l'ouverture, la réponse se déroule en hauteur plutôt
+/* --- p · la FAQ : à l'ouverture, la réponse se déroule en hauteur plutôt
        que d'apparaître d'un bloc --- */
 qq('.qa').forEach(function(d){
   var rep = q('.rep', d), som = q('summary', d);
@@ -596,7 +584,7 @@ if(fin){
   });
 
   qq('a, .plan, .arg, .badges>div, .marq li, .face, .puce, .cas, .mbr, ' +
-     '.qa summary, .fgrid li, .moyens li, .fleches button, .filtres button').forEach(function(el){
+     '.qa summary, .fgrid li, .moyens li, .filtres button').forEach(function(el){
     el.addEventListener('mouseenter', function(){
       gsap.to(an, {scale:1.9, borderColor:'rgba(210,255,197,.9)', duration:.35, ease:E});
       gsap.to(pt, {scale:.4, duration:.35, ease:E});

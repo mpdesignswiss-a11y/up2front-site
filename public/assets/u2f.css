@@ -348,6 +348,29 @@ h1 .m{color:var(--gris)}
   var(--noir-3)}
 .cas .vign-site span{font-size:15px;color:var(--vert);letter-spacing:.02em;word-break:break-all;
   padding:0 22px;text-align:center;line-height:1.5}
+/* l'état de la carte, posé sur la vignette : ouvrable maintenant, ou pas encore.
+   Le badge est frère de la vignette et non son enfant — voir p_accueil.py — et
+   se cale donc sur la carte, qu'on rend relative pour lui. Comme la vignette
+   est le premier élément de la carte et qu'elle en occupe toute la largeur, se
+   caler sur l'une ou sur l'autre revient au même à l'œil. Le sélecteur n'est
+   pas préfixé : le même badge sert à l'accueil (.cas) et à la page
+   réalisations (.proj). */
+.cas,.proj{position:relative}
+.etat{position:absolute;top:12px;left:12px;z-index:2;font-size:10.5px;font-weight:600;
+  letter-spacing:.09em;text-transform:uppercase;padding:5px 10px;border-radius:999px;
+  display:inline-flex;align-items:center;gap:6px;line-height:1}
+.etat-on{background:var(--vert);color:#000}
+.etat-on::before{content:"";width:6px;height:6px;border-radius:50%;background:#000}
+.etat-off{background:rgba(0,0,0,.62);color:var(--gris);border:1px solid var(--bord);
+  backdrop-filter:blur(3px)}
+/* Les vignettes dessinées portent une barre de navigation factice tout en haut,
+   exactement là où se pose le badge : il la coupait en deux et un bout de barre
+   dépassait sur sa droite, ce qui avait l'air d'un défaut d'affichage. Un voile
+   dégradé sur la première bande de la vignette efface ce bout et donne au badge
+   un fond franc. Sur les vignettes-adresse, qui ne dessinent rien, le voile est
+   invisible. */
+.vign::after{content:"";position:absolute;inset:0 0 auto;height:64px;pointer-events:none;
+  background:linear-gradient(180deg,rgba(0,0,0,.78),rgba(0,0,0,0))}
 
 /* ---------- processus ---------- */
 .etapes{margin-top:62px;border-top:1px solid var(--bord)}
@@ -408,18 +431,6 @@ h1 .m{color:var(--gris)}
 .avis-c .qui{margin-top:22px;padding-top:18px;border-top:1px solid var(--bord);
   font-size:13px;color:var(--gris)}
 .avis-c .qui b{display:block;color:var(--blanc);font-weight:600;font-size:14px;margin-bottom:4px}
-
-/* ---------- études de cas : bande horizontale ---------- */
-.casbar{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
-.fleches{display:flex;gap:10px}
-.fleches button{width:44px;height:44px;border-radius:50%;border:1px solid var(--bord);
-  background:none;color:var(--blanc);font-size:17px;cursor:pointer;font-family:inherit;
-  transition:background .3s,color .3s,border-color .3s}
-.fleches button:hover{background:var(--vert);color:#000;border-color:var(--vert)}
-.piste{display:flex;gap:18px;margin-top:46px;overflow-x:auto;scroll-behavior:smooth;
-  scrollbar-width:none;padding-bottom:4px}
-.piste::-webkit-scrollbar{display:none}
-.piste .cas{flex:0 0 clamp(230px,29%,350px)}
 
 /* ---------- méthode client local ---------- */
 .meth{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px;align-items:start}
