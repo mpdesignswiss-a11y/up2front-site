@@ -228,7 +228,10 @@ var apercu = q('#apercu');
 if(apercu){
   var vue      = q('[data-vue]', apercu);
   var nomEl    = q('[data-nom]', apercu);
-  var hoteEl   = q('[data-hote]', apercu);
+  /* L'en-tête portait aussi l'hôte du site — « smash-house-984.netlify.app ».
+     Il a été retiré du gabarit : le nom de l'hébergeur n'apprend rien au
+     visiteur et faisait passer un site fini pour un essai gratuit. L'adresse
+     réelle reste dans « Ouvrir dans un onglet ↗ », à un clic. */
   var lienEl   = q('[data-lien]', apercu);
   var boutLarg = qq('[data-larg]', apercu);
   var appelant = null;   /* le bouton qui a ouvert : on lui rend le focus */
@@ -241,10 +244,9 @@ if(apercu){
     });
   };
 
-  var ouvrir = function(url, nom, hote, source){
+  var ouvrir = function(url, nom, source){
     appelant = source || null;
     if(nomEl)  nomEl.textContent  = nom  || '';
-    if(hoteEl) hoteEl.textContent = hote || '';
     if(lienEl) lienEl.href = url;
     if(vue){
       vue.setAttribute('title', 'Aperçu du site ' + (nom || ''));
@@ -274,8 +276,7 @@ if(apercu){
   qq('[data-apercu]').forEach(function(b){
     b.addEventListener('click', function(){
       ouvrir(b.getAttribute('data-apercu'),
-             b.getAttribute('data-nom'),
-             b.getAttribute('data-hote'), b);
+             b.getAttribute('data-nom'), b);
     });
   });
 

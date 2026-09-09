@@ -359,12 +359,11 @@ h1 .m{color:var(--gris)}
   background:radial-gradient(120% 120% at 50% 0%,rgba(210,255,197,.10),transparent 62%);
   transition:opacity .7s var(--ease)}
 .cas .vign-site.est-prete::before{opacity:0}
-/* L'adresse reste lisible par-dessus l'aperçu : c'est elle qu'on vérifie avant
-   de cliquer, et elle dit où mène le lien. */
-.cas .vign-hote{position:absolute;z-index:3;left:12px;bottom:12px;max-width:calc(100% - 24px);
-  font-size:11.5px;color:var(--vert);letter-spacing:.02em;word-break:break-all;
-  line-height:1.3;padding:6px 11px;border-radius:999px;
-  background:rgba(0,0,0,.62);border:1px solid var(--bord);backdrop-filter:blur(3px)}
+/* Une pastille .vign-hote se posait ici, en bas à gauche de l'aperçu, avec
+   l'adresse de l'hébergeur : « smash-house-984.netlify.app ». Elle a été
+   retirée de p_accueil.py — le nom de l'hébergeur n'apprend rien au visiteur
+   et faisait passer un site fini pour un essai sur un compte gratuit, et la
+   ligne juste en dessous donne déjà le nom du site. La règle part avec elle. */
 /* l'état de la carte, posé sur la vignette : ouvrable maintenant, ou pas encore.
    Le badge est frère de la vignette et non son enfant — voir p_accueil.py — et
    se cale donc sur la carte, qu'on rend relative pour lui. Comme la vignette
