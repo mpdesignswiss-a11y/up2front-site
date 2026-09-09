@@ -22,10 +22,17 @@
    en étant chargé après — d'où un texte vert sur un fond vert, illisible, au
    survol. Le préfixe fait passer la règle à (0,3,1) et elle gagne. */
 .topnav a.nav-cta{border:1.4px solid var(--bord);border-radius:999px;
-  padding:9px 18px;transition:border-color .3s,color .3s,background .3s}
+  padding:9px 18px;
+  transition:border-color .3s,color .3s,background .3s,font-weight .3s,padding .3s}
 .topnav a.nav-cta::before{display:none}
+/* Le gras au survol coûte 4,1 px de largeur — mesuré sur « Voir les tarifs »
+   en Mona Sans, poids 400 puis 700. Sans rien faire, la pastille s'élargit et
+   pousse le sélecteur de langue à sa droite : un sursaut à chaque passage de
+   souris. On reprend donc ces 4 px sur le padding, 2 de chaque côté, et la
+   pastille garde exactement sa largeur. Les autres langues ont des libellés
+   de longueur voisine, donc l'écart résiduel reste sous le pixel. */
 .topnav a.nav-cta:hover{background:var(--vert);border-color:var(--vert);
-  color:#000}
+  color:#000;font-weight:700;padding:9px 16px}
 
 /* ---------- menu mobile ---------- */
 .burger{display:none;width:44px;height:44px;background:none;border:1px solid var(--bord);
