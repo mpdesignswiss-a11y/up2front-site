@@ -2,9 +2,7 @@
 User-agent: *
 Allow: /
 
-# /nouveau/ est un aperçu de travail ; les deux autres n'ont de sens
-# qu'une fois un formulaire envoyé.
-Disallow: /nouveau/
+# Ces deux pages n'ont de sens qu'une fois un formulaire envoyé.
 Disallow: /merci.html
 Disallow: /commande-confirmee.html
 

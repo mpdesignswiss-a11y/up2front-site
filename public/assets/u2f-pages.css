@@ -222,9 +222,20 @@ a.carte:hover{border-color:var(--vert);background:var(--noir-3)}
 .site-cadre{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--noir-3)}
 .site-cadre iframe{position:absolute;top:0;left:0;width:1440px;height:900px;border:0;
   transform:scale(var(--k,.28));transform-origin:top left;pointer-events:none;
-  opacity:0;transition:opacity .6s var(--ease)}
+  z-index:1;opacity:0;transition:opacity .6s var(--ease)}
 .site-cadre.est-prete iframe{opacity:1}
-.site-voile{position:absolute;inset:0;width:100%;border:0;cursor:pointer;
+/* L'affiche dessinée, la même que sur les vignettes de l'accueil
+   (vignettes.affiche). Le site vivant n'est chargé qu'au survol ; sans elle,
+   le cadre restait un rectangle noir jusqu'à ce que la souris passe dessus, et
+   la page qui doit prouver le travail montrait trois trous. Elle tient la
+   place, et le vrai site se pose par-dessus sans qu'on voie le fond au travers
+   pendant le fondu. Le halo vert marque l'attente et s'efface avec elle. */
+.site-cadre>svg{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.site-cadre::before{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 120% at 50% 0%,rgba(210,255,197,.10),transparent 62%);
+  transition:opacity .6s var(--ease)}
+.site-cadre.est-prete::before{opacity:0}
+.site-voile{position:absolute;inset:0;width:100%;border:0;cursor:pointer;z-index:2;
   background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.75) 100%);
   display:flex;align-items:flex-end;justify-content:center;padding-bottom:20px;
   opacity:0;transition:opacity .35s var(--ease)}
