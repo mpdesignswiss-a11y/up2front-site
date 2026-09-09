@@ -361,12 +361,10 @@ h1 .m{color:var(--gris)}
    sans avoir à l'ouvrir. */
 .cas .meta-2{margin:0 22px;padding:13px 0 20px;border-top:1px solid var(--bord)}
 .cas .meta-2 span{font-size:12px;letter-spacing:.03em;text-transform:none;white-space:normal}
-/* La vignette d'un site réellement en ligne n'est pas un dessin figé ni une
-   capture : c'est le site, chargé dans un cadre de 1440 px puis réduit par
-   homothétie (--k, posé par u2f-pages.js). Une capture aurait vieilli au
-   premier changement du site ; là, ce qu'on voit est ce qui est en ligne.
-   On charge 2,6 hauteurs de cadre (data-haut) et le survol fait remonter le
-   cadre de la course exacte (--defile) : la page se déroule sous l'œil.
+/* La vignette d'un site réellement en ligne. Le chemin normal est désormais la
+   capture (règle plus bas) ; ce qui suit est le repli, gardé pour un site
+   ajouté sans image : le site lui-même, chargé dans un cadre de 1440 px puis
+   réduit par homothétie (--k, posé par u2f-pages.js).
    Le sélecteur porte deux classes à dessein : u2f-pages.css, chargé après
    celui-ci, remet « .vign » en display:block. Une seule classe perdrait donc
    l'arbitrage. */
@@ -400,6 +398,33 @@ h1 .m{color:var(--gris)}
   background:radial-gradient(120% 120% at 50% 0%,rgba(210,255,197,.10),transparent 62%);
   transition:opacity .7s var(--ease)}
 .cas .vign-site.est-prete::before{opacity:0}
+/* Le voile d'aperçu, posé sur la vignette. La carte entière était un lien vers
+   le site : cliquer la preuve du travail faisait quitter le site, et sur le
+   domaine d'à côté plus rien ne ramène ici. La vignette ouvre donc l'aperçu
+   plein écran — le vrai site, chez nous — et « Ouvrir ↗ », en bas de carte,
+   garde le chemin vers le site en propre.
+   Au clavier, le voile se montre dès qu'il prend le focus : sans cela on
+   tabulerait sur un bouton invisible. */
+.cas .vign-voile{position:absolute;inset:0;width:100%;border:0;cursor:pointer;z-index:3;
+  background:linear-gradient(180deg,rgba(0,0,0,0) 42%,rgba(0,0,0,.74) 100%);
+  display:flex;align-items:flex-end;justify-content:center;padding-bottom:16px;
+  opacity:0;transition:opacity .35s var(--ease)}
+.cas .vign-voile span{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:#000;background:var(--vert);padding:9px 17px;border-radius:999px;
+  font-weight:600;line-height:1}
+.cas:hover .vign-voile,.cas .vign-voile:focus-visible{opacity:1}
+/* Sur un écran tactile il n'y a pas de survol : le voile resterait invisible
+   et l'aperçu inatteignable. On le montre alors en permanence, plus discret. */
+@media (hover:none){
+  .cas .vign-voile{opacity:1;
+    background:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.6) 100%)}
+}
+/* « Ouvrir ↗ » n'est plus un simple mot dans une carte cliquable : c'est le
+   lien vers le site, seul de son espèce dans la carte. Il se voit comme tel. */
+.cas .meta-2 .cas-lien{color:var(--vert);font-size:12px;letter-spacing:.03em;
+  white-space:nowrap;border-bottom:1px solid transparent;padding-bottom:1px;
+  transition:border-color .25s var(--ease)}
+.cas .meta-2 .cas-lien:hover{border-bottom-color:var(--vert)}
 /* Une pastille .vign-hote se posait ici, en bas à gauche de l'aperçu, avec
    l'adresse de l'hébergeur : « smash-house-984.netlify.app ». Elle a été
    retirée de p_accueil.py — le nom de l'hébergeur n'apprend rien au visiteur
