@@ -641,18 +641,34 @@ if(sceau){
     .to(scDisque, {scale:1, duration:.8, ease:'back.out(1.9)'}, .48)
     .to(scCoche,  {strokeDashoffset:0, duration:.5, ease:'power2.out'}, 1.02)
     .add(function(){ sceau.classList.add('est-scelle'); }, 1.02)
+    /* « immediateRender:false » : sans lui, GSAP écrit l'état de départ dès la
+       construction de la timeline, et l'onde se voit à 0.6 d'opacité avant même
+       que rien ne soit joué — un anneau vert posé sur un disque absent. */
     .fromTo(scOnde, {opacity:.6, scale:1},
-                    {opacity:0, scale:1.5, duration:1, ease:'power2.out'}, 1.02);
+                    {opacity:0, scale:1.5, duration:1, ease:'power2.out',
+                     immediateRender:false}, 1.02);
 
   /* le pointillé tourne ensuite sans fin, très lentement : le sceau reste
      vivant dans le coin de l'œil sans réclamer l'attention. */
   var rotSceau = gsap.to(scTour, {rotation:360, duration:52, ease:'none',
                                   repeat:-1, svgOrigin:'150 150', paused:true});
 
+  var jouerSceau = function(){
+    if(tlSceau.progress() > 0 || tlSceau.isActive()) return;
+    tlSceau.play(); rotSceau.play();
+  };
+
   ScrollTrigger.create({
     trigger: sceau, start: 'top 85%', once: true,
-    onEnter: function(){ tlSceau.play(); rotSceau.play(); }
+    onEnter: jouerSceau
   });
+
+  /* ScrollTrigger n'appelle pas onEnter lors de son premier calcul : un
+     déclencheur créé alors que la page est déjà descendue sur la section reste
+     actif, mais muet. C'est le cas de quiconque arrive par up2front.com/#garantie
+     ou recharge la page à cet endroit — précisément le visiteur à qui on a envoyé
+     le lien. On regarde donc nous-même, une fois, où se trouve le sceau. */
+  if(sceau.getBoundingClientRect().top < window.innerHeight * .85) jouerSceau();
 
   /* rejouer au survol, une fois la première construction finie : c'est le
      genre de détail qu'un visiteur refait exprès, et qui le retient. */

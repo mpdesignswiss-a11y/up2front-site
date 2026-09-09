@@ -209,68 +209,46 @@ if(cadres.length){
     window.addEventListener('resize', function(){ cadres.forEach(ajuster); });
   }
 
-  /* La file d'attente. « charger » y dépose au lieu de lancer tout de suite ;
-     un seul site est en vol à la fois, sinon les trois se disputent la bande
-     passante et arrivent ensemble, tard. */
-  var file = [], enVol = false;
-  var suivant = function(){
-    if(enVol || !file.length) return;
-    var cadre = file.shift();
+  /* Le chargement. Trois stratégies se sont succédé ici, et il faut dire
+     pourquoi on en est à la troisième.
+
+     1. À l'approche de l'écran, les trois d'un coup : la page piquait du nez au
+        moment où la galerie arrivait.
+     2. Au survol seulement : celui qui ne survolait pas ne voyait rien, à
+        l'endroit précis où le travail doit se prouver.
+     3. À l'approche, un site à la fois, en file : mieux, mais la vignette
+        restait un rectangle teinté le temps que le tour vienne — et sur trois
+        sites qui chargent des photos, ce temps se comptait en secondes.
+
+     Aujourd'hui : les trois partent ensemble dès que NOTRE page a fini de
+     charger la sienne. C'est le seul moment où la bande passante est libre, et
+     la galerie est loin en dessous : le site est en place, arrêté sur son
+     premier écran, bien avant que le visiteur y arrive. La vignette qu'il
+     découvre est donc une image du site, pas un voile de couleur. */
+  var charger = function(cadre){
     var f = q('iframe', cadre);
-    if(!f || f.src) return suivant();
-    enVol = true;
-    var libere = function(){
-      if(!enVol) return;      /* le relais est déjà passé au suivant */
-      enVol = false;
-      suivant();
-    };
-    f.addEventListener('load', function(){
-      cadre.classList.add('est-prete');   /* toujours, même après le délai */
-      libere();
-    });
-    /* Un site lent ne doit pas retenir les deux autres indéfiniment. */
-    setTimeout(libere, 1500);
+    if(!f || f.src) return;               /* déjà parti : rien à faire */
+    f.addEventListener('load', function(){ cadre.classList.add('est-prete'); });
+    /* Filet. Si « load » ne vient jamais — une police, une photo qui traîne —
+       on montre quand même au bout de cinq secondes ce qui est arrivé : mieux
+       vaut le site à demi peint que le voile de couleur. */
+    setTimeout(function(){ cadre.classList.add('est-prete'); }, 5000);
     f.src = f.getAttribute('data-src');
   };
 
-  var charger = function(cadre, prioritaire){
-    var f = q('iframe', cadre);
-    if(!f || f.src) return;               /* déjà parti : rien à faire */
-    var rang = file.indexOf(cadre);
-    if(rang > -1){
-      /* Déjà en file. Un survol le fait passer devant : celui qui va droit sur
-         la carte ne doit pas attendre le tour des deux autres. */
-      if(!prioritaire || rang === 0) return;
-      file.splice(rang, 1);
-    }
-    if(prioritaire) file.unshift(cadre); else file.push(cadre);
-    suivant();
-  };
+  var toutCharger = function(){ cadres.forEach(charger); };
+  if(document.readyState === 'complete') toutCharger();
+  else window.addEventListener('load', toutCharger);
 
-  /* À l'approche de l'écran. La marge d'un demi-écran fait que le site est
-     souvent déjà là quand la carte arrive vraiment sous les yeux. */
-  if(window.IntersectionObserver){
-    var io = new IntersectionObserver(function(entrees){
-      entrees.forEach(function(e){
-        if(!e.isIntersecting) return;
-        io.unobserve(e.target);
-        charger(e.target);
-      });
-    }, { rootMargin: '50% 0px' });
-    cadres.forEach(function(c){ io.observe(c); });
-  }else{
-    cadres.forEach(function(c){ charger(c); });
-  }
-
-  /* Les déclencheurs de survol sont posés sur la carte entière et non sur le
-     cadre : survoler le titre ou le prix annonce la même intention que
+  /* Les déclencheurs de survol restent, posés sur la carte entière et non sur
+     le cadre : survoler le titre ou le prix annonce la même intention que
      survoler l'image, et le lecteur au clavier n'atteint jamais le cadre — il
-     reçoit le focus sur le lien qui l'enveloppe. Ils font passer la carte
-     devant dans la file. */
+     reçoit le focus sur le lien qui l'enveloppe. Ils ne servent plus que dans
+     un cas, rare : la carte survolée avant que la page ait fini de charger. */
   cadres.forEach(function(cadre){
     var zone = cadre.closest ? (cadre.closest('.cas') || cadre.closest('.site') || cadre)
                              : cadre;
-    var lancer = function(){ charger(cadre, true); };
+    var lancer = function(){ charger(cadre); };
     ['pointerenter','focusin','touchstart'].forEach(function(evt){
       zone.addEventListener(evt, lancer, { once:true, passive:true });
     });
