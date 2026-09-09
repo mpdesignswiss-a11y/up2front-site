@@ -164,6 +164,15 @@ h1 .m{color:var(--gris)}
 .badges b{display:block;font-size:16.5px;color:var(--blanc);text-transform:none;
   letter-spacing:-.01em;margin-bottom:7px;font-weight:600}
 
+/* Le badge suisse. La croix est dessinée en CSS plutôt qu'insérée en SVG dans
+   la page : le contenu du badge reste une phrase simple, que la couche de
+   traduction déplace telle quelle vers l'anglais, l'allemand et l'italien, et
+   les quatre langues partagent une seule image au lieu d'en recopier le tracé
+   quatre fois. */
+.badges .ch b{display:flex;align-items:center;gap:8px}
+.badges .ch b::before{content:"";flex:0 0 auto;width:17px;height:17px;border-radius:3px;
+  background:#D52B1E url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10.4 5h3.2v4.4H18v3.2h-4.4V17h-3.2v-4.4H6V9.4h4.4z' fill='%23fff'/%3E%3C/svg%3E") center/contain no-repeat}
+
 /* rangée de cartes couleur (calquée sur le template) */
 .fan{margin-top:34px;display:flex;flex-flow:row wrap;justify-content:center;align-items:center;
   gap:11.2px}
@@ -618,7 +627,69 @@ footer{border-top:1px solid var(--bord-2);padding-top:86px;padding-bottom:44px}
 @media(max-width:420px){
   .face{width:34px;height:34px;font-size:12px;margin-left:-9px}
 }
+/* =====================================================================
+   WHATSAPP — bulle flottante et volet
+   =====================================================================
+   La bulle est le seul élément vert plein du site : elle doit se distinguer
+   du contenu sans le recouvrir. Elle est donc posée en bas à droite, à la
+   marge du texte, et elle est la dernière chose du document — un lecteur
+   d'écran la rencontre après le contenu, pas avant.
+
+   Le z-index reste sous celui du menu mobile et des modales : quand une
+   fenêtre s'ouvre, la bulle passe derrière, elle ne flotte pas par-dessus. */
+.wa{position:fixed;right:20px;bottom:20px;z-index:60;
+  display:flex;flex-flow:column;align-items:flex-end;gap:12px}
+
+.wa-bulle{width:56px;height:56px;border:none;border-radius:50%;cursor:pointer;
+  background:#25D366;color:#fff;display:grid;place-items:center;
+  box-shadow:0 6px 26px rgba(0,0,0,.5);
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.wa-bulle:hover{transform:scale(1.07);box-shadow:0 10px 32px rgba(37,211,102,.35)}
+.wa-bulle:focus-visible{outline:2px solid var(--blanc);outline-offset:3px}
+
+/* Le volet. « hidden » suffit à le cacher tant que le script n'a pas pris la
+   main ; l'attribut est retiré à l'ouverture, et c'est la classe qui anime. */
+.wa-volet[hidden]{display:none}
+.wa-volet{position:relative;width:min(320px,calc(100vw - 40px));
+  background:var(--noir-2);border:1px solid var(--bord);
+  padding:26px 22px 22px;display:flex;flex-flow:column;gap:10px;
+  box-shadow:0 18px 50px rgba(0,0,0,.6);
+  opacity:0;transform:translateY(10px) scale(.98);
+  transition:opacity .28s var(--ease),transform .28s var(--ease)}
+.wa-volet.ouvert{opacity:1;transform:none}
+
+.wa-x{position:absolute;top:12px;right:12px;width:28px;height:28px;
+  background:none;border:none;color:var(--gris);cursor:pointer;
+  display:grid;place-items:center;transition:color .25s}
+.wa-x:hover{color:var(--blanc)}
+
+.wa-nom{font-size:15px;font-weight:600;color:var(--blanc);letter-spacing:-.01em}
+.wa-dispo{font-size:12.5px;color:#25D366;letter-spacing:.02em}
+.wa-msg{font-size:14px;color:var(--gris);line-height:1.55;margin-top:6px}
+.wa-volet label{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--gris);margin-top:6px}
+.wa-volet textarea{width:100%;background:var(--noir);color:var(--blanc);
+  border:1px solid var(--bord-2);padding:11px 12px;font-family:var(--sans);
+  font-size:14px;line-height:1.5;resize:vertical;min-height:74px;
+  transition:border-color .25s}
+.wa-volet textarea:focus{outline:none;border-color:#25D366}
+.wa-go{margin-top:6px;background:#25D366;color:#000;text-align:center;
+  padding:13px 18px;font-size:14.5px;font-weight:600;letter-spacing:-.01em;
+  text-decoration:none;transition:background .25s}
+.wa-go:hover{background:#1fb457}
+
+/* Sur téléphone la bulle se rapproche du bord et le volet prend la largeur
+   utile, sans jamais dépasser — c'est exactement le débordement horizontal
+   qu'on vient de corriger ailleurs. */
+@media(max-width:520px){
+  .wa{right:14px;bottom:14px}
+  .wa-bulle{width:52px;height:52px}
+  .wa-volet{width:calc(100vw - 28px)}
+}
+
 @media(prefers-reduced-motion:reduce){
+  .wa-bulle:hover{transform:none}
+  .wa-volet{transition:none;opacity:1;transform:none}
   .rv{opacity:1;transform:none}
   h1 .ln i{transform:none}
   .scroll span{animation:none}

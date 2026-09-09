@@ -597,7 +597,7 @@ if(fin){
   });
 
   qq('a, .plan, .arg, .badges>div, .marq li, .face, .puce, .cas, .mbr, ' +
-     '.qa summary, .fgrid li, .moyens li, .filtres button').forEach(function(el){
+     '.qa summary, .fgrid li, .moyens li, .filtres button, .wa-bulle').forEach(function(el){
     el.addEventListener('mouseenter', function(){
       gsap.to(an, {scale:1.9, borderColor:'rgba(210,255,197,.9)', duration:.35, ease:E});
       gsap.to(pt, {scale:.4, duration:.35, ease:E});
@@ -705,6 +705,75 @@ if(restants.length){
   gsap.set(restants, {y:26});
   lot(restants, {duree:.9, stagger:.07});
 }
+
+/* =====================================================================
+   9bis · WHATSAPP — la bulle et son volet
+   =====================================================================
+   Le volet existe déjà dans le document : le script ne fabrique rien, il ne
+   fait qu'ouvrir, fermer, et recomposer l'adresse wa.me avec le message tapé.
+   Si ce fichier ne se charge pas, le bouton « Ouvrir WhatsApp » reste un lien
+   valide vers la conversation — sans texte pré-rempli, mais fonctionnel.
+
+   Le message par défaut est repris du « placeholder » du champ, et non écrit
+   ici : c'est la couche de traduction qui s'occupe de ce genre d'attribut, si
+   bien que l'anglais, l'allemand et l'italien reçoivent leur propre phrase
+   sans qu'une ligne de JavaScript soit à toucher.
+   ===================================================================== */
+(function(){
+  var boite = document.querySelector('.wa');
+  if(!boite) return;
+
+  var bulle = boite.querySelector('.wa-bulle');
+  var volet = boite.querySelector('.wa-volet');
+  var croix = boite.querySelector('.wa-x');
+  var champ = boite.querySelector('textarea');
+  var lien  = boite.querySelector('.wa-go');
+  var num   = boite.getAttribute('data-wa') || '';
+  if(!bulle || !volet || !lien) return;
+
+  function ouvrir(){
+    volet.hidden = false;
+    /* Un cadre d'affichage entre le retrait de « hidden » et l'ajout de la
+       classe : sans lui, le navigateur applique les deux dans le même calcul
+       de style et la transition n'a pas lieu — le volet apparaît d'un coup. */
+    requestAnimationFrame(function(){ volet.classList.add('ouvert'); });
+    bulle.setAttribute('aria-expanded', 'true');
+    if(champ && !champ.value) champ.value = champ.getAttribute('placeholder') || '';
+    if(champ) { champ.focus(); champ.setSelectionRange(champ.value.length, champ.value.length); }
+  }
+
+  function fermer(retour){
+    volet.classList.remove('ouvert');
+    bulle.setAttribute('aria-expanded', 'false');
+    /* On attend la fin de la transition pour reposer « hidden », sinon le
+       volet disparaît avant d'avoir fini de s'effacer. */
+    setTimeout(function(){ volet.hidden = true; }, 300);
+    if(retour) bulle.focus();
+  }
+
+  bulle.addEventListener('click', function(){
+    if(volet.hidden) ouvrir(); else fermer(true);
+  });
+  if(croix) croix.addEventListener('click', function(){ fermer(true); });
+
+  /* Le lien est recomposé au moment du clic, pas à chaque frappe : c'est le
+     seul instant où sa valeur compte, et cela évite d'encoder l'URL à chaque
+     caractère tapé. */
+  lien.addEventListener('click', function(){
+    var texte = champ ? champ.value.trim() : '';
+    lien.href = 'https://wa.me/' + num + (texte ? '?text=' + encodeURIComponent(texte) : '');
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && !volet.hidden) fermer(true);
+  });
+
+  /* Un clic ailleurs referme le volet. Il ne referme pas sur un clic dans le
+     volet lui-même, ni sur la bulle — celle-ci a déjà sa propre bascule. */
+  document.addEventListener('click', function(e){
+    if(!volet.hidden && !boite.contains(e.target)) fermer(false);
+  });
+})();
 
 /* =====================================================================
    10 · RECALCUL une fois les polices variables chargées

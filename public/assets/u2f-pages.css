@@ -108,6 +108,33 @@ a.carte:hover{border-color:var(--vert);background:var(--noir-3)}
 .carte .eti{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gris)}
 .carte .fleche{margin-top:auto;padding-top:16px;font-size:13.5px;color:var(--vert)}
 
+/* ---------- avis clients ----------
+   Un avis se lit d'abord par sa citation, ensuite par sa signature. La barre
+   verte à gauche marque la citation sans guillemets décoratifs, qui à cette
+   taille de texte deviennent du bruit. La signature reste discrète : c'est le
+   lien « Voir son site » qui doit attirer l'œil, parce que c'est lui qui rend
+   l'avis vérifiable — un avis qu'on ne peut pas recouper ne vaut rien. */
+.avis{border:1px solid var(--bord-2);background:var(--noir-2);padding:30px 26px;
+  display:flex;flex-flow:column;gap:18px;margin:0;
+  transition:border-color .35s,background .35s}
+.avis:hover{border-color:var(--vert);background:var(--noir-3)}
+.avis blockquote{margin:0;border-left:2px solid var(--vert);padding-left:18px}
+.avis blockquote p{color:var(--blanc);font-size:16.5px;line-height:1.62;
+  letter-spacing:-.01em}
+.avis figcaption{margin-top:auto;font-size:13.5px;color:var(--gris);line-height:1.55}
+.avis figcaption b{display:block;color:var(--blanc);font-weight:600;font-size:15px;
+  margin-bottom:3px}
+.avis figcaption a{color:var(--vert);text-decoration:underline;text-underline-offset:3px}
+
+/* La note reprise d'ailleurs. Elle est encadrée et sa source est cliquable :
+   le visiteur doit voir d'un coup d'œil que ce chiffre ne vient pas d'ici. */
+.note-src{border:1px solid var(--bord-2);border-left:2px solid var(--vert);
+  background:var(--noir-2);padding:20px 24px;margin-top:24px}
+.note-src p{color:var(--gris);font-size:14.5px;line-height:1.6;margin:0}
+.note-src b{color:var(--blanc);font-weight:600;font-size:16.5px;
+  font-variant-numeric:tabular-nums}
+.note-src a{color:var(--vert);text-decoration:underline;text-underline-offset:3px}
+
 /* vignette de projet : le dessin remplace la photo (aucun droit à acquérir) */
 .vign{aspect-ratio:4/3;background:var(--noir-3);border:1px solid var(--bord-2);
   overflow:hidden;display:block;position:relative}
