@@ -164,8 +164,16 @@ if(promo){
 /* ---------------------------------------------------------------------
    4 · Sites en ligne — la vignette est le site, pas une capture
    Le site est chargé dans un cadre de 1440 px puis réduit par homothétie
-   (--k). On ne le charge qu'à l'approche de l'écran, pour ne pas payer
-   trois sites au chargement de la page.
+   (--k).
+
+   Il l'était à l'approche de l'écran, donc en pratique dès qu'on descendait
+   la page : trois sites complets, avec leurs polices, leurs images et leurs
+   animations, venaient s'ajouter au nôtre pendant qu'on lisait. La page
+   d'accueil répondait mal, et pour rien — un visiteur sur dix regarde ces
+   vignettes de près. Le chargement part maintenant au premier signe
+   d'intérêt : la souris qui entre, le clavier qui arrive sur la carte, ou le
+   doigt qui s'y pose. Jusque-là, l'affiche dessinée tient la place. Une fois
+   chargé, le cadre reste : on ne paie qu'une fois.
    --------------------------------------------------------------------- */
 var cadres = qq('[data-cadre]');
 if(cadres.length){
@@ -207,18 +215,19 @@ if(cadres.length){
     window.addEventListener('resize', function(){ cadres.forEach(ajuster); });
   }
 
-  if(window.IntersectionObserver){
-    var io = new IntersectionObserver(function(entrees, obs){
-      entrees.forEach(function(e){
-        if(!e.isIntersecting) return;
-        charger(e.target);
-        obs.unobserve(e.target);
-      });
-    }, { rootMargin: '400px' });
-    cadres.forEach(function(c){ io.observe(c); });
-  }else{
-    cadres.forEach(charger);
-  }
+  /* Les déclencheurs sont posés sur la carte entière et non sur le cadre :
+     survoler le titre ou le prix annonce la même intention que survoler
+     l'image, et le lecteur au clavier n'atteint jamais le cadre — il reçoit
+     le focus sur le lien qui l'enveloppe. « once » suffit à tout démonter :
+     un cadre chargé n'a plus rien à écouter. */
+  cadres.forEach(function(cadre){
+    var zone = cadre.closest ? (cadre.closest('.cas') || cadre.closest('.site') || cadre)
+                             : cadre;
+    var lancer = function(){ charger(cadre); };
+    ['pointerenter','focusin','touchstart'].forEach(function(evt){
+      zone.addEventListener(evt, lancer, { once:true, passive:true });
+    });
+  });
 }
 
 /* ---------------------------------------------------------------------

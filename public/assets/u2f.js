@@ -421,11 +421,13 @@ lot('#faq .rv');
   var boutons = qq('button', barre), cartes = qq('.cas', grille);
   var vide = q('.cases-vide');
 
-  /* Une carte porte une ou plusieurs clés, séparées par une barre verticale :
-     « Commerce|En ligne ». Le séparateur n'est ni l'espace ni la virgule parce
-     que les familles en contiennent déjà (« Santé & bien-être »). C'est ce qui
-     permet au filtre « En ligne » de traverser les familles au lieu d'en être
-     une de plus. */
+  /* Une carte porte une ou plusieurs clés, séparées par une barre verticale.
+     Le séparateur n'est ni l'espace ni la virgule parce que les familles en
+     contiennent déjà (« Santé & bien-être »). Aujourd'hui chaque carte n'a
+     qu'une clé, sa famille : le filtre « En ligne », qui traversait les
+     familles, a été retiré — les trois sites ouvrables sont classés dans leur
+     métier comme les autres et leur badge dit déjà qu'ils s'ouvrent. La
+     mécanique multi-clés reste, elle ne coûte rien et resservira. */
   function trier(theme){
     var visibles = 0;
     cartes.forEach(function(c){
