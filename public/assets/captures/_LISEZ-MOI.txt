@@ -1,38 +1,41 @@
-LES CAPTURES DES TROIS SITES
-============================
+CAPTURES DES SITES EN LIGNE
+===========================
 
-Ce dossier attend trois images. Tant qu'elles n'y sont pas, le site
-fonctionne : la vignette charge le vrai site dans un cadre, comme avant,
-mais un seul à la fois. C'est ce qui faisait ramer la page quand les trois
-partaient ensemble.
+Ce dossier contient l'image de vignette de chaque site de la galerie.
 
-Les trois fichiers à déposer ici
---------------------------------
-  smash-house.png
-  latelier-coiffeur.png
-  bravo-agence.png
+  bravo-agence.jpg        https://bravo-agence.netlify.app/agence
+  latelier-coiffeur.jpg   https://latelier-coiffeur.netlify.app
+  smash-house.jpg         https://smash-house-984.netlify.app
 
-L'extension n'a pas d'importance : .png, .jpg, .webp, tout passe. Seul le
-nom compte, et il doit être exactement celui-ci — c'est lui qui est écrit
-dans _construire/donnees.py, champ « capture ».
+Elles remplacent les trois cadres vivants qui chargeaient les vrais sites
+dans la page. Ces cadres, c'étaient trois navigateurs complets ouverts en
+même temps : la page saccadait, et sur téléphone l'onglet se faisait tuer.
+Une image pèse cent fois moins et montre la même chose.
 
-Comment les faire, en une minute
---------------------------------
-1. Ouvrir la fenêtre de Chrome en grand (le plus large possible).
-2. Aller sur le site :
-     https://smash-house-984.netlify.app
-     https://latelier-coiffeur.netlify.app
-     https://bravo-agence.netlify.app
-3. Attendre que la page soit posée, en haut, sans rien survoler.
-4. Cmd + Maj + 4, puis Espace, puis cliquer sur la fenêtre.
-   macOS capture la fenêtre entière, sans le fond d'écran.
-5. Renommer le fichier et le glisser ici.
+Le vrai site reste à un clic : l'aperçu plein écran, lui, charge toujours
+le site en direct.
 
-La largeur idéale est 1440 px : c'est celle du cadre dessiné autour de la
-vignette. Plus large fonctionne aussi — l'image est réduite à l'affichage.
-Ne pas rogner : la hauteur en trop sert au défilement au survol, sur
-l'accueil.
 
-Ensuite
--------
-Double-cliquer sur PUBLIER-LE-SITE.command. Rien d'autre à modifier.
+COMMENT LE SITE LES TROUVE
+--------------------------
+Dans _construire/donnees.py, chaque site porte un champ « capture » :
+
+    "capture": "bravo-agence"
+
+Le générateur cherche alors assets/captures/bravo-agence.<ext> — .png,
+.jpg, .jpeg, .webp ou .avif. S'il trouve, il écrit l'image ; s'il ne
+trouve rien, il retombe sur le cadre vivant. Rien d'autre à régler.
+
+
+REMPLACER UNE CAPTURE
+---------------------
+Écraser le fichier en gardant exactement le même nom, puis republier
+(double-clic sur PUBLIER-LE-SITE.command).
+
+Ce qu'il faut photographier : le premier écran du site, en haut, sans rien
+survoler. Largeur 760 px au minimum, rapport 16/10 environ. Le cadrage est
+fait par le CSS — object-fit: cover, ancré en haut — donc inutile de rogner
+à la main, et inutile de capturer la page entière : seul le haut se voit.
+
+Les captures actuelles font 760 × 446 px, en JPEG de qualité moyenne :
+13 à 20 Ko chacune. Il n'y a aucune raison d'aller plus lourd.

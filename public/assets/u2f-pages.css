@@ -266,11 +266,12 @@ a.carte:hover{border-color:var(--vert);background:var(--noir-3)}
 .site-cadre.est-prete iframe{opacity:1}
 /* La capture d'écran, quand elle existe (donnees.SITES → capture). Elle
    remplace le cadre vivant dans la grille — le vrai site reste à un clic,
-   dans l'aperçu plein écran. Même largeur de référence, même homothétie :
-   l'image est cadrée sur son premier écran par le débordement du cadre. */
-.site-cadre img.cap{position:absolute;top:0;left:0;width:1440px;height:auto;
-  display:block;border:0;transform:scale(var(--k,.28));transform-origin:top left;
-  pointer-events:none;z-index:1}
+   dans l'aperçu plein écran. L'image porte le premier écran du site : on la
+   cadre en couverture, ancrée en haut, pour qu'aucun rapport de forme ne
+   laisse de bande noire, quelle que soit la largeur de la carte. */
+.site-cadre img.cap{position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:top center;
+  display:block;border:0;pointer-events:none;z-index:1}
 /* Le fond d'attente, un simple voile à la couleur du site
    (vignettes.attente). Le site vivant part au chargement dès que la carte
    approche de l'écran, un site à la fois ; ce fond ne tient donc la place

@@ -377,15 +377,17 @@ h1 .m{color:var(--gris)}
 .cas .vign-site.est-prete iframe{opacity:1}
 .cas:hover .vign-site.est-prete iframe{top:var(--defile,0)}
 /* La même vignette, servie par une capture d'écran (donnees.SITES → capture).
-   Elle prend exactement la place du cadre vivant : mêmes 1440 px de large,
-   même homothétie, même course au survol — sauf que faire défiler une image
-   ne coûte rien, là où faire défiler trois navigateurs complets coûtait la
-   fluidité de la page. Quand la capture est là, aucune iframe n'est écrite et
-   la vignette porte « est-prete » dès le départ. */
-.cas .vign-site img.cap{position:absolute;top:0;left:0;width:1440px;height:auto;
-  display:block;border:0;z-index:2;transform:scale(var(--k,.26));
-  transform-origin:top left;pointer-events:none;transition:top 7s linear}
-.cas:hover .vign-site img.cap{top:var(--defile,0)}
+   Elle prend la place du cadre vivant, mais sans son coût : trois navigateurs
+   complets chargés puis animés faisaient ramer la page entière. L'image porte
+   le premier écran du site — ce qu'une vignette doit montrer — et se cadre en
+   couverture, ancrée en haut : aucune bande noire, quel que soit le rapport de
+   forme de la carte. Quand la capture est là, aucune iframe n'est écrite et la
+   vignette porte « est-prete » dès le départ. */
+.cas .vign-site img.cap{position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:top center;
+  display:block;border:0;z-index:2;pointer-events:none;
+  transform:scale(1);transition:transform .6s var(--ease)}
+.cas:hover .vign-site img.cap{transform:scale(1.04)}
 /* Le fond d'attente, un voile à la couleur du site (vignettes.attente). Il
    tient la vignette jusqu'à l'arrivée du vrai site, qui part à l'approche de
    l'écran — plus au survol : celui qui ne survolait pas ne voyait jamais le

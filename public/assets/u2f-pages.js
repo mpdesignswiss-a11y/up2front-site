@@ -205,20 +205,15 @@ if(cadres.length){
     var f = img ? null : q('iframe', cadre);
     if(!img && !f) return;
 
-    /* Le cas de la capture. « --defile » est la course exacte, en pixels du
-       cadre : ce que l'image dépasse en hauteur, plafonné à ce que data-haut
-       autorise. On la calcule ici parce que le CSS ne connaît ni la hauteur
-       du cadre ni celle de l'image. Tant que l'image n'est pas décodée,
-       naturalHeight vaut 0 et la course reste nulle — le rendez-vous est
-       repris au « load » de l'image, plus bas. */
-    var haut = parseFloat(cadre.getAttribute('data-haut')) || 1;
-    if(img){
-      var course = (img.naturalHeight || 0) * k - cadre.clientHeight;
-      var plafond = PETIT ? 0 : cadre.clientHeight * (haut - 1);
-      cadre.style.setProperty('--defile',
-        '-' + Math.max(0, Math.round(Math.min(course, plafond))) + 'px');
-      return;
-    }
+    /* Le cas de la capture : rien à calculer. L'image se cadre elle-même en
+       couverture (object-fit:cover, ancrée en haut), donc elle ne dépend ni de
+       l'homothétie ni de la hauteur du cadre. Il y avait ici une course de
+       survol, « --defile », qui faisait remonter l'image pour dérouler la
+       page ; elle supposait une capture longue de plusieurs écrans. Les
+       captures sont des premiers écrans — c'est ce qu'une vignette doit
+       montrer, et les animations d'entrée des sites ne se rejouent pas plus
+       bas. La course n'a donc plus d'objet. */
+    if(img) return;
 
     /* Le cas du site vivant : une hauteur d'écran, pas davantage, et donc
        pas de course de survol. C'est le prix à payer pour que la page reste
