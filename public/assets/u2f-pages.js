@@ -176,7 +176,17 @@ if(cadres.length){
     if(!k) return;
     cadre.style.setProperty('--k', k);
     var f = q('iframe', cadre);
-    if(f) f.style.height = (cadre.clientHeight / k) + 'px';
+    if(!f) return;
+    /* « data-haut » dit combien de hauteurs de cadre on charge. Sans lui, on
+       charge exactement une hauteur : c'est le cas de la page réalisations,
+       où le cadre est déjà grand et où l'aperçu plein écran prend la suite.
+       Les vignettes de l'accueil demandent plus haut (2,6) pour avoir de quoi
+       faire défiler au survol : « --defile » est la course exacte en pixels,
+       calculée ici parce que le CSS ne connaît pas la hauteur du cadre. */
+    var mult = parseFloat(cadre.getAttribute('data-haut')) || 1;
+    f.style.height = (cadre.clientHeight * mult / k) + 'px';
+    cadre.style.setProperty('--defile',
+      '-' + Math.round(cadre.clientHeight * (mult - 1)) + 'px');
   };
 
   var charger = function(cadre){
