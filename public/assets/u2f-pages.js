@@ -180,41 +180,62 @@ var cadres = qq('[data-cadre]');
 if(cadres.length){
   var LARGEUR_REF = 1440;
 
-  /* Sur téléphone, un seul site vivant à la fois — et jamais trois.
+  /* Un seul site vivant à la fois — sur téléphone comme sur ordinateur.
      Une vignette, c'est un navigateur complet de 1440 px de large qui charge
      un vrai site, avec ses images, ses polices et son propre moteur
-     d'animation. Sur un ordinateur, trois de ces cadres passent inaperçus.
-     Sur un iPhone, ils s'ajoutent aux 1,5 Go que Safari accorde à un onglet,
-     et le système tue l'onglet : c'est la page « Un problème récurrent est
-     survenu », suivie d'un rechargement complet. Le symptôme est apparu le
-     jour où les trois cadres ont commencé à partir ensemble au chargement.
-     On garde donc la preuve visuelle, mais une à la fois : celui qui est à
-     l'écran charge, ceux qui s'en éloignent sont déchargés et rendent leur
-     mémoire. La hauteur chargée retombe aussi à un écran — le défilement au
-     survol n'existe pas au doigt, et 2,6 écrans de haut, c'est 2,6 fois la
-     mémoire pour rien. */
-  var UN_A_LA_FOIS = window.matchMedia('(max-width:900px)').matches;
+     d'animation. Trois de ces cadres tenaient sur un ordinateur de bureau,
+     et sur un iPhone ils s'ajoutaient aux 1,5 Go que Safari accorde à un
+     onglet : le système tuait l'onglet — « Un problème récurrent est
+     survenu », puis rechargement complet.
+     Ils ne tiennent pas mieux que ça sur un portable ordinaire : la page
+     saccade, le défilement colle, et c'est ce qu'on nous a signalé. La règle
+     du téléphone devient donc la règle partout : celui qui est à l'écran
+     charge, ceux qui s'en éloignent sont déchargés et rendent leur mémoire.
+     La hauteur chargée retombe à un écran pour les mêmes raisons : 2,6
+     écrans de haut, c'est 2,6 fois le travail de rendu pour un effet de
+     survol. Cet effet revient dès qu'une capture remplace le site vivant —
+     faire défiler une image ne coûte rien. */
+  var PETIT = window.matchMedia('(max-width:900px)').matches;
 
   var ajuster = function(cadre){
     var k = cadre.clientWidth / LARGEUR_REF;
     if(!k) return;
     cadre.style.setProperty('--k', k);
-    var f = q('iframe', cadre);
-    if(!f) return;
-    /* « data-haut » dit combien de hauteurs de cadre on charge. Sans lui, on
-       charge exactement une hauteur : c'est le cas de la page réalisations,
-       où le cadre est déjà grand et où l'aperçu plein écran prend la suite.
-       Les vignettes de l'accueil demandent plus haut (2,6) pour avoir de quoi
-       faire défiler au survol : « --defile » est la course exacte en pixels,
-       calculée ici parce que le CSS ne connaît pas la hauteur du cadre. */
-    var mult = UN_A_LA_FOIS ? 1
-                            : (parseFloat(cadre.getAttribute('data-haut')) || 1);
-    f.style.height = (cadre.clientHeight * mult / k) + 'px';
-    cadre.style.setProperty('--defile',
-      '-' + Math.round(cadre.clientHeight * (mult - 1)) + 'px');
+    var img = q('img.cap', cadre);
+    var f = img ? null : q('iframe', cadre);
+    if(!img && !f) return;
+
+    /* Le cas de la capture. « --defile » est la course exacte, en pixels du
+       cadre : ce que l'image dépasse en hauteur, plafonné à ce que data-haut
+       autorise. On la calcule ici parce que le CSS ne connaît ni la hauteur
+       du cadre ni celle de l'image. Tant que l'image n'est pas décodée,
+       naturalHeight vaut 0 et la course reste nulle — le rendez-vous est
+       repris au « load » de l'image, plus bas. */
+    var haut = parseFloat(cadre.getAttribute('data-haut')) || 1;
+    if(img){
+      var course = (img.naturalHeight || 0) * k - cadre.clientHeight;
+      var plafond = PETIT ? 0 : cadre.clientHeight * (haut - 1);
+      cadre.style.setProperty('--defile',
+        '-' + Math.max(0, Math.round(Math.min(course, plafond))) + 'px');
+      return;
+    }
+
+    /* Le cas du site vivant : une hauteur d'écran, pas davantage, et donc
+       pas de course de survol. C'est le prix à payer pour que la page reste
+       fluide tant qu'on n'a pas de captures. */
+    f.style.height = (cadre.clientHeight / k) + 'px';
+    cadre.style.setProperty('--defile', '0px');
   };
 
   cadres.forEach(ajuster);
+  /* Une capture arrive après coup : sa hauteur naturelle n'est connue qu'une
+     fois décodée. On rejoue le calcul à ce moment-là. */
+  cadres.forEach(function(cadre){
+    var img = q('img.cap', cadre);
+    if(img && !img.complete){
+      img.addEventListener('load', function(){ ajuster(cadre); }, { once:true });
+    }
+  });
 
   if(window.ResizeObserver){
     var ro = new ResizeObserver(function(entrees){
@@ -225,8 +246,8 @@ if(cadres.length){
     window.addEventListener('resize', function(){ cadres.forEach(ajuster); });
   }
 
-  /* Le chargement. Trois stratégies se sont succédé ici, et il faut dire
-     pourquoi on en est à la troisième.
+  /* Le chargement. Quatre stratégies se sont succédé ici, et il faut dire
+     pourquoi on en est à la quatrième.
 
      1. À l'approche de l'écran, les trois d'un coup : la page piquait du nez au
         moment où la galerie arrivait.
@@ -235,12 +256,15 @@ if(cadres.length){
      3. À l'approche, un site à la fois, en file : mieux, mais la vignette
         restait un rectangle teinté le temps que le tour vienne — et sur trois
         sites qui chargent des photos, ce temps se comptait en secondes.
+     4. Les trois ensemble dès que NOTRE page avait fini de charger la sienne.
+        La vignette était belle et la page ramait : trois navigateurs complets
+        qui s'animent en même temps, cela se voit au défilement.
 
-     Aujourd'hui : les trois partent ensemble dès que NOTRE page a fini de
-     charger la sienne. C'est le seul moment où la bande passante est libre, et
-     la galerie est loin en dessous : le site est en place, arrêté sur son
-     premier écran, bien avant que le visiteur y arrive. La vignette qu'il
-     découvre est donc une image du site, pas un voile de couleur. */
+     Aujourd'hui : un seul cadre vivant, celui qui est à l'écran, sur tous les
+     formats. La bonne réponse n'est pas là de toute façon — elle est dans une
+     capture d'écran, qui pèse cent fois moins et montre la même chose. Le
+     champ « capture » de donnees.py attend le fichier ; tant qu'il est vide,
+     ce qui suit tient la maison debout. */
   var charger = function(cadre){
     var f = q('iframe', cadre);
     if(!f || f.src) return;               /* déjà parti : rien à faire */
@@ -271,11 +295,17 @@ if(cadres.length){
     f.removeAttribute('src');
   };
 
-  if(UN_A_LA_FOIS && window.IntersectionObserver){
-    /* Le cadre le plus proche du centre de l'écran gagne. On ne se contente pas
-       de « entre dans l'écran / sort de l'écran » : au milieu d'un défilement,
-       deux cadres peuvent être visibles ensemble, et c'est précisément ce qu'on
-       veut éviter. */
+  /* Les cadres qui portent une capture n'ont pas d'iframe : ils sont déjà
+     servis, et rien ne doit se charger pour eux. On ne fait la file d'attente
+     qu'avec ceux qui restent. */
+  cadres = cadres.filter(function(c){ return !q('img.cap', c); });
+
+  if(cadres.length && PETIT && window.IntersectionObserver){
+    /* Téléphone. Un seul cadre vivant, jamais deux : le cadre le plus proche
+       du centre de l'écran gagne, les autres rendent leur mémoire. On ne se
+       contente pas de « entre dans l'écran / sort de l'écran » : au milieu
+       d'un défilement, deux cadres peuvent être visibles ensemble, et c'est
+       précisément ce qu'on veut éviter. */
     var vus = [];
     var arbitrer = function(){
       var milieu = window.innerHeight / 2, meilleur = null, ecart = Infinity;
@@ -297,20 +327,61 @@ if(cadres.length){
       arbitrer();
     }, { rootMargin: '10% 0px' });
     cadres.forEach(function(c){ io.observe(c); });
+  }else if(cadres.length && window.IntersectionObserver){
+    /* Ordinateur. La mémoire n'est pas le problème ici — le nôtre est que
+       trois navigateurs complets démarraient à la même seconde, chacun avec
+       ses photos, ses polices et son moteur d'animation. C'est ce chevauchement
+       qui faisait saccader la page, pas le nombre de cadres une fois posés.
+       On charge donc en file : un site part, le suivant attend qu'il ait fini
+       — ou une seconde et demie, si le réseau traîne. Rien ne se décharge : le
+       visiteur qui remonte retrouve la galerie telle qu'il l'a laissée.
+       Et rien ne part avant que la galerie approche de l'écran : une visite
+       qui s'arrête au premier écran ne paie aucun de ces trois chargements. */
+    var file = cadres.slice(), enCours = false;
+    var suivant = function(){
+      if(enCours) return;
+      var cadre = file.shift();
+      if(!cadre) return;
+      var f = q('iframe', cadre);
+      if(!f || f.src){ suivant(); return; }
+      enCours = true;
+      var passer = function(){
+        if(!enCours) return;
+        enCours = false;
+        clearTimeout(minuteur);
+        suivant();
+      };
+      var minuteur = setTimeout(passer, 1500);
+      f.addEventListener('load', passer, { once:true });
+      charger(cadre);
+    };
+    /* Doubler la file : le cadre survolé passe devant. Celui qui va droit sur
+       une carte n'a pas à attendre le tour des deux autres. */
+    var devant = function(cadre){
+      var i = file.indexOf(cadre);
+      if(i > 0){ file.splice(i, 1); file.unshift(cadre); }
+      suivant();
+    };
+    var io = new IntersectionObserver(function(entrees){
+      var vu = false;
+      entrees.forEach(function(e){ if(e.isIntersecting) vu = true; });
+      if(vu) suivant();
+    }, { rootMargin: '25% 0px' });
+    cadres.forEach(function(cadre){
+      io.observe(cadre);
+      var zone = cadre.closest ? (cadre.closest('.cas') || cadre.closest('.site') || cadre)
+                               : cadre;
+      var lancer = function(){ devant(cadre); };
+      ['pointerenter','focusin'].forEach(function(evt){
+        zone.addEventListener(evt, lancer, { once:true, passive:true });
+      });
+    });
   }else{
-    /* Sur ordinateur, les trois partent ensemble dès que NOTRE page a fini de
-       charger la sienne : c'est le seul moment où la bande passante est libre,
-       et la galerie est loin en dessous. La vignette que le visiteur découvre
-       est donc une image du site, pas un voile de couleur. */
-    var toutCharger = function(){ cadres.forEach(charger); };
-    if(document.readyState === 'complete') toutCharger();
-    else window.addEventListener('load', toutCharger);
-
-    /* Les déclencheurs de survol restent, posés sur la carte entière et non sur
-       le cadre : survoler le titre ou le prix annonce la même intention que
-       survoler l'image, et le lecteur au clavier n'atteint jamais le cadre — il
-       reçoit le focus sur le lien qui l'enveloppe. Ils ne servent plus que dans
-       un cas, rare : la carte survolée avant que la page ait fini de charger. */
+    /* Sans IntersectionObserver — de très vieux navigateurs — on ne sait pas
+       dire lequel est à l'écran. On s'en tient alors au survol : rien ne part
+       tout seul, donc rien ne peut faire trois chargements d'un coup. La
+       vignette reste un voile teinté pour qui ne survole pas, ce qui est le
+       moindre mal face à une page qui saccade. */
     cadres.forEach(function(cadre){
       var zone = cadre.closest ? (cadre.closest('.cas') || cadre.closest('.site') || cadre)
                                : cadre;

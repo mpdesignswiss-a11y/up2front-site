@@ -1,0 +1,38 @@
+LES CAPTURES DES TROIS SITES
+============================
+
+Ce dossier attend trois images. Tant qu'elles n'y sont pas, le site
+fonctionne : la vignette charge le vrai site dans un cadre, comme avant,
+mais un seul à la fois. C'est ce qui faisait ramer la page quand les trois
+partaient ensemble.
+
+Les trois fichiers à déposer ici
+--------------------------------
+  smash-house.png
+  latelier-coiffeur.png
+  bravo-agence.png
+
+L'extension n'a pas d'importance : .png, .jpg, .webp, tout passe. Seul le
+nom compte, et il doit être exactement celui-ci — c'est lui qui est écrit
+dans _construire/donnees.py, champ « capture ».
+
+Comment les faire, en une minute
+--------------------------------
+1. Ouvrir la fenêtre de Chrome en grand (le plus large possible).
+2. Aller sur le site :
+     https://smash-house-984.netlify.app
+     https://latelier-coiffeur.netlify.app
+     https://bravo-agence.netlify.app
+3. Attendre que la page soit posée, en haut, sans rien survoler.
+4. Cmd + Maj + 4, puis Espace, puis cliquer sur la fenêtre.
+   macOS capture la fenêtre entière, sans le fond d'écran.
+5. Renommer le fichier et le glisser ici.
+
+La largeur idéale est 1440 px : c'est celle du cadre dessiné autour de la
+vignette. Plus large fonctionne aussi — l'image est réduite à l'affichage.
+Ne pas rogner : la hauteur en trop sert au défilement au survol, sur
+l'accueil.
+
+Ensuite
+-------
+Double-cliquer sur PUBLIER-LE-SITE.command. Rien d'autre à modifier.
