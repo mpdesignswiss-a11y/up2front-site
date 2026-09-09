@@ -40,8 +40,19 @@ if(reduit){ toutMontrer(); return; }
    Ce pont est la pièce maîtresse : sans lui, Lenis et ScrollTrigger
    lisent deux positions de défilement différentes et tout déraille.
    ===================================================================== */
+/* Le défilement lissé est réservé aux machines à souris.
+
+   Sur un téléphone, il n'apportait rien : Lenis ne reprend pas le défilement
+   au doigt (iOS le fait déjà, et mieux, dans son moteur de composition). En
+   revanche il installait une boucle à soixante images par seconde qui ne
+   s'arrête jamais, doublée d'un « lagSmoothing(0) » qui interdit à GSAP de
+   lâcher du lest quand la machine est en retard. Sur un iPhone qui chauffe,
+   c'est exactement l'inverse de ce qu'il faut faire : la boucle réclame plus
+   de temps machine à mesure que la machine en a moins, et l'onglet finit tué
+   par le système. Le pointeur fin comme condition, c'est la même que celle du
+   curseur personnalisé — les deux sont des luxes de bureau. */
 var lenis = null;
-if(window.Lenis){
+if(window.Lenis && fin){
   lenis = new Lenis({
     duration: 1.15,
     easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10*t)); },

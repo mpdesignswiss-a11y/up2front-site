@@ -180,6 +180,21 @@ var cadres = qq('[data-cadre]');
 if(cadres.length){
   var LARGEUR_REF = 1440;
 
+  /* Sur téléphone, un seul site vivant à la fois — et jamais trois.
+     Une vignette, c'est un navigateur complet de 1440 px de large qui charge
+     un vrai site, avec ses images, ses polices et son propre moteur
+     d'animation. Sur un ordinateur, trois de ces cadres passent inaperçus.
+     Sur un iPhone, ils s'ajoutent aux 1,5 Go que Safari accorde à un onglet,
+     et le système tue l'onglet : c'est la page « Un problème récurrent est
+     survenu », suivie d'un rechargement complet. Le symptôme est apparu le
+     jour où les trois cadres ont commencé à partir ensemble au chargement.
+     On garde donc la preuve visuelle, mais une à la fois : celui qui est à
+     l'écran charge, ceux qui s'en éloignent sont déchargés et rendent leur
+     mémoire. La hauteur chargée retombe aussi à un écran — le défilement au
+     survol n'existe pas au doigt, et 2,6 écrans de haut, c'est 2,6 fois la
+     mémoire pour rien. */
+  var UN_A_LA_FOIS = window.matchMedia('(max-width:900px)').matches;
+
   var ajuster = function(cadre){
     var k = cadre.clientWidth / LARGEUR_REF;
     if(!k) return;
@@ -192,7 +207,8 @@ if(cadres.length){
        Les vignettes de l'accueil demandent plus haut (2,6) pour avoir de quoi
        faire défiler au survol : « --defile » est la course exacte en pixels,
        calculée ici parce que le CSS ne connaît pas la hauteur du cadre. */
-    var mult = parseFloat(cadre.getAttribute('data-haut')) || 1;
+    var mult = UN_A_LA_FOIS ? 1
+                            : (parseFloat(cadre.getAttribute('data-haut')) || 1);
     f.style.height = (cadre.clientHeight * mult / k) + 'px';
     cadre.style.setProperty('--defile',
       '-' + Math.round(cadre.clientHeight * (mult - 1)) + 'px');
@@ -228,31 +244,82 @@ if(cadres.length){
   var charger = function(cadre){
     var f = q('iframe', cadre);
     if(!f || f.src) return;               /* déjà parti : rien à faire */
-    f.addEventListener('load', function(){ cadre.classList.add('est-prete'); });
+    f.addEventListener('load', function(){ cadre.classList.add('est-prete'); },
+                       { once:true });
     /* Filet. Si « load » ne vient jamais — une police, une photo qui traîne —
        on montre quand même au bout de cinq secondes ce qui est arrivé : mieux
-       vaut le site à demi peint que le voile de couleur. */
-    setTimeout(function(){ cadre.classList.add('est-prete'); }, 5000);
+       vaut le site à demi peint que le voile de couleur. Le minuteur est
+       gardé : un cadre déchargé entre-temps ne doit pas se voir déclaré prêt
+       par le minuteur de son chargement précédent, ce qui montrerait le blanc
+       d'une page vide. */
+    if(cadre.__filet) clearTimeout(cadre.__filet);
+    cadre.__filet = setTimeout(function(){
+      cadre.classList.add('est-prete');
+    }, 5000);
     f.src = f.getAttribute('data-src');
   };
 
-  var toutCharger = function(){ cadres.forEach(charger); };
-  if(document.readyState === 'complete') toutCharger();
-  else window.addEventListener('load', toutCharger);
+  /* Décharger, c'est retirer le « src » : le cadre redevient une page vide et
+     le navigateur rend la mémoire du site, de ses images et de ses scripts.
+     On enlève aussi « est-prete » pour que le fond teinté reprenne sa place,
+     sinon on verrait le blanc de la page vide au travers. */
+  var decharger = function(cadre){
+    var f = q('iframe', cadre);
+    if(!f || !f.src) return;
+    if(cadre.__filet){ clearTimeout(cadre.__filet); cadre.__filet = null; }
+    cadre.classList.remove('est-prete');
+    f.removeAttribute('src');
+  };
 
-  /* Les déclencheurs de survol restent, posés sur la carte entière et non sur
-     le cadre : survoler le titre ou le prix annonce la même intention que
-     survoler l'image, et le lecteur au clavier n'atteint jamais le cadre — il
-     reçoit le focus sur le lien qui l'enveloppe. Ils ne servent plus que dans
-     un cas, rare : la carte survolée avant que la page ait fini de charger. */
-  cadres.forEach(function(cadre){
-    var zone = cadre.closest ? (cadre.closest('.cas') || cadre.closest('.site') || cadre)
-                             : cadre;
-    var lancer = function(){ charger(cadre); };
-    ['pointerenter','focusin','touchstart'].forEach(function(evt){
-      zone.addEventListener(evt, lancer, { once:true, passive:true });
+  if(UN_A_LA_FOIS && window.IntersectionObserver){
+    /* Le cadre le plus proche du centre de l'écran gagne. On ne se contente pas
+       de « entre dans l'écran / sort de l'écran » : au milieu d'un défilement,
+       deux cadres peuvent être visibles ensemble, et c'est précisément ce qu'on
+       veut éviter. */
+    var vus = [];
+    var arbitrer = function(){
+      var milieu = window.innerHeight / 2, meilleur = null, ecart = Infinity;
+      vus.forEach(function(c){
+        var r = c.getBoundingClientRect();
+        var d = Math.abs((r.top + r.bottom) / 2 - milieu);
+        if(d < ecart){ ecart = d; meilleur = c; }
+      });
+      cadres.forEach(function(c){
+        if(c === meilleur) charger(c); else decharger(c);
+      });
+    };
+    var io = new IntersectionObserver(function(entrees){
+      entrees.forEach(function(e){
+        var i = vus.indexOf(e.target);
+        if(e.isIntersecting){ if(i < 0) vus.push(e.target); }
+        else if(i >= 0){ vus.splice(i, 1); }
+      });
+      arbitrer();
+    }, { rootMargin: '10% 0px' });
+    cadres.forEach(function(c){ io.observe(c); });
+  }else{
+    /* Sur ordinateur, les trois partent ensemble dès que NOTRE page a fini de
+       charger la sienne : c'est le seul moment où la bande passante est libre,
+       et la galerie est loin en dessous. La vignette que le visiteur découvre
+       est donc une image du site, pas un voile de couleur. */
+    var toutCharger = function(){ cadres.forEach(charger); };
+    if(document.readyState === 'complete') toutCharger();
+    else window.addEventListener('load', toutCharger);
+
+    /* Les déclencheurs de survol restent, posés sur la carte entière et non sur
+       le cadre : survoler le titre ou le prix annonce la même intention que
+       survoler l'image, et le lecteur au clavier n'atteint jamais le cadre — il
+       reçoit le focus sur le lien qui l'enveloppe. Ils ne servent plus que dans
+       un cas, rare : la carte survolée avant que la page ait fini de charger. */
+    cadres.forEach(function(cadre){
+      var zone = cadre.closest ? (cadre.closest('.cas') || cadre.closest('.site') || cadre)
+                               : cadre;
+      var lancer = function(){ charger(cadre); };
+      ['pointerenter','focusin','touchstart'].forEach(function(evt){
+        zone.addEventListener(evt, lancer, { once:true, passive:true });
+      });
     });
-  });
+  }
 }
 
 /* ---------------------------------------------------------------------
