@@ -166,14 +166,15 @@ if(promo){
    Le site est chargé dans un cadre de 1440 px puis réduit par homothétie
    (--k).
 
-   Il l'était à l'approche de l'écran, donc en pratique dès qu'on descendait
-   la page : trois sites complets, avec leurs polices, leurs images et leurs
-   animations, venaient s'ajouter au nôtre pendant qu'on lisait. La page
-   d'accueil répondait mal, et pour rien — un visiteur sur dix regarde ces
-   vignettes de près. Le chargement part maintenant au premier signe
-   d'intérêt : la souris qui entre, le clavier qui arrive sur la carte, ou le
-   doigt qui s'y pose. Jusque-là, l'affiche dessinée tient la place. Une fois
-   chargé, le cadre reste : on ne paie qu'une fois.
+   Le chargement a d'abord attendu le survol, pour épargner la page : trois
+   sites complets qui s'ajoutent au nôtre, cela se sent. Mais un visiteur qui
+   ne survole pas ne voyait qu'un dessin d'attente à l'endroit exact où le
+   travail doit se prouver. C'est cher payé pour quelques dixièmes de seconde.
+   On charge donc à l'approche de l'écran — et un seul site à la fois, le
+   suivant partant quand le précédent a fini (ou au bout d'une seconde et
+   demie, si le réseau traîne). Le survol reste un déclencheur : celui qui va
+   droit sur la carte n'attend pas son tour. Une fois chargé, le cadre reste :
+   on ne paie qu'une fois.
    --------------------------------------------------------------------- */
 var cadres = qq('[data-cadre]');
 if(cadres.length){
@@ -197,13 +198,6 @@ if(cadres.length){
       '-' + Math.round(cadre.clientHeight * (mult - 1)) + 'px');
   };
 
-  var charger = function(cadre){
-    var f = q('iframe', cadre);
-    if(!f || f.src) return;
-    f.addEventListener('load', function(){ cadre.classList.add('est-prete'); });
-    f.src = f.getAttribute('data-src');
-  };
-
   cadres.forEach(ajuster);
 
   if(window.ResizeObserver){
@@ -215,15 +209,68 @@ if(cadres.length){
     window.addEventListener('resize', function(){ cadres.forEach(ajuster); });
   }
 
-  /* Les déclencheurs sont posés sur la carte entière et non sur le cadre :
-     survoler le titre ou le prix annonce la même intention que survoler
-     l'image, et le lecteur au clavier n'atteint jamais le cadre — il reçoit
-     le focus sur le lien qui l'enveloppe. « once » suffit à tout démonter :
-     un cadre chargé n'a plus rien à écouter. */
+  /* La file d'attente. « charger » y dépose au lieu de lancer tout de suite ;
+     un seul site est en vol à la fois, sinon les trois se disputent la bande
+     passante et arrivent ensemble, tard. */
+  var file = [], enVol = false;
+  var suivant = function(){
+    if(enVol || !file.length) return;
+    var cadre = file.shift();
+    var f = q('iframe', cadre);
+    if(!f || f.src) return suivant();
+    enVol = true;
+    var libere = function(){
+      if(!enVol) return;      /* le relais est déjà passé au suivant */
+      enVol = false;
+      suivant();
+    };
+    f.addEventListener('load', function(){
+      cadre.classList.add('est-prete');   /* toujours, même après le délai */
+      libere();
+    });
+    /* Un site lent ne doit pas retenir les deux autres indéfiniment. */
+    setTimeout(libere, 1500);
+    f.src = f.getAttribute('data-src');
+  };
+
+  var charger = function(cadre, prioritaire){
+    var f = q('iframe', cadre);
+    if(!f || f.src) return;               /* déjà parti : rien à faire */
+    var rang = file.indexOf(cadre);
+    if(rang > -1){
+      /* Déjà en file. Un survol le fait passer devant : celui qui va droit sur
+         la carte ne doit pas attendre le tour des deux autres. */
+      if(!prioritaire || rang === 0) return;
+      file.splice(rang, 1);
+    }
+    if(prioritaire) file.unshift(cadre); else file.push(cadre);
+    suivant();
+  };
+
+  /* À l'approche de l'écran. La marge d'un demi-écran fait que le site est
+     souvent déjà là quand la carte arrive vraiment sous les yeux. */
+  if(window.IntersectionObserver){
+    var io = new IntersectionObserver(function(entrees){
+      entrees.forEach(function(e){
+        if(!e.isIntersecting) return;
+        io.unobserve(e.target);
+        charger(e.target);
+      });
+    }, { rootMargin: '50% 0px' });
+    cadres.forEach(function(c){ io.observe(c); });
+  }else{
+    cadres.forEach(function(c){ charger(c); });
+  }
+
+  /* Les déclencheurs de survol sont posés sur la carte entière et non sur le
+     cadre : survoler le titre ou le prix annonce la même intention que
+     survoler l'image, et le lecteur au clavier n'atteint jamais le cadre — il
+     reçoit le focus sur le lien qui l'enveloppe. Ils font passer la carte
+     devant dans la file. */
   cadres.forEach(function(cadre){
     var zone = cadre.closest ? (cadre.closest('.cas') || cadre.closest('.site') || cadre)
                              : cadre;
-    var lancer = function(){ charger(cadre); };
+    var lancer = function(){ charger(cadre, true); };
     ['pointerenter','focusin','touchstart'].forEach(function(evt){
       zone.addEventListener(evt, lancer, { once:true, passive:true });
     });

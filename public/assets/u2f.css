@@ -353,11 +353,13 @@ h1 .m{color:var(--gris)}
   opacity:0;transition:opacity .7s var(--ease),top 7s linear}
 .cas .vign-site.est-prete iframe{opacity:1}
 .cas:hover .vign-site.est-prete iframe{top:var(--defile,0)}
-/* L'affiche, dessinée dans la couleur du site (vignettes.affiche). Elle tient
-   la vignette tant que le site n'est pas chargé — c'est-à-dire tant que
-   personne ne l'a survolée. Elle ne disparaît pas quand le site arrive : il
-   se pose par-dessus, ce qui évite de voir le fond au travers pendant le
-   fondu. Un halo dans le vert du site marque l'attente et s'efface avec. */
+/* Le fond d'attente, un voile à la couleur du site (vignettes.attente). Il
+   tient la vignette jusqu'à l'arrivée du vrai site, qui part à l'approche de
+   l'écran — plus au survol : celui qui ne survolait pas ne voyait jamais le
+   travail. Une maquette dessinée occupait cette place ; elle ressemblait trop
+   à un site fini pour être honnête. Le fond ne disparaît pas quand le site
+   arrive : il se pose par-dessus, ce qui évite de voir le noir au travers
+   pendant le fondu. Un halo dans le vert du site marque l'attente. */
 .cas .vign-site>svg{position:absolute;inset:0;width:100%;height:100%;z-index:0}
 .cas .vign-site::before{content:"";position:absolute;inset:0;z-index:1;
   background:radial-gradient(120% 120% at 50% 0%,rgba(210,255,197,.10),transparent 62%);
@@ -417,7 +419,14 @@ h1 .m{color:var(--gris)}
 /* ---------- garantie ---------- */
 .gbloc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:56px;align-items:center}
 .gbloc .h2{max-width:14ch}
-.sceau{width:100%;max-width:300px;justify-self:end}
+/* Le sceau. « overflow:visible » parce que l'onde lancée par u2f.js sort du
+   cadre du viewBox en s'élargissant, et qu'un SVG rogne ses enfants par
+   défaut. La lueur n'arrive qu'avec « est-scelle », posée par le script à
+   l'instant où la coche s'écrit : avant, il n'y a rien à célébrer. */
+.sceau{width:100%;max-width:300px;justify-self:end;overflow:visible}
+.sc-disque{transition:filter .9s cubic-bezier(.16,1,.3,1)}
+.sceau.est-scelle .sc-disque{filter:drop-shadow(0 0 30px rgba(210,255,197,.45))}
+@media (prefers-reduced-motion:reduce){.sc-disque{transition:none}}
 .moyens{margin-top:60px;border-top:1px solid var(--bord);border-bottom:1px solid var(--bord);
   overflow:hidden;padding:20px 0}
 .moyens ul{display:flex;list-style:none;white-space:nowrap;width:max-content;will-change:transform,translate;--vit:26s}

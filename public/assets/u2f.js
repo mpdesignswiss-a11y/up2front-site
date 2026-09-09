@@ -599,6 +599,72 @@ if(fin){
 }
 
 /* =====================================================================
+   9ter · LE SCEAU DE GARANTIE SE CONSTRUIT
+
+   C'était un dessin fixe, posé à côté du texte le plus important de la page :
+   celui du prix ferme. Il se monte maintenant sous les yeux du visiteur — le
+   cercle se trace, le pointillé se met à tourner, le disque arrive en rebond,
+   la coche s'écrit, une onde part du bord. Le geste dit ce que le texte dit :
+   quelque chose se scelle.
+
+   Les pièces gardent leur apparence finale dans le HTML ; c'est ici, et
+   seulement ici, qu'on les met à l'état de départ. Sans GSAP — CDN muet, ou
+   « mouvement réduit » demandé par le système — la fonction n'est jamais
+   atteinte et le sceau s'affiche entier.
+   ===================================================================== */
+var sceau = q('.sceau');
+if(sceau){
+  var scBord   = q('.sc-bord',   sceau),
+      scTour   = q('.sc-tour',   sceau),
+      scDisque = q('.sc-disque', sceau),
+      scOnde   = q('.sc-onde',   sceau),
+      scCoche  = q('.sc-coche',  sceau);
+
+  /* Longueurs mesurées sur les tracés : 2πr pour le cercle extérieur
+     (r = 146), et les deux segments de la coche additionnés. GSAP n'a pas de
+     plugin de tracé ici, donc le pointillé fait le travail : un tiret aussi
+     long que le trait, décalé de sa propre longueur, et le trait est absent. */
+  var LG_BORD  = Math.round(2 * Math.PI * 146),   /* 918 */
+      LG_COCHE = 124;
+
+  gsap.set(scBord,   {strokeDasharray:LG_BORD,  strokeDashoffset:LG_BORD,
+                      svgOrigin:'150 150', rotation:-90});
+  gsap.set(scCoche,  {strokeDasharray:LG_COCHE, strokeDashoffset:LG_COCHE});
+  gsap.set(scTour,   {opacity:0, scale:.86, svgOrigin:'150 150'});
+  gsap.set(scDisque, {scale:0,   svgOrigin:'150 150'});
+  gsap.set(scOnde,   {opacity:0, scale:1,   svgOrigin:'150 150'});
+
+  var tlSceau = gsap.timeline({paused:true, defaults:{ease:E}});
+  tlSceau
+    .to(scBord,   {strokeDashoffset:0, duration:1.15})
+    .to(scTour,   {opacity:1, scale:1, duration:.85}, .22)
+    .to(scDisque, {scale:1, duration:.8, ease:'back.out(1.9)'}, .48)
+    .to(scCoche,  {strokeDashoffset:0, duration:.5, ease:'power2.out'}, 1.02)
+    .add(function(){ sceau.classList.add('est-scelle'); }, 1.02)
+    .fromTo(scOnde, {opacity:.6, scale:1},
+                    {opacity:0, scale:1.5, duration:1, ease:'power2.out'}, 1.02);
+
+  /* le pointillé tourne ensuite sans fin, très lentement : le sceau reste
+     vivant dans le coin de l'œil sans réclamer l'attention. */
+  var rotSceau = gsap.to(scTour, {rotation:360, duration:52, ease:'none',
+                                  repeat:-1, svgOrigin:'150 150', paused:true});
+
+  ScrollTrigger.create({
+    trigger: sceau, start: 'top 85%', once: true,
+    onEnter: function(){ tlSceau.play(); rotSceau.play(); }
+  });
+
+  /* rejouer au survol, une fois la première construction finie : c'est le
+     genre de détail qu'un visiteur refait exprès, et qui le retient. */
+  if(fin) sceau.addEventListener('mouseenter', function(){
+    if(tlSceau.progress() === 1){
+      sceau.classList.remove('est-scelle');
+      tlSceau.restart();
+    }
+  });
+}
+
+/* =====================================================================
    9bis · FILET DE RÉVÉLATION
    Les lots ci-dessus sont nommés section par section : ils décrivent
    l'accueil. Les pages intérieures portent les mêmes classes .rv sans
