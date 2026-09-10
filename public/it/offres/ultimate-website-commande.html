@@ -25,8 +25,8 @@
 <link rel="icon" href="../../favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
 <link rel="manifest" href="../../site.webmanifest">
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/mona-sans@5/index.css">
+<link rel="preload" href="../../assets/polices/mona-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/polices/polices.css">
 <link rel="stylesheet" href="../../assets/u2f.css">
 <link rel="stylesheet" href="../../assets/u2f-pages.css">
 <script type="application/ld+json">{
@@ -173,6 +173,7 @@
       <div class="total">
         <span>Totale</span><b data-total>CHF&nbsp;490</b>
       </div>
+      <p class="note" data-note-options hidden>Le opzioni si selezionano una seconda volta sulla pagina di pagamento Stripe, dove vengono proposte poco prima della carta. Il totale sarà identico a questo.</p>
       <p class="note">IVA non applicabile. Pagabile in un'unica soluzione o in tre rate mensili uguali senza costi aggiuntivi — la scelta si effettua sulla pagina di pagamento.</p>
       <button class="btn btn-p btn-large" type="button" data-payer>
         Paga <span data-total-bouton>CHF&nbsp;490</span>
@@ -280,12 +281,12 @@
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrambleTextPlugin.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/CustomEase.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+<script src="../../assets/vendor/gsap.min.js"></script>
+<script src="../../assets/vendor/ScrollTrigger.min.js"></script>
+<script src="../../assets/vendor/SplitText.min.js"></script>
+<script src="../../assets/vendor/ScrambleTextPlugin.min.js"></script>
+<script src="../../assets/vendor/CustomEase.min.js"></script>
+<script src="../../assets/vendor/lenis.min.js"></script>
 <script src="../../assets/u2f.js"></script>
 <script src="../../assets/u2f-pages.js"></script>
 </body>

@@ -25,8 +25,8 @@
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <link rel="manifest" href="../site.webmanifest">
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/mona-sans@5/index.css">
+<link rel="preload" href="../assets/polices/mona-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/polices/polices.css">
 <link rel="stylesheet" href="../assets/u2f.css">
 <link rel="stylesheet" href="../assets/u2f-pages.css">
 <script type="application/ld+json">
@@ -192,6 +192,9 @@
       <div class="total">
         <span>Total</span><b data-total>CHF&nbsp;290</b>
       </div>
+      <p class="note" data-note-options hidden>Les options se cochent une
+      seconde fois sur la page de paiement Stripe, où elles sont proposées
+      juste avant la carte. Le total y sera identique à celui-ci.</p>
       <p class="note">TVA non applicable. Payable en une fois, ou en trois
       mensualités égales sans frais — le choix se fait sur la page de paiement.</p>
       <button class="btn btn-p btn-large" type="button" data-payer>
@@ -307,12 +310,12 @@
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrambleTextPlugin.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/CustomEase.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+<script src="../assets/vendor/gsap.min.js"></script>
+<script src="../assets/vendor/ScrollTrigger.min.js"></script>
+<script src="../assets/vendor/SplitText.min.js"></script>
+<script src="../assets/vendor/ScrambleTextPlugin.min.js"></script>
+<script src="../assets/vendor/CustomEase.min.js"></script>
+<script src="../assets/vendor/lenis.min.js"></script>
 <script src="../assets/u2f.js"></script>
 <script src="../assets/u2f-pages.js"></script>
 </body>

@@ -25,8 +25,8 @@
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <link rel="manifest" href="../site.webmanifest">
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/mona-sans@5/index.css">
+<link rel="preload" href="../assets/polices/mona-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/polices/polices.css">
 <link rel="stylesheet" href="../assets/u2f.css">
 <link rel="stylesheet" href="../assets/u2f-pages.css">
 <script type="application/ld+json">{
@@ -271,13 +271,39 @@
 
     var texte = corps();
     var sujet = 'Demande de devis — ' + document.getElementById('q-entreprise').value.trim();
+    var panneau = document.getElementById('f-copie');
     document.getElementById('f-texte').value = texte;
-    document.getElementById('f-copie').hidden = false;
+    panneau.hidden = false;
+
+    // Le texte d'abord, l'ouverture du logiciel de messagerie ensuite.
+    //
+    // Avant, on faisait « window.location.href = mailto: » tout de suite. Sur
+    // un poste sans client de messagerie associé — un Windows neuf, un Chrome
+    // sur Android, un ordinateur de bureau d'entreprise — le navigateur ne
+    // fait rien du tout : pas d'erreur, pas de page, rien. Le visiteur voyait
+    // son bouton ne répondre pas, et le panneau de secours restait plus bas,
+    // hors de l'écran, invisible. Une demande perdue, sans que personne ne le
+    // sache : ni lui, ni nous.
+    //
+    // Maintenant le panneau est amené sous les yeux avant toute tentative
+    // d'ouverture, et le mailto part depuis un <a> temporaire plutôt que par
+    // la barre d'adresse : si rien ne l'intercepte, la page reste en place au
+    // lieu de vaciller. Dans tous les cas, le texte est là, sélectionnable.
+    if (panneau.scrollIntoView) {
+      panneau.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
 
     var lien = 'mailto:contact@up2front.com?subject=' + encodeURIComponent(sujet) +
                '&body=' + encodeURIComponent(texte);
-    window.location.href = lien;
-    if (window.ScrollTrigger) ScrollTrigger.refresh();
+    setTimeout(function () {
+      var a = document.createElement('a');
+      a.href = lien;
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      try { a.click(); } catch (e) {}
+      setTimeout(function () { a.parentNode && a.parentNode.removeChild(a); }, 0);
+    }, 450);
   });
 
   var b = document.getElementById('f-copier');
@@ -374,12 +400,12 @@
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrambleTextPlugin.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/CustomEase.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+<script src="../assets/vendor/gsap.min.js"></script>
+<script src="../assets/vendor/ScrollTrigger.min.js"></script>
+<script src="../assets/vendor/SplitText.min.js"></script>
+<script src="../assets/vendor/ScrambleTextPlugin.min.js"></script>
+<script src="../assets/vendor/CustomEase.min.js"></script>
+<script src="../assets/vendor/lenis.min.js"></script>
 <script src="../assets/u2f.js"></script>
 <script src="../assets/u2f-pages.js"></script>
 </body>

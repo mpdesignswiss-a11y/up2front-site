@@ -52,6 +52,7 @@ if(form){
   var sortie  = q('[data-total]', form);
   var libelle = q('[data-total-bouton]', form);
   var lignes  = q('[data-lignes-options]', form);
+  var note    = q('[data-note-options]', form);
   var options = qq('input[data-prix]', form);
 
   var fmt = function(n){
@@ -61,10 +62,12 @@ if(form){
   var recalculer = function(){
     var total = base;
     var html  = '';
+    var n     = 0;
     options.forEach(function(o){
       if(o.checked){
         var p = parseFloat(o.getAttribute('data-prix')) || 0;
         total += p;
+        n += 1;
         html += '<div class="ligne"><span>' + o.getAttribute('data-nom') +
                 '</span><span>+ ' + p + '.—</span></div>';
       }
@@ -72,6 +75,13 @@ if(form){
     if(lignes) lignes.innerHTML = html;
     if(sortie)  sortie.textContent  = fmt(total);
     if(libelle) libelle.textContent = fmt(total);
+    /* Le lien Stripe s'ouvre sur le forfait de base : les deux options y sont
+       proposées en articles facultatifs, à cocher une seconde fois. Tant qu'on
+       ne le dit pas, le client voit « Payer CHF 330 » ici et « CHF 290 » là-bas,
+       et se demande laquelle des deux pages lui ment. La note ne s'affiche que
+       lorsqu'une option est cochée : sans option, les deux montants coïncident
+       et l'avertissement n'aurait rien à avertir. */
+    if(note) note.hidden = (n === 0);
     form.setAttribute('data-total-courant', String(total));
   };
 
