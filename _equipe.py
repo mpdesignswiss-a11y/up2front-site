@@ -7,6 +7,11 @@ si la section est déjà là, il ne fait rien.
 
 Les classes .team / .mbr existent déjà dans assets/u2f.css (grille de trois,
 deux colonnes en tablette, une en mobile) : rien à ajouter au style.
+
+« Fondateur » ne vaut que pour Maxime Pilloud : Up2Front est une entreprise
+individuelle, elle n'a qu'un titulaire. Alexandre Tranchant est associé, les
+cinq autres sont indépendants — le sous-titre le dit, pour que la page
+d'accueil ne contredise pas les mentions légales.
 """
 
 import os
@@ -16,13 +21,18 @@ RACINE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public")
 
 CHAPEAU = {
     "fr": ("L'équipe", "Qui travaille sur votre site.",
-           "Vous savez à qui vous écrivez, et qui fait quoi."),
+           "Un fondateur, un associé et des indépendants qui collaborent "
+           "régulièrement avec nous. Vous savez à qui vous écrivez, et qui "
+           "fait quoi."),
     "en": ("The team", "Who works on your website.",
-           "You know who you are writing to, and who does what."),
+           "A founder, a partner and independent collaborators who work with "
+           "us regularly. You know who you are writing to, and who does what."),
     "de": ("Das Team", "Wer an Ihrer Website arbeitet.",
-           "Sie wissen, wem Sie schreiben und wer was macht."),
+           "Ein Gründer, ein Partner und Selbstständige, die regelmässig mit "
+           "uns arbeiten. Sie wissen, wem Sie schreiben und wer was macht."),
     "it": ("Il team", "Chi lavora al vostro sito.",
-           "Sapete a chi scrivete e chi fa che cosa."),
+           "Un fondatore, un socio e collaboratori indipendenti che lavorano "
+           "regolarmente con noi. Sapete a chi scrivete e chi fa che cosa."),
 }
 
 # Une personne = une entrée. Le rôle et la ligne de description sont portés
@@ -38,10 +48,10 @@ GENS = [
     },
     {
         "nom": "Alexandre Tranchant", "ini": "AT",
-        "fr": ("Fondateur", "Développement commercial et marketing."),
-        "en": ("Founder", "Client acquisition and marketing."),
-        "de": ("Gründer", "Kundengewinnung und Marketing."),
-        "it": ("Fondatore", "Sviluppo commerciale e marketing."),
+        "fr": ("Associé", "Développement commercial et marketing."),
+        "en": ("Partner", "Client acquisition and marketing."),
+        "de": ("Partner", "Kundengewinnung und Marketing."),
+        "it": ("Socio", "Sviluppo commerciale e marketing."),
     },
     {
         "nom": "Nina Levaux", "ini": "NL",
