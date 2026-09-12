@@ -47,7 +47,7 @@ GENS = [
         "it": ("Fondatore", "Design e sviluppo dei siti."),
     },
     {
-        "nom": "Alexandre Tranchant", "ini": "AT",
+        "nom": "Alex Tranchant", "ini": "AT",
         "fr": ("Associé", "Développement commercial et marketing."),
         "en": ("Partner", "Client acquisition and marketing."),
         "de": ("Partner", "Kundengewinnung und Marketing."),
