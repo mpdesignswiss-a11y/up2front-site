@@ -847,13 +847,15 @@ if(restants.length){
 
      · à l'arrivée, le visage se dessine — le cercle se trace, les yeux
        tombent en place, la bouche se termine ;
-     · au repos, il cligne d'un œil à intervalle irrégulier, l'œil gauche
-       puis le droit, pour qu'on ne devine pas le prochain ;
+     · au repos, il respire en continu et pioche au hasard dans un petit
+       répertoire de gestes (clin d'œil, sourire, regard de côté, dodeline) ;
      · au survol, il fait un tour complet et élargit son sourire.
 
-   Chaque geste occupe une propriété distincte — rotation pour la roulade,
-   scaleY pour le clin d'œil, l'attribut d pour la bouche — sans quoi deux
-   animations simultanées se voleraient la main.
+   DEUX ÉLÉMENTS, DEUX RÔLES. Le survol prend la main sur le <svg> (rotation
+   et échelle du tour complet), le repos sur le <g class="vis"> qu'il
+   contient (respiration et dodeline). Sans cette séparation, la roulade et
+   la dodeline se battraient pour la même propriété rotation et le visage
+   resterait de travers en sortie de survol.
 
    Le sourire élargi garde exactement la même écriture de chemin que le
    sourire normal (un M, une courbe c, huit nombres) : c'est à cette
@@ -861,6 +863,7 @@ if(restants.length){
    ===================================================================== */
 (function(){
   var smi = q('.smi'); if(!smi) return;
+  var vis    = q('.vis', smi) || smi;
   var rond   = q('circle', smi);
   var yeux   = qq('path[fill]', smi);
   var bouche = q('path[stroke]', smi);
@@ -879,21 +882,89 @@ if(restants.length){
   gsap.timeline({delay:.4})
     .to(rond,   {strokeDashoffset:0, duration:.95, ease:E})
     .to(yeux,   {scale:1, duration:.5, ease:'back.out(2.4)', stagger:.09}, '-=.38')
-    .to(bouche, {strokeDashoffset:0, duration:.55, ease:ED}, '-=.28');
+    .to(bouche, {strokeDashoffset:0, duration:.55, ease:ED}, '-=.28')
+    /* Les pointillés ont fini leur office. On les efface, sinon le sourire
+       élargi — plus long que le normal — dépasserait la longueur du tiret et
+       se retrouverait tronqué à son extrémité au moment du survol. */
+    .set([rond, bouche], {clearProps:'strokeDasharray,strokeDashoffset'});
 
-  /* --- le clin d'œil, un œil à la fois --- */
-  var tour = 0;
-  (function clin(){
-    gsap.delayedCall(3.4 + Math.random() * 5.5, function(){
+  /* --- la respiration, en dessous de tout le reste --- */
+  gsap.to(vis, {scale:1.035, duration:2.4, delay:2.2, yoyo:true, repeat:-1,
+                ease:'sine.inOut', transformOrigin:'50% 50%'});
+
+  /* =====================================================================
+     Le répertoire du repos
+     =====================================================================
+     Quatre gestes tirés au sort, jamais deux fois le même d'affilée, séparés
+     par des pauses irrégulières : c'est l'irrégularité qui fait la vie. Une
+     boucle à intervalle fixe se remarque au bout de trois tours et donne une
+     horloge, pas un visage.
+     ===================================================================== */
+  var survol = false;   // pendant le survol, le repos se tait
+
+  var GESTES = [
+    /* le clin d'œil — un œil à la fois, en alternance */
+    (function(){ var tour = 0; return function(){
       gsap.to(yeux[tour++ % 2], {scaleY:.12, transformOrigin:'50% 50%',
         duration:.09, yoyo:true, repeat:1, ease:'power2.inOut'});
-      clin();
+      return .4;
+    }; })(),
+
+    /* le sourire — s'élargit, tient une seconde, revient */
+    function(){
+      gsap.timeline()
+        .to(bouche, {attr:{d:LARGE},  duration:.34, ease:'back.out(2)'})
+        .to(bouche, {attr:{d:NORMAL}, duration:.42, ease:ED}, '+=.95');
+      return 1.8;
+    },
+
+    /* le regard de côté — les deux yeux glissent, marquent un temps, reviennent.
+       Le côté change à chaque fois, pour ne pas toujours regarder le même mur. */
+    (function(){ var sens = 1; return function(){
+      sens = -sens;
+      gsap.timeline()
+        .to(yeux, {x: 4.5 * sens, duration:.32, ease:'power2.out'})
+        .to(yeux, {x: 0,          duration:.45, ease:ED}, '+=.8');
+      return 1.6;
+    }; })(),
+
+    /* la dodeline — la tête penche puis se redresse. Portée par le groupe,
+       jamais par le <svg>, que le survol se réserve. */
+    (function(){ var sens = 1; return function(){
+      sens = -sens;
+      gsap.timeline()
+        .to(vis, {rotation: 7 * sens, duration:.5,  ease:'power2.out',
+                  transformOrigin:'50% 50%'})
+        .to(vis, {rotation: 0,        duration:.75, ease:ED}, '+=.45');
+      return 1.8;
+    }; })()
+  ];
+
+  var dernier = -1;
+  (function repos(){
+    gsap.delayedCall(3 + Math.random() * 5, function(){
+      if(survol){ repos(); return; }          // on réessaiera plus tard
+      var i;
+      do { i = Math.floor(Math.random() * GESTES.length); } while(i === dernier);
+      dernier = i;
+      gsap.delayedCall(GESTES[i](), repos);   // on attend la fin du geste
     });
   })();
 
   /* --- la roulade au survol --- */
   if(!fin) return;
+
+  /* Remettre le visage droit et les yeux au centre avant que la roulade ne
+     démarre : un geste de repos interrompu en plein vol laisserait sinon une
+     inclinaison ou un regard de travers pendant tout le tour. */
+  function calmer(){
+    gsap.killTweensOf([bouche, vis].concat(yeux), 'rotation,x,scaleY,attr');
+    gsap.to(vis,  {rotation:0, duration:.3, ease:ED, transformOrigin:'50% 50%'});
+    gsap.to(yeux, {x:0, scaleY:1, duration:.25, ease:ED});
+  }
+
   smi.addEventListener('mouseenter', function(){
+    survol = true; calmer();
     /* rotation relative : le visage repart d'où il s'est arrêté, il ne
        revient jamais en arrière d'un coup sec quand on ressort. */
     gsap.to(smi,    {rotation:'+=360', duration:1.1, ease:E, transformOrigin:'50% 50%'});
@@ -901,6 +972,7 @@ if(restants.length){
     gsap.to(bouche, {attr:{d:LARGE}, duration:.3, ease:ED});
   });
   smi.addEventListener('mouseleave', function(){
+    survol = false;
     gsap.to(smi,    {scale:1, duration:.42, ease:E});
     gsap.to(bouche, {attr:{d:NORMAL}, duration:.35, ease:ED});
   });
