@@ -125,6 +125,10 @@ h1 .m{color:var(--gris)}
 .hgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr) auto;gap:40px;
   align-items:start;margin-top:56px}
 .smi{width:78px;height:78px;margin-bottom:22px}
+/* le visage est creux : sans ceci, le survol ne prendrait que sur le trait.
+   pointer-events:all rend le disque cliquable malgré fill:none. */
+.smi circle{pointer-events:all}
+.smi:hover{cursor:pointer}
 .lede{color:var(--gris);font-size:16.5px;max-width:40ch;line-height:1.62}
 .prix{font-size:clamp(19px,2vw,26px);font-weight:600;letter-spacing:-.02em;color:var(--vert);
   font-variant-numeric:tabular-nums}

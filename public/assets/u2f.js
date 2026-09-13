@@ -776,6 +776,137 @@ if(restants.length){
 })();
 
 /* =====================================================================
+   9ter · LES YEUX de l'indicateur de défilement
+   =====================================================================
+   Deux gestes seulement, parce qu'un regard qui en fait trop devient une
+   mascotte : les pupilles suivent le curseur, et l'œil cligne de temps en
+   temps. Le clignement est le seul des deux qui existe au doigt — sans
+   souris, il n'y a rien à suivre.
+
+   Le suivi se fait en unités du viewBox (60 × 32), pas en pixels : la
+   course reste juste quelle que soit la taille rendue du SVG. COURSE vaut
+   5 — le blanc fait rx 13, la pupille rx 5, il reste donc 8 de marge et
+   la pupille ne touche jamais le bord.
+   ===================================================================== */
+(function(){
+  var oeil = q('.eyes'); if(!oeil) return;
+  var pup  = qq('.pup', oeil); if(!pup.length) return;
+
+  var COURSE = 5;
+
+  if(fin){
+    var vers = pup.map(function(p){
+      return {x: gsap.quickTo(p, 'x', {duration:.45, ease:'power3'}),
+              y: gsap.quickTo(p, 'y', {duration:.45, ease:'power3'})};
+    });
+
+    /* Le SVG est dans le héros, donc au sommet de la page : sa position
+       bouge au défilement. On relit le cadre à chaque mouvement plutôt que
+       de le mettre en cache, et on laisse rAF absorber la cadence. */
+    var attente = false;
+    window.addEventListener('mousemove', function(e){
+      if(attente) return;
+      attente = true;
+      requestAnimationFrame(function(){
+        attente = false;
+        var c = oeil.getBoundingClientRect();
+        if(!c.width) return;
+        var ech = 60 / c.width;                      // px -> unités viewBox
+        pup.forEach(function(p, i){
+          var cx = c.left + (p.getAttribute('cx') / 60) * c.width;
+          var cy = c.top  + (p.getAttribute('cy') / 32) * c.height;
+          var dx = (e.clientX - cx) * ech;
+          var dy = (e.clientY - cy) * ech;
+          var d  = Math.hypot(dx, dy) || 1;
+          var k  = Math.min(d, COURSE) / d;          // borne sans figer l'angle
+          vers[i].x(dx * k); vers[i].y(dy * k);
+        });
+      });
+    }, {passive:true});
+
+    document.addEventListener('mouseleave', function(){
+      pup.forEach(function(p, i){ vers[i].x(0); vers[i].y(0); });
+    });
+  }
+
+  /* Clignement : l'œil entier s'écrase, pupille comprise — c'est ce que
+     fait une paupière. Intervalle irrégulier, sinon l'œil bat la mesure. */
+  (function cligner(){
+    gsap.delayedCall(2.6 + Math.random() * 4.5, function(){
+      gsap.to(oeil, {scaleY:.08, transformOrigin:'50% 50%', duration:.07,
+                     yoyo:true, repeat:1, ease:'power2.inOut'});
+      cligner();
+    });
+  })();
+})();
+
+/* =====================================================================
+   9quater · LE SMILEY du héros
+   =====================================================================
+   Trois couches, du plus discret au plus démonstratif :
+
+     · à l'arrivée, le visage se dessine — le cercle se trace, les yeux
+       tombent en place, la bouche se termine ;
+     · au repos, il cligne d'un œil à intervalle irrégulier, l'œil gauche
+       puis le droit, pour qu'on ne devine pas le prochain ;
+     · au survol, il fait un tour complet et élargit son sourire.
+
+   Chaque geste occupe une propriété distincte — rotation pour la roulade,
+   scaleY pour le clin d'œil, l'attribut d pour la bouche — sans quoi deux
+   animations simultanées se voleraient la main.
+
+   Le sourire élargi garde exactement la même écriture de chemin que le
+   sourire normal (un M, une courbe c, huit nombres) : c'est à cette
+   condition que GSAP sait interpoler l'un vers l'autre.
+   ===================================================================== */
+(function(){
+  var smi = q('.smi'); if(!smi) return;
+  var rond   = q('circle', smi);
+  var yeux   = qq('path[fill]', smi);
+  var bouche = q('path[stroke]', smi);
+  if(!rond || yeux.length < 2 || !bouche) return;
+
+  var NORMAL = bouche.getAttribute('d');
+  var LARGE  = 'M23 46c7 12 27 12 34 0';
+
+  /* --- le tracé d'arrivée --- */
+  var tourRond   = 2 * Math.PI * 37;
+  var tourBouche = bouche.getTotalLength();
+  gsap.set(rond,   {strokeDasharray:tourRond,   strokeDashoffset:tourRond});
+  gsap.set(bouche, {strokeDasharray:tourBouche, strokeDashoffset:tourBouche});
+  gsap.set(yeux,   {scale:0, transformOrigin:'50% 50%'});
+
+  gsap.timeline({delay:.4})
+    .to(rond,   {strokeDashoffset:0, duration:.95, ease:E})
+    .to(yeux,   {scale:1, duration:.5, ease:'back.out(2.4)', stagger:.09}, '-=.38')
+    .to(bouche, {strokeDashoffset:0, duration:.55, ease:ED}, '-=.28');
+
+  /* --- le clin d'œil, un œil à la fois --- */
+  var tour = 0;
+  (function clin(){
+    gsap.delayedCall(3.4 + Math.random() * 5.5, function(){
+      gsap.to(yeux[tour++ % 2], {scaleY:.12, transformOrigin:'50% 50%',
+        duration:.09, yoyo:true, repeat:1, ease:'power2.inOut'});
+      clin();
+    });
+  })();
+
+  /* --- la roulade au survol --- */
+  if(!fin) return;
+  smi.addEventListener('mouseenter', function(){
+    /* rotation relative : le visage repart d'où il s'est arrêté, il ne
+       revient jamais en arrière d'un coup sec quand on ressort. */
+    gsap.to(smi,    {rotation:'+=360', duration:1.1, ease:E, transformOrigin:'50% 50%'});
+    gsap.to(smi,    {scale:1.09, duration:.34, ease:'back.out(3)'});
+    gsap.to(bouche, {attr:{d:LARGE}, duration:.3, ease:ED});
+  });
+  smi.addEventListener('mouseleave', function(){
+    gsap.to(smi,    {scale:1, duration:.42, ease:E});
+    gsap.to(bouche, {attr:{d:NORMAL}, duration:.35, ease:ED});
+  });
+})();
+
+/* =====================================================================
    10 · RECALCUL une fois les polices variables chargées
    ===================================================================== */
 if(document.fonts && document.fonts.ready){
