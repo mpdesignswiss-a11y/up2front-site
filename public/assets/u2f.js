@@ -284,6 +284,12 @@ qq('[data-lignes]').forEach(function(lig){
        sur des lignes découpées : SplitText type:'lines' remonterait ses
        .ligne au rang d'enfants directs du <ul> et détruirait les <li>. --- */
 qq('[data-items]').forEach(function(lst){
+  /* Une liste posée dans une carte de prix a déjà son propre dévoilement
+     (§ plus haut, `.plan .feat li`, en one-shot). Lancer celui-ci en plus
+     ferait se disputer deux `from` les mêmes <li> : le second enregistre
+     comme état final l'opacité 0 laissée par le premier, et les lignes
+     disparaissent au défilement au lieu d'apparaître. */
+  if(lst.closest('.plan')) return;
   gsap.from(qq('li', lst), {
     opacity:.5, x:-50, duration:.5, ease:ED,
     stagger:{each:.1},
@@ -292,9 +298,15 @@ qq('[data-items]').forEach(function(lst){
 });
 
 /* --- c · cartes de prix : dérive différenciée, la carte centrale remonte
-       pendant que les deux autres descendent (parallaxe du template) --- */
+       pendant que les deux autres descendent (parallaxe du template).
+       Réservée à la grille de prix de l'accueil : ailleurs (page du suivi,
+       par exemple) il n'y a pas de `.tarifs .grid` à donner en trigger, et
+       ScrollTrigger se rabat alors sur la carte elle-même — la dérive
+       décale les cartes sans que les listes qu'elles contiennent
+       recalculent leurs repères, et les <li> restent figés à
+       mi-animation. --- */
 var derive = [7, -8, 7];
-qq('.plan').forEach(function(p, i){
+qq('.tarifs .grid .plan').forEach(function(p, i){
   gsap.to(p, {
     yPercent: derive[i] || 0, ease:'none',
     scrollTrigger:{ trigger:'.tarifs .grid', start:'top bottom', end:'bottom top', scrub:.8 }
