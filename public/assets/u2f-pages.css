@@ -346,6 +346,19 @@ a.carte:hover{border-color:var(--vert);background:var(--noir-3)}
   transition:width .45s var(--ease)}
 .apercu.est-mobile .apercu-scene iframe{width:min(390px,100%);
   border-left:1px solid var(--bord-2);border-right:1px solid var(--bord-2)}
+/* Mode maquette. La scène ne porte plus un site vivant mais l'image d'un
+   projet dessiné, sur toute sa longueur : on la fait défiler. La boîte prend
+   exactement la largeur d'origine de l'image — --maq-larg est posée par le
+   script au chargement — pour que chaque maquette s'affiche à sa taille
+   réelle : ni étirée sur 1400 px, ni rétrécie au point d'être illisible. Le
+   sélecteur de largeur et « Ouvrir en vrai » n'ont pas de sens ici — une
+   maquette n'est pas en ligne — on les retire. */
+.apercu-scene img[data-vue-img]{display:block;width:100%;height:auto;
+  align-self:flex-start;background:#fff}
+.apercu.est-maquette .apercu-boite{width:min(var(--maq-larg,660px),100%)}
+.apercu.est-maquette .apercu-scene{overflow:auto;overscroll-behavior:contain}
+.apercu.est-maquette .apercu-larg,
+.apercu.est-maquette .apercu-lien{display:none}
 .apercu-note{padding:9px 16px;border-top:1px solid var(--bord-2);font-size:12px;
   color:var(--gris)}
 

@@ -412,6 +412,14 @@ if(apercu){
   var lienEl   = q('[data-lien]', apercu);
   var boutLarg = qq('[data-larg]', apercu);
   var appelant = null;   /* le bouton qui a ouvert : on lui rend le focus */
+  /* Deux natures d'aperçu passent par la même fenêtre. Un site réellement en
+     ligne se charge dans le cadre. Une maquette — un projet dessiné — n'a pas
+     d'adresse : c'est une image en pleine longueur, que l'on fait défiler. On
+     cache alors le sélecteur de largeur et « Ouvrir en vrai », qui n'ont pas
+     de sens pour elle. */
+  var imgEl    = q('[data-vue-img]', apercu);
+  var noteEl   = q('[data-note]', apercu);
+  var scene    = q('.apercu-scene', apercu);
 
   var largeur = function(mode){
     apercu.classList.toggle('est-mobile', mode === 'mobile');
@@ -421,14 +429,43 @@ if(apercu){
     });
   };
 
-  var ouvrir = function(url, nom, source){
+  var ouvrir = function(url, nom, source, maquette){
     appelant = source || null;
     if(nomEl)  nomEl.textContent  = nom  || '';
-    if(lienEl) lienEl.href = url;
-    if(vue){
-      vue.setAttribute('title', 'Aperçu du site ' + (nom || ''));
-      vue.src = url;
+    apercu.classList.toggle('est-maquette', !!maquette);
+    if(maquette){
+      if(vue){ vue.removeAttribute('src'); vue.hidden = true; }
+      if(imgEl){
+        imgEl.hidden = false;
+        // Chaque maquette a sa propre largeur d'origine. On l'apprend de
+        // l'image elle-même une fois chargée, et la fenêtre s'y ajuste : la
+        // maquette s'affiche ainsi à sa taille réelle, sans être ni étirée
+        // ni tassée. Rien à renseigner dans le HTML quand on en ajoute une.
+        apercu.style.removeProperty('--maq-larg');
+        imgEl.onload = function(){
+          if(imgEl.naturalWidth){
+            apercu.style.setProperty('--maq-larg', imgEl.naturalWidth + 'px');
+          }
+        };
+        imgEl.src = maquette;
+        imgEl.alt = (imgEl.getAttribute('data-alt') || 'Maquette') + ' ' + (nom || '');
+      }
+      if(noteEl && noteEl.getAttribute('data-note-maquette')){
+        noteEl.textContent = noteEl.getAttribute('data-note-maquette');
+      }
+    }else{
+      if(imgEl){ imgEl.hidden = true; imgEl.removeAttribute('src'); }
+      if(lienEl) lienEl.href = url;
+      if(vue){
+        vue.hidden = false;
+        vue.setAttribute('title', 'Aperçu du site ' + (nom || ''));
+        vue.src = url;
+      }
+      if(noteEl && noteEl.getAttribute('data-note-site')){
+        noteEl.textContent = noteEl.getAttribute('data-note-site');
+      }
     }
+    if(scene) scene.scrollTop = 0;
     largeur('bureau');
     apercu.hidden = false;
     document.documentElement.style.overflow = 'hidden';
@@ -445,15 +482,17 @@ if(apercu){
     window.setTimeout(function(){
       apercu.hidden = true;
       if(vue) vue.removeAttribute('src');   /* on coupe scripts et sons */
+      if(imgEl) imgEl.removeAttribute('src');
     }, 320);
     if(appelant && appelant.focus) appelant.focus();
     appelant = null;
   };
 
-  qq('[data-apercu]').forEach(function(b){
+  qq('[data-apercu],[data-maquette]').forEach(function(b){
     b.addEventListener('click', function(){
       ouvrir(b.getAttribute('data-apercu'),
-             b.getAttribute('data-nom'), b);
+             b.getAttribute('data-nom'), b,
+             b.getAttribute('data-maquette'));
     });
   });
 

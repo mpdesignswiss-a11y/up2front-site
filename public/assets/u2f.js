@@ -446,11 +446,11 @@ lot('#faq .rv');
 
   /* Une carte porte une ou plusieurs clés, séparées par une barre verticale.
      Le séparateur n'est ni l'espace ni la virgule parce que les familles en
-     contiennent déjà (« Santé & bien-être »). Aujourd'hui chaque carte n'a
-     qu'une clé, sa famille : le filtre « En ligne », qui traversait les
-     familles, a été retiré — les trois sites ouvrables sont classés dans leur
-     métier comme les autres et leur badge dit déjà qu'ils s'ouvrent. La
-     mécanique multi-clés reste, elle ne coûte rien et resservira. */
+     contiennent déjà (« Santé & bien-être »). Le filtre « En ligne », qui
+     traversait les familles, a été retiré : chaque carte est classée dans son
+     métier et son badge dit déjà ce qu'elle ouvre. La mécanique multi-clés
+     sert aujourd'hui au cabinet de santé, qui répond à « Cabinet » comme à
+     « Santé ». */
   function trier(theme){
     var visibles = 0;
     cartes.forEach(function(c){
