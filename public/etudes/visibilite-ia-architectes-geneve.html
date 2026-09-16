@@ -127,6 +127,28 @@
   .srcs{margin-top:22px;line-height:2}
   .rule{height:1px;background:var(--line)}
 
+  section[id]{scroll-margin-top:64px}
+  .chap{position:fixed;top:0;left:0;right:0;z-index:60;
+    background:rgba(1,1,4,.84);border-bottom:1px solid var(--line);
+    -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+    transform:translateY(-101%);transition:transform .45s cubic-bezier(.16,1,.3,1)}
+  .chap.on{transform:none}
+  .chap .prog{height:2px;width:0;background:var(--accent);transition:width .1s linear}
+  .chap .inner{display:flex;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;
+    max-width:1000px;margin:0 auto;padding:0 18px}
+  .chap .inner::-webkit-scrollbar{display:none}
+  .chap a{flex:0 0 auto;display:flex;align-items:baseline;gap:7px;
+    padding:14px 13px 12px;font-size:12.5px;letter-spacing:-.005em;color:var(--txt-3);
+    text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent;
+    transition:color .25s,border-color .25s}
+  .chap a i{font-style:normal;font-size:9.5px;letter-spacing:.14em;
+    font-variant-numeric:tabular-nums;color:var(--txt-3);transition:color .25s}
+  .chap a:hover{color:var(--txt)}
+  .chap a.here{color:var(--txt);border-bottom-color:var(--accent)}
+  .chap a.here i{color:var(--accent)}
+  .chap a.fin{color:var(--accent)}
+  .chap a.fin i{color:var(--accent)}
+
   .dock{position:fixed;left:50%;bottom:24px;z-index:50;
     display:flex;align-items:center;gap:18px;
     padding:11px 11px 11px 24px;border-radius:100px;
@@ -158,6 +180,9 @@
     .dock.on{transform:translateY(0)}
     .dock p{font-size:12.5px;max-width:none}
     .dock a.go{padding:10px 16px;font-size:13px}
+    .chap .inner{padding:0 12px}
+    .chap a{font-size:12px;padding:12px 10px 10px;gap:6px}
+    section[id]{scroll-margin-top:56px}
   }
   @media(prefers-reduced-motion:reduce){
     .dock{transition:opacity .2s}
@@ -165,6 +190,23 @@
 </style>
 </head>
 <body>
+
+<nav class="chap" id="chap" aria-label="Chapitres" hidden>
+  <div class="prog" id="prog"></div>
+  <div class="inner" id="chapinner">
+    <a href="#c1"><i>01</i>Trois moteurs dans un seul</a>
+    <a href="#c2"><i>02</i>Le protocole</a>
+    <a href="#c3"><i>03</i>Le ticket d'entrée</a>
+    <a href="#c4"><i>04</i>Google contre Google</a>
+    <a href="#c5"><i>05</i>Quatre réponses en une heure</a>
+    <a href="#c6"><i>06</i>Les absents</a>
+    <a href="#c7"><i>07</i>La fuite vers la France</a>
+    <a href="#c8"><i>08</i>Par où commencer</a>
+    <a href="#c9"><i>09</i>Ce qu'elle ne dit pas</a>
+    <a class="fin" href="#c10"><i>→</i>Le relevé sur vos intentions</a>
+  </div>
+</nav>
+
 <div class="wrap">
 
   <header>
@@ -181,7 +223,7 @@
   </header>
 
   <!-- 01 -->
-  <section>
+  <section id="c1">
     <div class="num">01 — Le constat</div>
     <h2>Trois moteurs dans un seul : fiches, éditorial, anonyme</h2>
     <p class="lead">« Quel est le meilleur architecte à Genève ? » a été posée quatre fois à Google AI Mode au cours de la même heure, depuis la même machine, sans changer un seul paramètre de recherche. Elle a produit trois formats de réponse qui n'obéissent pas aux mêmes règles et ne couronnent pas les mêmes bureaux.</p>
@@ -245,7 +287,7 @@
   </div>
 
   <!-- 02 -->
-  <section>
+  <section id="c2">
     <div class="num">02 — Protocole</div>
     <h2>Ce qui a été fait, précisément</h2>
     <p>Quatre intentions clients rédigées en langage naturel, telles qu'un particulier les formulerait, soumises à quatre moteurs de réponse le 15 septembre 2026 entre 19h01 et 20h15. L'intention principale a été soumise deux fois à Perplexity à une minute d'intervalle, et quatre fois à Google AI Mode sur une heure, afin de mesurer la variabilité.</p>
@@ -272,7 +314,7 @@
   </section>
 
   <!-- 03 -->
-  <section>
+  <section id="c3">
     <div class="num">03 — Le résultat central</div>
     <h2>Dans le mode fiches, le ticket d'entrée coûte quelques dizaines d'avis</h2>
     <p>Voici les volumes d'avis Google des bureaux recommandés par Google AI Mode <strong>lorsqu'il répond en mode fiches</strong>, tels qu'affichés dans la réponse elle-même. Cette portée est importante : dans les deux autres modes, Google ne mentionne aucun avis et ce classement ne s'applique pas. Mais le mode fiches est celui qui est sorti majoritairement, et c'est le seul dont les critères sont entièrement lisibles de l'extérieur.</p>
@@ -298,7 +340,7 @@
   </section>
 
   <!-- 04 -->
-  <section>
+  <section id="c4">
     <div class="num">04 — Quatre moteurs, trois leviers</div>
     <h2>Google contre Google : deux listes, un seul nom commun</h2>
     <p class="lead">Le relevé le plus troublant de l'étude n'oppose pas Google à un concurrent. Il oppose Google à Google. Posée à Google AI Mode puis à Gemini — même entreprise, même index, même ville, même question, quarante minutes d'écart — l'intention « quel est le meilleur architecte à Genève » produit deux listes qui ne partagent <strong>qu'un seul bureau, et jamais aux mêmes rangs</strong>. C'est la même fracture que celle des trois modes de la section 01, vue cette fois entre deux produits distincts de la même maison.</p>
@@ -386,7 +428,7 @@
   </section>
 
   <!-- 05 -->
-  <section>
+  <section id="c5">
     <div class="num">05 — Variabilité</div>
     <h2>La même question, quatre réponses, une heure d'écart</h2>
     <p>La première intention a été soumise deux fois à Perplexity, à 19h01 puis 19h02, dans des conditions identiques. Le premier passage nomme trois bureaux, dont Devanthéry &amp; Lamunière. Le second n'en nomme que deux et fait disparaître Devanthéry &amp; Lamunière.</p>
@@ -396,7 +438,7 @@
   </section>
 
   <!-- 06 -->
-  <section>
+  <section id="c6">
     <div class="num">06 — Les absents</div>
     <h2>La notoriété professionnelle n'ouvre qu'une porte sur quatre</h2>
     <p>Les bureaux les plus établis du canton — ceux que la profession cite, qui publient leurs projets et siègent dans les instances — restent marginaux sur les quatorze relevés. Deux corrections importantes, apportées par les derniers passages : brodbeck roulet et Favre+Guth, invisibles chez Perplexity, occupent les deux premières places de Gemini ; et meier + associés, absent des treize autres relevés, prend la première place du seul passage où Google AI Mode bascule en mode éditorial. L'autorité professionnelle n'est donc pas sans effet — elle n'agit que dans les modes où les avis ne comptent pas, et ces modes-là sont minoritaires.</p>
@@ -432,7 +474,7 @@
   </section>
 
   <!-- 07 -->
-  <section>
+  <section id="c7">
     <div class="num">07 — Fuite de marché</div>
     <h2>Un cabinet français recommandé comme architecte d'intérieur genevois</h2>
     <p>Sur l'intention « architecte d'intérieur haut de gamme à Genève », Google AI Mode recommande <strong>Ynspir</strong>, agence dont l'adresse affichée dans la réponse est Cogolin, dans le Var. Quatre avis Google. Elle est présentée aux côtés des studios de la Place du Bourg-de-Four.</p>
@@ -444,7 +486,7 @@
   </section>
 
   <!-- 08 -->
-  <section>
+  <section id="c8">
     <div class="num">08 — Plan d'action</div>
     <h2>Dans cet ordre, du rendement le plus élevé au plus faible</h2>
     <ol class="steps">
@@ -459,7 +501,7 @@
   </section>
 
   <!-- 09 -->
-  <section style="border-bottom:none">
+  <section id="c9" style="border-bottom:none">
     <div class="num">09 — Limites</div>
     <h2>Ce que cette étude ne dit pas</h2>
     <p>Le nombre de passages par intention est insuffisant pour établir des fréquences solides : la version complète en exige cinq par intention et par moteur. Les chiffres « x / 14 » de la section 06 sont des comptages d'occurrences, pas des fréquences statistiques.</p>
@@ -473,7 +515,7 @@
   </section>
 
   <!-- 10 -->
-  <section class="sign">
+  <section id="c10" class="sign">
     <div class="num">Up2Front — Genève</div>
     <h2>Ce relevé peut être refait sur vos propres intentions</h2>
     <p>L'étude ci-dessus porte sur quatre questions génériques. Elle ne dit rien de votre position sur les intentions qui vous amènent réellement des clients — celles qui correspondent à ce que vous voulez vendre. C'est ce que je mesure : <strong>quatre intentions que vous choisissez, quatre moteurs, cinq passages chacun.</strong> Quatre-vingts relevés horodatés, livrés en cinq jours ouvrés. CHF 690.</p>
@@ -511,6 +553,45 @@
 </div>
 
 <script>
+(function(){
+  var chap=document.getElementById('chap'),
+      inner=document.getElementById('chapinner'),
+      prog=document.getElementById('prog'),
+      liens=[].slice.call(inner.querySelectorAll('a')),
+      cibles=liens.map(function(a){return document.querySelector(a.getAttribute('href'))}),
+      entete=document.querySelector('header');
+  if(!entete||cibles.indexOf(null)>-1)return;
+  chap.hidden=false;
+
+  var actif=-1;
+  function marquer(i){
+    if(i===actif)return;
+    actif=i;
+    liens.forEach(function(a,k){a.classList.toggle('here',k===i)});
+    var a=liens[i];
+    if(!a)return;
+    var g=a.offsetLeft, d=g+a.offsetWidth;
+    if(g<inner.scrollLeft+24) inner.scrollTo({left:Math.max(0,g-24),behavior:'smooth'});
+    else if(d>inner.scrollLeft+inner.clientWidth-24)
+      inner.scrollTo({left:d-inner.clientWidth+24,behavior:'smooth'});
+  }
+
+  var tic=false;
+  function lire(){
+    tic=false;
+    var y=window.pageYOffset||document.documentElement.scrollTop,
+        h=document.documentElement.scrollHeight-window.innerHeight;
+    prog.style.width=(h>0?Math.min(100,Math.max(0,y/h*100)):0)+'%';
+    chap.classList.toggle('on', y > entete.offsetTop+entete.offsetHeight-80);
+    var repere=y+window.innerHeight*0.35, i=0;
+    for(var k=0;k<cibles.length;k++){ if(cibles[k].offsetTop<=repere) i=k; }
+    marquer(i);
+  }
+  function planifier(){ if(!tic){tic=true;requestAnimationFrame(lire)} }
+  addEventListener('scroll',planifier,{passive:true});
+  addEventListener('resize',planifier);
+  lire();
+})();
 (function(){
   var dock=document.getElementById('dock');
   var reveal=document.querySelector('.jump');
