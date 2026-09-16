@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Étude de visibilité IA — Architectes à Genève | Up2Front</title>
+<style>
+  :root{
+    --bg:#08090B; --bg-2:#0E1013; --bg-3:#121519;
+    --line:#1E2228; --line-2:#2A2F37;
+    --txt:#E9E7E4; --txt-2:#9BA1A9; --txt-3:#6B717A;
+    --accent:#D8A657; --pos:#6FAF8B; --neg:#C4685E; --blue:#7E9CC4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--txt);
+    font-family:"Helvetica Neue",Helvetica,Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:0 32px}
+
+  header{padding:72px 0 56px;border-bottom:1px solid var(--line)}
+  .brand{display:flex;justify-content:space-between;align-items:baseline;gap:20px;
+    font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--txt-3);margin-bottom:64px}
+  .brand b{color:var(--txt);font-weight:600}
+  .eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:24px}
+  h1{font-size:clamp(34px,5.2vw,58px);line-height:1.04;font-weight:600;letter-spacing:-.025em;max-width:17ch}
+  .sub{margin-top:28px;font-size:19px;line-height:1.55;color:var(--txt-2);max-width:62ch}
+  .meta{display:flex;flex-wrap:wrap;gap:40px;margin-top:48px;font-size:12px;letter-spacing:.06em;color:var(--txt-3)}
+  .meta span{display:block;color:var(--txt);font-size:14px;letter-spacing:0;margin-top:4px}
+
+  section{padding:80px 0;border-bottom:1px solid var(--line)}
+  .num{font-size:11px;letter-spacing:.2em;color:var(--txt-3);text-transform:uppercase;margin-bottom:18px}
+  h2{font-size:clamp(25px,3.4vw,36px);line-height:1.15;font-weight:600;letter-spacing:-.02em;max-width:24ch}
+  h3{font-size:16px;font-weight:600;margin-bottom:10px}
+  p{max-width:68ch;color:var(--txt-2);margin-top:20px}
+  p strong{color:var(--txt);font-weight:600}
+  .lead{font-size:18px;color:var(--txt)}
+
+  .verdict{border-left:2px solid var(--accent);padding:24px 0 24px 28px;margin-top:40px}
+  .verdict p{margin-top:0;font-size:20px;line-height:1.5;color:var(--txt);max-width:58ch}
+
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:48px;border:1px solid var(--line)}
+  .stat{background:var(--bg-2);padding:28px 24px}
+  .stat b{display:block;font-size:40px;font-weight:600;letter-spacing:-.03em;line-height:1;color:var(--accent)}
+  .stat i{display:block;font-style:normal;font-size:13px;color:var(--txt-2);margin-top:12px;line-height:1.45}
+
+  table{width:100%;border-collapse:collapse;margin-top:44px;font-size:13.5px}
+  th{text-align:left;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--txt-3);
+    font-weight:500;padding:0 14px 14px 0;border-bottom:1px solid var(--line-2)}
+  td{padding:15px 14px 15px 0;border-bottom:1px solid var(--line);vertical-align:top;color:var(--txt-2)}
+  td.src{color:var(--txt);font-weight:600}
+  td.n{color:var(--accent);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tag{display:inline-block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+    padding:3px 9px;border:1px solid var(--line-2);border-radius:2px;color:var(--txt-3);white-space:nowrap}
+  .tag.g{border-color:#3A4A5C;color:var(--blue)}
+  .tag.p{border-color:#4A3C2A;color:var(--accent)}
+  .tag.c{border-color:#2E4A3C;color:var(--pos)}
+  .tag.m{border-color:#4A3234;color:var(--neg)}
+  .bar{height:3px;background:var(--line-2);width:100px;margin-top:8px;position:relative}
+  .bar i{position:absolute;inset:0 auto 0 0;background:var(--accent);display:block}
+
+  .worlds{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);margin-top:48px;border:1px solid var(--line)}
+  .worlds.three{grid-template-columns:1fr 1fr 1fr}
+  .worlds.three .world{padding:28px 22px}
+  .worlds.three .world h3{font-size:17px}
+  .world{background:var(--bg-2);padding:32px 28px}
+  .world .cap{font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:6px}
+  .world.a .cap{color:var(--blue)}
+  .world.b .cap{color:var(--accent)}
+  .world.neg .cap{color:var(--neg)}
+  .world.pos .cap{color:var(--pos)}
+  .world h3{font-size:19px;margin-bottom:8px;letter-spacing:-.01em}
+  .world p{font-size:13.5px;margin-top:8px;max-width:none}
+  .world ul{list-style:none;margin-top:22px;border-top:1px solid var(--line)}
+  .world li{font-size:14px;color:var(--txt);padding:11px 0;border-bottom:1px solid var(--line);
+    display:flex;justify-content:space-between;gap:12px}
+  .world li em{font-style:normal;font-size:11px;color:var(--txt-3);letter-spacing:.04em;white-space:nowrap}
+
+  .reviews{margin-top:44px;border:1px solid var(--line)}
+  .rev{display:grid;grid-template-columns:200px 1fr 90px;align-items:center;gap:20px;
+    padding:15px 24px;border-bottom:1px solid var(--line);background:var(--bg-2)}
+  .rev:last-child{border-bottom:none}
+  .rev b{font-size:14px;font-weight:600;color:var(--txt)}
+  .rev .track{height:8px;background:var(--line-2);position:relative}
+  .rev .track i{position:absolute;inset:0 auto 0 0;background:var(--accent);display:block}
+  .rev .track i.lo{background:var(--neg)}
+  .rev span{font-size:13px;color:var(--txt-2);text-align:right;font-variant-numeric:tabular-nums}
+
+  .blocks{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);margin-top:44px;border:1px solid var(--line)}
+  .block{background:var(--bg-2);padding:26px 24px}
+  .block .k{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+  .block p{margin-top:8px;font-size:14px;max-width:none}
+
+  ol.steps{list-style:none;counter-reset:s;margin-top:40px}
+  ol.steps li{counter-increment:s;padding:24px 0 24px 56px;border-bottom:1px solid var(--line);position:relative}
+  ol.steps li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:26px;
+    font-size:11px;letter-spacing:.1em;color:var(--accent)}
+  ol.steps p{margin-top:6px;font-size:14.5px}
+
+  .caveat{background:var(--bg-2);border:1px solid var(--line);padding:30px 28px;margin-top:40px}
+  .caveat h3{color:var(--txt);margin-bottom:14px}
+  .caveat p{font-size:14px;margin-top:12px}
+  .quote{border-left:2px solid var(--line-2);padding-left:22px;margin-top:28px;
+    font-size:15px;color:var(--txt);font-style:italic;max-width:64ch}
+
+  footer{padding:64px 0 96px;color:var(--txt-3);font-size:12.5px}
+  footer p{font-size:12.5px;color:var(--txt-3);max-width:72ch}
+  footer a{color:var(--txt-2);text-decoration:none;border-bottom:1px solid var(--line-2)}
+  .srcs{margin-top:22px;line-height:2}
+  .rule{height:1px;background:var(--line)}
+
+  @media(max-width:760px){
+    .wrap{padding:0 22px}
+    .stats,.worlds,.blocks{grid-template-columns:1fr}
+    .rev{grid-template-columns:1fr;gap:8px}
+    .rev span{text-align:left}
+    .meta{gap:26px}
+    table{font-size:12.5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand"><b>UP2FRONT</b><span>AI Visibility Report</span></div>
+    <div class="eyebrow">Étude sectorielle · Canton de Genève · Relevé réel</div>
+    <h1>Google répond trois fois à la même question, et jamais la même chose</h1>
+    <p class="sub">Quatorze interrogations réelles de Perplexity, Google AI Mode, ChatGPT et Gemini sur les architectes genevois. Posée quatre fois à Google AI Mode dans la même heure, la même question a produit trois formats de réponse incompatibles, trois premières places différentes, et pas un seul bureau présent dans les trois. Aucun architecte ne choisit lequel sortira chez son prospect. C'est ce qui rend la mesure indispensable — et l'audit à passage unique indéfendable.</p>
+    <div class="meta">
+      <div>Verticale<span>Architecture &amp; architecture d'intérieur</span></div>
+      <div>Périmètre<span>Genève et communes</span></div>
+      <div>Moteurs<span>Perplexity · Google AI Mode · ChatGPT · Gemini</span></div>
+      <div>Relevé<span>15 septembre 2026, 19h01–20h15</span></div>
+    </div>
+  </header>
+
+  <!-- 01 -->
+  <section>
+    <div class="num">01 — Le constat</div>
+    <h2>Trois moteurs dans un seul : fiches, éditorial, anonyme</h2>
+    <p class="lead">« Quel est le meilleur architecte à Genève ? » a été posée quatre fois à Google AI Mode au cours de la même heure, depuis la même machine, sans changer un seul paramètre de recherche. Elle a produit trois formats de réponse qui n'obéissent pas aux mêmes règles et ne couronnent pas les mêmes bureaux.</p>
+
+    <div class="worlds three">
+      <div class="world a">
+        <div class="cap">Mode fiches · 2 passages</div>
+        <h3>Le pack local mis en récit</h3>
+        <p>Chaque bureau arrive avec sa fiche Google Business : note, nombre d'avis, catégorie, adresse, horaires, boutons Appeler et Itinéraire. Le texte commente les fiches.</p>
+        <ul>
+          <li>En tête <em>HertelTan · 11 avis</em></li>
+          <li>Puis <em>Pierre Ambrosetti</em></li>
+          <li>Puis <em>CORPUS · Archiplein</em></li>
+          <li>Puis <em>group8 · Favre+Guth</em></li>
+          <li>Décide <em>le volume d'avis</em></li>
+        </ul>
+      </div>
+      <div class="world neg">
+        <div class="cap">Mode éditorial · 1 passage</div>
+        <h3>La synthèse de presse professionnelle</h3>
+        <p>Aucune fiche. Aucune note. <strong>Le mot « avis » n'apparaît pas une seule fois.</strong> Un tableau comparatif par spécialité, et des sources éditoriales.</p>
+        <ul>
+          <li>En tête <em>meier + associés</em></li>
+          <li>Puis <em>Pierre Ambrosetti</em></li>
+          <li>Puis <em>CORPUS · group8 · FdMP</em></li>
+          <li>Sources <em>maa.ch · local.ch</em></li>
+          <li>Décide <em>ancienneté · SIA/FAS</em></li>
+        </ul>
+      </div>
+      <div class="world pos">
+        <div class="cap">Mode anonyme · 1 passage</div>
+        <h3>La liste par type de projet</h3>
+        <p>Compte Google déconnecté. Ni fiches, ni notes, ni tableau : une liste de recommandations classées par nature de chantier. <strong>Deux bureaux jamais vus ailleurs.</strong></p>
+        <ul>
+          <li>Rénovation <em>Keller · CSDK</em></li>
+          <li>Durable <em>ecotonos</em></li>
+          <li>Envergure <em>CCHE · group8 · FdMP</em></li>
+          <li>Sources <em>fiches Google seules</em></li>
+          <li>Décide <em>la spécialisation affichée</em></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="verdict">
+      <p>En mode fiches, HertelTan est « l'une des références genevoises les plus en vue » avec onze avis Google. En mode éditorial, cinquante minutes plus tard, HertelTan a disparu au profit de meier + associés, dont la fiche n'est jamais montrée. Déconnecté du compte, aucun des deux n'apparaît : la première recommandation va à Keller Architectes, suivie de CSDK, un bureau absent des treize autres relevés.</p>
+    </div>
+
+    <p>Ce n'est pas un effet de personnalisation au sens habituel : les trois premiers passages ont été effectués sur le même compte, à quelques minutes d'intervalle, sans modifier un paramètre — et ils divergent déjà. Le quatrième, en session déconnectée, diverge une troisième fois. C'est le moteur lui-même qui bascule d'un mode à l'autre, et les trois modes récompensent des efforts différents : le volume d'avis clients, l'ancienneté et l'appartenance aux instances professionnelles, ou la clarté de la spécialisation déclarée.</p>
+
+    <div class="stats">
+      <div class="stat"><b>3</b><i>formats de réponse différents pour une question identique, en une heure, sur la même machine</i></div>
+      <div class="stat"><b>11</b><i>avis Google suffisent à prendre la première place — mais seulement dans le mode fiches</i></div>
+      <div class="stat"><b>0</b><i>bureau présent à la fois dans les trois modes : aucune position n'est acquise partout</i></div>
+    </div>
+
+    <p>La conséquence commerciale est nette. Un architecte qui ne travaille que ses avis gagne le mode fiches et perd les deux autres. Un architecte qui ne mise que sur sa notoriété professionnelle fait l'inverse. <strong>Ces leviers ne sont pas concurrents, ils couvrent chacun une portion du moteur</strong> — et aucun bureau ne peut savoir à l'avance dans quel mode son prospect tombera. C'est précisément pourquoi un audit à passage unique ne prouve rien : il décrit un mode parmi trois et le présente comme la réalité.</p>
+  </section>
+
+  <!-- 02 -->
+  <section>
+    <div class="num">02 — Protocole</div>
+    <h2>Ce qui a été fait, précisément</h2>
+    <p>Quatre intentions clients rédigées en langage naturel, telles qu'un particulier les formulerait, soumises à quatre moteurs de réponse le 15 septembre 2026 entre 19h01 et 20h15. L'intention principale a été soumise deux fois à Perplexity à une minute d'intervalle, et quatre fois à Google AI Mode sur une heure, afin de mesurer la variabilité.</p>
+    <p>Trois sessions distinctes. <strong>Session A, 19h01–19h06</strong> — Perplexity et Google AI Mode, sans historique de conversation. <strong>Session B, 19h20–19h50</strong> — ChatGPT en session non authentifiée, et Gemini sur compte Google connecté, Gemini n'étant pas accessible autrement. <strong>Session C, 19h58–20h15</strong> — trois passages de contrôle sur Google AI Mode, dont le dernier après déconnexion complète du compte Google, pour isoler ce qui relève de la personnalisation.</p>
+    <table>
+      <thead><tr><th style="width:40%">Intention soumise</th><th style="width:130px">Moteur</th><th style="width:70px">Heure</th><th>Bureaux nommés</th></tr></thead>
+      <tbody>
+        <tr><td class="src">Quel est le meilleur architecte à Genève ?</td><td><span class="tag p">Perplexity</span></td><td class="n">19:01</td><td>HertelTan · CORPUS · Devanthéry &amp; Lamunière</td></tr>
+        <tr><td class="src">Quel est le meilleur architecte à Genève ? <em style="color:var(--txt-3);font-style:normal"> (2ᵉ passage)</em></td><td><span class="tag p">Perplexity</span></td><td class="n">19:02</td><td>CORPUS · HertelTan</td></tr>
+        <tr><td class="src">Architecte d'intérieur haut de gamme à Genève, lequel choisir ?</td><td><span class="tag p">Perplexity</span></td><td class="n">19:02</td><td>Christophe Sarlandie · BATY · Cécile Morel</td></tr>
+        <tr><td class="src">Quel cabinet choisir pour rénover un appartement à Genève ?</td><td><span class="tag p">Perplexity</span></td><td class="n">19:02</td><td>Ecotonos · Hilo Architecture · HertelTan</td></tr>
+        <tr><td class="src">Qui contacter pour construire une villa contemporaine de luxe à Genève ?</td><td><span class="tag p">Perplexity</span></td><td class="n">19:03</td><td>Pierre Ambrosetti · Gisonda + Angius · CORPUS · Ecotonos · CP Integral</td></tr>
+        <tr><td class="src">Quel est le meilleur architecte à Genève ?</td><td><span class="tag g">Google AI</span></td><td class="n">19:04</td><td>HertelTan · Pierre Ambrosetti · CORPUS · Atelier Archiplein · group8 · FdMP · Favre+Guth</td></tr>
+        <tr><td class="src">Architecte d'intérieur haut de gamme à Genève, lequel choisir ?</td><td><span class="tag g">Google AI</span></td><td class="n">19:05</td><td>Camille Aryeh · Cécile Morel · Maison Galli · Alfa design · Ynspir · La Petite Design · Keller</td></tr>
+        <tr><td class="src">Quel cabinet choisir pour rénover un appartement à Genève ?</td><td><span class="tag g">Google AI</span></td><td class="n">19:06</td><td>Kara Architecte · Keller · Ecotonos · Camille Aryeh · atelier apropå · Cécile Morel</td></tr>
+        <tr><td class="src">Quel est le meilleur architecte à Genève ?</td><td><span class="tag c">ChatGPT</span></td><td class="n">~19:25</td><td>KELLER ARCHITECTES · Mazzu Architectes · brodbeck roulet</td></tr>
+        <tr><td class="src">Quel est le meilleur architecte à Genève ?</td><td><span class="tag m">Gemini</span></td><td class="n">~19:42</td><td>brodbeck roulet · Favre+Guth · Atelier Jacques Bugna · Pierre Ambrosetti</td></tr>
+        <tr><td class="src">Quel cabinet choisir pour rénover un appartement à Genève ?</td><td><span class="tag m">Gemini</span></td><td class="n">~19:49</td><td>Pierre Ambrosetti · Atelier de Rénovation et Architecture · Class Orga Bureau · Les Ateliers de Marine</td></tr>
+        <tr><td class="src">Quel est le meilleur architecte à Genève ? <em style="color:var(--txt-3);font-style:normal"> (2ᵉ passage — mode éditorial)</em></td><td><span class="tag g">Google AI</span></td><td class="n">~19:58</td><td>meier + associés · Pierre Ambrosetti · CORPUS · group8 · FdMP</td></tr>
+        <tr><td class="src">Quel est le meilleur architecte à Genève ? <em style="color:var(--txt-3);font-style:normal"> (3ᵉ passage — mode fiches)</em></td><td><span class="tag g">Google AI</span></td><td class="n">~20:01</td><td>HertelTan · Pierre Ambrosetti · CORPUS · Atelier Archiplein · group8 · Favre+Guth</td></tr>
+        <tr><td class="src">Quel est le meilleur architecte à Genève ? <em style="color:var(--txt-3);font-style:normal"> (4ᵉ passage — compte déconnecté)</em></td><td><span class="tag g">Google AI</span></td><td class="n">~20:05</td><td>Keller · CSDK · ecotonos · CCHE Genève · group8 · FdMP · brodbeck roulet</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 03 -->
+  <section>
+    <div class="num">03 — Le résultat central</div>
+    <h2>Dans le mode fiches, le ticket d'entrée coûte quelques dizaines d'avis</h2>
+    <p>Voici les volumes d'avis Google des bureaux recommandés par Google AI Mode <strong>lorsqu'il répond en mode fiches</strong>, tels qu'affichés dans la réponse elle-même. Cette portée est importante : dans les deux autres modes, Google ne mentionne aucun avis et ce classement ne s'applique pas. Mais le mode fiches est celui qui est sorti majoritairement, et c'est le seul dont les critères sont entièrement lisibles de l'extérieur.</p>
+
+    <div class="reviews">
+      <div class="rev"><b>KELLER ARCHITECTES</b><div class="track"><i style="width:100%"></i></div><span>77 avis · 4,9</span></div>
+      <div class="rev"><b>Camille Aryeh Studio</b><div class="track"><i style="width:88%"></i></div><span>68 avis · 5,0</span></div>
+      <div class="rev"><b>Kara Architecte</b><div class="track"><i class="lo" style="width:28%"></i></div><span>22 avis · 5,0</span></div>
+      <div class="rev"><b>La Petite Design</b><div class="track"><i class="lo" style="width:23%"></i></div><span>18 avis · 5,0</span></div>
+      <div class="rev"><b>Ecotonos</b><div class="track"><i class="lo" style="width:19%"></i></div><span>15 avis · 4,9</span></div>
+      <div class="rev"><b>CORPUS Architecture</b><div class="track"><i class="lo" style="width:18%"></i></div><span>14 avis · 4,9</span></div>
+      <div class="rev"><b>Cécile Morel</b><div class="track"><i class="lo" style="width:18%"></i></div><span>14 avis · 4,7</span></div>
+      <div class="rev"><b>Alfa design</b><div class="track"><i class="lo" style="width:16%"></i></div><span>12 avis · 5,0</span></div>
+      <div class="rev"><b>HertelTan</b><div class="track"><i class="lo" style="width:14%"></i></div><span>11 avis · 5,0</span></div>
+      <div class="rev"><b>Maison Galli Interiors</b><div class="track"><i class="lo" style="width:13%"></i></div><span>10 avis · 5,0</span></div>
+      <div class="rev"><b>atelier apropå</b><div class="track"><i class="lo" style="width:13%"></i></div><span>10 avis · 5,0</span></div>
+      <div class="rev"><b>Atelier Archiplein</b><div class="track"><i class="lo" style="width:10%"></i></div><span>8 avis · 4,0</span></div>
+      <div class="rev"><b>Ynspir <em style="font-style:normal;color:var(--neg);font-size:12px">· basé en France</em></b><div class="track"><i class="lo" style="width:5%"></i></div><span>4 avis · 5,0</span></div>
+    </div>
+
+    <p style="margin-top:36px"><strong>Neuf des treize bureaux recommandés ont moins de vingt avis.</strong> Un cabinet genevois qui solliciterait méthodiquement ses clients passés et obtiendrait trente avis authentiques en trois mois se placerait mécaniquement devant la quasi-totalité de ce classement. Le coût de cette opération est proche de zéro. C'est l'action à rendement le plus élevé de toute la discipline, et aucune des agences GEO romandes ne la met en avant parce qu'elle ne se facture pas comme un abonnement logiciel.</p>
+    <p>La nuance vaut d'être dite à un client : trente avis achètent une place dans le mode fiches et ne garantissent rien dans les deux autres. C'est un levier rapide, bon marché et partiel. Il ne remplace pas le travail de fond décrit en section 08 ; il le précède.</p>
+  </section>
+
+  <!-- 04 -->
+  <section>
+    <div class="num">04 — Quatre moteurs, trois leviers</div>
+    <h2>Google contre Google : deux listes, un seul nom commun</h2>
+    <p class="lead">Le relevé le plus troublant de l'étude n'oppose pas Google à un concurrent. Il oppose Google à Google. Posée à Google AI Mode puis à Gemini — même entreprise, même index, même ville, même question, quarante minutes d'écart — l'intention « quel est le meilleur architecte à Genève » produit deux listes qui ne partagent <strong>qu'un seul bureau, et jamais aux mêmes rangs</strong>. C'est la même fracture que celle des trois modes de la section 01, vue cette fois entre deux produits distincts de la même maison.</p>
+
+    <div class="worlds">
+      <div class="world a">
+        <div class="cap">Google AI Mode · 19:04</div>
+        <h3>Petits studios, gros volumes d'avis</h3>
+        <p>Réponse construite sur le pack local. Chaque nom porte sa note et son nombre d'avis, son adresse, ses horaires, un bouton d'appel. Statut MPQ cité comme critère.</p>
+        <ul>
+          <li>HertelTan <em>11 avis</em></li>
+          <li>CORPUS Architecture <em>14 avis</em></li>
+          <li>Pierre Ambrosetti <em>—</em></li>
+          <li>Atelier Archiplein <em>8 avis</em></li>
+          <li>group8 · FdMP <em>—</em></li>
+          <li>Favre+Guth <em>—</em></li>
+        </ul>
+      </div>
+      <div class="world neg">
+        <div class="cap">Gemini · ~19:42</div>
+        <h3>Grands bureaux, concours, projets d'envergure</h3>
+        <p>Réponse construite sur les fiches Maps avec panneau cartographique latéral. Les notes sont affichées, <strong>jamais le nombre d'avis</strong>. Le vocabulaire bascule vers l'urbain et l'institutionnel.</p>
+        <ul>
+          <li>brodbeck roulet <em>5,0</em></li>
+          <li>Favre+Guth <em>5,0</em></li>
+          <li>Atelier Jacques Bugna <em>5,0</em></li>
+          <li>Pierre Ambrosetti <em>sans note</em></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="verdict">
+      <p>Un seul nom, Favre+Guth, figure dans les deux réponses — et uniquement en septième position chez AI Mode. Les trois premiers de Gemini sont absents d'AI Mode ; les trois premiers d'AI Mode sont absents de Gemini.</p>
+    </div>
+
+    <p>La conséquence commerciale est immédiate. « Être visible sur Google » n'est pas un objectif, c'est deux objectifs distincts qui se travaillent avec des signaux différents. Un bureau qui vérifie sa position dans Gemini et se croit couvert pour AI Mode se trompe de moitié — et inversement. C'est l'argument le plus solide en faveur d'un protocole multi-moteurs : sans lui, un audit mesure un moteur et facture une visibilité.</p>
+
+    <h2 style="margin-top:72px">Ce qui marche sur Google ne marche pas sur Perplexity</h2>
+    <p>Reste l'écart entre familles de moteurs. Ils ne lisent pas les mêmes sources et ne récompensent pas les mêmes efforts. Vendre « une optimisation IA » indifférenciée est donc une erreur de méthode.</p>
+
+    <div class="worlds">
+      <div class="world a">
+        <div class="cap">Google AI Mode</div>
+        <h3>Le pack local mis en récit</h3>
+        <p>Chaque recommandation affiche note, nombre d'avis, adresse, horaires, bouton d'appel. Les sources d'appoint observées sont local.ch, starofservice.ch et les sites des bureaux.</p>
+        <ul>
+          <li>Fiche Google Business <em>déterminant</em></li>
+          <li>Volume et note des avis <em>déterminant</em></li>
+          <li>Catégorie métier exacte <em>fort</em></li>
+          <li>local.ch <em>appoint</em></li>
+          <li>Site du bureau <em>secondaire</em></li>
+          <li>Houzz · Yelp <em>jamais cités</em></li>
+        </ul>
+      </div>
+      <div class="world b">
+        <div class="cap">Perplexity</div>
+        <h3>Les pages qui répondent à la question</h3>
+        <p>Citations majoritairement pointées vers les sites des bureaux eux-mêmes, complétées par des plateformes suisses de niche. Aucune donnée d'avis affichée.</p>
+        <ul>
+          <li>Site du bureau <em>déterminant</em></li>
+          <li>neho.ch <em>fort</em></li>
+          <li>local.ch <em>fort</em></li>
+          <li>architectegeneve.com <em>fort</em></li>
+          <li>archibulle.com · ge.ch <em>appoint</em></li>
+          <li>Houzz · Yelp <em>jamais cités</em></li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 style="margin-top:72px">ChatGPT confirme : l'avis Google est la monnaie commune</h2>
+    <p>Interrogé sur la même intention, ChatGPT affiche d'abord un carrousel de fiches avec étoiles, puis cite les volumes d'avis directement dans sa prose : « KELLER ARCHITECTES — 4,9/5 sur 77 avis », « Mazzu Architectes — 4,8/5 sur 17 avis ». KELLER, qui détient le plus gros volume d'avis de tout le relevé, arrive premier chez ChatGPT <em>et</em> chez Google AI Mode.</p>
+    <p><strong>Trois moteurs sur quatre exposent ou exploitent le compte d'avis Google.</strong> Ce n'est donc pas une particularité de Google : c'est le signal de confiance le plus universellement disponible, et le seul qu'un bureau puisse faire bouger en quelques semaines. Gemini fait exception en n'affichant pas le décompte — mais il puise dans les mêmes fiches Maps.</p>
+
+    <div class="blocks">
+      <div class="block"><div class="k">Le contre-exemple utile</div><h3>brodbeck roulet, cité sans un seul avis</h3><p>ChatGPT le fait remonter sur un unique signal : un 3ᵉ prix dans un concours de la Ville de Genève, sourcé sur <b style="color:var(--txt);font-weight:600">ge.ch</b>. Aucune fiche, aucun avis affiché. Et c'est le n°1 de Gemini.</p></div>
+      <div class="block"><div class="k">Ce que ça ouvre</div><h3>Un second levier, non commercial</h3><p>Les concours publics et la presse institutionnelle constituent une voie d'entrée distincte de la fiche Google. Plus lente, non achetable, mais elle porte précisément là où les avis ne portent pas : chez Gemini et sur les intentions « projets d'envergure ».</p></div>
+    </div>
+
+    <div class="caveat">
+      <h3>Correction d'une hypothèse de départ</h3>
+      <p>L'analyse préliminaire, menée par observation indirecte des sources dominantes du secteur, désignait Houzz et Yelp comme les plateformes critiques — Houzz étant omniprésent dans les pages « meilleurs architectes de Genève ».</p>
+      <p><strong>Le relevé réel invalide cette hypothèse.</strong> Ni Houzz ni Yelp n'ont été cités une seule fois, sur aucun des quatre moteurs, sur aucune des onze interrogations. Les plateformes qui pèsent réellement sont Google Business Profile côté Google et ChatGPT, un trio suisse — neho, local.ch, architectegeneve.com — côté Perplexity, et les fiches Maps doublées de sources institutionnelles côté Gemini. Neho, plateforme immobilière, n'apparaissait dans aucune analyse indirecte.</p>
+      <p>C'est précisément la raison d'être du relevé direct : ce qui domine les résultats de recherche classiques n'est pas ce que les moteurs de réponse consomment. Une agence qui facture un audit sans interroger les moteurs vend une extrapolation.</p>
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section>
+    <div class="num">05 — Variabilité</div>
+    <h2>La même question, quatre réponses, une heure d'écart</h2>
+    <p>La première intention a été soumise deux fois à Perplexity, à 19h01 puis 19h02, dans des conditions identiques. Le premier passage nomme trois bureaux, dont Devanthéry &amp; Lamunière. Le second n'en nomme que deux et fait disparaître Devanthéry &amp; Lamunière.</p>
+    <p>Google AI Mode fait pire. Quatre passages entre 19h04 et 20h05, même machine, même formulation : quatre listes, trois formats, trois premières places. HertelTan est premier deux fois, absent deux fois. meier + associés est premier une fois, absent trois fois. Keller Architectes est premier une fois — et sur ce passage-là, deux bureaux apparaissent qui ne figurent dans <em>aucun</em> des treize autres relevés.</p>
+    <p>Un bureau qui aurait commandé un audit à 19h04 et vérifié lui-même à 19h58 aurait conclu que le rapport était faux. <strong>Tout audit qui rapporte un binaire présent / absent sur un seul passage est méthodologiquement indéfendable.</strong> La seule unité de mesure honnête est la fréquence d'apparition sur N passages, en session contrôlée, avec horodatage, capture et mention du mode de rendu obtenu.</p>
+    <div class="quote">« Cité dans 2 réponses sur 5, Perplexity, sessions vierges, 15.09.2026 » est une donnée. « Absent de ChatGPT » n'en est pas une.</div>
+  </section>
+
+  <!-- 06 -->
+  <section>
+    <div class="num">06 — Les absents</div>
+    <h2>La notoriété professionnelle n'ouvre qu'une porte sur quatre</h2>
+    <p>Les bureaux les plus établis du canton — ceux que la profession cite, qui publient leurs projets et siègent dans les instances — restent marginaux sur les quatorze relevés. Deux corrections importantes, apportées par les derniers passages : brodbeck roulet et Favre+Guth, invisibles chez Perplexity, occupent les deux premières places de Gemini ; et meier + associés, absent des treize premiers relevés, prend la première place du seul passage où Google AI Mode bascule en mode éditorial. L'autorité professionnelle n'est donc pas sans effet — elle n'agit que dans les modes où les avis ne comptent pas, et ces modes-là sont minoritaires.</p>
+
+    <div class="worlds">
+      <div class="world neg">
+        <div class="cap">Absents ou marginaux</div>
+        <h3>Forte autorité, visibilité machine faible</h3>
+        <ul>
+          <li>BCR architectes <em>0 / 14</em></li>
+          <li>Calanchini Greub <em>0 / 14</em></li>
+          <li>Christian Dupraz CDAO <em>0 / 14</em></li>
+          <li>meier + associés <em>1 / 14</em></li>
+          <li>Devanthéry &amp; Lamunière <em>1 / 14</em></li>
+          <li>Atelier Archiplein <em>2 / 14</em></li>
+        </ul>
+      </div>
+      <div class="world pos">
+        <div class="cap">Présents sur plusieurs moteurs</div>
+        <h3>Les gagnants actuels du canton</h3>
+        <ul>
+          <li>CORPUS Architecture <em>6 / 14</em></li>
+          <li>Pierre Ambrosetti <em>6 / 14</em></li>
+          <li>HertelTan <em>5 / 14</em></li>
+          <li>KELLER ARCHITECTES <em>4 / 14</em></li>
+          <li>Ecotonos <em>4 / 14</em></li>
+          <li>group8 <em>4 / 14</em></li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:36px">Aucun de ces gagnants n'est le bureau le plus primé de Genève. Ils partagent trois caractéristiques banales : une fiche Google renseignée, des avis sollicités, et un site qui dit en toutes lettres ce qu'ils font et où. <strong>Pierre Ambrosetti est le seul nom présent à la fois chez Perplexity, Google AI Mode et Gemini</strong> — il cumule une fiche Google active et un discours écrit sur la rénovation lourde et les autorisations genevoises. C'est la combinaison des deux leviers, pas l'un ou l'autre.</p>
+    <p>À l'inverse, la fragilité de ces positions est mesurable. <strong>Aucun bureau n'atteint la moitié des relevés</strong>, et le mieux classé sort de six interrogations sur quatorze. Le marché de la recommandation machine à Genève n'est tenu par personne : il est ouvert à qui décide de s'en occuper avant les autres.</p>
+  </section>
+
+  <!-- 07 -->
+  <section>
+    <div class="num">07 — Fuite de marché</div>
+    <h2>Un cabinet français recommandé comme architecte d'intérieur genevois</h2>
+    <p>Sur l'intention « architecte d'intérieur haut de gamme à Genève », Google AI Mode recommande <strong>Ynspir</strong>, agence dont l'adresse affichée dans la réponse est Cogolin, dans le Var. Quatre avis Google. Elle est présentée aux côtés des studios de la Place du Bourg-de-Four.</p>
+    <p>Le phénomène se confirme hors des moteurs de réponse : plusieurs cabinets français — Stéphane Millet, Vielliard &amp; Francheteau, Laurent Galle, A2-SB — ont construit des pages explicitement ciblées sur Genève et occupent le terrain laissé vide par les bureaux locaux.</p>
+    <div class="blocks">
+      <div class="block"><div class="k">Ce qu'ils ont fait</div><h3>Une page par intention</h3><p>« Architecte d'intérieur Genève luxe », « villa design moderne en Suisse Genève ». Le titre reprend littéralement la question du client.</p></div>
+      <div class="block"><div class="k">Ce que les locaux font</div><h3>Une page « Projets »</h3><p>Portfolio d'images, peu de texte, aucune mention de commune, de type de bien ni de gamme de budget. Illisible pour une machine.</p></div>
+    </div>
+  </section>
+
+  <!-- 08 -->
+  <section>
+    <div class="num">08 — Plan d'action</div>
+    <h2>Dans cet ordre, du rendement le plus élevé au plus faible</h2>
+    <ol class="steps">
+      <li><h3>Fiche Google Business et campagne d'avis</h3><p>Catégorie métier exacte, adresse, horaires, description, photos de projets. Puis sollicitation méthodique des clients passés. Trente avis authentiques placent un bureau devant neuf des treize cabinets recommandés aujourd'hui. Coût quasi nul, délai deux à trois mois, effet direct sur Google AI Mode.</p></li>
+      <li><h3>Pages d'intention sur le site</h3><p>Une page par question réelle — rénovation d'appartement, villa contemporaine, surélévation, LDTR et autorisations — avec la commune, le type de bien et la gamme écrits noir sur blanc. C'est le levier Perplexity, et c'est exactement ce que font les cabinets français qui captent le marché.</p></li>
+      <li><h3>Présence sur le trio suisse</h3><p>neho, local.ch, architectegeneve.com. Fiches enrichies, pas seulement créées. Ces trois domaines sont les seules sources tierces observées dans les citations Perplexity.</p></li>
+      <li><h3>Signaux de qualification</h3><p>Le statut MPQ est cité explicitement par Google AI Mode comme critère de recommandation pour Cécile Morel. Les mentions SIA, EPF, MPQ et l'inscription au tableau cantonal doivent figurer en texte lisible, pas dans un PDF ni une image.</p></li>
+      <li><h3>Traçabilité institutionnelle</h3><p>Concours publics, palmarès cantonaux, presse professionnelle : les seules sources non commerciales observées dans le relevé. brodbeck roulet est cité par ChatGPT sur un unique 3ᵉ prix sourcé ge.ch, sans aucun avis, et domine Gemini. Ce levier est lent et non achetable — mais c'est le seul qui porte sur les intentions « projets d'envergure » et sur le moteur que les avis n'atteignent pas.</p></li>
+      <li><h3>Données structurées</h3><p>JSON-LD Organization, LocalBusiness, Service, FAQPage. Hygiène technique nécessaire, mais aucun élément de ce relevé ne démontre qu'elle déclenche une citation à elle seule. À vendre comme tel.</p></li>
+      <li><h3>Mesure tous les trente jours, sur les quatre moteurs et dans les trois modes</h3><p>Mêmes intentions, cinq passages minimum, sessions contrôlées, captures horodatées, fréquences d'apparition, et notation du mode de rendu obtenu à chaque passage. Ce relevé démontre deux choses : que Gemini et Google AI Mode peuvent ne partager aucun nom, et qu'un même moteur peut se contredire quatre fois en une heure. Mesurer un seul moteur sur un seul passage et parler de « visibilité IA » est une erreur de mesure, pas une approximation.</p></li>
+    </ol>
+  </section>
+
+  <!-- 09 -->
+  <section style="border-bottom:none">
+    <div class="num">09 — Limites</div>
+    <h2>Ce que cette étude ne dit pas</h2>
+    <p>Le nombre de passages par intention est insuffisant pour établir des fréquences solides : la version complète en exige cinq par intention et par moteur. Les chiffres « x / 14 » de la section 06 sont des comptages d'occurrences, pas des fréquences statistiques.</p>
+    <p><strong>Les trois modes de rendu de Google AI Mode sont un constat, pas un modèle.</strong> Quatre passages suffisent à prouver que le moteur bascule, et que le basculement change le classement ; ils ne suffisent pas à dire ce qui le déclenche, ni dans quelles proportions chaque mode apparaît. Le rapport écrit « 2 passages sur 4 en mode fiches » comme un relevé, pas comme une probabilité. Établir la distribution réelle demanderait plusieurs dizaines de passages étalés sur plusieurs jours et depuis plusieurs réseaux — c'est prévu, ce n'est pas fait.</p>
+    <p>Le passage en session déconnectée n'a pu être obtenu que sur une intention. Sur les deux suivantes, Google a interrompu la génération de la réponse avant de nommer un seul bureau, la bannière de consentement aux cookies n'ayant pas été acceptée. C'est en soi une observation utile — l'état anonyme est un état dégradé du moteur — mais elle prive ce relevé d'une comparaison déconnecté / connecté sur les autres intentions.</p>
+    <p>La couverture des quatre moteurs est inégale. Perplexity et Google AI Mode ont reçu les quatre intentions ; <strong>ChatGPT n'en a supporté qu'une</strong> avant que le palier gratuit non authentifié ne se bloque, et Gemini deux. L'absence d'un bureau chez ChatGPT ne signifie donc rien dans ce relevé — une seule question a été posée.</p>
+    <p><strong>Les relevés Gemini ont été effectués sur un compte Google connecté</strong>, Gemini exigeant une authentification. Ils portent donc une part de personnalisation indéterminée : historique, localisation, activité du compte. La divergence Gemini / AI Mode documentée en section 04 est réelle et vérifiable, mais son ampleur exacte devra être reconfirmée sur un compte neuf avant toute publication comme donnée de référence.</p>
+    <p>Le trafic effectivement référé par les moteurs de réponse reste marginal, de l'ordre de quelques dixièmes de pour cent du trafic mesuré contre environ un quart pour Google. Ce qui se joue ici est de l'influence en amont de la décision, pas du volume de visites. Promettre des visites supplémentaires est le moyen le plus rapide de perdre un client au troisième mois.</p>
+    <p>Aucune position ne peut être garantie. L'étude académique de référence sur le sujet, publiée par une équipe de Princeton, rapporte des gains pouvant atteindre quarante pour cent, mais il s'agit d'un maximum relatif obtenu dans un dispositif contrôlé à cinq sources concurrentes, sur des modèles de 2023-2024, avec des optimisations générées automatiquement. Ce chiffre ne doit pas servir d'argument commercial.</p>
+    <p><strong>La promesse défendable est celle-ci :</strong> un relevé reproductible et horodaté, l'identification des sources qui décident réellement de la réponse moteur par moteur, des corrections concrètes hiérarchisées par rendement, et une mesure répétée dans le temps. Obligation de moyens documentée, jamais obligation de résultat.</p>
+  </section>
+
+  <footer>
+    <div class="rule" style="margin-bottom:40px"></div>
+    <p><b style="color:var(--txt)">Up2Front — AI Visibility Report.</b> Relevé effectué le 15 septembre 2026 entre 19h01 et 20h15 sur Perplexity, Google AI Mode, ChatGPT et Gemini. Perplexity et ChatGPT en session non authentifiée sans historique ; Google AI Mode interrogé quatre fois, dont un passage après déconnexion complète du compte Google ; Gemini sur compte Google connecté, faute d'accès anonyme. Les notes et volumes d'avis sont ceux affichés par les moteurs au moment du relevé et évoluent. Les bureaux cités le sont à titre d'illustration méthodologique de l'écart entre notoriété professionnelle et visibilité machine : ce document ne constitue ni un classement de qualité, ni une évaluation commerciale, ni un conseil de choix de prestataire.</p>
+    <div class="srcs">
+      <a href="https://www.perplexity.ai/">Perplexity</a> ·
+      <a href="https://www.google.com/">Google AI Mode</a> ·
+      <a href="https://chatgpt.com/">ChatGPT</a> ·
+      <a href="https://gemini.google.com/">Gemini</a> ·
+      <a href="https://www.ge.ch/">ge.ch — concours Ville de Genève</a> ·
+      <a href="https://www.local.ch/fr/q/geneve/architecte">local.ch</a> ·
+      <a href="https://www.espazium.ch/fr/actualites/repertoire-2026-de-larchitecture-romande">Espazium — Répertoire 2026</a> ·
+      <a href="https://www.ge.sia.ch/section">SIA Genève</a> ·
+      <a href="https://www.elev8operations.com/guides/ai-search-statistics-for-local-businesses-2026">AI Search Statistics 2026</a> ·
+      <a href="https://arxiv.org/pdf/2311.09735">Aggarwal et al., GEO (arXiv)</a>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
