@@ -193,6 +193,7 @@ section{padding:clamp(66px,9vw,116px) 0}
 .card>*{position:relative}
 .card h3{margin:18px 0 12px;font-size:20px;font-weight:500;letter-spacing:-.035em;line-height:1.24}
 .card p{font-size:14.8px;line-height:1.6;color:var(--txt-2)}
+.card p strong{color:#fff;font-weight:500}
 
 /* ---------- méthode ---------- */
 .split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,4vw,54px);align-items:center}
@@ -314,6 +315,36 @@ section{padding:clamp(66px,9vw,116px) 0}
 .vbox p{margin-top:12px;font-size:14.5px;line-height:1.55;color:#CFCFD4}
 .vbox p strong{color:var(--lime);font-weight:500}
 @media(max-width:900px){.valeur{grid-template-columns:1fr}}
+
+/* ---------- repère de prix ---------- */
+.repere{margin-top:14px;background:var(--bg-2);border:1px solid var(--line);
+  border-radius:var(--r);padding:clamp(26px,3vw,34px)}
+.repere>p{font-size:14.8px;line-height:1.6;color:var(--txt-2);max-width:78ch}
+.repere>p strong{color:#fff;font-weight:500}
+.echelle{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:26px;
+  background:var(--line);border:1px solid var(--line);border-radius:var(--r-s);overflow:hidden}
+.ech{background:var(--bg-3);padding:22px 20px}
+.ech.nous{background:rgba(207,254,37,.06)}
+.ech b{display:block;font-size:11.5px;font-weight:500;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--txt-3)}
+.ech u{display:block;margin-top:14px;text-decoration:none;font-size:clamp(23px,2.5vw,29px);
+  font-weight:500;letter-spacing:-.045em;line-height:1;color:var(--txt)}
+.ech.nous u{color:var(--lime)}
+.ech span{display:block;margin-top:10px;font-size:13.5px;line-height:1.5;color:var(--txt-3)}
+.repere .src{margin-top:18px;font-size:12.5px;line-height:1.55;color:var(--txt-3);max-width:78ch}
+@media(max-width:760px){.echelle{grid-template-columns:1fr}}
+
+/* ---------- la marche suivante ---------- */
+.apres{margin-top:14px;display:grid;grid-template-columns:auto 1fr;gap:clamp(18px,2vw,26px);
+  align-items:start;background:var(--bg-2);border:1px solid var(--line);
+  border-radius:var(--r);padding:clamp(26px,3vw,34px)}
+.apres .num{width:34px;height:34px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;
+  border:1px solid var(--line-2);font-size:14px;color:var(--txt-3)}
+.apres h3{font-size:19px;font-weight:500;letter-spacing:-.035em;line-height:1.24}
+.apres p{margin-top:11px;font-size:14.8px;line-height:1.6;color:var(--txt-2);max-width:74ch}
+.apres p strong{color:#fff;font-weight:500}
+.apres .note{margin-top:12px;font-size:13px;color:var(--txt-3)}
+@media(max-width:640px){.apres{grid-template-columns:1fr}}
 
 /* ---------- questions ---------- */
 .faq{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;align-items:start}
@@ -582,7 +613,7 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,6vw,72px) 0 40px;marg
       <span class="pop">Seule offre publiée</span>
       <h3>Relevé de visibilité IA</h3>
       <p class="sub">Ce que les quatre moteurs de réponse recommandent quand on leur demande un professionnel de votre métier dans votre ville.</p>
-      <div class="amount"><b>CHF&nbsp;690</b><span>une seule fois, prix ferme</span></div>
+      <div class="amount"><b>CHF&nbsp;690</b><span>une seule fois, prix ferme<br>ou 3&nbsp;×&nbsp;CHF&nbsp;230, sans frais</span></div>
       <h4>Ce qui est compris :</h4>
       <ul>
         <li><i>✓</i>80 relevés horodatés, captures d'écran jointes</li>
@@ -603,7 +634,7 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,6vw,72px) 0 40px;marg
       <article class="card">
         <span class="tag">Paiement</span>
         <h3>En une ou trois fois, sans frais</h3>
-        <p>Trois mensualités égales, sans intérêt ni frais de dossier. Facture à trente jours, virement bancaire : aucune donnée de carte ne transite ni n'est conservée.</p>
+        <p><strong>3 × CHF 230</strong>, sans intérêt ni frais de dossier, sans dossier de crédit à constituer : il suffit de le demander à la commande. Facture à trente jours, virement bancaire, aucune donnée de carte ne transite ni n'est conservée.</p>
       </article>
       <article class="card">
         <span class="tag">Délai</span>
@@ -638,6 +669,28 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,6vw,72px) 0 40px;marg
       <p>Le prospect qui pose la question à l'IA et ne voit pas votre nom ne vous appelle pas, ne vous écrit pas, et <strong>ne laisse aucune trace</strong>. Vous ne saurez jamais qu'il a existé.</p>
     </div>
   </div>
+
+  <div class="repere">
+    <p>Un mot sur le prix, puisque c'est la question. Les audits de visibilité IA — «&nbsp;GEO&nbsp;», «&nbsp;AEO&nbsp;», «&nbsp;référencement IA&nbsp;», le nom change tous les six mois — se négocient en France entre <strong>1 200 et 5 000 € hors taxes</strong> selon l'étendue. En Suisse, presque personne n'affiche son tarif&nbsp;: on demande un rendez-vous, puis un devis. <strong>Le nôtre est écrit sur cette page</strong>, et il est en dessous du plancher du marché.</p>
+    <div class="echelle">
+      <div class="ech">
+        <b>Audit «&nbsp;flash&nbsp;» du marché</b>
+        <u>dès 1 200&nbsp;€</u>
+        <span>Souvent un passage par moteur, sans horodatage ni captures. C'est précisément ce que notre étude démontre insuffisant.</span>
+      </div>
+      <div class="ech">
+        <b>Audit complet du marché</b>
+        <u>jusqu'à 5 000&nbsp;€</u>
+        <span>Le budget médian annoncé pour une prestation de visibilité IA en 2026, accompagnement compris.</span>
+      </div>
+      <div class="ech nous">
+        <b>Relevé Up2Front</b>
+        <u>CHF 690</u>
+        <span>80 relevés horodatés, soit <strong>CHF 8.60 le relevé</strong>. Prix ferme, publié, sans rendez-vous préalable.</span>
+      </div>
+    </div>
+    <p class="src">Ces ordres de grandeur sont ceux affichés publiquement par les agences françaises en 2026&nbsp;; ils sont donnés hors taxes, quand le nôtre est net de TVA. Nous ne prétendons pas qu'ils recouvrent exactement le même travail — nous prétendons que le nôtre est décrit relevé par relevé, ce qui permet de comparer. Si vous trouvez une offre qui publie son protocole et son prix en dessous du nôtre, écrivez-nous&nbsp;: nous voulons la voir.</p>
+  </div>
 </section>
 
 <section class="wrap">
@@ -651,12 +704,22 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,6vw,72px) 0 40px;marg
     <div class="et"><b>3</b><h3>Nous relevons</h3><p>Quatre-vingts interrogations réparties sur au moins deux sessions, dont une en compte déconnecté. Tout est horodaté et capturé.</p></div>
     <div class="et"><b>4</b><h3>Vous recevez le rapport</h3><p>Page web et PDF, captures jointes, plan d'action chiffré. Vos questions se posent par écrit, et elles sont comprises.</p></div>
   </div>
+
+  <div class="apres">
+    <span class="num" aria-hidden="true">5</span>
+    <div>
+      <h3>Et ensuite, si vous voulez qu'on exécute le plan : le chantier.</h3>
+      <p>Le rapport se termine par une liste de corrections classées par ordre d'effet, rédigées pour être exécutables par n'importe qui — vous, votre webmaster, ou nous. Si vous préférez nous les confier, c'est le <strong>chantier de visibilité IA</strong> : il se chiffre sur devis, une fois le plan écrit, parce que la charge dépend de ce que le relevé aura trouvé chez vous et pas chez un autre.</p>
+      <p><strong>Les CHF 690 du relevé sont intégralement déduits du chantier</strong> s'il est commandé dans les soixante jours suivant la remise du rapport. C'est la seule remise qui existe, elle est annoncée avant l'achat, et elle ne se négocie pas au-delà.</p>
+      <p class="note">Rien à décider aujourd'hui, et aucun devis ne vous sera envoyé spontanément. On ne vend pas une correction avant d'avoir mesuré ce qu'il y a à corriger : ce serait exactement le reproche que notre étude adresse aux audits à passage unique.</p>
+    </div>
+  </div>
 </section>
 
 <section class="wrap" id="questions">
   <div class="head">
     <span class="tag">07 — Les questions qu'on nous pose</span>
-    <h2 class="d2">Les six objections, et ce qu'on y répond.</h2>
+    <h2 class="d2">Les sept objections, et ce qu'on y répond.</h2>
     <p class="lead">Elles sont légitimes. Nous préférons y répondre ici, en clair, plutôt que dans un appel où vous n'auriez pas le temps de vérifier.</p>
   </div>
   <div class="faq">
@@ -690,6 +753,11 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,6vw,72px) 0 40px;marg
       <p>Non. Le rapport est en français, sans jargon, et le plan d'action est classé par ordre d'effet&nbsp;: vous commencez par la première ligne.</p>
       <p>Chaque action est <strong>exécutable par vous, par votre webmaster, ou par nous si vous le demandez ensuite</strong>. Rien ne vous oblige à revenir vers nous, et c'est écrit dans le rapport.</p>
     </article>
+    <article class="qa">
+      <h3>«&nbsp;Et le rapport va conclure qu'il faut vous acheter autre chose, c'est ça&nbsp;?&nbsp;»</h3>
+      <p>C'est le risque du métier, et la raison pour laquelle le plan d'action est rédigé pour être exécuté sans nous. Vous pouvez le confier à votre webmaster ou le faire vous-même&nbsp;: chaque ligne est décrite assez précisément pour ça.</p>
+      <p>Si vous préférez nous le confier, le chantier existe et se chiffre sur devis — et les <strong>CHF 690 en sont déduits</strong> sous soixante jours. Mais aucun devis ne part de lui-même&nbsp;: <strong>c'est vous qui le demandez, ou personne</strong>.</p>
+    </article>
   </div>
 </section>
 
@@ -697,7 +765,7 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,6vw,72px) 0 40px;marg
   <div class="final">
     <span class="eyebrow">Commander</span>
     <h2 class="d2 duo" style="margin-top:24px"><span class="f">Savoir où vous en êtes,</span> <b>avant vos concurrents.</b></h2>
-    <p class="lead">CHF 690, prix ferme, sans TVA, payable en une ou trois fois. Cinq jours ouvrés dès le brief complet. Aucun abonnement derrière, aucune réunion, tout par écrit.</p>
+    <p class="lead">CHF 690, prix ferme, sans TVA, payable en une fois ou en 3&nbsp;×&nbsp;CHF&nbsp;230 sans frais. Cinq jours ouvrés dès le brief complet. Aucun abonnement derrière, aucune réunion, tout par écrit.</p>
     <div class="cta">
       <a class="btn btn-p" href="mailto:contact@up2front.com?subject=Commande%20%E2%80%94%20Relev%C3%A9%20de%20visibilit%C3%A9%20IA%20%28CHF%20690%29&amp;body=Bonjour%2C%0A%0AJe%20commande%20le%20Relev%C3%A9%20de%20visibilit%C3%A9%20IA%20%E2%80%94%20CHF%20690%2C%20prix%20ferme%2C%20cinq%20jours%20ouvr%C3%A9s%20d%C3%A8s%20le%20brief%20complet.%0A%0ABureau%20/%20entreprise%20%3A%0AActivit%C3%A9%20exacte%20%3A%0AVille%20ou%20zone%20%C3%A0%20couvrir%20%3A%0ASite%20web%20%3A%0AConcurrents%20%C3%A0%20suivre%20%28facultatif%29%20%3A%0A%0AAdresse%20de%20facturation%20%3A%0A%0ALes%20quatre%20intentions%20d%27achat%20seront%20arr%C3%AAt%C3%A9es%20avec%20vous%20avant%20le%20premier%20relev%C3%A9.%0A%0ACordialement%2C%0A"><svg class="ar" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg>Commander — CHF&nbsp;690</a>
       <a class="btn btn-o" href="mailto:contact@up2front.com?subject=Visibilit%C3%A9%20IA%20%E2%80%94%20une%20question">Poser une question d'abord</a>
