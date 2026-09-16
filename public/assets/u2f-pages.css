@@ -356,9 +356,39 @@ a.carte:hover{border-color:var(--vert);background:var(--noir-3)}
 .apercu-scene img[data-vue-img]{display:block;width:100%;height:auto;
   align-self:flex-start;background:#fff}
 .apercu.est-maquette .apercu-boite{width:min(var(--maq-larg,660px),100%)}
-.apercu.est-maquette .apercu-scene{overflow:auto;overscroll-behavior:contain}
+.apercu.est-maquette .apercu-scene{overflow-y:auto;overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;scrollbar-width:thin}
+/* Jauge de défilement. macOS masque les barres flottantes tant qu'on ne fait
+   rien : rien ne disait que la maquette continuait plus bas. Celle-ci est
+   dessinée, toujours visible, et dit d'un coup d'œil où l'on en est dans la
+   page. Position et hauteur posées par le script, qui connaît la place exacte
+   de la scène entre l'en-tête et la note. */
+.apercu-jauge{position:absolute;right:5px;width:5px;border-radius:999px;
+  background:rgba(255,255,255,.1);display:none;pointer-events:none;z-index:2}
+.apercu.est-maquette.est-defilable .apercu-jauge{display:block}
+.apercu-jauge i{position:absolute;left:0;right:0;top:0;min-height:26px;
+  border-radius:999px;background:var(--vert);
+  transition:top .12s linear,height .12s linear}
+.apercu-scene:focus{outline:none}
+.apercu-scene:focus-visible{outline:2px solid var(--vert);outline-offset:-2px}
 .apercu.est-maquette .apercu-larg,
 .apercu.est-maquette .apercu-lien{display:none}
+/* Le mot qui dit qu'il y a une suite. Il ne s'affiche que si la maquette
+   dépasse vraiment la fenêtre, et s'efface au premier coup de molette. */
+.apercu-defil{position:absolute;left:50%;bottom:52px;transform:translateX(-50%);
+  display:none;align-items:center;gap:9px;padding:9px 16px;border-radius:999px;
+  background:rgba(8,8,8,.84);border:1px solid var(--bord);color:var(--blanc);
+  font-size:12.5px;letter-spacing:.01em;pointer-events:none;opacity:0;
+  backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);
+  transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.apercu.est-maquette.est-defilable .apercu-defil{display:flex;opacity:1}
+.apercu.est-maquette.est-defilable.a-defile .apercu-defil{opacity:0;
+  transform:translate(-50%,10px)}
+.apercu-defil i{width:7px;height:7px;flex:none;border-right:2px solid var(--vert);
+  border-bottom:2px solid var(--vert);animation:u2f-defil 1.6s var(--ease) infinite}
+@keyframes u2f-defil{
+  0%,100%{transform:rotate(45deg) translate(-1px,-1px);opacity:.45}
+  50%    {transform:rotate(45deg) translate(2px,2px);opacity:1}}
 .apercu-note{padding:9px 16px;border-top:1px solid var(--bord-2);font-size:12px;
   color:var(--gris)}
 
@@ -405,4 +435,5 @@ a.carte:hover{border-color:var(--vert);background:var(--noir-3)}
 }
 @media(prefers-reduced-motion:reduce){
   .apercu-boite,.apercu-scene iframe,.site-cadre iframe{transition:none}
+  .apercu-defil i{animation:none}
 }

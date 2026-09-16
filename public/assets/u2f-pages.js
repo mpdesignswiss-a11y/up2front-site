@@ -421,6 +421,71 @@ if(apercu){
   var noteEl   = q('[data-note]', apercu);
   var scene    = q('.apercu-scene', apercu);
 
+  /* Une maquette fait deux à trois fois la hauteur de la fenêtre : on la fait
+     défiler. Trois choses manquaient pour que ce soit évident et confortable.
+     1. Lenis capte la molette sur toute la page — data-lenis-prevent lui dit
+        de ne pas y toucher au-dessus de la scène.
+     2. Le clavier ne faisait rien : la zone prend le focus et répond aux
+        flèches, à Page haut/bas, à Origine/Fin et à la barre d'espace.
+     3. Rien ne disait qu'il y avait une suite : une pastille « Faites défiler »
+        apparaît quand la maquette dépasse, et s'efface dès qu'on défile. */
+  var MOTS = {fr:'Faites défiler', en:'Scroll to see more',
+              de:'Zum Weiterlesen scrollen', it:'Scorri per vedere'};
+  var langue  = (document.documentElement.getAttribute('lang') || 'fr').slice(0, 2);
+  var indic   = null;
+  var jauge   = null;
+  var boite   = q('.apercu-boite', apercu);
+
+  /* Place la jauge entre l'en-tête et la note, et dit si la maquette dépasse
+     assez pour qu'il y ait quelque chose à faire défiler. */
+  var jauger = function(){
+    if(!scene) return;
+    var trop = scene.scrollHeight - scene.clientHeight > 60;
+    apercu.classList.toggle('est-defilable', trop);
+    if(jauge && boite && trop){
+      jauge.style.top    = scene.offsetTop + 'px';
+      jauge.style.bottom = (boite.offsetHeight - scene.offsetTop
+                            - scene.offsetHeight) + 'px';
+      curseur();
+    }
+  };
+
+  /* Hauteur et position du curseur = part visible de la maquette. */
+  var curseur = function(){
+    if(!jauge || !scene) return;
+    var part = scene.clientHeight / scene.scrollHeight;
+    var tete = jauge.firstChild;
+    tete.style.height = (part * 100).toFixed(2) + '%';
+    tete.style.top    = (scene.scrollTop / scene.scrollHeight * 100).toFixed(2) + '%';
+  };
+
+  if(scene){
+    scene.setAttribute('data-lenis-prevent', '');
+    scene.tabIndex = 0;
+    if(boite){
+      indic = document.createElement('div');
+      indic.className = 'apercu-defil';
+      indic.setAttribute('aria-hidden', 'true');
+      indic.innerHTML = '<span></span><i></i>';
+      indic.firstChild.textContent = MOTS[langue] || MOTS.fr;
+      boite.appendChild(indic);
+
+      jauge = document.createElement('div');
+      jauge.className = 'apercu-jauge';
+      jauge.setAttribute('aria-hidden', 'true');
+      jauge.innerHTML = '<i></i>';
+      boite.appendChild(jauge);
+    }
+    scene.addEventListener('scroll', function(){
+      apercu.classList.toggle('a-defile', scene.scrollTop > 40);
+      if(!apercu.classList.contains('est-defilable')) jauger();
+      curseur();
+    }, {passive:true});
+    window.addEventListener('resize', function(){
+      if(!apercu.hidden) jauger();
+    });
+  }
+
   var largeur = function(mode){
     apercu.classList.toggle('est-mobile', mode === 'mobile');
     boutLarg.forEach(function(b){
@@ -446,6 +511,12 @@ if(apercu){
           if(imgEl.naturalWidth){
             apercu.style.setProperty('--maq-larg', imgEl.naturalWidth + 'px');
           }
+          /* La hauteur ne se mesure qu'une fois la largeur appliquée et la
+             mise en page refaite. On jauge tout de suite, puis deux fois de
+             plus : sur un écran étroit l'image se remet en page après coup. */
+          jauger();
+          window.setTimeout(jauger, 80);
+          window.setTimeout(jauger, 400);
         };
         imgEl.src = maquette;
         imgEl.alt = (imgEl.getAttribute('data-alt') || 'Maquette') + ' ' + (nom || '');
@@ -466,13 +537,19 @@ if(apercu){
       }
     }
     if(scene) scene.scrollTop = 0;
+    apercu.classList.remove('a-defile', 'est-defilable');
     largeur('bureau');
     apercu.hidden = false;
     document.documentElement.style.overflow = 'hidden';
     if(window.u2fLenis) window.u2fLenis.stop();
     requestAnimationFrame(function(){ apercu.classList.add('est-ouvert'); });
+    /* Sur une maquette, le focus va à la zone qui défile : les flèches et la
+       barre d'espace marchent tout de suite. Tab mène à la croix, Échap ferme
+       de toute façon. Sur un site en ligne, rien ne défile ici — la croix
+       garde le focus. */
     var x = q('.apercu-x', apercu);
-    if(x) x.focus();
+    if(maquette && scene) scene.focus({preventScroll:true});
+    else if(x) x.focus();
   };
 
   var fermer = function(){
@@ -505,7 +582,23 @@ if(apercu){
   });
 
   document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape' && !apercu.hidden) fermer();
+    if(apercu.hidden) return;
+    if(e.key === 'Escape'){ fermer(); return; }
+    if(!scene || !apercu.classList.contains('est-maquette')) return;
+    if(e.metaKey || e.ctrlKey || e.altKey) return;
+    var h = scene.clientHeight, pas = null;
+    if(e.key === 'ArrowDown')                       pas = 96;
+    else if(e.key === 'ArrowUp')                    pas = -96;
+    else if(e.key === 'PageDown')                   pas = h * .9;
+    else if(e.key === 'PageUp')                     pas = -h * .9;
+    else if(e.key === ' ' || e.key === 'Spacebar')  pas = (e.shiftKey ? -1 : 1) * h * .9;
+    else if(e.key === 'Home')                       pas = -scene.scrollHeight;
+    else if(e.key === 'End')                        pas = scene.scrollHeight;
+    if(pas === null) return;
+    /* Défilement direct, pas « smooth » : c'est ce que fait le navigateur au
+       clavier, et cela ne dépend pas d'une animation qui peut être gelée. */
+    scene.scrollTop += pas;
+    e.preventDefault();
   });
 }
 
