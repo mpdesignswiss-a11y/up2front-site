@@ -5,18 +5,21 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Étude de visibilité IA — Architectes à Genève | Up2Front</title>
+<link rel="stylesheet" href="../assets/polices/polices.css">
 <style>
   :root{
-    --bg:#08090B; --bg-2:#0E1013; --bg-3:#121519;
-    --line:#1E2228; --line-2:#2A2F37;
-    --txt:#E9E7E4; --txt-2:#9BA1A9; --txt-3:#6B717A;
-    --accent:#D8A657; --pos:#6FAF8B; --neg:#C4685E; --blue:#7E9CC4;
+    --bg:#010104; --bg-2:#0A0A0D; --bg-3:#121216;
+    --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.16);
+    --txt:#fff; --txt-2:#9C9CA2; --txt-3:#6A6A72;
+    --accent:#CFFE25; --perplexity:#A78BC4; --pos:#6FAF8B; --neg:#C4685E; --blue:#7E9CC4;
+    --sans:"Mona Sans Variable","Mona Sans",-apple-system,"Segoe UI",system-ui,sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--txt);
-    font-family:"Helvetica Neue",Helvetica,Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    font-family:var(--sans);
     font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  ::selection{background:var(--accent);color:#010104}
   .wrap{max-width:960px;margin:0 auto;padding:0 32px}
 
   header{padding:72px 0 56px;border-bottom:1px solid var(--line)}
@@ -54,7 +57,7 @@
   .tag{display:inline-block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
     padding:3px 9px;border:1px solid var(--line-2);border-radius:2px;color:var(--txt-3);white-space:nowrap}
   .tag.g{border-color:#3A4A5C;color:var(--blue)}
-  .tag.p{border-color:#4A3C2A;color:var(--accent)}
+  .tag.p{border-color:#453A55;color:var(--perplexity)}
   .tag.c{border-color:#2E4A3C;color:var(--pos)}
   .tag.m{border-color:#4A3234;color:var(--neg)}
   .bar{height:3px;background:var(--line-2);width:100px;margin-top:8px;position:relative}
@@ -104,11 +107,18 @@
   .quote{border-left:2px solid var(--line-2);padding-left:22px;margin-top:28px;
     font-size:15px;color:var(--txt);font-style:italic;max-width:64ch}
 
+  .jump{border-bottom:1px solid var(--line);padding:26px 0}
+  .jump p{margin-top:0;font-size:13.5px;line-height:1.6;color:var(--txt-3);max-width:78ch}
+  .jump a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(207,254,37,.35);
+    white-space:nowrap}
+
   .sign{border-bottom:none}
   .sign .cta{display:flex;flex-wrap:wrap;align-items:center;gap:28px;margin-top:40px}
-  .sign .btn{display:inline-block;background:var(--accent);color:#141008;text-decoration:none;
-    font-size:14px;font-weight:600;letter-spacing:.01em;padding:15px 28px;border-radius:2px}
-  .sign .alt{font-size:14px;color:var(--txt-2);text-decoration:none;border-bottom:1px solid var(--line-2)}
+  .sign .btn{display:inline-block;background:var(--accent);color:#010104;text-decoration:none;
+    font-size:15.5px;font-weight:500;letter-spacing:-.012em;padding:15px 30px;border-radius:100px;
+    transition:background .3s,transform .3s}
+  .sign .btn:hover{background:#E2FF6F;transform:translateY(-1px)}
+  .sign .alt{font-size:14px;color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(207,254,37,.35)}
   .sign .who{margin-top:34px;font-size:13px;color:var(--txt-3)}
 
   footer{padding:64px 0 96px;color:var(--txt-3);font-size:12.5px}
@@ -202,6 +212,10 @@
 
     <p>La conséquence commerciale est nette. Un architecte qui ne travaille que ses avis gagne le mode fiches et perd les deux autres. Un architecte qui ne mise que sur sa notoriété professionnelle fait l'inverse. <strong>Ces leviers ne sont pas concurrents, ils couvrent chacun une portion du moteur</strong> — et aucun bureau ne peut savoir à l'avance dans quel mode son prospect tombera. C'est précisément pourquoi un audit à passage unique ne prouve rien : il décrit un mode parmi trois et le présente comme la réalité.</p>
   </section>
+
+  <div class="jump">
+    <p>Cette étude porte sur quatre questions génériques. Le même relevé, fait sur les quatre intentions qui vous amènent réellement des clients — quatre moteurs, cinq passages chacun, quatre-vingts relevés horodatés — coûte CHF 690 et prend cinq jours ouvrés. <a href="https://up2front.com/visibilite-ia.html">Le détail de l'offre</a></p>
+  </div>
 
   <!-- 02 -->
   <section>
