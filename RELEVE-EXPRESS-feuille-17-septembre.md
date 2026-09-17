@@ -72,13 +72,19 @@ Protocole complet : `RELEVE-EXPRESS-mode-operatoire.md`, section « La preuve »
 | # | Heure | Moteur | Session | Nommé ? Position | Sources citées | Capture |
 |---|---|---|---|---|---|---|
 | 1 | 11h18 | Google AI Mode | connecté (avatar MP) | **Absent.** Neuf bureaux nommés, aucun n'est HertelTan : Atelier Siebold, CORPUS, ARA Sàrl, Class Orga, Kara, CCHE, Stella Studio, BeHome Interiors, ANA K Design | `www.architectegeneve.com` **trois fois**, CORPUS, ARA, Petit Futé, `stellastudio.ch` | txt + url ✓ / png ✗ |
-| 2 | **12h06** (horodatage affiché par le moteur dans la page) | Perplexity | **non authentifié** — « Se connecter » visible dans l'image | **Absent.** Cinq bureaux nommés : CORPUS, Kara Architecte, **Ecotonos**, CM Studio, Studio Plus Architectes | `corpus`, `kara-architecte`, **`architectegeneve`**, `cm-studio`, `studio-plus` — 10 sources | txt + url + **png ✓** |
-| 3 | | Google AI Mode | | | | |
+| 2 | **12h06** (horodatage affiché par le moteur dans la page) | Perplexity | **non authentifié** — « Se connecter » visible dans l'image | **Absent.** Cinq bureaux nommés : CORPUS, Kara Architecte, **Ecotonos**, CM Studio, Studio Plus Architectes | `corpus`, `kara-architecte`, **`architectegeneve`**, `cm-studio`, `studio-plus` — 10 sources | txt + url — **png ABSENT, voir écart n° 8** |
+| 3 | **13h00m39 → 13h01m05** | Google AI Mode | connecté (avatar MP) | **Absent, pour la troisième fois de la journée.** Sept bureaux nommés : Stella Studio (5.0/5), Class Orga (4.8/12), Ynspir (5.0/5), ANA K Design (4.5/8), Atelier Siebold (5.0/2), Pierre Ambrosetti (5.0/3), CORPUS (4.9/14) | `www.architectegeneve.com` **en première carte**, CORPUS, Atelier Siebold. Chips en ligne : `architectegeneve.co…`, Class Orga, `stellastudio.ch +5`, CORPUS +2, Atelier Siebold +2 | **png ✓ (5 images)** / txt ✗ / url partielle — voir écart n° 9 |
 | 4 | | Perplexity | | | | |
 | 5 | | Google AI Mode | | | | |
 | 6 | | Perplexity | | | | |
 
 **Constat en trois phrases :**
+
+> **À noter, et c'est le fait le plus intéressant de la journée :** HertelTan est absent de sa
+> propre intention aux trois relevés (11h18 Google, 12h06 Perplexity, 13h00 Google), mais il sort
+> **nommé 3ᵉ à 13h04 dans l'intention de KELLER** (`meilleur architecte à Genève`), avec sa note
+> 5.0 (11 avis) et son adresse Rue des Maraîchers 8. Le bureau existe donc bien pour le moteur.
+> Ce n'est pas l'entreprise qui est invisible : c'est l'entreprise **sur cette intention-là**.
 
 ---
 
@@ -88,8 +94,8 @@ Protocole complet : `RELEVE-EXPRESS-mode-operatoire.md`, section « La preuve »
 | # | Heure | Moteur | Session | Nommé ? Position | Sources citées | Capture |
 |---|---|---|---|---|---|---|
 | 1 | **11h43** — rattrapage hors fenêtre, voir journal | Google AI Mode | connecté (avatar MP) | **Nommé**, 3ᵉ des quatre « grands bureaux multidisciplinaires » (après CCHE et Favre+Guth, avant FdMP), et 3ᵉ ligne du tableau comparatif | SIA Genève « +1 ». **`maa.ch` n'est cité nulle part.** Cartes sources : CORPUS, FdMP, CCHE | txt + url ✓ / png ✗ |
-| 2 | **12h11** (horodatage moteur) — image prise à **12h18**, voir écart n° 7 | Perplexity | **non authentifié** — « Se connecter » visible dans l'image | **Absent.** Six bureaux nommés : brodbeck roulet, CORPUS, Pierre Ambrosetti, La Ville Nouvelle, maage sàrl, Acquaroli | `local(.ch)`, `pierreambrosetti`, `architecte-comparatif`, `neho` — 10 sources. **`maa.ch` absent ici aussi** | txt + url + **png ✓** (fil archivé) |
-| 3 | | Google AI Mode | | | | |
+| 2 | **12h11** (horodatage moteur) — images prises à **12h17 et 12h18**, voir écart n° 7 | Perplexity | **non authentifié** — « Se connecter » visible dans l'image | **Absent.** Six bureaux nommés : brodbeck roulet, CORPUS, Pierre Ambrosetti, La Ville Nouvelle, maage sàrl, Acquaroli | `local(.ch)`, `pierreambrosetti`, `architecte-comparatif`, `neho` — 10 sources. **`maa.ch` absent ici aussi** | txt + url + **png ✓** (fil archivé) |
+| 3 | **13h01m32 → 13h01m52** | Google AI Mode | connecté (avatar MP) | **Nommé, 6ᵉ et dernier des noms cités**, en clôture de la section « Ateliers d'architecture et de référence contemporaine ». Ouverture de réponse : « **FdMP architectes, CORPUS Architecture Urbanisme et CCHE Genève** figurent parmi les bureaux les plus réputés ». Puis Pierre Ambrosetti, group8, meier + associés. **Absent du tableau comparatif final** (FdMP, CORPUS, CCHE, Pierre Ambrosetti) | **`maa.ch` est cité, en chip, sur la ligne meier** — c'est nouveau : au passage 1 il n'apparaissait nulle part. Cartes sources : **local.ch** (« Les MEILLEURS Architectes à Genève »), FdMP, CORPUS | **png ✓ (4 images)** / txt ✗ / url partielle — voir écart n° 9 |
 | 4 | | Perplexity | | | | |
 | 5 | | Google AI Mode | | | | |
 | 6 | | Perplexity | | | | |
@@ -105,12 +111,15 @@ Protocole complet : `RELEVE-EXPRESS-mode-operatoire.md`, section « La preuve »
 |---|---|---|---|---|---|---|
 | 1 | 11h20 | Google AI Mode | connecté (avatar MP) | **Absent.** Six cabinets nommés : Camille Aryeh (1ᵉʳ, 5.0/68), Maison Galli, Cécile Morel, Kara, Alfa design, La Petite Design | Cécile Morel (deux fois), Google → Camille Aryeh Studio | txt + url ✓ / png ✗ |
 | 2 | **12h19 — REFUSÉ** | Perplexity | non authentifié | **Aucune réponse.** Le moteur répond « Inscrivez-vous et répétez votre demande. » Quota anonyme épuisé après deux recherches. Voir écart n° 6 | — | url + incident ✓ |
-| 3 | | Google AI Mode | | | | |
+| 3 | **13h02m07 → 13h02m33** | Google AI Mode | connecté (avatar MP) | **Absent, deuxième fois sur Google.** Cinq cabinets nommés et classés dans un tableau de synthèse : Kara Architecte (1ᵉʳ, 5.0/22), Camille Aryeh Studio (2ᵉ, 5.0/68), Cécile Morel (3ᵉ, 4.7/14), **KELLER ARCHITECTES (4ᵉ, 4.9/77)**, Alfa design (5ᵉ, 5.0/12) | Les **trois cartes sources sont des fiches Google** : Kara Architecte Genève, KELLER ARCHITECTES, Camille Aryeh Studio. **Aucun site d'entreprise cité en carte** | **png ✓ (6 images)** / txt ✗ / url partielle — voir écart n° 9 |
 | 4 | | Perplexity | | | | |
 | 5 | | Google AI Mode | | | | |
 | 6 | | Perplexity | | | | |
 
 **Constat en trois phrases :**
+
+> KELLER sort 4ᵉ sur l'intention de CSDK, pendant que CSDK n'y figure pas. Les deux bureaux
+> se disputent la même requête et un seul des deux y est.
 
 ---
 
@@ -121,7 +130,7 @@ Protocole complet : `RELEVE-EXPRESS-mode-operatoire.md`, section « La preuve »
 |---|---|---|---|---|---|---|
 | 1 | 11h20 | Google AI Mode | connecté (avatar MP) | **Nommé, 2ᵉ** (après La Petite Design), 5.0 (68 avis), et 2ᵉ ligne du tableau comparatif | **Oui, cité comme source** (carte « Google → Camille Aryeh Studio »). Autres : La Petite Design, Marine Terrien | txt + url ✓ / png ✗ |
 | 2 | — | Perplexity | — | **Non relevé.** Accès anonyme fermé après deux recherches. Voir écart n° 6 | — | — |
-| 3 | | Google AI Mode | | | | |
+| 3 | **13h02m50 → 13h03m14** | Google AI Mode | connecté (avatar MP) | **Nommé 1ᵉʳ** — il ouvre la section « Design résidentiel & haut de gamme » et occupe la **1ʳᵉ ligne du tableau comparatif**. 5.0 (68 avis), Pl. du Bourg-de-Four 7. **Il gagne une place sur le passage 1**, où il sortait 2ᵉ derrière La Petite Design. Suivent Kara Architecte, Marine Terrien Design, La Petite Design, Alfa design, atelier apropà, Atelier August | **Cité comme source** (carte « Google → Camille Aryeh Studio », 3ᵉ carte). Autres cartes : La Petite Design, **`www.alfa.design`** | **png ✓ (7 images)** / txt ✗ / url partielle — voir écart n° 9 |
 | 4 | | Perplexity | | | | |
 | 5 | | Google AI Mode | | | | |
 | 6 | | Perplexity | | | | |
@@ -137,7 +146,7 @@ Protocole complet : `RELEVE-EXPRESS-mode-operatoire.md`, section « La preuve »
 |---|---|---|---|---|---|---|
 | 1 | 11h20 | Google AI Mode | connecté (avatar MP) | **Nommé**, 3ᵉ au global, en tête de la section « Architecture contemporaine et résidentielle » (CCHE et FdMP occupent la section précédente), 4.9 (14 avis) | **Son propre site cité en première carte.** Puis **local.ch**, puis CCHE | txt + url ✓ / png ✗ |
 | 2 | — | Perplexity | — | **Non relevé.** Accès anonyme fermé après deux recherches. Voir écart n° 6 | — | — |
-| 3 | | Google AI Mode | | | | |
+| 3 | **13h03m29 → 13h03m45** | Google AI Mode | connecté (avatar MP) | **Nommé, 3ᵉ au global et 3ᵉ ligne du tableau**, position identique au passage 1. 4.9 (14 avis), La Voie-Creuse 14. Le précèdent CCHE Genève SA (5.0/5) et FdMP (4.9/7). Suivent KELLER (4.9/77), Kara (5.0/22), Veyrat Sarasin (4.1/7). Tableau final : CCHE, FdMP, **CORPUS**, KELLER | **Son propre site en première carte**, comme au passage 1. Puis **CCHE**, puis **Veyrat Sarasin**. *(local.ch, présent au passage 1, a disparu des cartes)* | **png ✓ (5 images)** / txt ✗ / url partielle — voir écart n° 9 |
 | 4 | | Perplexity | | | | |
 | 5 | | Google AI Mode | | | | |
 | 6 | | Perplexity | | | | |
@@ -153,7 +162,7 @@ Protocole complet : `RELEVE-EXPRESS-mode-operatoire.md`, section « La preuve »
 |---|---|---|---|---|---|---|
 | 1 | 11h20 | Google AI Mode | connecté (avatar MP) | **Nommé 1ᵉʳ**, « référence absolue à Genève pour les villas de luxe ». Vésenaz. **Aucune note affichée** — seul du lot dans ce cas | **Oui, cité comme source**, avec un article daté du 15 nov. 2025. Autres : CORPUS, Atelier BE, Trustup | txt + url ✓ / png ✗ |
 | 2 | — | Perplexity | — | **Non relevé.** Accès anonyme fermé après deux recherches. Voir écart n° 6. *Noter toutefois : Ambrosetti sort nommé 3ᵉ dans le relevé Perplexity de meier à 12h11, sur une autre intention que la sienne* | — | — |
-| 3 | | Google AI Mode | | | | |
+| 3 | **13h03m59 → 13h04m13** | Google AI Mode | connecté (avatar MP) | **Nommé 1ᵉʳ**, position identique au passage 1 : « Reconnu comme une référence incontournable pour les villas exclusives à Genève », Vésenaz. **Toujours aucune note affichée** — seul du lot dans ce cas aux deux passages. Suivent KELLER (4.9/77), Atelier be (3.3/3), CORPUS (4.9/14), CCHE (5.0/5), **meier + associés (5.0/5, Rue du Môle 38BIS)** | **Cité comme source en première carte**, avec le même article daté du **15 nov. 2025** qu'au passage 1. Puis CORPUS, puis **Atelier BE**. *(Trustup, présent au passage 1, a disparu)* | **png ✓ (5 images)** / txt ✗ / url partielle — voir écart n° 9 |
 | 4 | | Perplexity | | | | |
 | 5 | | Google AI Mode | | | | |
 | 6 | | Perplexity | | | | |
@@ -169,7 +178,7 @@ Protocole complet : `RELEVE-EXPRESS-mode-operatoire.md`, section « La preuve »
 |---|---|---|---|---|---|---|
 | 1 | 11h20 | Google AI Mode | connecté (avatar MP) | **Nommé 1ᵉʳ**, 4.9 (77 avis), « Mené par Alex Keller », et 1ᵉʳ du tableau comparatif. CSDK 2ᵉ (5.0/10) | **Aucune carte source dans la réponse capturée** — la page s'arrête après le tableau | txt + url ✓ / png ✗ |
 | 2 | — | Perplexity | — | **Non relevé.** Accès anonyme fermé après deux recherches. Voir écart n° 6 | — | — |
-| 3 | | Google AI Mode | | | | |
+| 3 | **13h04m28 → 13h04m50** | Google AI Mode | connecté (avatar MP) | **Nommé 1ᵉʳ**, position identique au passage 1 : 4.9 (77 avis), Rue Du-Roveray 16, et **1ʳᵉ ligne du tableau de synthèse**. Suivent Pierre Ambrosetti (2ᵉ), **HertelTan Architectes (3ᵉ, 5.0/11, Rue des Maraîchers 8)**, Kara Architecte, Atelier A architectes, FdMP (4.9/7), CCHE (5.0/5). **CSDK, qui sortait 2ᵉ au passage 1, a disparu.** Tableau final : KELLER, Kara, FdMP, CCHE, Pierre Ambrosetti | **Trois cartes sources cette fois** (contre zéro au passage 1) : FdMP architectes, Pierre Ambrosetti, et **Neho — « Liste des architectes à Genève (2026) »**, dont l'extrait visible nomme HertelTan | **png ✓ (6 images)** / txt ✗ / url partielle — voir écart n° 9 |
 | 4 | | Perplexity | | | | |
 | 5 | | Google AI Mode | | | | |
 | 6 | | Perplexity | | | | |
@@ -339,7 +348,8 @@ le texte intégral des trois refus et les URL des fils correspondants.
 
 ### Écart n° 7 — l'image de meier est une relecture, pas la vue d'origine
 
-L'image du relevé meier a été prise à **12h18**, sept minutes après la réponse de **12h11**, sur
+Les deux images du relevé meier ont été prises à **12h17m14 et 12h18m07**, six et sept minutes
+après la réponse de **12h11**, sur
 le fil rouvert après la purge des cookies. La page y porte la mention « Vous consultez une
 session partagée », absente à 12h11. **Le texte, lui, a été relevé avant le mur**, à 12h11, et
 n'a pas bougé. L'écart porte sur l'image seule, et le fichier `.txt` le dit en tête.
@@ -356,6 +366,52 @@ session — qui est une variable déclarée des sept relevés Google de 11h20. S
 `count.perplexity.ai`, `perplexity.ai` et `www.perplexity.ai` ont été supprimés. La bannière
 cookies revenue après la purge a été réglée sur **« Uniquement nécessaires »**, choix à tenir
 identique aux passages 2 et 3.
+
+### Écart n° 8 — le relevé Perplexity de HertelTan n'a pas d'image, contrairement à ce qui était écrit
+
+La ligne HertelTan / Perplexity portait la mention **« png ✓ »**. Elle était fausse. Le classement
+des captures, fait à 13h20, a montré qu'aucune image du fil HertelTan n'existe : les trois captures
+de la tranche 12h11–12h18 sont une vue de l'application Claude (12h11m27, écartée) et **deux vues du
+fil meier** (12h17m14 et 12h18m07). Le fil HertelTan n'a jamais été capturé.
+
+**Ce que HertelTan conserve :** le texte intégral de la réponse et l'URL du fil
+(`perplexity.ai/search/ac13742a-0902-4b58-b400-0777a62dda9b`), tous deux relevés à 12h06. **Ce qu'il
+perd :** l'image. Le relevé reste utilisable — l'URL est publique et rejouable — mais il est d'un
+cran plus faible que celui de meier.
+
+*Comment l'erreur s'est produite :* la mention a été écrite à 12h20 en supposant, sans vérifier,
+qu'une capture existait par symétrie avec meier. C'est exactement le genre d'affirmation que le
+protocole interdit. Elle est corrigée ici plutôt qu'effacée.
+
+---
+
+### Écart n° 9 — le passage 2 a les images, pas le texte ni l'URL. L'inverse exact du passage 1.
+
+Le passage 2 est capturé en entier : **38 images** pour les sept relevés Google, prises entre
+13h00m39 et 13h04m50, classées dans `captures/<bureau>/`. C'est la première fois de la journée
+que la jambe « image » tient pour les sept.
+
+**Mais les deux autres jambes manquent.** Aucun fichier `.txt` n'a été écrit pour le passage 2 :
+le contenu des réponses n'existe que dans les pixels des captures, lu à la main et retranscrit
+dans les lignes ci-dessus. Et l'URL complète n'a pas été relevée : elle est **visible dans la
+barre d'adresse de chaque image, mais tronquée** par la largeur de la fenêtre. On lit
+`google.com/search?q=architecte+pour+une+renovation+d%27appartement+a+Geneve&udm=50&mids=…`
+— le paramètre `mids`, qui identifie le fil, est coupé.
+
+**Ce que cela coûte, concrètement.** Un relevé avec image mais sans texte reste opposable :
+l'image *est* le texte, elle se lit. Ce qui s'affaiblit, c'est la recherche (impossible de
+grep les noms cités) et surtout le **rejeu** : sans l'URL complète, on ne peut pas rouvrir le
+fil exact pour vérifier qu'il n'a pas bougé. Le passage 1 avait le problème symétrique.
+**Aucun des deux passages n'a les trois jambes.**
+
+**Pourquoi c'est arrivé.** Le dispositif du passage 2 a été conçu dans l'urgence autour de la
+seule chose qui manquait au passage 1 — les images. Personne, moi le premier, n'a demandé à
+Max de copier aussi le texte et l'URL. C'est une erreur de conception du dispositif, pas une
+erreur d'exécution de sa part : il a fait exactement ce qui était demandé.
+
+**Correction pour le passage 3 :** pour chaque relevé, avant de capturer, copier l'URL complète
+depuis la barre d'adresse (⌘L puis ⌘C) et coller le texte de la réponse. Sans quoi la série
+entière du 17 septembre restera boiteuse des trois côtés à la fois.
 
 ---
 
@@ -405,6 +461,54 @@ du centre-ville sur son propre métier.
 *Deux relevés flatteurs, à écrire comme tels.* Ambrosetti 1ᵉʳ et cité comme source ; KELLER 1ᵉʳ
 avec 77 avis. Le mode opératoire l'avait prévu pour Keller. La règle s'applique : on l'écrit,
 et l'e-mail change d'angle au lieu de changer de chiffre.
+
+---
+
+### Passage 2 — 13h00m39 → 13h04m50. Sept relevés sur quatorze, tous Google.
+
+**Google AI Mode : 7/7**, en quatre minutes et onze secondes, session connectée (avatar MP
+vérifié dans l'image), **avec images pour les sept** — 38 fichiers. **Perplexity : 0/7**, l'accès
+anonyme étant fermé depuis 12h19 (écart n° 6). Texte et URL complète manquants — écart n° 9.
+
+| Bureau | Passage 1 (Google, 11h18–11h43) | Passage 2 (Google, 13h00–13h04) | Bouge ? |
+|---|---|---|---|
+| HertelTan | **Absent** | **Absent** | non |
+| CSDK | **Absent** | **Absent** | non |
+| meier + associés | Nommé 3ᵉ, `maa.ch` **jamais cité** | Nommé **6ᵉ et dernier**, `maa.ch` **cité en chip** | **oui, des deux côtés** |
+| CORPUS | Nommé 3ᵉ, site en 1ʳᵉ source | Nommé 3ᵉ, site en 1ʳᵉ source | non |
+| Camille Aryeh | Nommé **2ᵉ**, cité comme source | Nommé **1ᵉʳ**, cité comme source | **oui, +1** |
+| Pierre Ambrosetti | **1ᵉʳ**, source, aucune note | **1ᵉʳ**, source, aucune note | non |
+| KELLER | **1ᵉʳ**, aucune carte source | **1ᵉʳ**, **trois cartes sources** | **oui, côté sources** |
+
+**Ce que la comparaison établit.**
+
+*Les deux absences tiennent.* HertelTan et CSDK sont absents de leur propre intention aux deux
+passages Google, à une heure et quarante minutes d'intervalle. Ce n'est plus un relevé, c'en est
+deux. Ce n'est toujours pas une position — il faut le troisième passage — mais l'hypothèse
+« c'était un hasard de requête » devient plus coûteuse à défendre.
+
+*L'absence de HertelTan est une absence d'intention, pas une absence d'entreprise.* Le fait le
+plus utile du passage 2 : HertelTan sort **nommé 3ᵉ à 13h04 sur `meilleur architecte à Genève`**,
+avec sa note et son adresse, et une source (Neho) le décrit comme « l'un des bureaux genevois
+les plus en vue ». Le moteur le connaît. Il ne le sort simplement pas quand on cherche une
+rénovation d'appartement. C'est un diagnostic plus précis — et plus vendable — qu'un « vous êtes
+invisible » que le bureau pourrait démentir en trois secondes.
+
+*Les quatre positions fortes ne bougent pas.* Ambrosetti 1ᵉʳ, KELLER 1ᵉʳ, CORPUS 3ᵉ, Camille
+Aryeh qui gagne même une place. Aucun effondrement, aucune envolée. La stabilité est en soi
+un résultat : elle rend le protocole crédible, parce qu'un dispositif qui donnerait sept
+résultats différents à chaque heure ne mesurerait rien.
+
+*Une seule position se dégrade : meier + associés, qui passe de 3ᵉ à 6ᵉ et dernier, et sort du
+tableau comparatif final.* Mais dans le même mouvement `maa.ch` apparaît pour la première fois
+comme source citée. Le bureau perd du rang et gagne de la citation. **Ne pas transformer ça en
+récit :** deux relevés ne font pas une tendance, et l'un des deux compensant l'autre, on ne sait
+pas dire ce qui s'est passé. À vérifier au passage 3.
+
+*Un détail à ne pas perdre.* CSDK sortait 2ᵉ dans l'intention de KELLER au passage 1 ; à 13h04
+il n'y est plus, et HertelTan occupe une place dans cette même réponse. Les sept bureaux se
+croisent sur les intentions des uns et des autres — ce qui veut dire qu'aucun des sept relevés
+ne peut être lu seul.
 
 **Ce que les deux relevés Perplexity ajoutent, et qui est le meilleur matériau de la journée.**
 
