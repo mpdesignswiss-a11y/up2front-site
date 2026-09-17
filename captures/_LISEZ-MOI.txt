@@ -1,0 +1,11 @@
+Un dossier par bureau. Un relevé = trois fichiers de même nom, extensions .png / .txt / .url
+
+  2026-09-17_09h14_googleaimode_herteltan.png   capture PLEIN ECRAN macOS (horloge visible)
+  2026-09-17_09h14_googleaimode_herteltan.txt   texte brut de la reponse
+  2026-09-17_09h14_googleaimode_herteltan.url   URL exacte, une ligne
+
+Ces fichiers ne s'effacent pas et ne se retouchent pas.
+Apres chaque passage : bash captures/sceller.sh "passage N — date"
+
+Le manifeste (manifeste.csv) et les empreintes (empreintes.txt) sont la preuve
+d'integrite ; le push GitHub est l'horodatage tiers.
