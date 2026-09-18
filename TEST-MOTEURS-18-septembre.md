@@ -98,6 +98,102 @@ ligne qu'on corrige, pas la réalité.
 
 ## Après
 
-Le résultat s'écrit ici même, sous ce titre, le jour du test. Il modifie la ligne « Moteurs
-interrogés » du niveau 2 dans le mode opératoire, et la réserve ouverte en fin de fichier se
-ferme. Puis commit, puis push.
+**Test mené le 18 septembre 2026 entre 11h45 et 11h55, par Max. Six relevés complets sur huit
+prévus.** Ce qui suit est écrit à partir des captures plein écran, pas de souvenirs.
+
+### Conditions réelles
+
+Les huit tentatives ont été faites **dans Google Chrome, en navigation privée, déconnecté des
+deux moteurs**. La barre de menu et le libellé « Navigation privée (3) » sont dans chaque image.
+Aucun écart de navigateur : j'avais écrit le contraire, à tort, et cette erreur est consignée
+plus bas.
+
+### Ce qu'on a observé
+
+| Moteur | Passages tenus | Blocage | Cite ses sources |
+|---|---|---|---|
+| ChatGPT déconnecté | **4 sur 4** | aucun | oui — pastilles de domaine cliquables |
+| Perplexity anonyme | **2 sur 4** | mur d'inscription au passage 3 | oui — 15 sources listées par réponse |
+
+**ChatGPT a tenu les quatre passages d'affilée**, en dix minutes, sans mur de quota ni demande de
+connexion. Chaque conversation porte une URL stable de la forme `chatgpt.com/uc/<identifiant>`,
+consultable et donc vérifiable après coup. Les quatre sont dans le registre.
+
+**Perplexity a bloqué au troisième passage**, à 11h55 : un mur d'inscription posé par-dessus une
+réponse grisée, impossible à lire. Le passage 4 n'a pas été tenté — la série s'arrête là, comme
+prévu. Le 17 septembre, le même mur était tombé au deuxième passage sur sept. Deux occurrences ne
+font pas une loi, mais elles vont dans le même sens et suffisent à trancher un défaut de travail.
+
+**Les deux moteurs citent leurs sources avec des liens.** Le critère n° 2 ne les sépare donc pas.
+C'est le mur de quota, et lui seul, qui départage.
+
+### Ce qu'on en tire
+
+**Le défaut de travail du mode opératoire v2 — ChatGPT déconnecté comme second moteur de
+l'Express — est confirmé par la mesure.** Il l'était par hypothèse ; il ne l'est plus. La réserve
+ouverte en fin de `RELEVE-EXPRESS-mode-operatoire.md` peut se fermer, et la ligne « Moteurs
+interrogés » du niveau 2 tient telle quelle.
+
+Portée de cette conclusion, et rien au-delà : elle vaut pour **une intention en français, marché
+Genève, un après-midi, une machine, un réseau**. Elle dit qu'un opérateur peut enchaîner quatre
+relevés ChatGPT déconnecté sans être arrêté. Elle ne dit pas que ça tiendra à quarante, ni
+depuis une autre adresse, ni dans six mois. Le jour où un mur tombera sur ChatGPT aussi, il sera
+écrit ici de la même façon.
+
+### Une observation qui n'était pas demandée
+
+**HertelTan Architectes n'apparaît dans aucun des six relevés complets**, sur leur propre
+intention de cœur de métier. Les noms qui reviennent sont, chez ChatGPT, CM Studio, KELLER,
+Marine Terrien, Cécile Morel, Alan Strappazzon, Kara, et chez Perplexity, Mahaut Design, Atelier
+Nord, Kunz, maage, RK Interiors, mélimélo, Relief Intérieurs, Origami Rénovation.
+
+Le pilote du 17 septembre donnait déjà 3 absences sur 3. On est à 9 sur 9. **Ce n'est toujours
+pas un taux** — c'est une intention unique, deux journées, deux moteurs, et le jeu HertelTan
+complet en compte quatre-vingts. Mais neuf observations concordantes sur l'intention centrale
+d'un bureau, c'est la chose la plus solide qu'on ait à ce jour sur ce dossier, et ça mérite
+d'être dit sans être gonflé.
+
+### Écarts et corrections déclarés
+
+**Un écart de protocole.** Le quatrième relevé ChatGPT (11h50) n'est pas un échange à un seul
+tour : le moteur a d'abord demandé de quelle ville il s'agissait, et Max a répondu « Genève ».
+La réponse mesurée est donc arrivée au second tour. Elle est conservée et comptée comme passage
+tenu — la question portait sur le mur de quota, qui n'est pas tombé — mais elle n'est **pas**
+comparable mot pour mot aux trois autres, et c'est écrit dans la colonne `ecart` de sa ligne.
+
+**Deux erreurs de ma part, dans ce fil, avant l'ouverture des captures.** J'ai affirmé que
+ChatGPT déconnecté ne produisait aucune URL à copier, et que la colonne `citations_brutes`
+resterait donc vide : c'est faux, les quatre conversations ont chacune leur URL. Et j'ai écrit
+que le test avait été fait pour partie dans Safari, pour partie dans Chrome, et je l'avais
+consigné comme écart : c'est faux aussi, Max avait raison, tout est dans Chrome. Les deux
+affirmations venaient de moi, pas d'une observation. Elles sont retirées et consignées plutôt
+qu'effacées.
+
+**Une réserve honnête sur les conditions.** Le lanceur ouvrait ChatGPT avec le paramètre de chat
+temporaire, mais **les captures ne permettent pas de confirmer que ce mode était bien actif** —
+la mention n'y est pas lisible. Ce qui est établi par l'image, c'est l'état déconnecté et la
+fenêtre privée. La colonne `mode` du registre porte donc cette nuance.
+
+### Ce que le rodage du registre a appris
+
+Le test devait aussi servir à trouver une colonne mal pensée avant les quatre-vingts relevés
+HertelTan. Il en a trouvé une, par manque : **le geste n° 3 demande de copier l'URL de la
+réponse, et aucune colonne ne l'accueillait.** `citations_brutes` sert aux sources citées, pas à
+l'adresse de la conversation. La colonne **`url_reponse`** a donc été ajoutée juste après
+`fichier_reponse`, dans le registre de test comme dans `REGISTRE-releves.csv`, qui passe de
+vingt-huit à vingt-neuf colonnes. Les huit URL y sont.
+
+### Reste à faire
+
+Ranger les captures dans `captures/_test-moteurs/` — soit à la main, soit avec
+`captures/ranger-TEST-MOTEURS.command`. Les noms de fichiers inscrits au registre viennent de
+l'heure lue sur la barre de menu ; le script, lui, nomme d'après l'heure de création du fichier.
+Si les deux divergent d'une minute, **c'est le registre qu'on corrige, pas les fichiers**.
+
+Les `.txt` de texte intégral ne sont pas faits. Sans eux, les listes de bureaux consignées en
+colonne `ecart` reposent sur la lecture des images, ce qui suffit pour la question posée — quel
+moteur tient — mais ne suffirait pas pour un comptage. À produire avant de compter quoi que ce
+soit à partir de ces six réponses.
+
+Puis recopier les huit lignes dans `REGISTRE-releves.csv` et supprimer le fichier de registre de
+test.

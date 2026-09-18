@@ -57,6 +57,12 @@ plus bas et ne se négocie pas.
 Le mot **audit** est réservé au niveau 3. L'Express est un aperçu. Appeler audit une chose à
 quatre relevés dévalue celle à quatre-vingts.
 
+La ligne « Moteurs interrogés » de l'Express est vérifiée depuis le 18 septembre : ChatGPT
+déconnecté encaisse quatre passages d'affilée. Au niveau 3, Perplexity reste dans la liste comme
+**illustration ponctuelle, jamais comptée** — anonyme il bloque au troisième passage, authentifié
+il répond à notre historique et non à celui d'un client genevois. Aucun taux ne sortira jamais
+de lui.
+
 ---
 
 ## Les règles communes aux trois niveaux
@@ -105,11 +111,19 @@ pour une mesure, acceptable pour une illustration déclarée comme telle.
 
 **Même machine, même réseau, pour toute une série.** Sinon la comparaison ne veut rien dire.
 
-**Réserve ouverte.** Le choix de ChatGPT comme second moteur de l'Express est un défaut de
-travail, pas un fait établi. Il sera tranché par un test : quatre relevés d'affilée sur la même
-intention, ChatGPT déconnecté d'un côté, Perplexity déconnecté de l'autre, en notant lequel tient
-les quatre sans mur de quota et lequel cite réellement ses sources. Vingt minutes. Ce test est
-lui-même un relevé : il se fait sous la version 2, avec registre.
+**Réserve levée le 18 septembre 2026.** Le choix de ChatGPT comme second moteur de l'Express
+était un défaut de travail ; il est désormais mesuré. Huit tentatives prévues sur la même
+intention, en navigation privée Chrome, déconnecté des deux côtés : **ChatGPT a tenu ses quatre
+passages d'affilée sans mur** et produit une URL de conversation stable à chaque fois ;
+**Perplexity anonyme a été bloqué par un mur d'inscription au troisième passage**, après deux
+réponses complètes. Les deux citent leurs sources avec des liens — le critère de citation ne les
+sépare pas, c'est le quota qui tranche. Détail, captures et écarts déclarés dans
+`TEST-MOTEURS-18-septembre.md`.
+
+Portée : une intention, en français, marché Genève, une machine, un réseau, un après-midi. Cela
+établit qu'un opérateur peut enchaîner quatre relevés ChatGPT déconnecté sans être arrêté. Cela
+n'établit pas que ça tiendra à quarante ni dans six mois. Le jour où un mur tombe sur ChatGPT
+aussi, il s'écrit ici.
 
 ---
 
@@ -324,9 +338,14 @@ conversation.
 ## Ce qui reste ouvert au 18 septembre 2026
 
 - ~~Le registre de collecte n'existe pas encore.~~ **Fait le 18 septembre :** `REGISTRE-releves.csv`,
-  vide, vingt-huit colonnes, avec un écart déclaré sur `response_text`.
-- **Le test ChatGPT / Perplexity** n'est pas fait. Le second moteur de l'Express reste un défaut
-  de travail.
+  vide, avec un écart déclaré sur `response_text`. Le test des moteurs, qui servait aussi à roder
+  le registre, a fait apparaître une colonne manquante : l'URL de la réponse n'avait nulle part
+  où aller. **Ajoutée le 18 septembre** sous le nom `url_reponse`, après `fichier_reponse` —
+  vingt-neuf colonnes. C'est exactement ce qu'on cherchait à découvrir sur huit lignes plutôt que
+  sur quatre-vingts.
+- ~~Le test ChatGPT / Perplexity n'est pas fait.~~ **Fait le 18 septembre.** ChatGPT déconnecté
+  tient quatre passages, Perplexity anonyme bloque au troisième. Le second moteur de l'Express
+  n'est plus un défaut de travail : voir `TEST-MOTEURS-18-septembre.md`.
 - **Otterly n'est pas ouvert.** Tant qu'il ne l'est pas, les 80 relevés du niveau 3 coûtent environ
   sept heures à la main au lieu d'une. Ce qui s'automatise est le comptage ; la capture horodatée
   reste manuelle, parce que c'est elle le produit.
