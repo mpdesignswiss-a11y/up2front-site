@@ -1,14 +1,11 @@
 === PIÈCES OTTERLY.AI — 18 SEPTEMBRE 2026 ====================================
 
 Compte      : Otterly.AI, essai gratuit, ouvert par Max le 18 septembre 2026
-Marque      : HertelTan Architectes
-              ATTENTION, ORTHOGRAPHE DU DOMAINE NON TRANCHÉE. Ce fichier a
-              d'abord écrit « hertelan.ch ». Le PDF d'Otterly écrit
-              « herteltan.ch », en en-tête de ses onze pages et dans son
-              tableau des sources. Les deux ne peuvent pas être justes. Le
-              domaine réel n'a pas été constaté sur le site lui-même. Tant
-              qu'il ne l'est pas, aucune des deux formes ne s'écrit dans un
-              document destiné au bureau. À trancher par Max.
+Marque      : HertelTan Architectes — herteltan.ch
+              RÉSERVE LEVÉE LE 18 SEPTEMBRE. Ce fichier avait d'abord écrit
+              « hertelan.ch », par erreur de saisie. Le PDF d'Otterly écrit
+              « herteltan.ch » ; Max a ouvert https://herteltan.ch et l'a
+              confirmé. C'est cette forme qui fait foi partout.
 Espace      : « Your First Workspace »
 Portée      : pays = Suisse (ch). PAS canton de Genève. Otterly ne descend pas
               sous le pays.

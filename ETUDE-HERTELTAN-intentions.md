@@ -188,7 +188,13 @@ conséquences, à traiter avant tout envoi ou toute publication :
 1. **Le rapport nominatif est destiné à HertelTan, pas au public.** Il leur est adressé
    directement. Une version publique devra être **anonymisée** (« un bureau d'architecture
    genevois de onze avis »), sauf accord écrit de leur part.
-2. **La réserve LCD reste ouverte** (art. 3 al. 1 let. o, publicité comparative et dénigrement).
+2. **Les réserves LCD restent ouvertes**, et elles sont deux, pas une. **Let. o** vise le
+   pollupostage — l'envoi *en masse* de publicité par voie de télécommunication sans
+   consentement préalable ; c'est une réserve sur la **méthode d'envoi**. **Let. a**
+   (dénigrement) et **let. e** (comparaison inexacte ou fallacieuse) visent le **contenu** :
+   nommer, comparer ou classer des bureaux tiers. Ce fichier a longtemps attribué à la let. o
+   « publicité comparative et dénigrement » — c'était faux, corrigé le 18 septembre après
+   vérification auprès de l'OFCOM.
    Elle n'est pas levée par le volume de preuve. Elle demande un avis d'avocat, et cet avis
    conditionne la version publique comme l'e-mail d'approche.
 

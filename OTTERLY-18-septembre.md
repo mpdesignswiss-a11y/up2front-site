@@ -5,13 +5,11 @@ export des quinze questions à 14h29. Les deux pièces sont au dépôt, sans ret
 `captures/_otterly/`, avec leurs empreintes sha256 et un `_PROVENANCE.txt` qui dit ce qu'elles
 valent.
 
-> **Réserve ouverte, à trancher par Max avant tout usage externe.** Le PDF d'Otterly écrit le
-> domaine suivi **`herteltan.ch`**, en en-tête de neuf de ses onze pages et dans son tableau des
-> sources. Notre `_PROVENANCE.txt` écrit **`hertelan.ch`**. Les deux orthographes ne peuvent
-> pas être justes. Ce fichier retient celle du PDF, parce que le PDF est la pièce archivée — mais
-> **ce n'est pas une vérification, c'est un choix par défaut.** Tant que le domaine réel n'est pas
-> constaté sur le site lui-même, aucune des deux formes ne s'écrit dans un document destiné au
-> bureau.
+Marque suivie : **`herteltan.ch`**.
+
+> **Réserve levée le 18 septembre.** Nos notes avaient d'abord écrit `hertelan.ch`, par erreur de
+> saisie ; le PDF d'Otterly écrit `herteltan.ch` en en-tête de neuf de ses onze pages. Max a
+> ouvert https://herteltan.ch et confirmé cette forme. C'est elle qui fait foi partout.
 
 **Toute phrase de ce fichier doit pouvoir être recalculée depuis le CSV.** En cas de divergence
 entre le CSV et le PDF, c'est le CSV qui fait foi — il est vérifiable ligne à ligne, le PDF non.
@@ -328,8 +326,11 @@ l'outil ne sert à rien d'autre qu'à cette photographie.
 **Décidé.** Les relevés manuels `CH-GE` continuent en parallèle, sans fusion. Otterly ne les
 remplace pas : il ne descend pas sous le pays.
 
-**Pas décidé.** Rien de ce fichier ne part vers HertelTan. La réserve LCD (art. 3 al. 1 let. o)
-reste ouverte et conditionne aussi bien une version publique qu'un e-mail d'approche.
+**Pas décidé.** Rien de ce fichier ne part vers HertelTan. Deux réserves LCD distinctes restent
+ouvertes : la **let. o** sur la méthode (pollupostage, envoi en masse sans consentement) et les
+**let. a / let. e** sur le contenu (dénigrement, comparaison inexacte ou fallacieuse). La
+première conditionne l'e-mail d'approche, la seconde la version publique. Elles se lèvent
+séparément, par un avocat.
 
 **Reporté.** Six domaines à fort poids dans les sources citées ne sont identifiés par personne au
 dossier : `hilo-architectes.ch` (12 %), `pierreambrosetti.ch` (12 %), `classorga.ch` (8 %),

@@ -285,9 +285,20 @@ Elle ne produit aucun taux et n'en produira pas. Ses dix écarts sont déclarés
 `RELEVE-EXPRESS-feuille-17-septembre.md` et y restent.
 
 **Sa version publique doit être anonymisée** — « un bureau d'architecture genevois de onze avis » —
-tant que les bureaux n'ont pas donné d'accord écrit, et tant que la réserve LCD (art. 3 al. 1
-let. o, publicité comparative et dénigrement) n'est pas levée par un avocat. Cette réserve n'est
-pas levée par le volume de preuve.
+tant que les bureaux n'ont pas donné d'accord écrit, et tant que les réserves LCD ne sont pas
+levées par un avocat. Ces réserves ne sont pas levées par le volume de preuve.
+
+> **Correction du 18 septembre.** Ce paragraphe disait « art. 3 al. 1 let. o, publicité
+> comparative et dénigrement ». **C'est faux, et c'est une erreur de Claude.** Vérifié auprès de
+> l'OFCOM : la let. o vise le pollupostage, c'est-à-dire l'envoi **en masse** de publicité par
+> voie de télécommunication sans consentement préalable (opt-in, en vigueur depuis le
+> 1ᵉʳ avril 2007). Elle ne parle ni de comparaison ni de dénigrement.
+> Les deux réserves sont distinctes et se traitent séparément :
+> — **let. o : la méthode d'envoi.** Elle concerne le démarchage par e-mail, pas le contenu.
+> — **let. a (dénigrement) et let. e (comparaison inexacte ou fallacieuse) : le contenu.**
+> C'est là que se joue le fait de nommer, comparer ou classer des bureaux tiers.
+> Aucun des deux points n'est tranché. Ni Claude ni Max ne sont juristes ; ce qui précède
+> situe les articles, il ne dit pas ce qui est permis.
 
 ---
 
