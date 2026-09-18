@@ -199,10 +199,13 @@ ordre.
 | kara-architecte.ch | 17 % | bureau d'architectes |
 | corpus.ch | 15 % | annuaire / plateforme |
 | architectegeneve.com | 13 % | plateforme d'apport d'affaires |
-| hilo-architectes.ch | 12 % | bureau, non identifié au dossier |
+| hilo-architectes.ch | 12 % | bureau d'architectes, Genève — une page par ville |
 | kellerarchitectes.com | 12 % | bureau |
-| pierreambrosetti.ch | 12 % | non identifié au dossier |
-| … | | |
+| pierreambrosetti.ch | 12 % | bureau d'architectes, Vésenaz — une page par intention |
+| cecilemorel.ch · classorga.ch · cm-studio.ch · nessell.ch | 8 % | bureau · entreprise générale · bureau · **agence immobilière** |
+| architectes.ch | 7 % | portail |
+| ranq.ch | 7 % | **annuaire qui vend la visibilité dans l'IA** |
+| csdk.ch | 7 % | bureau d'architectes, Genève — site portfolio, sans page d'intention |
 | **herteltan.ch** | **7 %** | **14ᵉ des quinze domaines listés, ex æquo à 7 % avec `architectes.ch`, `ranq.ch` et `csdk.ch`** |
 
 Et dans le classement des URL les plus citées — les dix premières — **`herteltan.ch` ne figure
@@ -215,6 +218,12 @@ des quatre premières sources ne sont pas des bureaux d'architectes mais des ann
 plateformes d'apport d'affaires, qui se placent entre le moteur et le bureau. Voilà la forme
 réelle du problème, et elle ne se lit ni dans le nombre de mentions ni dans la position moyenne.
 
+**Les six domaines qui n'étaient pas identifiés l'ont été depuis**, un par un, en ouvrant chaque
+site : voir `DOMAINES-OTTERLY-qui-sont-ils.md`. Deux d'entre eux — HILO et Pierre Ambrosetti,
+12 % chacun — portent déjà une page par ville ou par intention d'achat. Un troisième, `ranq.ch`,
+7 %, est un annuaire qui vend explicitement « la visibilité dans l'IA ». Et `nessell.ch`, 8 %, est
+une agence immobilière, pas un architecte.
+
 ### Le « Brand 74 % » du camembert ne veut rien dire
 
 L'outil répartit les 368 citations en catégories et annonce **« Brand 74 % »**. Pris au mot, cela
@@ -225,7 +234,9 @@ L'explication est dans le tableau : Otterly étiquette « Brand » des domaines 
 voir avec la marque suivie — `local.ch`, `corpus.ch`, `hilo-architectes.ch`,
 `kellerarchitectes.com`, `ranq.ch`, `csdk.ch` — et étiquette « Competitor » `kara-architecte.ch`,
 `cm-studio.ch`, `cecilemorel.ch`. La catégorie est incohérente, et l'incohérence penche du côté
-flatteur.
+flatteur. **Les six domaines ont depuis été ouverts et identifiés** : aucun de ceux qu'Otterly
+étiquette « Brand » n'a le moindre rapport avec HertelTan. L'erreur est établie sur pièces, pas
+supposée.
 
 **Ce chiffre est inutilisable et ne sera cité nulle part.** Il est consigné ici pour une seule
 raison : c'est exactement le genre de nombre qu'un vendeur de GEO met en première page d'un
@@ -332,10 +343,12 @@ ouvertes : la **let. o** sur la méthode (pollupostage, envoi en masse sans cons
 première conditionne l'e-mail d'approche, la seconde la version publique. Elles se lèvent
 séparément, par un avocat.
 
-**Reporté.** Six domaines à fort poids dans les sources citées ne sont identifiés par personne au
-dossier : `hilo-architectes.ch` (12 %), `pierreambrosetti.ch` (12 %), `classorga.ch` (8 %),
-`nessell.ch` (8 %), `csdk.ch` (7 %), `ranq.ch` (7 %). C'est une piste de prospection, pas une
-conclusion, et elle attend.
+**Fait le 18 septembre, après coup.** Les six domaines à fort poids que personne au dossier ne
+savait identifier — `hilo-architectes.ch` (12 %), `pierreambrosetti.ch` (12 %), `classorga.ch`
+(8 %), `nessell.ch` (8 %), `csdk.ch` (7 %), `ranq.ch` (7 %) — ont été ouverts un par un et écrits
+dans `DOMAINES-OTTERLY-qui-sont-ils.md`. Quatre bureaux ou entreprises du bâtiment, une agence
+immobilière, un annuaire qui vend la visibilité dans l'IA. Ce qui en sort reste une piste, pas une
+conclusion : rien n'a été capturé, et `kellerarchitectes.com` (12 %) n'a pas été examiné.
 
 **À vérifier avant tout usage.** `kara-architecte.ch` apparaît deux fois dans le classement des
 URL les plus citées, en `http://` et en `https://`, 5 citations chacune. Si l'outil compte deux
