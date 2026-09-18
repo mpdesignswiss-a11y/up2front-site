@@ -131,6 +131,55 @@ qui arrange le diagnostic. C'est l'inverse d'un tri favorable.
 
 ---
 
+## La série OT — sept questions ajoutées le 18 septembre à 14h22, et pourquoi
+
+Le compte Otterly.AI a été ouvert le 18 septembre en début d'après-midi. **L'outil refuse de
+valider un suivi en dessous de quinze questions** : le bouton « Next » reste inactif à huit,
+vérifié à 14h22. Il fallait donc sept questions de plus, ou renoncer à l'outil.
+
+Sept ont été écrites sur place, en quelques minutes. Elles portent les identifiants **OT-01 à
+OT-07** — « OT » pour Otterly, l'outil qui les a imposées — et elles ne sont pas de même nature
+que les huit. Les huit sortent des pages d'expertise du bureau et sont verrouillées le 18 septembre
+au matin, avant la moindre mesure. Les sept sortent d'une contrainte logicielle, l'après-midi du
+même jour, mais **avant qu'Otterly n'ait rien mesuré** — c'est la seule chose qui les sauve.
+
+| Code | Formulation | Pourquoi elle existe |
+|---|---|---|
+| OT-01 | `architecte pour aménager un restaurant à Genève` | Couvre `/expertise/conception-interieur-restaurant/`, sans intention dans les huit |
+| OT-02 | `architecte pour l'aménagement d'un commerce à Genève` | Couvre le volet « commerces » de `/expertise/commerces-et-bureaux/` |
+| OT-03 | `meilleur architecte à Genève` | **Voir ci-dessous — c'est une faute** |
+| OT-04 | `architecte d'intérieur à Genève` | Variante courte de HT-12, sans le qualificatif de standing |
+| OT-05 | `bureau d'architectes à Genève pour un immeuble de logements` | Échelle immeuble, absente des huit qui sont toutes à l'échelle du logement |
+| OT-06 | `architecte pour rénover une cuisine et une salle de bain à Genève` | Formulation par pièce, la plus proche du langage d'un particulier |
+| OT-07 | `cabinet d'architecture à Genève pour un projet de rénovation` | Variante générique, témoin |
+
+**La règle, et elle n'a pas d'exception : les deux séries ne s'additionnent jamais dans un chiffre
+montré à un prospect.** Un taux Otterly se donne sur les huit, ou sur les sept, jamais sur quinze.
+Le rapport du 18 septembre le montre : HertelTan récolte 2 mentions sur les huit intentions
+verrouillées et 5 sur les sept de remplissage. Additionner donnerait « 7 mentions sur 15
+questions », un chiffre flatteur et faux, construit majoritairement sur des questions écrites pour
+débloquer un bouton.
+
+### OT-03 est une faute, et elle est de Claude
+
+`meilleur architecte à Genève` **figure dans la liste des exclusions ci-dessus**, décidée le matin
+même, pour un motif explicite : « l'inclure gonflerait artificiellement le taux de mention ». Cette
+exclusion est le passage dont l'étude dit qu'il est « l'inverse d'un tri favorable ».
+
+Elle a été réintroduite l'après-midi pour combler un formulaire, sans que personne ne rouvre le
+fichier. Et elle a rapporté une mention, rang 1 — exactement l'effet que l'exclusion visait à
+prévenir.
+
+Elle reste dans le suivi Otterly, parce que la retirer casserait la série avant qu'elle n'ait
+commencé et parce que voir bouger cette question-là dans la durée a son intérêt. Mais **elle ne
+compte dans aucun taux**, ni avec les huit, ni avec les sept. Son statut est inchangé depuis le
+matin : contre-preuve, jamais numérateur.
+
+La leçon, pour la suite : une décision de méthode écrite dans un fichier ne protège de rien si
+personne ne rouvre le fichier au moment de décider.
+
+---
+
 ## Avant de publier quoi que ce soit
 
 Cette étude est construite sur une entreprise réelle, nommée, qui n'a rien demandé. Deux
@@ -152,8 +201,11 @@ conséquences, à traiter avant tout envoi ou toute publication :
 3. ~~Jeu d'intentions aligné sur le produit.~~ **Fait le 18 septembre** : huit intentions comptées.
 4. Test ChatGPT / Perplexity, vingt minutes, sous version 2 avec registre — il tranche le second
    moteur de l'Express, pas celui du Relevé 690.
-5. Les huit intentions chargées dans l'outil de suivi. Le compte Otterly n'est pas ouvert ; tant
-   qu'il ne l'est pas, les 80 relevés se font à la main.
+5. ~~Les huit intentions chargées dans l'outil de suivi.~~ **Fait le 18 septembre à 14h28** :
+   compte Otterly.AI ouvert, quinze questions chargées — les huit verrouillées plus les sept de
+   remplissage de la série OT. Portée pays = Suisse, pas canton de Genève : **l'outil ne remplace
+   pas les 80 relevés à la main, il mesure autre chose, à une autre échelle.** Les deux comptages
+   restent séparés. Premier retour consigné dans `OTTERLY-18-septembre.md`.
 6. Première fenêtre : 5 passages par intention, session fraîche à chaque fois, Google AI Mode seul.
 7. Deuxième fenêtre, un autre jour, 5 passages, même protocole.
 8. Comptages, taux par journée **à côté** du taux groupé, intervalles de Wilson, rapport.
