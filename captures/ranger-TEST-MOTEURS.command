@@ -1,15 +1,17 @@
 #!/bin/bash
 # Range les captures du test des moteurs (18 septembre) dans
 # captures/_test-moteurs/ avec le nom normalisé du protocole.
-# Double-cliquer pour lancer. À faire UNE FOIS, à la fin des huit relevés.
+# Double-cliquer pour lancer.
 #
-# Hypothèse : les captures ont été prises DANS L'ORDRE du protocole —
-# les ChatGPT d'abord, puis les Perplexity — sans rien capturer d'autre
-# entre-temps. L'heure vient de la date de création du fichier, pas
-# d'une horloge qu'on aurait pu régler.
+# Version 2. La version 1 prenait « les N images les plus récentes du Bureau »,
+# en supposant qu'aucune autre capture n'avait été prise pendant ou après le
+# relevé. Cette hypothèse était fausse : des captures de travail (fenêtre
+# Finder, Terminal) se sont glissées parmi les relevés. Le script ne devine
+# plus. Il montre TOUT ce qu'il y a sur le Bureau, avec l'heure de création de
+# chaque fichier, et demande d'écarter ce qui n'est pas un relevé.
 #
-# Un relevé peut porter plusieurs images (réponse longue, scroll).
-# Le script demande combien d'images par relevé ; il ne devine pas.
+# L'heure vient de la date de création du fichier, jamais d'une horloge qu'on
+# aurait pu régler.
 
 cd "$(dirname "$0")" || exit 1
 CIBLE="$(pwd)/_test-moteurs"
@@ -20,9 +22,64 @@ echo ""
 echo "======================================================"
 echo "  RANGEMENT — test des moteurs, 18 septembre"
 echo "======================================================"
+
+# ---------------------------------------------------------------
+# 1. Le catalogue : tous les PNG du Bureau, du plus ancien au plus récent.
+# ---------------------------------------------------------------
+TOUS=()
+while IFS= read -r f; do TOUS+=("$f"); done < <(
+  ls -t "$BUREAU"/*.png 2>/dev/null | tail -r
+)
+
+if [ "${#TOUS[@]}" -eq 0 ]; then
+  echo ""; echo "Aucun PNG sur le Bureau. Rien à ranger."; read -r _; exit 1
+fi
+
 echo ""
-echo "Combien d'images par relevé, séparées par des espaces."
-echo "Exemple : 2 2 1 1  =  quatre relevés, deux images aux deux premiers."
+echo "Les images du Bureau, de la plus ANCIENNE à la plus RÉCENTE."
+echo "L'heure est celle de création du fichier."
+echo ""
+for i in "${!TOUS[@]}"; do
+  n=$((i+1))
+  h=$(stat -f '%SB' -t '%d/%m %Hh%M:%S' "${TOUS[$i]}")
+  printf "  %3d.  %s   %s\n" "$n" "$h" "$(basename "${TOUS[$i]}")"
+done
+
+# ---------------------------------------------------------------
+# 2. Écarter ce qui n'est pas un relevé.
+# ---------------------------------------------------------------
+echo ""
+echo "Quels numéros NE SONT PAS des relevés ? (captures de travail, autres)"
+echo "Séparés par des espaces. Laisser vide si tout est un relevé."
+echo ""
+printf "À écarter : "
+read -r ECARTES
+
+declare -a GARDE
+for i in "${!TOUS[@]}"; do
+  n=$((i+1)); jeter=0
+  for e in $ECARTES; do [ "$e" = "$n" ] && jeter=1; done
+  [ "$jeter" -eq 0 ] && GARDE+=("${TOUS[$i]}")
+done
+
+echo ""
+echo "Il reste ${#GARDE[@]} image(s) de relevé :"
+for f in "${GARDE[@]}"; do
+  h=$(stat -f '%SB' -t '%Hh%M:%S' "$f")
+  printf "     %s   %s\n" "$h" "$(basename "$f")"
+done
+
+if [ "${#GARDE[@]}" -eq 0 ]; then
+  echo ""; echo "Plus rien à ranger. Rien n'a été touché."; read -r _; exit 1
+fi
+
+# ---------------------------------------------------------------
+# 3. Combien d'images par relevé.
+# ---------------------------------------------------------------
+echo ""
+echo "Maintenant, comment ces ${#GARDE[@]} images se répartissent en relevés."
+echo "Un nombre par relevé, dans l'ordre, séparés par des espaces."
+echo "Exemple : 2 1 1 1  =  quatre relevés, deux images au premier."
 echo "Laisser vide si le moteur n'a produit aucun relevé."
 echo ""
 
@@ -57,19 +114,19 @@ fi
 N=0
 for c in "${COMPTES[@]}"; do N=$((N+c)); done
 
-# Les N PNG les plus récents du Bureau, du plus ancien au plus récent.
-FICHIERS=()
-while IFS= read -r f; do FICHIERS+=("$f"); done < <(
-  ls -t "$BUREAU"/*.png 2>/dev/null | head -n "$N" | tail -r
-)
-
-if [ "${#FICHIERS[@]}" -lt "$N" ]; then
+if [ "$N" -ne "${#GARDE[@]}" ]; then
   echo ""
-  echo "Il faut $N image(s) ; le Bureau n'en contient que ${#FICHIERS[@]}."
-  echo "Rien n'a été touché."
+  echo "Le compte ne tombe pas juste : tu déclares $N image(s) réparties en"
+  echo "relevés, mais il en reste ${#GARDE[@]} après écartement."
+  echo "Rien n'a été touché. Relance et reprends le compte."
   read -r _; exit 1
 fi
 
+FICHIERS=("${GARDE[@]}")
+
+# ---------------------------------------------------------------
+# 4. L'aperçu. Rien ne bouge avant « o ».
+# ---------------------------------------------------------------
 echo ""
 echo "Voici ce qui va être fait — RIEN n'est déplacé avant ta confirmation :"
 echo ""
