@@ -415,6 +415,49 @@ entière du 17 septembre restera boiteuse des trois côtés à la fois.
 
 ---
 
+### Écart n° 10 — le passage 3 n'a pas eu lieu. Le 17 septembre est clos à deux passages.
+
+Le protocole fixait **trois passages dans une même journée** : 11h00, 13h00, 16h00. Les deux
+premiers ont eu lieu (11h18 → 12h19, puis 13h00m39 → 13h04m50). **Le troisième, prévu vers
+16h00, n'a pas été effectué.** Il est à présent le **18 septembre au matin** : la journée du 17
+est terminée et le passage 3 n'est plus rattrapable, par construction — un relevé pris le 18 ne
+peut pas être le troisième point d'une série intra-journée du 17.
+
+**Ce que cela retire au dispositif.** Le troisième passage servait à une chose précise : trancher
+entre variation et bruit. Avec deux points, une position qui bouge — meier + associés, 3ᵉ puis 6ᵉ —
+ne peut pas être distinguée d'un aléa de génération. C'est écrit noir sur blanc dans le bilan du
+passage 2 : « deux relevés ne font pas une tendance […] À vérifier au passage 3. » Cette
+vérification n'aura pas lieu. **La ligne meier reste donc indéterminée, et doit être présentée
+comme telle.**
+
+**Ce que cela ne retire pas.** Les neuf relevés du passage 1 et les sept du passage 2 sont
+inchangés. Les quatre positions stables (Ambrosetti 1ᵉʳ, KELLER 1ᵉʳ, CORPUS 3ᵉ, Camille Aryeh
+1ᵉʳ puis 2ᵉ), l'absence répétée de HertelTan sur son intention, et la contradiction
+Google/Perplexity sur meier à trente-deux minutes d'écart ne dépendent pas du passage 3.
+
+**Ce qui n'est pas encore décidé — et que je ne décide pas à la place de Max.** Deux voies, et
+elles ne disent pas la même chose à un prospect :
+
+1. **Clore la série à deux passages**, cet écart déclaré, et le dire tel quel : « dispositif prévu
+   à trois passages, exécuté à deux, le troisième n'a pas été fait ». Honnête, immédiat, et
+   suffisant pour les constats qui ne reposent pas sur la stabilité.
+2. **Requalifier en dispositif sur deux jours** : le relevé du 18 devient **sa propre journée**,
+   sur les sept intentions verrouillées à l'identique, avec sa propre feuille
+   (`RELEVE-EXPRESS-feuille-18-septembre.md`). Il ne s'appelle pas « passage 3 » et ne se range
+   pas dans les colonnes du 17. Ce qu'il mesure est autre chose — la stabilité d'un jour à
+   l'autre, pas d'une heure à l'autre — et c'est en soi plus intéressant, mais il faut le nommer
+   correctement.
+
+**Dans les deux cas, la correction de l'écart n° 9 s'applique** : copier l'URL complète (⌘L, ⌘C)
+et le texte de la réponse **avant** de capturer.
+
+**Pourquoi c'est arrivé.** Le passage 2 s'est terminé à 13h04, et l'après-midi a été consacré à
+classer les 38 captures, remplir la feuille et récupérer un dossier de fichiers que j'avais
+déplacé par erreur. Personne n'a relancé le passage de 16h00. La responsabilité est de mon côté :
+tenir l'horaire du protocole faisait partie de mon travail.
+
+---
+
 ## Bilans par passage
 
 *À remplir après chaque passage.*
