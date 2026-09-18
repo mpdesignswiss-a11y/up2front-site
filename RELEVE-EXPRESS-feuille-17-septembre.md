@@ -1,9 +1,38 @@
 # Feuille de relevé express — 17 septembre 2026
 
-**Série de référence.** C'est cette feuille, et elle seule, qui alimente les e-mails de prospection.
-La série du 16 septembre est exploratoire, non capturée, et ne sort pas d'ici.
+> ### Requalification — écrite le 18 septembre 2026
+>
+> **Cette série est un pilote, pas une mesure.** Au sens que le domaine donne au mot : une
+> vérification exploratoire, destinée à régler le dispositif, pas à produire un taux. Elle a
+> servi exactement à ça — elle a révélé le mur de quota Perplexity, l'ordre de relevé fautif, et
+> l'insuffisance d'une intention par bureau. C'est son utilité, et elle est réelle.
+>
+> **Ce qu'elle ne peut pas produire : aucun pourcentage.** Une intention par bureau et deux
+> passages donnent **deux observations par cellule au maximum**, très en dessous du plancher
+> admis — 3 à 5 passages y sont déjà classés « trop peu pour un taux défendable ». Tout chiffre
+> en pourcentage tiré de cette feuille serait indéfendable devant un contradicteur.
+>
+> **Correction du compte annoncé.** L'en-tête disait : *« Sept bureaux × trois passages × deux
+> moteurs = quarante-deux relevés, tous capturés et scellés. »* C'était le plan, pas le réel, et
+> la phrase contredisait l'écart n° 10 inscrit quatre cents lignes plus bas dans le même fichier.
+> Le réel : **neuf relevés au passage 1, sept au passage 2, soit seize** — le volet Perplexity
+> s'est arrêté à 2/7 sur quota, et le passage 3 n'a pas eu lieu. Quarante captures classées. La
+> phrase fausse n'est pas effacée : elle est citée ici.
+>
+> **Ce qui reste utilisable en prospection**, et qui ne dépend d'aucun taux : les positions
+> observées telles quelles, l'absence répétée de HertelTan sur son intention, et la contradiction
+> Google / Perplexity sur meier + associés à trente-deux minutes d'écart. Ce sont des constats
+> datés et rejouables, pas des fréquences.
+>
+> Les relevés ci-dessous ont été faits sous le **mode opératoire version 1**. Ils ne se mélangent
+> dans aucun comptage avec un relevé fait sous la version 2.
 
-Sept bureaux × trois passages × deux moteurs = **quarante-deux relevés**, tous capturés et scellés.
+**Série de référence du pilote.** C'est cette feuille, et elle seule, qui alimente les e-mails de
+prospection. La série du 16 septembre est exploratoire, non capturée, et ne sort pas d'ici.
+
+**Seize relevés effectivement faits** — passage 1 : neuf ; passage 2 : sept — sur sept bureaux et
+deux moteurs. Tous capturés et scellés. Le plan en prévoyait quarante-deux : voir la
+requalification ci-dessus et les écarts n° 8 et n° 10.
 
 ---
 
