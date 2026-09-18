@@ -119,7 +119,7 @@ lui-même un relevé : il se fait sous la version 2, avec registre.
 2. Attendre que la réponse soit **complète** — pas de capture en cours de génération.
 3. **Copier l'URL entière** dans le registre. Entière : sur Google AI Mode elle contient la
    question en clair (`?q=…&udm=50`), c'est elle qu'on donne au prospect pour qu'il rejoue.
-4. **Copier le texte intégral** de la réponse dans le registre.
+4. **Copier le texte intégral** de la réponse dans un `.txt` portant le nom de la capture.
 5. **Capture plein écran macOS** — pas capture de navigateur : l'horloge de la barre de menu doit
    se trouver dans la même image que la réponse.
 6. Écrire la ligne du registre et la clore.
@@ -134,6 +134,46 @@ Nommage des captures :
 
 soit : date, heure, moteur, bureau, identifiant d'intention, numéro de passage. Un dossier par
 bureau. Ces fichiers ne s'effacent pas.
+
+---
+
+## Le registre de collecte
+
+Créé le 18 septembre 2026, vide : `REGISTRE-releves.csv`. **Une ligne par relevé.** Pas une ligne
+par intention, pas une ligne par journée : par relevé. Un passage qui n'a pas eu lieu s'écrit
+quand même, avec sa cause en colonne `ecart` — c'est ainsi que le 17 septembre aurait dû se tenir.
+
+Les colonnes, et ce qu'elles servent à défendre :
+
+| Colonne | Nom de référence | Ce qu'elle sert à défendre |
+|---|---|---|
+| `etude_id` | `study_id` | Deux études ne se mélangent jamais dans un comptage. |
+| `bureau` | — | Le sujet mesuré. |
+| `intention_id` / `intention_version` | `prompt_id` / `prompt_version` | Une intention reformulée devient une **autre** intention : nouvelle version, comptage séparé. |
+| `intention_texte` | `prompt_text` | Le texte exact, mot pour mot. Un prospect doit pouvoir le recoller. |
+| `passage_id` | `run_id` | Le numéro de passage, 1 à 10. |
+| `fenetre` | — | `J1` ou `J2`. C'est elle qui permet de publier le taux par journée **à côté** du taux groupé. |
+| `horodatage_local` / `horodatage_utc` | `timestamp_utc` | L'heure locale est celle de la capture ; l'UTC est celle qui se compare. |
+| `moteur` / `modele` / `mode` | `platform` / `model` / `mode` | `google` / `aimode` n'est pas `google` / `web`. Deux modes, deux populations. |
+| `marche` / `langue` | `market` / `language` | `CH-GE` / `fr`. Un relevé en anglais ne compte pas avec un relevé en français. |
+| `etat_du_compte` | `account_state` | `deconnecte`, `temporaire`, `connecte`. La colonne qui a tué la série Perplexity. |
+| `session_neuve` | `fresh_session` | `oui` / `non`. À chaque passage, pas seulement au début de la série. |
+| `banniere_traitee` | — | Une bannière non traitée produit une réponse tronquée. Ce n'est pas la même donnée. |
+| `reponse_complete` | — | `oui` / `non`. Une génération interrompue ne compte pas. |
+| `fichier_reponse` | `response_text` | **Écart assumé** — voir ci-dessous. |
+| `bureau_mentionne` / `bureau_recommande` | `brand_mentioned` / `brand_recommended` | Être nommé et être recommandé sont deux choses. Le taux vendu porte sur la mention. |
+| `rang_mention` | — | Rang dans la réponse, ou vide. Jamais agrégé sans le dire. |
+| `citations_brutes` / `citations_normalisees` | `citation_urls_raw` / `citation_urls_normalized` | Brut = ce que l'écran affiche. Normalisé = domaine racine. On compte sur le normalisé, on prouve sur le brut. |
+| `domaine_cible_cite` | `target_domain_cited` | Le site du bureau, cité ou non. C'est le chiffre qui fait mal, donc c'est celui qui vend. |
+| `capture` | `capture_reference` | Le nom de fichier exact. Une ligne sans capture n'est pas un relevé. |
+| `observateur` | — | Qui a tenu la main. |
+| `ecart` | — | Vide si rien. Rempli, toujours, si quelque chose. |
+
+**Écart assumé sur `response_text`.** La colonne annoncée contenait le texte intégral de la
+réponse. Le registre porte à la place `fichier_reponse`, qui pointe vers un `.txt` posé à côté de
+la capture et portant le même nom. Cause : le registre se remplit à la main, et une réponse de
+deux mille signes dans une cellule rend la feuille illisible. Le texte reste conservé **mot pour
+mot** ; il change seulement de fichier. Rien ne se perd, mais l'écart est écrit.
 
 ---
 
@@ -283,8 +323,8 @@ conversation.
 
 ## Ce qui reste ouvert au 18 septembre 2026
 
-- **Le registre de collecte n'existe pas encore.** Aucun relevé version 2 ne commence avant qu'il
-  soit créé, vide, avec ses colonnes.
+- ~~Le registre de collecte n'existe pas encore.~~ **Fait le 18 septembre :** `REGISTRE-releves.csv`,
+  vide, vingt-huit colonnes, avec un écart déclaré sur `response_text`.
 - **Le test ChatGPT / Perplexity** n'est pas fait. Le second moteur de l'Express reste un défaut
   de travail.
 - **Otterly n'est pas ouvert.** Tant qu'il ne l'est pas, les 80 relevés du niveau 3 coûtent environ
