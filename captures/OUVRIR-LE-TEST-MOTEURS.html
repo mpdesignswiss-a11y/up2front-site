@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="fr">
+<meta charset="utf-8">
+<title>Test des moteurs — 8 relevés</title>
+<style>
+  :root{--vert:#1d4d3f;--sable:#f6f3ec;--encre:#14211c;--trait:#d8d0c2;--rouge:#8a2b20}
+  *{box-sizing:border-box}
+  body{margin:0;padding:40px 24px 80px;background:var(--sable);color:var(--encre);
+       font:16px/1.55 -apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif}
+  .w{max-width:760px;margin:0 auto}
+  h1{font-size:26px;margin:0 0 4px;letter-spacing:-.4px}
+  .sub{color:#5d6b64;margin:0 0 24px;font-size:14px}
+  h2{font-size:15px;margin:30px 0 10px;text-transform:uppercase;letter-spacing:.6px;color:var(--vert)}
+  h2 span{text-transform:none;letter-spacing:0;font-weight:400;color:#5d6b64;font-size:13px}
+  ol{list-style:none;margin:0;padding:0}
+  li{background:#fff;border:1px solid var(--trait);border-radius:10px;
+     padding:14px 16px 14px 56px;margin:0 0 10px;position:relative}
+  li .n{position:absolute;left:16px;top:14px;width:26px;height:26px;
+     border-radius:50%;background:var(--vert);color:#fff;font-size:13px;font-weight:700;
+     display:flex;align-items:center;justify-content:center}
+  li.fait{opacity:.42}
+  li.bloque{opacity:1;border-color:var(--rouge);background:#fdf6f5}
+  li.bloque .n{background:var(--rouge)}
+  .i{font-family:ui-monospace,Menlo,monospace;font-size:13px;color:#3d5a4f;margin:0 0 10px}
+  a.go,button.k{display:inline-block;padding:7px 14px;border-radius:7px;font-size:13px;
+     font-weight:600;text-decoration:none;cursor:pointer;border:1px solid var(--vert);
+     background:#fff;color:var(--vert);margin:0 6px 0 0;font-family:inherit}
+  a.go{background:var(--vert);color:#fff}
+  button.stop{border-color:var(--rouge);color:var(--rouge)}
+  .nom{margin-top:10px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:#5d6b64;
+     background:#f2efe7;border-radius:6px;padding:8px 10px;display:none}
+  .nom b{color:var(--encre)}
+  .note{margin-top:30px;padding:18px 20px;border-left:3px solid var(--vert);
+     background:#fff;font-size:14px;color:#3d5a4f}
+  .note b{color:var(--encre)}
+  .stopnote{border-left-color:var(--rouge)}
+  .stopnote b{color:var(--rouge)}
+</style>
+<div class="w">
+<h1>Test des moteurs — 8 relevés</h1>
+<p class="sub">18 septembre 2026 · intention HT-01, la même aux huit ·
+premier relevé sous le mode opératoire version 2.</p>
+
+<div class="note">
+<b>Ce qu'on cherche, et rien d'autre :</b> lequel des deux tient <b>quatre relevés d'affilée</b>
+sans mur de quota ni demande de connexion, et lequel <b>cite réellement ses sources</b> avec des
+liens. Ce n'est pas un test de visibilité : aucun taux n'en sortira.<br><br>
+<b>D'affilée, sans pause.</b> C'est le mur de quota qu'on veut voir ; une pause le masquerait.
+Les quatre ChatGPT d'abord, puis les quatre Perplexity.
+</div>
+
+<h2>ChatGPT <span>— déconnecté, chat temporaire, fenêtre privée neuve à chaque passage</span></h2>
+<ol id="cg"></ol>
+
+<h2>Perplexity <span>— déconnecté, fenêtre privée neuve à chaque passage, aucun historique</span></h2>
+<ol id="px"></ol>
+
+<div class="note">
+<b>La boucle, pour chaque ligne :</b> clic sur « Ouvrir » → vérifier d'abord que la session est
+bien déconnectée et, sur ChatGPT, que le <b>chat temporaire</b> est actif → bannière cookies
+traitée <b>avant</b> que la réponse s'affiche → attendre la réponse <b>complète</b> →
+<b>copier l'URL entière</b> → <b>copier le texte intégral</b> dans un .txt →
+<b>Cmd + Maj + 3</b> (plein écran, l'horloge doit être dans l'image) → cocher ici.<br><br>
+Le nom de fichier exact s'affiche sous la ligne au moment où tu cliques « Ouvrir ».
+Il porte l'heure de ce clic. Le bouton <b>copier</b> le met dans le presse-papier.
+</div>
+
+<div class="note stopnote">
+<b>Si un moteur bloque — quota, mur de connexion, réponse tronquée :</b> on ne recommence pas et
+on ne contourne pas. Clic sur <b>bloqué</b>, capture de l'écran de blocage quand même, et la série
+s'arrête <b>pour ce moteur</b>. Le blocage est le résultat, pas un incident à effacer.
+C'est exactement ce que le 17 septembre a appris.
+</div>
+
+</div>
+
+<script>
+const Q = "architecte pour une rénovation d'appartement à Genève";
+const M = {
+  chatgpt: {
+    hote: 'cg',
+    url: q => 'https://chatgpt.com/?temporary-chat=true&q=' + encodeURIComponent(q)
+  },
+  perplexity: {
+    hote: 'px',
+    url: q => 'https://www.perplexity.ai/search?q=' + encodeURIComponent(q)
+  }
+};
+
+function deuxCh(n){ return String(n).padStart(2,'0'); }
+function horodate(){
+  const d = new Date();
+  return d.getFullYear() + '-' + deuxCh(d.getMonth()+1) + '-' + deuxCh(d.getDate())
+       + '_' + deuxCh(d.getHours()) + 'h' + deuxCh(d.getMinutes());
+}
+
+function rend(moteur){
+  const cfg = M[moteur];
+  const html = [1,2,3,4].map(p => {
+    const id = moteur + p;
+    return '<li id="' + id + '"><div class="n">' + p + '</div>'
+      + '<div class="i">' + Q + '</div>'
+      + '<a class="go" target="_blank" rel="noopener" href="' + cfg.url(Q) + '" '
+      + 'onclick="tampon(\'' + id + '\',\'' + moteur + '\',' + p + ')">Ouvrir</a>'
+      + '<button class="k" onclick="bascule(\'' + id + '\',\'fait\')">fait, masquer</button>'
+      + '<button class="k stop" onclick="bascule(\'' + id + '\',\'bloque\')">bloqué</button>'
+      + '<div class="nom" id="n' + id + '"></div></li>';
+  }).join('');
+  document.getElementById(cfg.hote).innerHTML = html;
+}
+
+function bascule(id, cls){ document.getElementById(id).classList.toggle(cls); }
+
+function tampon(id, moteur, p){
+  const base = horodate() + '_' + moteur + '_herteltan_HT-01_p' + deuxCh(p);
+  const zone = document.getElementById('n' + id);
+  zone.style.display = 'block';
+  zone.innerHTML = '<b>' + base + '.png</b> &nbsp;·&nbsp; ' + base + '.txt &nbsp; '
+    + '<button class="k" onclick="copier(\'' + base + '\', this)">copier</button>';
+}
+
+function copier(base, bouton){
+  navigator.clipboard.writeText(base).then(
+    () => { bouton.textContent = 'copié'; },
+    () => { bouton.textContent = 'copie refusée — sélectionner à la main'; }
+  );
+}
+
+rend('chatgpt');
+rend('perplexity');
+</script>
+</html>
