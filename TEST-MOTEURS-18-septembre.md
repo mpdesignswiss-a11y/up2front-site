@@ -153,6 +153,24 @@ complet en compte quatre-vingts. Mais neuf observations concordantes sur l'inten
 d'un bureau, c'est la chose la plus solide qu'on ait à ce jour sur ce dossier, et ça mérite
 d'être dit sans être gonflé.
 
+### Une seconde observation non demandée, et celle-là compte
+
+**Les quatre réponses ChatGPT s'ouvrent sur une carte, pas sur du texte.** Vérifié sur les
+quatre, image par image : avant le moindre paragraphe, ChatGPT affiche un plan de Genève (rendu
+Mapbox) avec des fiches d'établissements notées — CM STUDIO Architectes 5,0, ecotonos 4,5, Hilo
+Architecture 5,0, Alan Strappazzon 4,5. Le texte et les liens viennent **après**, en dessous.
+
+Si ça se confirme, ça déplace une partie du levier : pour une intention de service local, être
+cité par ChatGPT ne passe pas seulement par un site web bien écrit, mais par une présence dans
+la couche « établissements notés » qu'il affiche en premier. Ce n'est pas le même chantier, ni
+la même promesse commerciale.
+
+**Réserve, et elle est sérieuse.** Je ne sais pas ce qui alimente ces fiches ni d'où viennent
+les notes. Elles ressemblent à des notes d'annuaire cartographique, mais **je ne l'ai pas
+vérifié** et je ne l'écrirai pas comme un fait. Tant que la source n'est pas établie, cette
+observation ne va dans aucun document client : elle reste une piste à instruire, sur quatre
+relevés d'une seule intention.
+
 ### Écarts et corrections déclarés
 
 **Un écart de protocole.** Le quatrième relevé ChatGPT (11h50) n'est pas un échange à un seul
@@ -185,10 +203,11 @@ vingt-huit à vingt-neuf colonnes. Les huit URL y sont.
 
 ### Reste à faire
 
-Ranger les captures dans `captures/_test-moteurs/` — soit à la main, soit avec
-`captures/ranger-TEST-MOTEURS.command`. Les noms de fichiers inscrits au registre viennent de
-l'heure lue sur la barre de menu ; le script, lui, nomme d'après l'heure de création du fichier.
-Si les deux divergent d'une minute, **c'est le registre qu'on corrige, pas les fichiers**.
+~~Ranger les captures.~~ **Fait le 18 septembre à 12h15 :** vingt images dans
+`captures/_test-moteurs/`, nommées par `ranger-TEST-MOTEURS.command`. Une seule divergence entre
+le registre et les fichiers, et le registre a cédé : le mur Perplexity a été capturé à 11h55:55
+mais le fichier a été écrit à 11h56:01, donc la capture porte `11h56` tandis que l'horodatage du
+relevé reste 11:55. Six secondes, écrites plutôt que gommées.
 
 Les `.txt` de texte intégral ne sont pas faits. Sans eux, les listes de bureaux consignées en
 colonne `ecart` reposent sur la lecture des images, ce qui suffit pour la question posée — quel
