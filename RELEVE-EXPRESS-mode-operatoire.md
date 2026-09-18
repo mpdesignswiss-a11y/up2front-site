@@ -140,6 +140,13 @@ aussi, il s'écrit ici.
 
 Les gestes 3 et 4 **avant** le geste 5. C'est l'écart n° 9, et il ne se reproduit pas.
 
+**Sur ChatGPT déconnecté, le geste 4 n'a aucun rattrapage.** Vérifié le 18 septembre au soir :
+l'URL `chatgpt.com/uc/…` qu'on copie au geste 3 **ne rouvre pas la conversation** — elle renvoie
+sur une page d'accueil vide. Le texte n'est donc récupérable qu'à l'écran, pendant le passage. Si
+la fenêtre se ferme avant le `.txt`, la réponse est perdue et la capture devient le seul état qui
+en reste. Perplexity et Google AI Mode rouvrent, eux : là, le geste 4 se rattrape. Sur ChatGPT,
+non — et c'est le moteur où il faut donc être le plus discipliné.
+
 Nommage des captures :
 
 ```

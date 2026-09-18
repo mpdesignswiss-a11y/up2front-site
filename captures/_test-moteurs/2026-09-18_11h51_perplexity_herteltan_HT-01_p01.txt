@@ -1,0 +1,157 @@
+=== PROVENANCE ==============================================================
+Relevé      : TEST-MOTEURS-2026-09-18 / HT-01 / perplexity / passage 1
+URL source  : https://www.perplexity.ai/search/0b80bd57-2673-44ef-a72e-976b09767baf
+Horodatage affiché par Perplexity sur la page : 11:50
+Horodatage du relevé au registre (création de la 1re capture) : 11:51
+
+Ce texte n'a PAS été transcrit par l'opérateur au moment du relevé. Il a été
+récupéré par Claude le 18 septembre en fin de journée, en rouvrant l'URL de la
+conversation depuis un contexte de navigateur DIFFÉRENT de celui du relevé
+(extension Chrome pilotée, pas la fenêtre privée de Max). Perplexity affiche
+alors la mention « Vous consultez une session partagée ».
+
+En cas de divergence entre ce fichier et les captures plein écran
+(_p01_a.png à _p01_e.png), CE SONT LES CAPTURES QUI FONT FOI.
+
+Les marqueurs de citation de Perplexity (« local », « rkinteriors », etc.)
+sont conservés tels qu'ils apparaissent dans le corps de la réponse.
+=============================================================================
+
+architecte pour une rénovation d'appartement à Genève
+11:50
+Recherche terminée
+2s
+
+Pour une rénovation d'appartement à Genève, vous avez le choix entre des architectes généralistes, des architectes d'intérieur et des bureaux spécialisés en rénovation. Voici quelques pistes concrètes et comment bien choisir.
+
+Quelques cabinets et professionnels actifs à Genève (rénovation d'appartement)
+
+D'après les annuaires et sites spécialisés, voici des noms régulièrement cités pour la rénovation et l'architecture d'intérieur dans le canton :
+local
++5
+
+Mahaut Design – architecture d'intérieur, rénovations, aménagements sur mesure (Genève centre).
+local
+
+Atelier Nord Sàrl – architecture et intérieur, avec une mention explicite "rénovations" (Vésenaz).
+local
+
+de Planta Associés Architectes SA – architecture et intérieur, projets de rénovation (Carouge).
+local
+
+Favre + Guth Architectes SA – architecture, intérieur et design, actif sur des transformations (Les Acacias).
+local
+
+Kunz – architectes – intérieur, planning et rénovations (Genève).
+local
+
+maage sàrl – architecture, planning et rénovations (Carouge).
+local
+
+RK Interiors – studio d'architecture d'intérieur Lausanne/Genève, de la conception à la réalisation.
+rkinteriors
+
+mélimélo studio – rénovations durables et économie circulaire, actif en Suisse romande dont Genève.
+melimelostudio
+
+Relief Intérieurs – architecture d'intérieur pour appartements et maisons, en rénovation comme en neuf.
+relief-interieurs
+
+Origami Renovation – conception et architecture d'intérieur, accompagnement complet (Suisse romande).
+origami-renovation
+
+Ces listes ne sont pas exhaustives ; il existe beaucoup d'autres bureaux. L'idée est d'en contacter 2–4 pour comparer approches, honoraires et disponibilités.
+
+Comment choisir l'architecte adapté à votre projet
+1. Vérifier la spécialisation "rénovation d'appartement"
+
+Privilégiez les cabinets qui mentionnent explicitement :
+
+Rénovation / transformation d'appartements
+
+Architecture d'intérieur
+
+Connaissances des contraintes genevoises (copropriétés, autorisations, normes SIA, etc.)
+
+Les offres d'emploi locales montrent que la maîtrise des normes SIA et des procédures administratives genevoises est un critère clé pour les architectes actifs à Genève.
+jobup
+
+2. Regarder les réalisations (portfolio)
+
+Demandez :
+
+2–3 projets de rénovation d'appartement similaires au vôtre (surface, époque, standing)
+
+Des photos avant/après et, si possible, des références clients
+
+Les sites comme Relief Intérieurs ou les studios d'intérieur mettent souvent en avant leurs réalisations privées (appartements, maisons).
+relief-interieurs
+
+3. Clarifier la mission et les honoraires
+
+Définissez avec l'architecte ce que vous attendez :
+
+Esquisse + avant-projet seulement
+
+Projet complet + demandes d'autorisation
+
+Direction des travaux / suivi de chantier
+
+En Suisse romande, pour un réaménagement partiel, les honoraires d'architecte d'intérieur tournent souvent autour de 8–15% du montant des travaux ; pour une mission plus complète, cela peut être plus.
+bureaux-pro
+
+À Genève, les fourchettes de coût de rénovation (sans honoraires) sont typiquement :
+reno-val
+
+Rafraîchissement : 400–700 CHF/m²
+
+Rénovation partielle (cuisine/sdb + finitions) : 700–1 200 CHF/m²
+
+Rénovation complète (distribution revue, tout repris) : 1 200–1 800 CHF/m²
+
+L'architecte doit pouvoir vous donner une estimation cohérente avec ces ordres de grandeur.
+
+4. Vérifier l'inscription et les assurances
+
+Pour un architecte "classique" (pas seulement décorateur) :
+
+Vérifiez l'inscription à la FAS (Fédération des architectes suisses) ou à l'OSA (Ordre des architectes suisses) via leurs annuaires en ligne.
+
+Demandez une attestation d'assurance responsabilité civile professionnelle.
+
+C'est particulièrement important si votre rénovation touche à la structure, aux façades ou aux parties communes.
+
+Comment procéder concrètement
+
+Listez 3–5 architectes parmi ceux cités plus haut ou via les annuaires (local.ch, FAS/OSA, Houzz, etc.).
+local
+
+Envoyez un mail court avec :
+
+Adresse et surface de l'appartement
+
+Année approximative de construction / type d'immeuble
+
+Budget global estimé
+
+Objectifs (ex. ouvrir cuisine, créer 1 chambre, refaire sdb, etc.)
+
+Demandez un premier rendez-vous (souvent payant ou inclus dans la mission) pour :
+
+Visiter l'appartement
+
+Discuter de leur approche et de leurs honoraires
+
+Voir si le contact humain passe bien (crucial sur un chantier de rénovation).
+
+Si vous me dites :
+
+Votre quartier (ex. Plainpalais, Eaux-Vives, Champel, etc.)
+
+La surface et le type de travaux envisagés
+
+Votre budget approximatif
+
+je peux vous aider à affiner une short-list d'architectes plus ciblés et à préparer un message type à leur envoyer.
+
+15 sources

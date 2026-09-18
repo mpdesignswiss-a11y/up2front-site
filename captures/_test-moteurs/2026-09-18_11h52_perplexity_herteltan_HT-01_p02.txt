@@ -1,0 +1,112 @@
+=== PROVENANCE ==============================================================
+Relevé      : TEST-MOTEURS-2026-09-18 / HT-01 / perplexity / passage 2
+URL source  : https://www.perplexity.ai/search/a28a9ccd-7bc2-4630-909f-ff547d9998f0
+Horodatage affiché par Perplexity sur la page : 11:51
+Horodatage du relevé au registre (création de la 1re capture) : 11:52
+
+Ce texte n'a PAS été transcrit par l'opérateur au moment du relevé. Il a été
+récupéré par Claude le 18 septembre en fin de journée, en rouvrant l'URL de la
+conversation depuis un contexte de navigateur DIFFÉRENT de celui du relevé
+(extension Chrome pilotée, pas la fenêtre privée de Max). Perplexity affiche
+alors la mention « Vous consultez une session partagée ».
+
+En cas de divergence entre ce fichier et les captures plein écran
+(_p02_a.png à _p02_d.png), CE SONT LES CAPTURES QUI FONT FOI.
+
+Les marqueurs de citation de Perplexity (« local », « rkinteriors », etc.)
+sont conservés tels qu'ils apparaissent dans le corps de la réponse.
+=============================================================================
+
+architecte pour une rénovation d'appartement à Genève
+11:51
+Recherche terminée
+2s
+
+Pour une rénovation d'appartement à Genève, vous avez le choix entre des architectes généralistes, des spécialistes en architecture d'intérieur et des entreprises générales qui proposent un accompagnement « clé en main ». Voici une sélection de cabinets et professionnels actifs dans la région genevoise, avec leurs spécificités.
+
+Architectes et bureaux spécialisés en rénovation d'appartement
+
+Plusieurs cabinets genevois mentionnent explicitement la rénovation d'appartements parmi leurs prestations :
+
+Mahaut Design – Architecture d'intérieur, aménagements, rénovation, design et équipements de cuisine. Situé cours des Bastions, à Genève.
+local
+
+Atelier Nord Sàrl – Architecture et architecture d'intérieur avec une spécialisation en rénovation. Basé à Vésenaz (GE).
+local
+
+Kunz – architectes – Bureau proposant architecture d'intérieur, planification et rénovation, au centre de Genève.
+local
+
+ADATT SA – Cabinet d'architecture avec une offre incluant conception architecturale et rénovations, à Carouge.
+local
+
+Amos Architectes SA – Agence à Meyrin travaillant sur des projets de rénovation.
+local
+
+maage sàrl – Architecture, planification et rénovation, notamment en bois, à Carouge.
+local
+
+INGEBAT SA Architectes – Bureau d'architecture orienté rénovation, rue Sillem à Genève.
+local
+
+Architectes d'intérieur et designers d'espaces
+
+Si votre projet est surtout centré sur l'agencement, les matériaux et l'ambiance :
+
+RK Interiors – Studio de design d'intérieur à Genève et Lausanne, spécialisé en neuroarchitecture et design biophilique, de la conception à la réalisation.
+rkinteriors
+
+mélimélo studio – Studio d'architecture d'intérieur basé en Suisse romande (actif à Genève), axé sur les rénovations durables et l'économie circulaire.
+melimelostudio
+
+Relief Intérieurs – Conception d'espaces privés (appartements, maisons) et professionnels, en rénovation comme en neuf.
+relief-interieurs
+
+MCOSI® (Mélusine) – Architecte d'intérieur et experte en harmonisation d'espace (ergonomie, choix de matériaux, couleurs).
+m-cosi
+
+Origami Renovation – Conception et architecture d'intérieur en Suisse romande, avec plans 3D et accompagnement complet.
+origami-renovation
+
+Entreprises générales et rénovation « clé en main »
+
+Si vous cherchez un interlocuteur unique qui gère aussi les travaux :
+
+Reno Val – Entreprise générale à Genève proposant rénovation partielle ou complète d'appartements, avec devis détaillé sous 48 h après visite. Ils indiquent des fourchettes de prix au m² et des délais types.
+reno-val
+
+Labinno Construction Genève – Bureau d'études, ingénierie et construction, incluant rénovation.
+local
+
+2401 Architecture & Expertise – Coopérative d'architectes et ingénieurs développant projets de construction, rénovation et transformation.
+934architectureetexpertise
+
+Comment choisir et prochaines étapes
+
+Pour affiner votre choix :
+
+Définissez votre besoin : simple rafraîchissement, réorganisation des espaces, changement complet de distribution, ou projet très technique (structure, humidité, acoustique).
+
+Vérifiez les références : demandez des exemples de rénovations d'appartements similaires au vôtre (surface, standing, quartier).
+
+Clarifiez le mode de mission :
+
+Architecte seul (conception + suivi de chantier)
+
+Architecte d'intérieur + entreprise de travaux séparée
+
+Entreprise générale avec architecte intégré
+
+Obtenez 2–3 devis : faites visiter l'appartement à plusieurs professionnels pour comparer approches, délais et budgets.
+
+Si vous me dites :
+
+le quartier (ex. Eaux-Vives, Plainpalais, Champel, etc.),
+
+la surface approximative,
+
+le type de travaux envisagés (cuisine/salle de bain, redistribution, isolation, etc.),
+
+je peux vous proposer une short-list plus ciblée et des questions précises à poser lors des premiers rendez-vous.
+
+15 sources

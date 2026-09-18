@@ -1,0 +1,49 @@
+=== PROVENANCE, ET UNE MISE EN GARDE ========================================
+Relevé      : TEST-MOTEURS-2026-09-18 / HT-01 / perplexity / passage 3
+URL source  : https://www.perplexity.ai/search/2203186f-d11f-4b2d-8c77-d3598244a561
+Horodatage affiché par Perplexity sur la page : 11:55
+Horodatage du relevé au registre : 11:55 (capture nommée 11h56, cf. ecart)
+
+CE RELEVÉ EST CELUI DU BLOCAGE. Au moment du test, un mur d'inscription
+s'affichait par-dessus une réponse grisée : l'opérateur n'a rien pu lire, et
+la série Perplexity s'est arrêtée là. La capture _p03.png montre le mur.
+
+Le texte ci-dessous a été récupéré par Claude en fin de journée en rouvrant
+l'URL depuis un contexte de navigateur DIFFÉRENT. Il montre que la réponse
+AVAIT BIEN ÉTÉ PRODUITE côté serveur : elle existait sous le mur.
+
+Cela ne change pas le résultat du test. La question posée était : un opérateur
+peut-il enchaîner quatre relevés ? Réponse : non, le mur tombe au troisième.
+Mais la formulation exacte du registre doit être « réponse produite, illisible
+par l'opérateur », et non « pas de réponse ».
+
+Ce texte N'A PAS ÉTÉ VU par l'opérateur au moment du relevé. Il ne peut donc
+servir à aucun comptage rétroactif présenté comme une observation de terrain.
+Il est conservé pour ce qu'il est : la preuve que le mur masque, il n'empêche
+pas.
+
+En cas de divergence entre ce fichier et la capture _p03.png, C'EST LA
+CAPTURE QUI FAIT FOI.
+=============================================================================
+
+architecte pour une rénovation d'appartement à Genève
+11:55
+Recherche terminée
+
+Voici quelques cabinets et architectes à Genève spécialisés en rénovation d'appartements:
+
+CORPUS, bureau d'architectes à Genève, active en rénovation et transformation.
+corpus
+
+Kara Architecte, Genève, rénovation sur mesure et design intérieur, contact téléphonique et email fournis.
+kara-architecte
+
+Ecotonos, Genève, accompagnement de la conception au permis pour projets de rénovation.
+architectegeneve
+
+CM Studio, rénovation d'appartement et accompagnement de A à Z à Genève.
+cm-studio
+
+Si vous voulez, je peux vous proposer une shortlist adaptée à votre budget et à votre type de rénovation (réorganisation, mise aux normes énergétiques, etc.).
+
+10 sources
