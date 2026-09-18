@@ -1,13 +1,32 @@
 # Étude approfondie — HertelTan Architectes EPF SIA
 
-## Jeu d'intentions, version 1 — verrouillé le 18 septembre 2026
+## Jeu d'intentions, version 2 — verrouillé le 18 septembre 2026
 
-> **Ce fichier est verrouillé.** Les dix-huit intentions ci-dessous sont fixées **avant** toute
-> mesure. Elles ne seront ni ajoutées, ni retirées, ni reformulées une fois les premiers relevés
-> lancés — quel que soit le résultat, flatteur ou non. Toute modification ultérieure ouvre une
-> **version 2** datée, avec la raison écrite, et les deux versions ne se mélangent pas dans les
-> comptages. C'est la seule façon d'empêcher la question qu'un architecte posera tôt ou tard :
-> « vous n'auriez pas choisi vos questions après avoir vu les réponses ? »
+> **Ce fichier est verrouillé.** Les intentions comptées sont fixées **avant** toute mesure. Elles
+> ne seront ni ajoutées, ni retirées, ni reformulées une fois les premiers relevés lancés — quel
+> que soit le résultat, flatteur ou non. Toute modification ultérieure ouvre une version datée,
+> avec la raison écrite, et les versions ne se mélangent pas dans les comptages. C'est la seule
+> façon d'empêcher la question qu'un architecte posera tôt ou tard : « vous n'auriez pas choisi vos
+> questions après avoir vu les réponses ? »
+
+> ### Version 2 — huit intentions comptées au lieu de dix-huit
+>
+> **Écrite le 18 septembre 2026, avant le premier relevé.** La version 1 de ce fichier, écrite le
+> matin même et poussée sur GitHub dans le commit `a39fd62`, verrouillait dix-huit intentions.
+> Elle n'est pas supprimée : elle reste dans l'historique git, horodatée chez un tiers, et
+> vérifiable. Le changement est donc contrôlable par quiconque.
+>
+> **Raison.** Le mode opératoire version 2 fixe le produit vendu à **huit intentions × dix
+> passages**. Une étude de cas à dix-huit intentions démontrerait quelque chose qui n'est pas en
+> vente ; le bureau qui achèterait ensuite le Relevé 690 recevrait un dossier deux fois plus
+> mince que celui qui l'a convaincu. La vitrine doit être le produit, pas une version augmentée
+> du produit.
+>
+> **Ce qui autorise le changement.** Aucune mesure n'a commencé. La règle de verrouillage interdit
+> de changer les intentions *après avoir vu les réponses* ; elle n'interdit pas de réduire le jeu
+> avant le premier relevé, à condition que ce soit écrit, daté, et motivé par autre chose qu'un
+> résultat. Ici le motif est l'alignement sur le produit, et il est vérifiable : la sélection suit
+> les critères écrits plus bas, pas des observations.
 
 ---
 
@@ -32,7 +51,7 @@ observations peut établir ou démentir, là où trois relevés ne le peuvent pa
 
 ---
 
-## D'où viennent les dix-huit intentions
+## D'où viennent les intentions
 
 Elles ne sortent pas de mon imagination ni d'un outil de mots-clés. **Chacune est adossée à une
 page publique de leur propre site** (`herteltan.ch`, plan de site consulté le 18 septembre 2026).
@@ -50,33 +69,48 @@ mesurerait la notoriété, pas la visibilité commerciale.
 
 ---
 
-## Le jeu verrouillé
+## Le jeu compté — huit intentions
+
+Ce sont les seules qui entrent dans le taux. Dix passages chacune, réparties 5 + 5 sur deux jours
+distincts, Google AI Mode seul : **80 relevés comptés**.
 
 | ID | Intention exacte | Strate | Page du site qui la justifie |
 |----|------------------|--------|------------------------------|
 | HT-01 | `architecte pour une rénovation d'appartement à Genève` | Logement | `/expertise/logements/` — **reprise du pilote du 17 septembre, mot pour mot**, pour garder un point de comparaison |
 | HT-02 | `qui contacter pour transformer un appartement à Genève` | Logement | `/expertise/logements/` |
 | HT-03 | `architecte pour rénover une villa à Genève` | Logement | `/expertise/logements/` |
-| HT-04 | `bureau d'architecture pour la rénovation d'un immeuble à Genève` | Logement | `/expertise/logements/` |
-| HT-05 | `architecte pour une surélévation à Genève` | Logement | `/expertise/logements/` |
 | HT-06 | `architecte rénovation énergétique Genève` | Énergie | `/expertise/renovation-energetique/` |
-| HT-07 | `comment rénover et isoler un immeuble ancien à Genève` | Énergie | `/expertise/renovation-energetique/` |
-| HT-08 | `qui peut m'accompagner pour une rénovation énergétique subventionnée à Genève` | Énergie | `/expertise/renovation-energetique/` |
 | HT-09 | `architecte pour aménager des bureaux à Genève` | Tertiaire | `/expertise/commerces-et-bureaux/` |
-| HT-10 | `architecte pour aménager une boutique à Genève` | Tertiaire | `/expertise/commerces-et-bureaux/` |
-| HT-11 | `architecte pour l'agencement d'un restaurant à Genève` | Tertiaire | `/expertise/conception-interieur-restaurant/` |
 | HT-12 | `architecte d'intérieur à Genève pour un appartement haut de gamme` | Intérieur | `/expertise/conception-interieur/` |
-| HT-13 | `qui conçoit une cuisine sur mesure à Genève` | Intérieur | `/expertise/conception-interieur/` |
 | HT-14 | `expertise immobilière avant achat à Genève` | Expertise | `/expertise/expertise-immobiliere/` |
-| HT-15 | `faire évaluer l'état d'un bien avant de l'acheter à Genève` | Expertise | `/expertise/expertise-immobiliere/` |
-| HT-16 | `English speaking architect in Geneva` | Profil | `/trouver-un-architecte-anglophone-a-geneve/` — **article écrit exprès pour cette intention** |
-| HT-17 | `architecte SIA à Genève pour un projet privé` | Profil | `/equipe/` — architectes inscrits GE et VD, membres SIA |
 | HT-18 | `combien coûte un architecte à Genève pour une rénovation` | Profil | `/prestations-ordinaires-dun-bureau-darchitecte-en-suisse/` |
 
-**Répartition :** 5 logement, 3 énergie, 3 tertiaire, 2 intérieur, 2 expertise, 3 profil.
-La strate « logement » est la plus fournie parce que c'est le cœur déclaré du bureau et parce que
-c'est là que le pilote a trouvé l'absence. Cette pondération est décidée **maintenant**, avant de
-mesurer, et sera rappelée dans le rapport.
+**Les identifiants ne sont pas renumérotés.** HT-04, HT-05, HT-07 et les autres n'existent pas
+dans le jeu compté, et leur absence est visible d'un coup d'œil. Renuméroter de 1 à 8 effacerait
+la trace de la réduction.
+
+**Répartition : 3 logement, et une par autre strate.** Les six strates du site sont toutes
+représentées — aucune prestation déclarée n'est laissée de côté. Le logement en porte trois parce
+que c'est le cœur déclaré du bureau et parce que c'est là que le pilote a trouvé l'absence. Cette
+pondération est décidée **maintenant**, avant de mesurer, et sera rappelée dans le rapport.
+
+**Les critères de sélection, écrits avant le premier relevé :** une intention par page expertise ;
+HT-01 conservée parce qu'elle seule se compare au pilote ; la strate logement renforcée ; à
+l'intérieur d'une strate, l'intention la plus proche de la façon dont un client formule sa
+demande. Aucun critère ne fait référence à un résultat observé, pour la bonne raison qu'aucun
+résultat n'existe.
+
+### Les dix intentions écartées du comptage
+
+HT-04, HT-05, HT-07, HT-08, HT-10, HT-11, HT-13, HT-15, HT-16, HT-17. Elles restent écrites dans
+l'historique git (commit `a39fd62`) et forment une **réserve** : si le bureau achète un suivi,
+elles sont la seconde vague, déjà adossée à leurs pages, déjà datée d'avant toute mesure.
+
+Une l'est pour une raison de méthode et pas d'arbitrage : **HT-16 `English speaking architect in
+Geneva` est en anglais.** Le registre sépare les relevés par langue, et un relevé anglais ne se
+compte pas avec un relevé français — ce serait mélanger deux populations, la faute même que nous
+reprochons aux audits qui additionnent Google et Perplexity. Elle méritera sa propre série, avec
+son propre taux.
 
 ---
 
@@ -113,11 +147,17 @@ conséquences, à traiter avant tout envoi ou toute publication :
 
 ## Ce qui vient ensuite, dans l'ordre
 
-1. Mode opératoire version 2 écrit et commité — **avant** le premier relevé.
-2. Registre de collecte créé, vide, avec ses colonnes.
-3. Les 18 intentions chargées dans l'outil de suivi.
-4. Premier passage : 10 relevés par intention, session fraîche à chaque fois, Google AI Mode seul.
-5. Deuxième fenêtre de collecte, un autre jour, même protocole.
-6. Comptages, intervalles de Wilson, rapport.
+1. ~~Mode opératoire version 2 écrit et commité.~~ **Fait le 18 septembre**, commit `e8fd149`.
+2. ~~Registre de collecte créé, vide, avec ses colonnes.~~ **Fait le 18 septembre**, commit `a47d229`.
+3. ~~Jeu d'intentions aligné sur le produit.~~ **Fait le 18 septembre** : huit intentions comptées.
+4. Test ChatGPT / Perplexity, vingt minutes, sous version 2 avec registre — il tranche le second
+   moteur de l'Express, pas celui du Relevé 690.
+5. Les huit intentions chargées dans l'outil de suivi. Le compte Otterly n'est pas ouvert ; tant
+   qu'il ne l'est pas, les 80 relevés se font à la main.
+6. Première fenêtre : 5 passages par intention, session fraîche à chaque fois, Google AI Mode seul.
+7. Deuxième fenêtre, un autre jour, 5 passages, même protocole.
+8. Comptages, taux par journée **à côté** du taux groupé, intervalles de Wilson, rapport.
+9. Remesure à 90 jours. C'est elle, et elle seule, qui dira si corriger change ce que le moteur
+   répond. Rien n'est promis avant.
 
-Rien de tout cela ne commence tant que les points 1 et 2 ne sont pas écrits et scellés.
+Les points 1 à 3 sont scellés. Le premier relevé peut commencer.
