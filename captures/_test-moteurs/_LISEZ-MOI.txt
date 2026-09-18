@@ -1,0 +1,3 @@
+Dossier des captures et textes du test des moteurs du 18 septembre 2026.
+Nommage : 2026-09-18_HHhMM_<moteur>_herteltan_HT-01_p0N.png (et .txt)
+Ces fichiers ne s'effacent pas.
