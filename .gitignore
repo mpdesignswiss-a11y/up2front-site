@@ -1,2 +1,9 @@
 .DS_Store
 public/contact-config.php
+
+# Dossier de travail — dépôt privé séparé, ne jamais publier ici
+_dossier/
+
+# Chantier Astro local (node_modules, dist)
+site/
+node_modules/
