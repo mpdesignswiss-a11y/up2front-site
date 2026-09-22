@@ -1,0 +1,77 @@
+name: Vérifier le nouveau site (Astro)
+
+# Ce workflow construit le projet Astro de site/ et s'arrête là.
+# Il ne publie rien, il n'a aucune permission d'écriture sur Pages :
+# une construction cassée ne peut donc jamais faire tomber up2front.com,
+# qui continue d'être servi depuis public/ par deploy.yml.
+
+on:
+  push:
+    paths:
+      - "site/**"
+      - ".github/workflows/verifier-le-site.yml"
+  pull_request:
+    paths:
+      - "site/**"
+  workflow_dispatch:
+
+concurrency:
+  group: verifier-le-site-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  construire:
+    name: Construire site/ sans publier
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v7
+
+      - name: Installer Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Installer les dépendances
+        working-directory: site
+        run: npm ci --no-audit --no-fund
+
+      - name: Contrôler les types
+        working-directory: site
+        run: npm run check
+
+      - name: Construire le site
+        working-directory: site
+        run: npm run build
+
+      - name: Vérifier qu'une page a bien été produite
+        working-directory: site
+        run: |
+          test -f dist/index.html || { echo "dist/index.html manquant"; exit 1; }
+          echo "Pages produites :"
+          find dist -name '*.html' | sort
+
+      # Interdits du kit, vérifiés sur le HTML construit plutôt que sur les
+      # sources : c'est le fichier livré qui compte. Voir CLAUDE.md du gabarit.
+      - name: Refuser toute ressource tierce dans le HTML construit
+        working-directory: site
+        run: |
+          MOTIFS='fonts.googleapis.com|fonts.gstatic.com|cdnjs.cloudflare.com|images.unsplash.com|unpkg.com|jsdelivr.net'
+          if grep -rEn "$MOTIFS" dist --include='*.html' --include='*.css' --include='*.js'; then
+            echo "Ressource tierce détectée — voir les lignes ci-dessus."
+            exit 1
+          fi
+          echo "Aucune ressource tierce."
+
+      - name: Garder une trace de la construction
+        uses: actions/upload-artifact@v7
+        with:
+          name: site-dist
+          path: site/dist
+          retention-days: 7

@@ -7,3 +7,7 @@ _dossier/
 # Chantier Astro local (node_modules, dist)
 site/
 node_modules/
+
+# PDF déposés à la racine : ce sont des pièces internes (dossiers Alex, offres).
+# Le dépôt est Public — aucun d'eux ne doit partir avec un commit distrait.
+/*.pdf
