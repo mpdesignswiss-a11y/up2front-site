@@ -33,10 +33,19 @@ JOURS = int(os.environ.get("JOURS", "60"))
 def _auth(user, pw):
     return "Basic " + base64.b64encode(f"{user}:{pw}".encode()).decode()
 
+def _req(path, data=None, methode="GET"):
+    """Requête vers le Worker avec auth + User-Agent (sinon Cloudflare renvoie 403)."""
+    req = urllib.request.Request(WORKER_URL + path, data=data, method=methode)
+    req.add_header("Authorization", _auth(WORKER_USER, WORKER_PASS))
+    req.add_header("User-Agent", "Mozilla/5.0 (Up2Front robot reponses)")
+    req.add_header("Accept", "application/json")
+    if data is not None:
+        req.add_header("Content-Type", "application/json")
+    return req
+
 def bureaux_par_domaine():
     """Récupère la liste des bureaux du Worker → { domaine: slug }, { email: slug }."""
-    req = urllib.request.Request(WORKER_URL + "/api/emails", method="GET")
-    req.add_header("Authorization", _auth(WORKER_USER, WORKER_PASS))
+    req = _req("/api/emails")
     with urllib.request.urlopen(req, timeout=30) as r:
         data = json.loads(r.read().decode())
     emails = data.get("emails", {})
@@ -111,9 +120,7 @@ def main():
         fils[slug].sort(key=lambda m: m.get("date", ""))
 
     corps = json.dumps({"messages": fils}).encode()
-    req = urllib.request.Request(WORKER_URL + "/api/messages", data=corps, method="POST")
-    req.add_header("Content-Type", "application/json")
-    req.add_header("Authorization", _auth(WORKER_USER, WORKER_PASS))
+    req = _req("/api/messages", data=corps, methode="POST")
     with urllib.request.urlopen(req, timeout=30) as r:
         rep = json.loads(r.read().decode())
     print("Réponses poussées :", rep)
