@@ -63,9 +63,9 @@ header .in{display:flex;align-items:center;justify-content:space-between;
   padding-top:16px;padding-bottom:16px}
 .logo{font-size:27px;font-weight:800;letter-spacing:-.02em;color:var(--vert);line-height:1}
 .logo span{color:var(--blanc)}
-.topnav{display:flex;gap:56px;font-size:13.5px;letter-spacing:.06em;text-transform:uppercase;
+.topnav{display:flex;gap:clamp(20px,2.6vw,48px);font-size:13.5px;letter-spacing:.06em;text-transform:uppercase;
   margin-left:auto}
-.topnav a{transition:color .25s}
+.topnav a{transition:color .25s;white-space:nowrap}
 .topnav a:hover{color:var(--vert)}
 
 /* ---------- sélecteur de langue ----------
