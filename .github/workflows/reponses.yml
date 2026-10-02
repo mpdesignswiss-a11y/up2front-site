@@ -1,0 +1,28 @@
+name: Réponses prospects → page d'envoi
+
+# Lit la boîte contact@up2front.com et remonte les réponses dans la page d'envoi.
+# Tourne toutes les 15 min (et à la demande via le bouton "Run workflow").
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+jobs:
+  relever-reponses:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Lire les réponses et les pousser
+        env:
+          IMAP_HOST: mail.infomaniak.com
+          IMAP_USER: contact@up2front.com
+          IMAP_PASS: ${{ secrets.IMAP_PASS }}
+          WORKER_URL: https://envoi-up2front.mpdesign-swiss.workers.dev
+          WORKER_USER: alex
+          WORKER_PASS: ${{ secrets.WORKER_PASS }}
+          JOURS: "60"
+        run: python3 scripts/lire_reponses.py
