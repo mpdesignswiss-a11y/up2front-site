@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="fr-CH">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vérificateur de visibilité IA — test offert en 1 minute | Up2Front</title>
+<meta name="description" content="En une minute, mesurez si vous êtes équipé pour être recommandé par Google AI Mode, ChatGPT, Gemini, Claude et Perplexity. Offert, sans carte. Puis lancez votre relevé réel sur les cinq moteurs.">
+<link rel="canonical" href="https://up2front.com/verificateur.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Up2Front">
+<meta property="og:locale" content="fr_CH">
+<meta property="og:title" content="Vérificateur de visibilité IA — test offert en 1 minute | Up2Front">
+<meta property="og:description" content="Être équipé ne veut pas dire être cité. Mesurez votre préparation en 1 minute, puis lancez votre relevé réel sur les cinq moteurs. Offert, sans carte.">
+<meta property="og:url" content="https://up2front.com/verificateur.html">
+<meta property="og:image" content="https://up2front.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vérificateur de visibilité IA — test offert | Up2Front">
+<meta name="twitter:description" content="Mesurez en 1 minute si vous êtes équipé pour être cité par les cinq moteurs de réponse. Offert, sans carte.">
+<meta name="twitter:image" content="https://up2front.com/og-image.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32x32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="assets/polices/polices.css">
+<style>
+:root{
+  --bg:#010104;
+  --bg-2:#0A0A0D;
+  --bg-3:#121216;
+  --line:rgba(255,255,255,.08);
+  --line-2:rgba(255,255,255,.16);
+  --txt:#fff;
+  --txt-2:#9C9CA2;
+  --txt-3:#6A6A72;
+  --lime:#CFFE25;
+  --lime-pale:#E6FFAB;
+  --alerte:#E8976B;
+  --sans:"Mona Sans Variable","Mona Sans",-apple-system,"Segoe UI",system-ui,sans-serif;
+  --r:24px;
+  --r-s:12px;
+  --max:1180px;
+  --pad:clamp(20px,5vw,40px);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);color:var(--txt);
+  font-family:var(--sans);font-weight:400;font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  min-height:100vh;display:flex;flex-direction:column;
+}
+a{color:inherit;text-decoration:none}
+img,svg{display:block;max-width:100%}
+::selection{background:var(--lime);color:#010104}
+.wrap{width:100%;max-width:var(--max);margin:0 auto;padding-inline:var(--pad)}
+
+/* ---------- typographie ---------- */
+.d1,.d2,.d3{font-weight:500;letter-spacing:-.055em;line-height:1.06}
+.d1{font-size:clamp(34px,5.2vw,58px)}
+.d2{font-size:clamp(31px,4.6vw,52px);line-height:1.08}
+.d3{font-size:clamp(23px,2.5vw,32px);letter-spacing:-.04em;line-height:1.14}
+.lead{color:var(--txt-2);font-size:clamp(15px,1.15vw,17px);line-height:1.62}
+
+.tag{display:inline-block;background:var(--lime-pale);color:#010104;
+  font-size:13px;font-weight:500;letter-spacing:-.01em;padding:5px 12px;border-radius:8px}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;background:var(--bg-3);
+  border:1px solid var(--line);border-radius:100px;padding:8px 17px 8px 14px;
+  font-size:13.5px;color:#D9D9DE;letter-spacing:-.01em}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--lime);
+  box-shadow:0 0 0 4px rgba(207,254,37,.16)}
+
+/* ---------- boutons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  border-radius:100px;padding:15px 30px;font-size:15.5px;font-weight:500;letter-spacing:-.012em;
+  border:1px solid transparent;cursor:pointer;font-family:inherit;
+  transition:background .3s cubic-bezier(.16,1,.3,1),color .3s,border-color .3s,transform .3s}
+.btn:hover{transform:translateY(-1px)}
+.btn-p{background:var(--lime);color:#010104}
+.btn-p:hover{background:#E2FF6F}
+.btn-o{border-color:var(--line-2);color:#fff;background:transparent}
+.btn-o:hover{border-color:#fff;background:rgba(255,255,255,.05)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn .ar{font-size:17px;line-height:1}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+
+/* ---------- barre ---------- */
+.nav{position:sticky;top:0;z-index:60;background:rgba(1,1,4,.76);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.nav .in{display:flex;align-items:center;gap:20px;height:70px}
+.mark{display:flex;align-items:center;gap:12px;font-weight:600;font-size:17px;letter-spacing:-.035em}
+.mark i{font-style:normal;color:var(--lime)}
+.mark span{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--txt-3);padding-left:12px;border-left:1px solid var(--line-2)}
+.nav .links{margin-left:auto;display:flex;gap:26px;font-size:14.5px;color:var(--txt-2);letter-spacing:-.01em}
+.nav .links a:hover{color:#fff}
+.nav .btn{padding:11px 22px;font-size:14.5px}
+@media(max-width:820px){.nav .links{display:none}.mark span{display:none}}
+
+/* ---------- scène de l'outil ---------- */
+main{flex:1}
+.tool{padding:clamp(30px,5vw,56px) 0 clamp(56px,7vw,96px)}
+.prog{display:flex;gap:6px;max-width:560px;margin:0 auto clamp(30px,4vw,44px)}
+.prog i{height:3px;flex:1;background:var(--line);border-radius:3px;transition:background .45s}
+.prog i.on{background:var(--lime)}
+.step{display:none;animation:fade .5s cubic-bezier(.16,1,.3,1) both}
+.step.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* étape 1 — accroche + formulaire */
+.lede{text-align:center;max-width:780px;margin:0 auto}
+.lede h1{margin:20px auto 0;max-width:20ch;font-weight:340;text-wrap:balance;
+  font-size:clamp(30px,5vw,52px);line-height:1.08;letter-spacing:-.03em}
+.lede h1 em{font-style:normal;color:var(--lime);font-weight:500}
+.lede h1 b{font-weight:620;letter-spacing:-.05em}
+.lede .lead{max-width:60ch;margin:18px auto 0}
+.lede .lead strong{color:#fff;font-weight:500}
+.rassure{display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:center;margin-top:20px;font-size:13.5px;color:var(--txt-2)}
+.rassure span{display:inline-flex;align-items:center;gap:7px}
+.rassure span::before{content:"✓";color:var(--lime);font-weight:700}
+.rassure b{color:var(--lime);font-weight:600}
+
+.fields{margin:clamp(30px,4vw,42px) auto 0;max-width:620px;display:grid;grid-template-columns:1fr 1fr;gap:16px 18px}
+.field label{display:block;font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--txt-3);margin-bottom:9px}
+.field input{width:100%;background:var(--bg-2);border:1px solid var(--line-2);border-radius:var(--r-s);
+  color:var(--txt);font:inherit;font-size:16px;padding:14px 16px;transition:border-color .2s,background .2s}
+.field input::placeholder{color:var(--txt-3)}
+.field input:focus{outline:none;border-color:var(--lime);background:var(--bg-3)}
+.opt{color:var(--txt-3);text-transform:none;letter-spacing:0;font-weight:400}
+.go-row{display:flex;justify-content:center;margin-top:30px}
+@media(max-width:600px){.fields{grid-template-columns:1fr}.go-row .btn{width:100%}}
+
+/* étape 2 — questionnaire */
+.qhead{text-align:center;max-width:720px;margin:0 auto clamp(30px,4vw,40px)}
+.qhead .lead{margin-top:14px}
+.qwrap{max-width:760px;margin:0 auto}
+.q{padding:26px 0;border-bottom:1px solid var(--line)}
+.q:first-child{border-top:1px solid var(--line)}
+.qh{display:flex;gap:14px;align-items:baseline}
+.qn{font-variant-numeric:tabular-nums;font-weight:600;font-size:13px;color:var(--lime);letter-spacing:.04em;min-width:26px}
+.qt{font-size:17px;font-weight:500;letter-spacing:-.02em;line-height:1.3}
+.qhelp{margin:10px 0 0 40px;font-size:14px;line-height:1.55;color:var(--txt-3);max-width:60ch}
+.seg{display:flex;flex-wrap:wrap;gap:9px;margin:16px 0 0 40px}
+.seg button{appearance:none;cursor:pointer;font:inherit;font-size:14px;color:var(--txt-2);
+  background:var(--bg-2);border:1px solid var(--line-2);border-radius:100px;padding:10px 18px;transition:all .18s}
+.seg button:hover{border-color:#fff;color:#fff}
+.seg button.sel{background:var(--lime);color:#010104;border-color:var(--lime);font-weight:600}
+@media(max-width:600px){.qhelp,.seg{margin-left:0}}
+.step-nav{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between;max-width:760px;margin:36px auto 0}
+
+/* étape 3 — résultat (l'instrument) */
+.rwrap{max-width:860px;margin:0 auto}
+.hero-res{display:flex;gap:clamp(24px,4vw,48px);align-items:flex-end;flex-wrap:wrap}
+.score{flex:0 0 auto}
+.score .num{display:flex;align-items:baseline;gap:6px;font-weight:620;letter-spacing:-.055em;line-height:.82}
+.score .num b{font-size:clamp(78px,13vw,132px);font-variant-numeric:tabular-nums}
+.score .num em{font-style:normal;font-size:clamp(22px,3vw,30px);font-weight:500;color:var(--txt-3)}
+.stamp{margin-top:16px;font-size:12.5px;color:var(--txt-3);letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.verdict{flex:1;min-width:250px;padding-bottom:6px}
+.vtag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  padding:6px 14px;border:1px solid var(--line-2);color:var(--txt-2);border-radius:100px;margin-bottom:16px}
+.vtag.good{border-color:var(--lime);color:var(--lime)}
+.verdict h2{font-size:clamp(22px,3.3vw,30px);font-weight:500;letter-spacing:-.03em;line-height:1.14}
+.verdict p{color:var(--txt-2);margin-top:12px;font-size:15px;line-height:1.55;max-width:44ch}
+
+.measure{margin-top:clamp(28px,3.5vw,38px)}
+.mbar{height:10px;border-radius:100px;background:var(--line);position:relative}
+.mbar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--lime);border-radius:100px;display:block;
+  transition:width 1.3s cubic-bezier(.22,1,.36,1)}
+.mbar .mk{position:absolute;top:-6px;left:0;width:2px;height:22px;background:var(--lime);
+  box-shadow:0 0 10px rgba(207,254,37,.6);transition:left 1.3s cubic-bezier(.22,1,.36,1)}
+.mscale{display:flex;justify-content:space-between;margin-top:10px;font-size:11px;color:var(--txt-3);font-variant-numeric:tabular-nums}
+
+/* déblocage / capture e-mail */
+.unlock{margin-top:clamp(32px,4vw,44px);background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);
+  padding:clamp(26px,2.6vw,36px);position:relative;overflow:hidden}
+.unlock::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(520px 320px at 0% 0%,rgba(207,254,37,.06),transparent 62%)}
+.unlock>*{position:relative}
+.unlock h3{font-size:21px;font-weight:500;letter-spacing:-.03em}
+.unlock p{color:var(--txt-2);font-size:14.8px;line-height:1.6;margin-top:12px;max-width:54ch}
+.unlock p em{font-style:normal;color:#fff}
+.engines{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+.engines span{font-size:12px;color:var(--txt-2);background:rgba(255,255,255,.05);border:1px solid var(--line);
+  border-radius:100px;padding:5px 13px;letter-spacing:-.01em}
+.capture{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}
+.capture input{flex:1;min-width:240px;background:var(--bg-3);border:1px solid var(--line-2);border-radius:var(--r-s);
+  color:var(--txt);font:inherit;padding:14px 16px}
+.capture input:focus{outline:none;border-color:var(--lime)}
+.consent{display:flex;gap:10px;align-items:flex-start;margin-top:16px;font-size:12.8px;line-height:1.5;color:var(--txt-3)}
+.consent input{margin-top:3px;accent-color:var(--lime);flex:0 0 auto}
+.err{display:none;margin-top:10px;font-size:13px;color:var(--alerte)}
+
+/* détail signal par signal */
+.det-label{margin:clamp(34px,4vw,46px) 0 14px;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--txt-3)}
+.signals{border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.sig{padding:20px clamp(20px,2.4vw,26px);border-bottom:1px solid var(--line);background:var(--bg-2)}
+.sig:last-child{border-bottom:0}
+.sigt{display:flex;justify-content:space-between;align-items:baseline;gap:14px}
+.signame{font-size:15px;font-weight:500;color:#fff;letter-spacing:-.015em}
+.sigpts{font-weight:600;font-size:13.5px;color:var(--lime);font-variant-numeric:tabular-nums;white-space:nowrap}
+.sigpts.zero{color:var(--txt-3)}
+.sigbar{height:5px;background:var(--line-2);border-radius:100px;margin:13px 0 11px;overflow:hidden}
+.sigbar i{display:block;height:100%;background:var(--lime);width:0;border-radius:100px;transition:width 1s cubic-bezier(.22,1,.36,1)}
+.sigtip{font-size:13.5px;line-height:1.55;color:var(--txt-3)}
+.refaire{display:flex;justify-content:center;margin-top:34px}
+
+/* étape 4 — confirmation */
+.done{text-align:center;max-width:560px;margin:0 auto;padding:clamp(20px,4vw,40px) 0}
+.check{width:66px;height:66px;border-radius:50%;background:var(--lime);margin:0 auto 26px;
+  display:grid;place-items:center;font-size:30px;color:#010104;font-weight:600;
+  box-shadow:0 0 0 8px rgba(207,254,37,.1);animation:pop .5s cubic-bezier(.22,1.5,.5,1) both}
+@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+.done h2{font-size:clamp(24px,3.6vw,34px);font-weight:500;letter-spacing:-.03em}
+.done p{color:var(--txt-2);margin:16px auto 0;max-width:46ch;font-size:15px;line-height:1.6}
+.done .cta{justify-content:center;margin-top:28px}
+
+/* ---------- pied ---------- */
+footer{border-top:1px solid var(--line);padding:clamp(48px,6vw,72px) 0 40px;margin-top:auto}
+.fgrid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px}
+@media(max-width:820px){.fgrid{grid-template-columns:1fr;gap:32px}}
+.fgrid>div>p{margin-top:16px;font-size:14px;line-height:1.6;color:var(--txt-2);max-width:42ch}
+.fcol h4{font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--txt-3)}
+.fcol ul{list-style:none;margin-top:16px;display:grid;gap:10px;font-size:14.5px;color:var(--txt-2)}
+.fcol a:hover{color:var(--lime)}
+.fbas{margin-top:48px;padding-top:26px;border-top:1px solid var(--line);
+  display:flex;flex-wrap:wrap;gap:8px 26px;font-size:13px;color:var(--txt-3)}
+
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:16px;top:16px;z-index:99;background:var(--lime);color:#010104;padding:10px 18px;border-radius:8px}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* focus clavier visible (WCAG 2.4.7) */
+:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+input:focus-visible{outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#outil">Aller au contenu</a>
+
+<nav class="nav">
+  <div class="in wrap">
+    <a class="mark" href="index.html"><b>Up2<i>Front</i></b><span>Visibilité IA</span></a>
+    <div class="links">
+      <a href="visibilite-ia.html">L'offre</a>
+      <a href="visibilite-ia.html#recevez">Le rapport</a>
+      <a href="etudes/visibilite-ia-architectes-geneve.html">L'étude</a>
+    </div>
+    <a class="btn btn-p" href="visibilite-ia.html#reserver">Parler à Up2Front</a>
+  </div>
+</nav>
+
+<main id="outil">
+  <div class="tool wrap">
+
+    <div class="prog" aria-hidden="true">
+      <i class="on" data-p="1"></i><i data-p="2"></i><i data-p="3"></i><i data-p="4"></i>
+    </div>
+    <p id="live" class="sr" aria-live="polite" aria-atomic="true"></p>
+
+    <!-- ÉTAPE 1 -->
+    <section class="step active" id="s1">
+      <div class="lede">
+        <span class="eyebrow">Ce que l'IA répond quand on vous cherche</span>
+        <h1>« Le meilleur <em>[votre métier]</em> à <em>[votre ville]</em> ? »<br><b>Voyons si c'est vous.</b></h1>
+        <p class="lead">Google AI, ChatGPT, Gemini, Claude et Perplexity recommandent déjà des entreprises à votre place. En <strong>une minute</strong>, mesurez si vous êtes équipé pour être cité — avant de lancer votre vrai relevé sur les cinq moteurs.</p>
+        <div class="rassure">
+          <span><b>Offert</b>, sans carte</span><span>Sans engagement</span><span>Aucune relance insistante</span>
+        </div>
+      </div>
+
+      <div class="fields">
+        <div class="field"><label for="metier">Votre métier</label>
+          <input id="metier" type="text" placeholder="architecte, chauffagiste, fiduciaire…" autocomplete="off"></div>
+        <div class="field"><label for="ville">Votre ville ou canton</label>
+          <input id="ville" type="text" placeholder="Genève" autocomplete="off"></div>
+        <div class="field"><label for="nom">Nom de l'entreprise <span class="opt">— facultatif</span></label>
+          <input id="nom" type="text" placeholder="Votre raison sociale" autocomplete="off"></div>
+        <div class="field"><label for="site">Site web <span class="opt">— facultatif</span></label>
+          <input id="site" type="text" placeholder="https://…" autocomplete="off"></div>
+      </div>
+
+      <div class="go-row"><button class="btn btn-p" id="go1">Voir ma préparation <span class="ar">→</span></button></div>
+    </section>
+
+    <!-- ÉTAPE 2 -->
+    <section class="step" id="s2">
+      <div class="qhead">
+        <span class="eyebrow">5 signaux · 20 secondes</span>
+        <h2 class="d3" style="margin-top:18px">Ce qui décide si l'IA vous cite</h2>
+        <p class="lead" id="s2sub">Répondez honnêtement : le diagnostic n'a de valeur que s'il est juste.</p>
+      </div>
+      <div class="qwrap" id="questions"></div>
+      <div class="step-nav">
+        <button class="btn btn-o" id="back2">← Retour</button>
+        <button class="btn btn-p" id="go2" disabled>Voir mon score <span class="ar">→</span></button>
+      </div>
+    </section>
+
+    <!-- ÉTAPE 3 -->
+    <section class="step" id="s3">
+      <div class="rwrap">
+        <div class="hero-res">
+          <div class="score">
+            <div class="num"><b id="scoreNum">0</b><em>/100</em></div>
+            <div class="stamp" id="stamp">relevé de préparation · 5 signaux</div>
+          </div>
+          <div class="verdict">
+            <span class="vtag" id="vtag">—</span>
+            <h2 id="vtitle">—</h2>
+            <p id="vtext">—</p>
+          </div>
+        </div>
+
+        <div class="measure">
+          <div class="mbar"><i id="mfill"></i><span class="mk" id="mk"></span></div>
+          <div class="mscale"><span>0</span><span>25</span><span>50</span><span>75</span><span>100</span></div>
+        </div>
+
+        <div class="unlock">
+          <h3>Être équipé ne veut pas dire être cité.</h3>
+          <p id="unlockText">Ce score mesure votre <em>préparation</em>. Pour savoir si l'IA vous cite <em>réellement</em>, on interroge les cinq moteurs sur votre métier — relevé horodaté, offert et sans engagement.</p>
+          <div class="engines" aria-label="Les cinq moteurs interrogés">
+            <span>Google AI Mode</span><span>ChatGPT</span><span>Gemini</span><span>Claude</span><span>Perplexity</span>
+          </div>
+          <div class="capture">
+            <input id="email" type="email" placeholder="vous@entreprise.ch" autocomplete="email" aria-label="Votre e-mail">
+            <button class="btn btn-p" id="go3">Lancer mon relevé — offert</button>
+          </div>
+          <label class="consent"><input type="checkbox" id="consent"> J'accepte d'être recontacté·e par Up2Front au sujet de mon relevé de visibilité IA. Désinscription à tout moment.</label>
+          <p class="err" id="emailErr">Entrez un e-mail valide et cochez la case.</p>
+          <input type="checkbox" name="botcheck" id="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0">
+        </div>
+
+        <div class="det-label">Le détail, signal par signal</div>
+        <div class="signals" id="signalsOut"></div>
+
+        <div class="refaire"><button class="btn btn-o" id="back3">← Refaire le test</button></div>
+      </div>
+    </section>
+
+    <!-- ÉTAPE 4 -->
+    <section class="step" id="s4">
+      <div class="done">
+        <div class="check">✓</div>
+        <h2>C'est lancé.</h2>
+        <p id="doneText">Votre relevé complet arrive par e-mail. Vous préférez qu'on le passe ensemble ? Réservez 30 minutes de visio, c'est offert.</p>
+        <div class="cta">
+          <a class="btn btn-p" id="calendly" href="https://calendly.com/contact-up2front/30min?utm_source=verificateur-visibilite-ia" target="_blank" rel="noopener">Réserver ma visio de 30 min</a>
+          <a class="btn btn-o" href="etudes/visibilite-ia-architectes-geneve.html">Voir notre étude publique</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <a class="mark" href="index.html"><b>Up2<i>Front</i></b><span>Visibilité IA</span></a>
+        <p>Sites web professionnels et mesure de visibilité dans les moteurs de réponse, pour les PME suisses. Genève, toute la Suisse.</p>
+      </div>
+      <div class="fcol">
+        <h4>Cette offre</h4>
+        <ul>
+          <li><a href="visibilite-ia.html">L'offre visibilité IA</a></li>
+          <li><a href="etudes/visibilite-ia-architectes-geneve.html">L'étude sur les architectes genevois</a></li>
+          <li><a href="mailto:contact@up2front.com">contact@up2front.com</a></li>
+        </ul>
+      </div>
+      <div class="fcol">
+        <h4>Up2Front</h4>
+        <ul>
+          <li><a href="index.html">Sites web dès CHF&nbsp;290</a></li>
+          <li><a href="realisations.html">Réalisations</a></li>
+          <li><a href="legal/conditions.html">Conditions générales</a></li>
+          <li><a href="legal/confidentialite.html">Confidentialité</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fbas">
+      <span>© Up2Front 2026 — Tous droits réservés.</span>
+      <span>Maxime Pilloud, entreprise individuelle · Genève, Suisse</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* =========================================================================
+   Vérificateur de visibilité IA — Up2Front
+   Teaser 100% autonome : calcule un SCORE DE PRÉPARATION (/100) côté client,
+   puis capture l'e-mail (Web3Forms → contact@up2front.com) pour déclencher le
+   vrai relevé. Aucun appel LLM ici. DA native : Mona Sans, fond #010104, lime #CFFE25.
+   ========================================================================= */
+/* Clé publique Web3Forms (faite pour vivre côté client, ce n'est pas un secret).
+   Les demandes arrivent sur contact@up2front.com. */
+var WEB3FORMS_KEY = 'a5a08ec1-eccc-40ed-b291-78ad8011fb4b';
+
+var SIGNALS = [
+  { id:'ciblage', w:25, title:'Une page qui dit votre métier ET votre ville',
+    help:"Un des vrais leviers de citation : les moteurs reprennent les pages qui répondent directement à « métier + ville ». Un portfolio d'images ne suffit pas.",
+    options:[{l:'Non / pas de site',v:0},{l:'Vaguement',v:0.5},{l:'Oui, clairement',v:1}],
+    tips:["Créez une page par intention (« {metier} à {ville} ») avec une réponse directe en tête.",
+          "Rendez-la explicite : métier, ville et type de prestation écrits noir sur blanc.",
+          "Parfait : c'est exactement ce que les moteurs reprennent."]},
+  { id:'lisible', w:25, title:'Un site que les robots des IA peuvent lire',
+    help:"Un site tout en images ou en JavaScript — ou qui bloque les robots des IA — est invisible pour elles. Du vrai texte accessible : c'est la fondation d'une citation.",
+    options:[{l:'Non / pas de site',v:0},{l:'Je ne sais pas',v:0.5},{l:'Oui',v:1}],
+    tips:["Sans site lisible, aucun moteur ne peut vous citer. C'est la fondation.",
+          "C'est justement ce que notre relevé complet vérifie pour vous, page par page.",
+          "Bonne base technique — vous donnez aux moteurs de quoi vous lire."]},
+  { id:'sources', w:20, title:'Présence sur local.ch / search.ch / registre de profession',
+    help:"En Suisse c'est un levier fort : les moteurs citent souvent les registres de profession et les annuaires .ch, davantage que Google Maps.",
+    options:[{l:'Non',v:0},{l:'En partie',v:0.5},{l:'Oui',v:1}],
+    tips:["Inscrivez-vous sur local.ch, search.ch et le registre de votre profession.",
+          "Complétez les fiches existantes : des infos riches pèsent plus qu'une simple présence.",
+          "Très bien : vous êtes là où les moteurs suisses vont chercher."]},
+  { id:'avis', w:15, title:'Fiche Google avec des avis',
+    help:"Les avis comptent fort pour le classement local de Google et la confiance des clients — mais peu comme source citée dans une réponse rédigée par l'IA. Utile, pas central.",
+    options:[{l:'Aucune fiche',v:0},{l:'Fiche, moins de 10 avis',v:0.4},{l:'10 à 30 avis',v:0.7},{l:'Plus de 30 avis',v:1}],
+    tips:["Créez votre fiche Google Business : utile pour Google et la confiance, à faire tôt.",
+          "Récoltez des avis : ça aide sur Google, sans garantir d'être cité dans les réponses IA.",
+          "Bonne base d'avis — surtout un atout côté Google et réputation.",
+          "Très bien côté avis : fort pour Google et la confiance (moins pour la citation IA elle-même)."]},
+  { id:'entite', w:15, title:'Les mêmes coordonnées partout sur le web',
+    help:"Nom, adresse et téléphone identiques partout (et, idéalement, une fiche Wikidata) : c'est ce qui aide l'IA à vous reconnaître comme une entreprise fiable.",
+    options:[{l:'Non / je ne sais pas',v:0},{l:'Coordonnées cohérentes partout',v:0.5},{l:'Oui, + Wikipedia/Wikidata',v:1}],
+    tips:["Harmonisez vos coordonnées partout, puis créez votre fiche Wikidata.",
+          "Bon point de départ : la cohérence des coordonnées aide déjà les moteurs.",
+          "Avance rare en Suisse romande — un vrai atout d'identité."]}
+];
+
+var state = { answers:{}, metier:'', ville:'', nom:'', site:'', score:0, email:'' };
+
+function show(n){
+  document.querySelectorAll('.step').forEach(function(s){ s.classList.remove('active'); });
+  var step=document.getElementById('s'+n); step.classList.add('active');
+  document.querySelectorAll('.prog i').forEach(function(i){ i.classList.toggle('on', parseInt(i.dataset.p,10)<=n); });
+  window.scrollTo({top:0,behavior:'smooth'});
+  var h=step.querySelector('h1, .verdict h2, .done h2, .d3');
+  if(h){ h.setAttribute('tabindex','-1'); h.focus({preventScroll:true}); }
+}
+
+document.getElementById('go1').addEventListener('click', function(){
+  var metier=document.getElementById('metier').value.trim();
+  var ville=document.getElementById('ville').value.trim();
+  if(!metier||!ville){ [['metier',metier],['ville',ville]].forEach(function(f){
+    document.getElementById(f[0]).style.borderColor=f[1]?'':'#E8976B'; }); return; }
+  state.metier=metier; state.ville=ville;
+  state.nom=document.getElementById('nom').value.trim();
+  state.site=document.getElementById('site').value.trim();
+  document.getElementById('s2sub').innerHTML='Pour <strong style="color:#fff">'+esc(metier)+'</strong> à <strong style="color:#fff">'+esc(ville)+'</strong>. Répondez honnêtement : le diagnostic n\'a de valeur que s\'il est juste.';
+  buildQuestions(); show(2);
+});
+
+function buildQuestions(){
+  var box=document.getElementById('questions'); box.innerHTML=''; state.answers={};
+  SIGNALS.forEach(function(sig,qi){
+    var q=document.createElement('div'); q.className='q';
+    var opts=sig.options.map(function(o,oi){ return '<button type="button" data-q="'+sig.id+'" data-v="'+oi+'">'+esc(o.l)+'</button>'; }).join('');
+    q.innerHTML='<div class="qh"><span class="qn">0'+(qi+1)+'</span><span class="qt">'+esc(sig.title)+'</span></div>'+
+      '<div class="qhelp">'+esc(sig.help)+'</div><div class="seg">'+opts+'</div>';
+    box.appendChild(q);
+  });
+  box.querySelectorAll('.seg button').forEach(function(b){
+    b.addEventListener('click', function(){
+      b.parentNode.querySelectorAll('button').forEach(function(x){x.classList.remove('sel');});
+      b.classList.add('sel'); state.answers[b.dataset.q]=parseInt(b.dataset.v,10);
+      document.getElementById('go2').disabled=Object.keys(state.answers).length<SIGNALS.length;
+    });
+  });
+  document.getElementById('go2').disabled=true;
+}
+
+document.getElementById('back2').addEventListener('click', function(){ show(1); });
+document.getElementById('go2').addEventListener('click', function(){ computeResult(); show(3); });
+document.getElementById('back3').addEventListener('click', function(){ show(1); });
+
+function computeResult(){
+  var total=0;
+  SIGNALS.forEach(function(sig){ total+=Math.round(sig.w*sig.options[state.answers[sig.id]].v); });
+  var score=total; state.score=score;
+
+  var tag,title,text;
+  if(score<40){ tag='Invisible probable';
+    title="L'IA ne vous voit probablement pas.";
+    text="Les signaux qui comptent manquent. La bonne nouvelle : ce sont les plus rapides à corriger, et le marché n'est tenu par personne."; }
+  else if(score<70){ tag='Préparation fragile';
+    title='Vous existez, mais sur un seul pied.';
+    text="Un ou deux leviers vous portent ; les autres vous échappent. C'est ce qui rend une position instable d'un moteur à l'autre."; }
+  else { tag='Bien équipé';
+    title='Vous avez les bons signaux en place.';
+    text="Reste à vérifier si ça se traduit en citations réelles — car être équipé ne garantit pas d'être cité."; }
+
+  var vt=document.getElementById('vtag'); vt.textContent=tag; vt.className='vtag'+(score>=70?' good':'');
+  document.getElementById('vtitle').textContent=title;
+  document.getElementById('vtext').textContent=text;
+  var live=document.getElementById('live'); if(live) live.textContent='Score de préparation : '+score+' sur 100. '+tag+'. '+title;
+
+  var d=new Date(), pad=function(n){return (n<10?'0':'')+n;};
+  var stamp=document.getElementById('stamp');
+  if(stamp) stamp.textContent='relevé de préparation · '+pad(d.getDate())+'.'+pad(d.getMonth()+1)+'.'+d.getFullYear()+' · 5 signaux';
+  var mfill=document.getElementById('mfill'), mk=document.getElementById('mk');
+  if(mfill) mfill.style.width='0'; if(mk) mk.style.left='0';
+
+  var out=document.getElementById('signalsOut'); out.innerHTML='';
+  SIGNALS.forEach(function(sig){
+    var oi=state.answers[sig.id], v=sig.options[oi].v, pts=Math.round(sig.w*v);
+    var tip=sig.tips[oi].replace('{metier}',esc(state.metier)).replace('{ville}',esc(state.ville));
+    var row=document.createElement('div'); row.className='sig';
+    row.innerHTML='<div class="sigt"><span class="signame">'+esc(sig.title)+'</span>'+
+      '<span class="sigpts'+(pts===0?' zero':'')+'">'+pts+' / '+sig.w+'</span></div>'+
+      '<div class="sigbar"><i data-w="'+Math.round(v*100)+'"></i></div>'+
+      '<div class="sigtip">'+tip+'</div>';
+    out.appendChild(row);
+  });
+
+  requestAnimationFrame(function(){ setTimeout(function(){
+    if(mfill) mfill.style.width=score+'%';
+    if(mk) mk.style.left=score+'%';
+    out.querySelectorAll('.sigbar i').forEach(function(bar){ bar.style.width=bar.dataset.w+'%'; });
+    countUp(document.getElementById('scoreNum'),score,1300);
+  },120); });
+}
+
+function countUp(el,to,dur){ var s=performance.now();
+  (function tick(now){ var p=Math.min((now-s)/dur,1); el.textContent=Math.round((1-Math.pow(1-p,3))*to);
+    if(p<1) requestAnimationFrame(tick); })(s); }
+
+document.getElementById('go3').addEventListener('click', function(){
+  var email=document.getElementById('email').value.trim();
+  var ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if(!ok||!document.getElementById('consent').checked){ document.getElementById('emailErr').style.display='block'; return; }
+  document.getElementById('emailErr').style.display='none'; state.email=email;
+  document.getElementById('doneText').innerHTML='Votre relevé complet pour <strong style="color:#fff">'+esc(state.metier)+' à '+esc(state.ville)+'</strong> arrive par e-mail. Vous préférez qu\'on le passe ensemble ? Réservez 30 minutes de visio, c\'est offert.';
+  setCalendly();
+  sendLead(); show(4);
+});
+
+function setCalendly(){
+  var cal='https://calendly.com/contact-up2front/30min';
+  var cp=new URLSearchParams({
+    hide_gdpr_banner:'1', background_color:'010104', text_color:'f4f4f6', primary_color:'cffe25',
+    utm_source:'verificateur-visibilite-ia', utm_medium:'outil', utm_campaign:'visibilite-ia',
+    utm_content:(state.metier+' '+state.ville).trim(), utm_term:'prep-'+state.score, email:state.email
+  });
+  if(state.nom) cp.set('name', state.nom);
+  document.getElementById('calendly').href = cal + '?' + cp.toString();
+}
+
+/* Envoi du lead via Web3Forms → e-mail sur contact@up2front.com (pas d'appel Make ici). */
+function sendLead(){
+  var detail = SIGNALS.map(function(s){
+    return s.title+' : '+Math.round(s.w*s.options[state.answers[s.id]].v)+'/'+s.w;
+  }).join(' · ');
+  var payload = {
+    access_key: WEB3FORMS_KEY,
+    subject: 'Nouveau relevé demandé — '+state.metier+' à '+state.ville,
+    from_name: 'Vérificateur visibilité IA — Up2Front',
+    email: state.email,
+    replyto: state.email,
+    metier: state.metier, ville: state.ville,
+    entreprise: state.nom || '—', site: state.site || '—',
+    score_preparation: state.score + '/100',
+    detail: detail,
+    source: 'verificateur-visibilite-ia',
+    botcheck: document.getElementById('botcheck').checked
+  };
+  if(!WEB3FORMS_KEY || WEB3FORMS_KEY.indexOf('COLLE_TA_CLE') === 0){ console.log('LEAD (clé Web3Forms à renseigner) →', payload); return; }
+  fetch('https://api.web3forms.com/submit', {
+    method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body: JSON.stringify(payload)
+  }).catch(function(){ /* la confirmation reste affichée quoi qu'il arrive */ });
+}
+
+function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+</script>
+</body>
+</html>
