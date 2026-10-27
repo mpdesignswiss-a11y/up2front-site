@@ -22,6 +22,7 @@
 <link rel="icon" href="favicon-32x32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="stylesheet" href="assets/polices/polices.css">
+<script>document.documentElement.classList.add('js')</script>
 <style>
 :root{
   --bg:#010104;
@@ -460,6 +461,65 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,6vw,72px) 0 40px;marg
   background:linear-gradient(180deg,var(--bg-3),var(--bg-2));border:1px solid var(--line);border-radius:var(--r)}
 .band h3{font-size:clamp(19px,2.3vw,25px);letter-spacing:-.02em;margin-bottom:6px}
 .band p{color:var(--txt-2);margin-bottom:16px}
+/* ---------- conversation réelle (version courte) ---------- */
+.conv{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.conv-q{display:flex;flex-direction:column;align-items:flex-end;gap:8px;padding:clamp(22px,3vw,34px) clamp(20px,3vw,34px) 0}
+.conv-who{font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--txt-3)}
+.conv-txt{max-width:min(560px,100%);background:#F4F4F6;color:#010104;border-radius:20px 20px 6px 20px;
+  padding:14px 20px;font-size:clamp(15px,1.4vw,18px);letter-spacing:-.02em;line-height:1.4;min-height:1.4em}
+.conv-txt .caret{display:inline-block;width:2px;height:1.05em;margin-left:2px;background:#010104;vertical-align:-.15em;animation:caret 1s steps(1) infinite}
+@keyframes caret{50%{opacity:0}}
+.conv-r{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:clamp(18px,2.4vw,26px) clamp(20px,3vw,34px)}
+@media(max-width:900px){.conv-r{grid-template-columns:1fr}}
+.rep{background:var(--bg-3);border:1px solid var(--line);border-radius:18px;padding:18px 18px 20px;
+  transition:opacity .8s cubic-bezier(.16,1,.3,1) calc(var(--d)*.22s),transform .8s cubic-bezier(.16,1,.3,1) calc(var(--d)*.22s)}
+.rep header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.rep .mot{font-size:12.5px;font-weight:500;padding:4px 11px;border-radius:100px;background:rgba(255,255,255,.06);border:1px solid var(--line)}
+.rep time{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12px;color:var(--txt-3)}
+.rep p{font-size:14px;line-height:1.55;color:var(--txt-2)}
+.rep ol{margin-top:12px;padding-left:22px;display:grid;gap:6px;font-size:14.5px;color:#F4F4F6}
+.rep ol li::marker{color:var(--txt-3);font-size:12.5px}
+.rep mark{background:linear-gradient(rgba(207,254,37,.16),rgba(207,254,37,.16)) left/0% 100% no-repeat;color:inherit;padding:1px 5px;margin:-1px -5px;border-radius:5px;cursor:default;outline:none;
+  transition:background-size .7s cubic-bezier(.16,1,.3,1),color .3s,background-color .3s,box-shadow .3s}
+.rep.lu mark{background-size:100% 100%;color:var(--lime)}
+.rep mark.x{background:var(--lime);color:#010104;box-shadow:0 0 0 3px rgba(207,254,37,.22)}
+.conv.survol .rep mark:not(.x){opacity:.38}
+.rep mark{transition-property:background-size,color,background-color,box-shadow,opacity}
+.conv-astuce{font-size:12.5px;color:var(--txt-3);margin-top:2px}
+.conv-bilan{border-top:1px solid var(--line);padding:18px clamp(20px,3vw,34px) 22px;display:grid;gap:6px;
+  transition:opacity .8s ease .2s}
+.conv-bilan p{font-size:14.5px;line-height:1.55;color:var(--txt-2)}
+.conv-bilan b{color:var(--lime);font-weight:500}
+.js .conv:not(.vu) .rep{opacity:0;transform:translateY(16px)}
+.js .conv:not(.fini) .conv-bilan{opacity:0}
+
+/* ---------- quatre temps ---------- */
+.temps{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;position:relative;counter-reset:t}
+@media(max-width:980px){.temps{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.temps{grid-template-columns:1fr}}
+.tp{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:24px 22px 26px;display:grid;gap:14px;align-content:start;
+  transition:border-color .6s,background .6s,transform .8s cubic-bezier(.16,1,.3,1),opacity .8s cubic-bezier(.16,1,.3,1)}
+.tp-n{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:500;font-size:15px;
+  border:1px solid var(--line-2);color:#fff;transition:background .6s,color .6s,border-color .6s}
+.tp h3{font-size:20px;font-weight:500;letter-spacing:-.035em;line-height:1.2}
+.tp-p{display:inline-block;margin-top:6px;font-size:12.5px;color:var(--txt-3);letter-spacing:-.01em}
+.tp p{font-size:14.5px;line-height:1.6;color:var(--txt-2)}
+.tp p strong{color:#fff;font-weight:500}
+.tp.on{border-color:rgba(207,254,37,.35);background:linear-gradient(180deg,rgba(207,254,37,.06),transparent 60%),var(--bg-2)}
+.tp.on .tp-n{background:var(--lime);color:#010104;border-color:var(--lime)}
+.tp.on .tp-p{color:var(--lime)}
+.js .temps:not(.vu) .tp{opacity:0;transform:translateY(18px)}
+.temps .tp:nth-child(2){transition-delay:.12s}.temps .tp:nth-child(3){transition-delay:.24s}.temps .tp:nth-child(4){transition-delay:.36s}
+.temps-pied{margin-top:22px;text-align:center;font-size:14px;color:var(--txt-3)}
+.temps-pied a{color:var(--lime)}
+.offre .liste.non{align-self:start}
+.offre .liste.non .li.pq{grid-template-columns:1fr;background:rgba(207,254,37,.05)}
+.offre .liste.non .li p b{color:#fff;font-weight:500}
+@media(prefers-reduced-motion:reduce){
+  .js .conv .rep,.js .conv .conv-bilan,.js .temps .tp{opacity:1!important;transform:none!important;transition:none}
+  .rep mark{background-size:100% 100%;color:var(--lime);transition:none}
+  .conv-txt .caret{display:none}
+}
 </style>
 </head>
 <body>
@@ -471,7 +531,7 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,6vw,72px) 0 40px;marg
     <a class="mark" href="index.html"><b>Up2<i>Front</i></b><span>Visibilité IA</span></a>
     <div class="links">
       <a href="#contenu">La méthode</a>
-      <a href="#recevez">Le Relevé</a>
+      <a href="#exemple">Une vraie réponse</a>
       <a href="#questions">Questions</a>
       <a href="verificateur.html">Le vérificateur</a>
       <a href="etudes/visibilite-ia-architectes-geneve.html">L'étude</a>
@@ -483,228 +543,85 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,6vw,72px) 0 40px;marg
 <header class="hero wrap">
   <span class="eyebrow">Ce que l'IA répond à vos futurs clients</span>
   <h1 class="d1"><span class="q">«&nbsp;Quel est le meilleur <i>[votre&nbsp;métier]</i> à <i>[votre&nbsp;ville]</i>&nbsp;?&nbsp;»</span> <span class="f">Vos clients la posent à l'IA.</span> <em><b>Reste à savoir qui elle cite — et si c'est vous.</b></em></h1>
-  <p class="lead">Trois moteurs — Google AI Mode, ChatGPT, Gemini — interrogés plusieurs fois, et jamais tout à fait la même réponse, même à une heure d'intervalle. On mesure, pour votre métier et votre ville, qui l'IA recommande à votre place.</p>
-  <p class="lead lead-2">Nous mesurons ce que répondent ChatGPT, Gemini et le mode IA de Google, celui qui s'affiche directement dans Google. <b>Demandez à votre prestataire s'il le fait.</b></p>
-  <div class="prix">
-    <span class="quoi">Le relevé, sur votre métier et votre ville</span>
-    <span class="ligne"><b>Offert</b><s>1 question · 3 moteurs · 2 passages · une page web à votre nom</s></span>
-  </div>
+  <p class="lead">Nous posons cette question à Google AI Mode, ChatGPT et Gemini, deux fois à quelques heures d'écart. Vous recevez leurs réponses mot pour mot, datées à la minute, sur une page à votre nom.</p>
   <div class="cta">
-    <a class="btn btn-p" href="#commander"><svg class="ar" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg>Demander mon Relevé</a>
-    <a class="btn btn-o" href="verificateur.html">Tester ma préparation — 1 min</a>
-    <a class="btn btn-o" href="etudes/visibilite-ia-architectes-geneve.html">Voir une étude réelle</a>
+    <a class="btn btn-p" href="#commander"><svg class="ar" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg>Demander mon Relevé — offert</a>
+    <a class="btn btn-o" href="#exemple">Voir une vraie réponse</a>
   </div>
-  <p class="fine">Pas un diagnostic&nbsp;: une mesure. La question qu'un client vous poserait, posée à trois moteurs, deux fois à quelques heures d'écart — chaque réponse conservée et datée à la minute, et la méthode publiée.</p>
   <div class="rassure">
     <span>✓&nbsp;<b>Offert</b>, sans carte</span>
     <span>✓&nbsp;Sans engagement</span>
     <span>✓&nbsp;La page est à vous</span>
-    <span>✓&nbsp;Aucune relance insistante</span>
   </div>
 </header>
 
-<div class="wrap seuls">
-  <h2 class="seuls-t">Ce que vous voyez chez nous</h2>
-  <div class="grid seuls-g">
-    <article class="card">
-      <span class="tag">01</span>
-      <h3>Le mode IA de Google, mesuré.</h3>
-      <p>La réponse que vos clients lisent sans quitter Google. Beaucoup d'outils ne l'incluent pas, ou seulement en option payante. Nous l'interrogeons à chaque relevé.</p>
-    </article>
-    <article class="card">
-      <span class="tag">02</span>
-      <h3>Chaque réponse, datée à la minute.</h3>
-      <p>Une IA ne répond jamais deux fois pareil. Nous posons la question plusieurs fois, à quelques heures d'écart, et nous gardons chaque réponse, datée à la minute. <strong>Vous lisez ce que l'IA a dit, pas notre résumé.</strong></p>
-    </article>
-    <article class="card">
-      <span class="tag">03</span>
-      <h3>L'avant et l'après, mesurés.</h3>
-      <p>Si vous nous confiez le chantier, nous refaisons le même relevé 90 jours après : mêmes questions, mêmes moteurs. Vous voyez ce qui a changé. <strong>Nous ne garantissons aucun résultat : nous le mesurons.</strong></p>
-    </article>
-  </div>
-</div>
-
-<div class="wrap">
-  <div class="stats">
-    <div class="stat"><b>3</b><p>réponses différentes à la même question, en une heure</p></div>
-    <div class="stat"><b>11</b><p>avis Google ont suffi pour la première place</p></div>
-    <div class="stat"><b>0</b><p>bureau présent dans les trois réponses</p></div>
-    <div class="stat"><b>6/14</b><p>le meilleur score de l'étude, tous bureaux confondus</p></div>
-  </div>
-</div>
-
-<section class="wrap">
+<section class="wrap" id="exemple">
   <div class="head">
-    <span class="tag">01 — Le problème</span>
-    <h2 class="d2">Personne ne sait ce que les moteurs répondent à sa place.</h2>
-    <p class="lead">Vous connaissez votre position sur Google. Vous ne savez rien de ce qui se dit de vous dans une réponse générée — qui est aujourd'hui le premier écran que voit un prospect, et souvent le seul. Le nom qui en sort n'est pas celui qui paie le plus, ni celui qui a le plus beau site. C'est celui que le moteur a des raisons de citer.</p>
+    <span class="tag">Une vraie réponse</span>
+    <h2 class="d2">Une question, trois moteurs, trois réponses différentes.</h2>
+    <p class="lead">Extrait d'un relevé réel du 27 octobre 2026, à 15 h 28 (heure de Genève). Les phrases sont celles des moteurs, coupées mais pas réécrites.</p>
   </div>
-  <div class="grid g3">
-    <article class="card">
-      <span class="tag">Ce qu'on croit</span>
-      <h3>«&nbsp;Je suis bien référencé&nbsp;»</h3>
-      <p>Le référencement classique et la recommandation machine ne sont pas le même terrain. Chez Google, les trois premiers de Gemini n'apparaissent pas dans la réponse d'AI Mode, et les trois premiers d'AI Mode n'apparaissent pas dans celle de Gemini. C'est mesuré, c'est dans l'étude.</p>
-    </article>
-    <article class="card">
-      <span class="tag">Ce qu'on croit</span>
-      <h3>«&nbsp;J'ai une bonne réputation&nbsp;»</h3>
-      <p>La notoriété ne garantit rien ici. Les acteurs les plus établis d'un marché — ceux que tout le monde cite dans le métier, qui publient et siègent dans les instances — peuvent rester marginaux dans les réponses générées. Les moteurs ne lisent pas les mêmes signaux que vos pairs.</p>
-    </article>
-    <article class="card">
-      <span class="tag">Ce qu'on croit</span>
-      <h3>«&nbsp;C'est trop tôt&nbsp;»</h3>
-      <p>Dans notre étude, aucun acteur n'atteint la moitié des relevés — le mieux classé sort six fois sur quatorze. Le marché de la recommandation machine n'est encore tenu par personne : il est ouvert à qui s'en occupe avant les autres.</p>
-    </article>
-  </div>
-
-  <div class="reco">
-    <div class="cap">
-      <span class="chip">Valable pour tout métier local</span>
-      <b>Exemple réel — architectes à Genève · quatorze relevés, quatre moteurs</b>
-      <span>Notre étude publiée, prise comme démonstration · Perplexity, Google AI Mode, ChatGPT, Gemini · 19h01–20h05 · comptages publiés · votre secteur se mesure exactement pareil</span>
+  <div class="conv" data-conv>
+    <div class="conv-q"><span class="conv-who">Un client demande</span><p class="conv-txt" data-type="chauffagiste à Carouge pour installer une pompe à chaleur">chauffagiste à Carouge pour installer une pompe à chaleur</p></div>
+    <div class="conv-r">
+      <article class="rep" style="--d:0">
+        <header><span class="mot">Google AI Mode</span><time datetime="2026-10-27T15:28+01:00">15:28</time></header>
+        <p>«&nbsp;Plusieurs entreprises spécialisées en chauffage et basées à Carouge proposent l'installation de pompes à chaleur (PAC)&nbsp;:&nbsp;»</p>
+        <ol><li><mark data-n="heliosenergies" tabindex="0">Hélios Énergies SA</mark></li><li><mark data-n="capenergie" tabindex="0">CAP ENERGIE</mark></li><li><mark data-n="multitherme" tabindex="0">Multi &amp; Therme SA</mark></li></ol>
+      </article>
+      <article class="rep" style="--d:1">
+        <header><span class="mot">ChatGPT</span><time datetime="2026-10-27T15:28+01:00">15:28</time></header>
+        <p>«&nbsp;Voici une sélection d'entreprises à contacter en priorité.&nbsp;» Puis, sur la première&nbsp;: «&nbsp;Mon premier choix pour un projet de rénovation énergétique.&nbsp;»</p>
+        <ol><li><mark data-n="capenergie" tabindex="0">Cap Energie SA</mark></li><li><mark data-n="bossonrapo" tabindex="0">Bosson + Rapo SA</mark></li><li><mark data-n="multitherme" tabindex="0">Multi + Therme SA</mark></li><li><mark data-n="heliosenergies" tabindex="0">Hélios Énergies SA</mark></li><li><mark data-n="neotechenergies" tabindex="0">Néo Tech Energies</mark></li></ol>
+      </article>
+      <article class="rep" style="--d:2">
+        <header><span class="mot">Gemini</span><time datetime="2026-10-27T15:28+01:00">15:28</time></header>
+        <p>«&nbsp;…plusieurs sociétés locales disposent de l'expertise nécessaire pour mener à bien votre projet&nbsp;:&nbsp;»</p>
+        <ol><li><mark data-n="senalada" tabindex="0">Senalada</mark></li><li><mark data-n="bossonrapo" tabindex="0">Bosson + Rapo SA</mark></li><li><mark data-n="hugodubois" tabindex="0">Hugo Dubois</mark></li><li><mark data-n="alppac" tabindex="0">alpPAC</mark></li></ol>
+      </article>
     </div>
-    <div class="cols">
-      <div class="col">
-        <b>Ceux que les moteurs citent</b>
-        <p>Aucun n'est le bureau le plus primé du canton.</p>
-        <ul>
-          <li><i>CORPUS Architecture</i><em>6 / 14</em></li>
-          <li><i>Pierre Ambrosetti</i><em>6 / 14</em></li>
-          <li><i>HertelTan</i><em>5 / 14</em></li>
-          <li><i>KELLER ARCHITECTES</i><em>4 / 14</em></li>
-          <li><i>Ecotonos</i><em>4 / 14</em></li>
-          <li><i>group8</i><em>4 / 14</em></li>
-        </ul>
-      </div>
-      <div class="col bas">
-        <b>Ceux que la profession cite</b>
-        <p>Forte autorité professionnelle, visibilité machine faible.</p>
-        <ul>
-          <li><i>Trois bureaux parmi les plus établis du canton</i><em class="zero">0 / 14</em></li>
-          <li><i>Un bureau qui prend la première place une fois</i><em>1 / 14</em></li>
-          <li><i>Un bureau cité au premier passage, effacé au second</i><em>1 / 14</em></li>
-          <li><i>Un bureau reconnu de la profession</i><em>2 / 14</em></li>
-        </ul>
-      </div>
-    </div>
-    <div class="pied">
-      <p>Votre nom est dans l'une de ces deux colonnes. Ou dans aucune.</p>
-      <p>Les six premiers sont nommés parce qu'ils sortent. Les autres ne le sont pas ici, mais leurs noms figurent dans <a href="etudes/visibilite-ia-architectes-geneve.html">l'étude publiée</a>, avec l'heure de chaque relevé et le moteur interrogé. Vous pouvez refaire les quatorze interrogations vous-même.</p>
+    <div class="conv-bilan">
+      <p><b>Aucune entreprise</b> n'est citée par les trois moteurs. Le premier nom change à chaque fois.</p>
+      <p>Et ce n'est qu'un passage&nbsp;: c'est pour cela que le Relevé repose la même question quelques heures plus tard.</p>
+      <p class="conv-astuce">Survolez ou touchez un nom pour le retrouver chez les autres moteurs.</p>
     </div>
   </div>
 </section>
 
 <section class="wrap" id="contenu">
-  <div class="head gauche">
-    <span class="tag">02 — La méthode</span>
-    <h2 class="d2">Un passage ne prouve rien. C'est démontré, et c'est publié.</h2>
-  </div>
-  <div class="card">
-    <div class="split">
-      <div>
-        <p class="lead">Le 15 septembre 2026, la question «&nbsp;quel est le meilleur architecte à Genève&nbsp;?&nbsp;» a été posée quatre fois à Google AI Mode, en une heure, depuis la même machine, sans changer un seul paramètre.</p>
-        <p class="lead">Le moteur a produit <strong>trois formats de réponse incompatibles</strong> — les fiches Google mises en récit, une synthèse éditoriale où le mot «&nbsp;avis&nbsp;» n'apparaît pas une seule fois, et une liste par type de chantier en session déconnectée. Trois premières places différentes. Pas un seul bureau présent dans les trois.</p>
-        <div class="quote">
-          <p>Voilà pourquoi une réponse unique vend une photographie en la faisant passer pour un état. Dans le Relevé, chaque moteur reçoit la question <strong>deux fois, à quelques heures d'écart</strong>, en session neutre. L'analyse du chantier va plus loin&nbsp;: quatre intentions, plusieurs passages chacune.</p>
-          <p class="src">Étude sur les architectes genevois · <a href="etudes/visibilite-ia-architectes-geneve.html">lire les quatorze relevés</a></p>
-        </div>
-      </div>
-      <div class="formule">
-        <div class="fbox"><b>1</b><span>question de client</span></div>
-        <div class="fbox on"><b>3</b><span>moteurs</span></div>
-        <div class="fbox"><b>2</b><span>passages, datés à la minute</span></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="preuve">
-    <div class="pbox">
-      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 1.9"/></svg></span>
-      <b>Chaque relevé est horodaté à la minute</b>
-      <p>19h01, 19h02, 20h05. Chaque réponse est conservée telle quelle, avec son heure. Un chiffre sans heure ne se vérifie pas — donc il ne compte pas.</p>
-    </div>
-    <div class="pbox">
-      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.4 5.6 5.6 18.4"/><circle cx="12" cy="12" r="9"/></svg></span>
-      <b>Une session en compte déconnecté</b>
-      <p>Pour isoler ce qui vient de la personnalisation. C'est le passage qui a fait sortir deux bureaux absents des treize autres relevés.</p>
-    </div>
-    <div class="pbox">
-      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V6a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 1.5Z"/><path d="M8 8h7M8 12h7"/></svg></span>
-      <b>La méthode est en ligne avant que vous payiez</b>
-      <p>Protocole, relevés bruts, comptages et limites de la mesure. Vous jugez le travail sur le travail, pas sur une promesse commerciale.</p>
-    </div>
-  </div>
-
-  <div class="refuter">
-    <p>Refaites les quatorze interrogations vous-même. Si vous obtenez autre chose, écrivez-nous.</p>
-    <p>Vous obtiendrez d'ailleurs probablement autre chose, et c'est exactement le sujet&nbsp;: ces moteurs ne rendent pas deux fois la même réponse. C'est ce qui rend un passage unique inutile, et c'est pour ça qu'on multiplie les passages, sur trois moteurs. <a href="etudes/visibilite-ia-architectes-geneve.html">Le protocole complet est ici.</a></p>
-  </div>
-</section>
-
-<section class="wrap" id="recevez">
   <div class="head">
-    <span class="tag">03 — Ce que vous recevez</span>
-    <h2 class="d2">Le Relevé&nbsp;: ce que l'IA répond, réponse par réponse.</h2>
-    <p class="lead">Une page web privée, à votre nom. Vous y lisez ce que les trois moteurs ont répondu à la question qu'un de vos clients poserait — pas notre résumé.</p>
+    <span class="tag">La méthode, en quatre temps</span>
+    <h2 class="d2">On mesure d'abord. Le reste ne se décide qu'avec vous.</h2>
   </div>
-  <div class="liste">
-    <div class="li"><span class="ic">✓</span><p>La question qu'un client poserait pour trouver un professionnel de votre métier dans votre ville&nbsp;: une phrase, pas un mot-clé</p></div>
-    <div class="li"><span class="ic">✓</span><p>Trois moteurs interrogés — <strong>Google AI Mode, ChatGPT, Gemini</strong> — chacun en session neutre, jamais depuis un compte connecté</p></div>
-    <div class="li"><span class="ic">✓</span><p>Deux passages par moteur, à quelques heures d'écart&nbsp;: une réponse seule ne prouve rien</p></div>
-    <div class="li"><span class="ic">✓</span><p>Chaque réponse conservée et datée à la minute, avec les noms qui en sortent, dans l'ordre d'apparition</p></div>
-    <div class="li"><span class="ic">✓</span><p>Où vous apparaissez, et qui apparaît à votre place</p></div>
-    <div class="li"><span class="ic">✓</span><p>Une page web à votre nom, privée, que vous gardez</p></div>
-  </div>
-
-<div class="releve" style="margin-top:14px">
-    <div class="cap">
-      <b>Extrait du tableau de relevé</b>
-      <span>six lignes réelles de l'étude genevoise · une seule et même question</span>
-    </div>
-    <div class="sc">
-      <table>
-        <thead>
-          <tr><th style="width:118px">Moteur</th><th style="width:78px">Heure</th><th>Noms sortis, dans l'ordre d'apparition</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><span class="mot">Perplexity</span></td><td class="h">19:01</td><td><span class="q">HertelTan</span> <em>·</em> CORPUS <em>·</em> Devanthéry &amp; Lamunière</td></tr>
-          <tr><td><span class="mot">Google AI Mode</span></td><td class="h">19:04</td><td><span class="q">HertelTan</span> <em>·</em> Pierre Ambrosetti <em>·</em> CORPUS <em>·</em> Atelier Archiplein <em>·</em> group8 <em>·</em> FdMP <em>·</em> Favre+Guth</td></tr>
-          <tr><td><span class="mot">ChatGPT</span></td><td class="h">~19:25</td><td><span class="q">Keller Architectes</span> <em>·</em> Mazzu Architectes <em>·</em> brodbeck roulet</td></tr>
-          <tr><td><span class="mot">Gemini</span></td><td class="h">~19:42</td><td><span class="q">brodbeck roulet</span> <em>·</em> Favre+Guth <em>·</em> Atelier Jacques Bugna <em>·</em> Pierre Ambrosetti</td></tr>
-          <tr><td><span class="mot">Google AI Mode</span><br><em style="font-size:12px">2ᵉ passage</em></td><td class="h">~19:58</td><td><span class="q">meier + associés</span> <em>·</em> Pierre Ambrosetti <em>·</em> CORPUS <em>·</em> group8 <em>·</em> FdMP</td></tr>
-          <tr><td><span class="mot">Google AI Mode</span><br><em style="font-size:12px">4ᵉ passage, déconnecté</em></td><td class="h">~20:05</td><td><span class="q">Keller</span> <em>·</em> CSDK <em>·</em> ecotonos <em>·</em> CCHE Genève <em>·</em> group8 <em>·</em> FdMP <em>·</em> brodbeck roulet</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="pied">Une seule question — «&nbsp;quel est le meilleur architecte à Genève&nbsp;?&nbsp;» — le même soir, sur la même machine. Quatre bureaux différents en première place sur six lignes. Votre Relevé a cette forme, avec votre métier et votre ville. <a href="etudes/visibilite-ia-architectes-geneve.html">Voir les quatorze relevés</a></p>
-  </div>
-
-  <div class="band" style="margin-top:22px">
-    <h3>Et vous, qui l'IA cite-t-elle à votre place&nbsp;?</h3>
-    <p>Le même relevé, sur votre métier et votre ville. Offert, sur une page à votre nom.</p>
-    <a class="btn btn-p" href="#commander"><svg class="ar" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg>Demander mon Relevé — c'est offert</a>
-  </div>
-</section>
-
-<section class="wrap">
-  <div class="head">
-    <span class="tag">04 — Ce que ce n'est pas</span>
-    <h2 class="d2">Dit d'avance, pour qu'il n'y ait rien à découvrir après.</h2>
-    <p class="lead">Le Relevé mesure. Il n'exécute pas, il ne vous appelle pas, et il ne vous engage à rien.</p>
-  </div>
-  <div class="liste non">
-    <div class="li"><span class="ic">×</span><p>Aucune modification de votre site. Le Relevé mesure&nbsp;; les corrections, si vous les voulez, font partie du chantier.</p></div>
-    <div class="li"><span class="ic">×</span><p>Aucun rendez-vous obligatoire. La page vous est envoyée&nbsp;; une visio de 30 minutes reste possible si vous voulez en parler.</p></div>
-    <div class="li"><span class="ic">×</span><p>Aucun abonnement, aucune reconduction tacite, aucune carte à sortir. Le Relevé est offert&nbsp;; ce qui pourrait venir après ne se décide qu'avec vous.</p></div>
-    <div class="li"><span class="ic">×</span><p>Aucune promesse de position. Un moteur qui varie n'est pas une vérité stable, et nous ne le présentons pas comme tel.</p></div>
-  </div>
+  <ol class="temps">
+    <li class="tp on">
+      <span class="tp-n">1</span>
+      <div><h3>Le Relevé</h3><span class="tp-p">Offert</span></div>
+      <p>La question qu'un client poserait, à trois moteurs, deux fois à quelques heures d'écart. Vous lisez ce qu'ils ont répondu, qui ils citent, et où vous apparaissez.</p>
+    </li>
+    <li class="tp">
+      <span class="tp-n">2</span>
+      <div><h3>Le diagnostic</h3><span class="tp-p">Début du chantier</span></div>
+      <p>Si vous voulez aller plus loin&nbsp;: quatre questions que vos clients posent vraiment, plusieurs passages chacune. On cherche ce que les moteurs lisent chez ceux qu'ils citent.</p>
+    </li>
+    <li class="tp">
+      <span class="tp-n">3</span>
+      <div><h3>Les corrections</h3><span class="tp-p">Sur devis</span></div>
+      <p>Fiches, annuaires, avis, mentions, site lisible par l'IA. Chaque correction peut être faite par vous, votre webmaster ou nous.</p>
+    </li>
+    <li class="tp">
+      <span class="tp-n">4</span>
+      <div><h3>La re-mesure à 90 jours</h3><span class="tp-p">Comprise</span></div>
+      <p>Mêmes questions, mêmes moteurs, l'avant et l'après côte à côte. <strong>Nous ne garantissons aucun résultat&nbsp;: nous le mesurons.</strong></p>
+    </li>
+  </ol>
+  <p class="temps-pied">Ensuite, un suivi trimestriel est possible, sans reconduction tacite. Rien n'est proposé avant que vous ayez lu votre Relevé.</p>
 </section>
 
 <section class="wrap" id="commander">
   <div class="head">
-    <span class="tag">05 — Le Relevé</span>
+    <span class="tag">Le Relevé</span>
     <h2 class="d2">Il est offert. Vous le demandez, on mesure, vous lisez.</h2>
-    <p class="lead">La méthode est publiée&nbsp;: la question, les moteurs, les heures figurent sur la page. N'importe qui peut rejouer le protocole et contrôler.</p>
   </div>
   <div class="offre">
     <div class="plan">
@@ -739,22 +656,12 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,6vw,72px) 0 40px;marg
         <p class="legal">Une précision à ajouter&nbsp;? Écrivez à <a href="mailto:contact@up2front.com">contact@up2front.com</a>.</p>
       </div>
     </div>
-    <div class="grid">
-      <article class="card">
-        <span class="tag">Offert</span>
-        <h3>Zéro prix, zéro carte</h3>
-        <p>Le Relevé ne coûte rien et ne vous engage à rien. La suite, s'il y en a une, se décide avec vous.</p>
-      </article>
-      <article class="card">
-        <span class="tag">Sans engagement</span>
-        <h3>La page est à vous</h3>
-        <p>Elle reste la vôtre, que la suite se fasse avec nous ou non.</p>
-      </article>
-      <article class="card">
-        <span class="tag">Et ensuite</span>
-        <h3>Le chantier, sur devis</h3>
-        <p>Si vous voulez aller plus loin, le chantier commence par une analyse sur quatre intentions — les questions que vos clients posent vraiment. Il se chiffre sur devis, après le Relevé.</p>
-      </article>
+    <div class="liste non">
+      <div class="li"><span class="ic">×</span><p><b>Aucune modification de votre site.</b> Le Relevé mesure&nbsp;; corriger fait partie du chantier, si vous le voulez.</p></div>
+      <div class="li"><span class="ic">×</span><p><b>Aucun rendez-vous obligatoire.</b> La page vous est envoyée. Une visio de 30 minutes reste possible si vous voulez en parler.</p></div>
+      <div class="li"><span class="ic">×</span><p><b>Aucun abonnement, aucune carte.</b> Ce qui pourrait venir après ne se décide qu'avec vous.</p></div>
+      <div class="li"><span class="ic">×</span><p><b>Aucune promesse de position.</b> Un moteur qui varie n'est pas une vérité stable, et nous ne le présentons pas comme tel.</p></div>
+      <div class="li pq"><p><b>Pourquoi c'est offert&nbsp;?</b> Parce que c'est la meilleure démonstration de notre travail. Vous voyez la mesure en vrai, puis c'est vous qui décidez s'il y a une suite.</p></div>
     </div>
   </div>
 
@@ -764,133 +671,46 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,6vw,72px) 0 40px;marg
     <div class="calendly-inline-widget" data-url="https://calendly.com/contact-up2front/30min?hide_gdpr_banner=1&amp;background_color=010104&amp;text_color=f4f4f6&amp;primary_color=cffe25"></div>
     </details>
     <noscript><a class="btn btn-p" href="https://calendly.com/contact-up2front/30min">Réserver ma visio de 30 min</a></noscript>
-    <div class="suite">
-      <span><b>1.</b> Vous demandez votre Relevé</span>
-      <span><b>2.</b> On pose la question à trois moteurs</span>
-      <span><b>3.</b> On la repose quelques heures plus tard</span>
-      <span><b>4.</b> Vous recevez votre page</span>
-    </div>
-  </div>
-
-  <div class="garantie">
-    <span class="sceau" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 4 6v6c0 4.5 3.3 8.2 8 9.5 4.7-1.3 8-5 8-9.5V6l-8-3.5Z"/><path d="m8.6 12.2 2.3 2.3 4.5-4.5"/></svg>
-    </span>
-    <div>
-      <h3>Le relevé est réel. Le résultat, personne ne peut le garantir — et nous ne le ferons pas.</h3>
-      <p>Chaque Relevé contient <strong>les réponses des trois moteurs, datées à la minute</strong>, telles qu'elles ont été rendues. C'est un vrai travail de mesure, pas un argumentaire déguisé en diagnostic.</p>
-      <p class="note">En revanche, aucune promesse sur ce que les moteurs répondront. Un relevé peut très bien vous apprendre que vous sortez déjà partout : c'est une réponse, et elle a de la valeur. On mesure, on ne vend pas un classement.</p>
-    </div>
-  </div>
-
-  <div class="valeur">
-    <div class="vbox">
-      <b>Pourquoi c'est offert</b>
-      <p>Parce que c'est la meilleure démonstration de ce qu'on sait faire. Vous voyez le travail en vrai&nbsp;; ensuite, c'est <strong>vous</strong> qui décidez si vous voulez aller plus loin.</p>
-    </div>
-    <div class="vbox">
-      <b>Le faire soi-même</b>
-      <p>Trois moteurs, en session neutre, deux fois à quelques heures d'écart, chaque réponse notée à la minute&nbsp;: <strong>faisable</strong>, à condition de tenir la discipline jusqu'au bout.</p>
-    </div>
-    <div class="vbox">
-      <b>Ne rien faire</b>
-      <p>Le prospect qui pose la question à l'IA et ne voit pas votre nom ne vous appelle pas, ne vous écrit pas, et <strong>ne laisse aucune trace</strong>. Vous ne saurez jamais qu'il a existé.</p>
-    </div>
-  </div>
-</section>
-
-<section class="wrap">
-  <div class="head">
-    <span class="tag">06 — Comment ça se passe</span>
-    <h2 class="d2">Quatre étapes, dans cet ordre.</h2>
-  </div>
-  <div class="etapes">
-    <div class="et"><b>1</b><h3>Vous demandez votre Relevé</h3><p>Par e-mail&nbsp;: votre entreprise, votre métier, votre ville. C'est offert, sans carte ni engagement. Une visio reste possible si vous voulez en parler.</p></div>
-    <div class="et"><b>2</b><h3>Nous posons la question</h3><p>Celle qu'un client poserait pour vous trouver, à Google AI Mode, ChatGPT et Gemini, en session neutre. Chaque réponse est datée à la minute.</p></div>
-    <div class="et"><b>3</b><h3>Nous la reposons</h3><p>Quelques heures plus tard, aux trois mêmes moteurs. Une réponse seule ne prouve rien&nbsp;: c'est la série qui compte.</p></div>
-    <div class="et"><b>4</b><h3>Vous lisez votre page</h3><p>Une page web privée, à votre nom&nbsp;: ce que l'IA a répondu, qui elle cite, et où vous apparaissez.</p></div>
-  </div>
-
-  <div class="apres">
-    <span class="num" aria-hidden="true">5</span>
-    <div>
-      <h3>Et ensuite, si vous voulez qu'on s'en charge&nbsp;: le chantier.</h3>
-      <p>Il commence par <strong>l'analyse sur quatre intentions</strong> — les questions que vos clients posent vraiment, plusieurs passages chacune. Viennent ensuite les corrections&nbsp;: fiches, annuaires, avis, mentions, site lisible par l'IA. <strong>Le chantier se termine par une contre-mesure à 90 jours, comprise dans le prix</strong>&nbsp;: mêmes questions, mêmes moteurs, l'avant et l'après côte à côte. Un suivi trimestriel reste possible ensuite, en option.</p>
-      <p class="note">Sur devis, après le Relevé. Rien à décider en lisant votre page. Nous ne garantissons aucun résultat&nbsp;: nous le mesurons.</p>
-    </div>
   </div>
 </section>
 
 <section class="wrap" id="questions">
   <div class="head">
-    <span class="tag">07 — Les questions qu'on nous pose</span>
+    <span class="tag">Les questions qu'on nous pose</span>
     <h2 class="d2">Les objections, et ce qu'on y répond.</h2>
-    <p class="lead">Elles sont légitimes. Nous préférons y répondre ici, en clair, plutôt que dans un appel où vous n'auriez pas le temps de vérifier.</p>
   </div>
   <div class="faq">
     <article class="qa">
       <h3>«&nbsp;Je peux le faire moi-même, non&nbsp;?&nbsp;»</h3>
-      <p>Oui. Le protocole est publié, rien n'est caché, et <a href="etudes/visibilite-ia-architectes-geneve.html">l'étude</a> vous donne le mode d'emploi complet. Ce qu'on vous épargne, c'est la discipline&nbsp;: session neutre, heure notée, deuxième passage quelques heures plus tard.</p>
-      <p>Presque tous ceux qui essaient posent la question une fois, lisent la réponse et en tirent une conclusion. C'est exactement l'erreur que l'étude démontre&nbsp;: <strong>un passage unique ne prouve rien</strong>.</p>
+      <p>Oui, et la méthode est publiée. Ce qu'on vous épargne, c'est la discipline&nbsp;: session neutre, heure notée, deuxième passage quelques heures plus tard. Presque tous ceux qui essaient posent la question une fois et en tirent une conclusion. <strong>Un passage unique ne prouve rien.</strong></p>
     </article>
     <article class="qa">
-      <h3>«&nbsp;Pourquoi ne pas poser la question une fois, tout simplement&nbsp;?&nbsp;»</h3>
-      <p>Parce qu'une fois ne prouve rien. La même question posée quatre fois en une heure au même moteur a produit <strong>trois formats de réponse incompatibles et trois premières places différentes</strong>.</p>
-      <p>Une réponse unique présente donc une photographie en la faisant passer pour un état. Ce n'est pas la même chose.</p>
-    </article>
-    <article class="qa">
-      <h3>«&nbsp;Et si je sors déjà bien&nbsp;? J'aurai perdu mon temps.&nbsp;»</h3>
-      <p>Non&nbsp;: vous saurez <strong>sur quel moteur</strong> vous sortez, et à côté de qui. C'est la première chose à savoir pour ne pas le perdre par accident en refaisant son site.</p>
-      <p>Et vous repartirez avec la liste nominative de ceux qui sortent à côté de vous. Dans l'étude genevoise, aucun bureau n'atteint la moitié des relevés&nbsp;: sortir bien quelque part ne veut pas dire sortir partout.</p>
-    </article>
-    <article class="qa">
-      <h3>«&nbsp;Pourquoi ces trois moteurs&nbsp;?&nbsp;»</h3>
-      <p>Parce que ce sont <strong>les trois que vos clients utilisent le plus pour une recherche locale</strong>&nbsp;: Google AI Mode, ChatGPT et Gemini — dont le premier, intégré à Google, répond directement dans la page de résultats, sans que personne n'ouvre une autre application.</p>
-      <p>Et parce qu'on ne relève un moteur que <strong>s'il peut l'être proprement, sans compte connecté</strong> — un moteur connecté répondrait selon l'historique du compte, donc il mesurerait nos habitudes, pas votre visibilité. Les trois sont interrogés en session neutre et déconnectée, comme dans l'étude publiée. Aucune personnalisation&nbsp;: un chiffre non reproductible n'a rien à faire dans un rapport.</p>
-      <p><strong>Les moteurs ne rendent pas tous la même chose, et le Relevé ne fait pas semblant du contraire.</strong> Certains affichent les sources de leurs réponses, d'autres nomment des entreprises dans un texte rédigé, sans lien. La page montre donc ce que chacun a rendu, tel quel&nbsp;: les <strong>mentions</strong> partout, et les <strong>sources affichées</strong> là où elles existent.</p>
-      <p style="color:var(--txt-3);font-size:13.5px">À noter&nbsp;: l'<a href="etudes/visibilite-ia-architectes-geneve.html" style="color:var(--lime)">étude publiée sur les architectes</a> est un relevé daté du 15 septembre, réalisé sur quatre moteurs. Les relevés se font aujourd'hui sur trois moteurs&nbsp;; le chiffre historique de l'étude, lui, ne se réécrit pas.</p>
-    </article>
-    <article class="qa">
-      <h3>«&nbsp;Les moteurs changent sans arrêt. Votre relevé sera périmé dans un mois.&nbsp;»</h3>
-      <p>Le classement, oui. Ce qui le décide, beaucoup moins vite&nbsp;: les avis, l'ancienneté, les affiliations, la spécialisation affichée. L'analyse du chantier s'attache <strong>au mécanisme, pas seulement à l'instantané</strong>.</p>
-      <p>Et parce que tout est horodaté à la minute, le relevé reste comparable&nbsp;: c'est un point de départ mesurable, pas une opinion à la date du jour.</p>
-      <p>Reste le cas où vous disparaissez d'un moteur sans le savoir — cela arrive du jour au lendemain, après une refonte ou un changement du moteur lui-même. Pour ceux qui le veulent, un suivi trimestriel optionnel, après le chantier, rejoue vos quatre intentions et vous alerte dans ce cas, sans reconduction tacite. On en parle si vous le souhaitez, <strong>jamais avant que vous ayez lu votre Relevé</strong>, et il n'existe pas sans mesure de départ — sans état de départ, il n'y aurait rien à comparer.</p>
+      <h3>«&nbsp;Et si je sors déjà bien&nbsp;?&nbsp;»</h3>
+      <p>Vous saurez <strong>sur quel moteur</strong>, et à côté de qui. C'est la première chose à savoir pour ne pas perdre cette place par accident, en refaisant votre site par exemple.</p>
     </article>
     <article class="qa">
       <h3>«&nbsp;C'est du SEO, en fait&nbsp;?&nbsp;»</h3>
-      <p>Non. Le SEO travaille votre rang dans une liste de liens bleus. Ici, on mesure <strong>ce qu'une machine dit de vous</strong> quand elle répond à votre place, sans que personne ne clique sur rien.</p>
-      <p>Les deux terrains se recoupent en partie, mais pas complètement — et les moteurs ne se recoupent pas entre eux non plus&nbsp;: dans l'étude, <strong>les trois premiers de Gemini n'apparaissent pas dans la réponse de Google AI Mode</strong>, et inversement. Deux produits de la même maison, quarante minutes d'écart.</p>
+      <p>Non. Le SEO travaille votre rang dans une liste de liens. Ici, on mesure <strong>ce qu'une machine dit de vous</strong> quand elle répond à votre place, sans que personne ne clique. Les deux se recoupent en partie seulement.</p>
     </article>
     <article class="qa">
-      <h3>«&nbsp;J'ai déjà vu un classement IA de mon métier. C'est la même chose&nbsp;?&nbsp;»</h3>
-      <p>Regardez quels assistants il interroge, et si le mode IA de Google en fait partie. Un classement public montre qui gagne, pas pourquoi vous manquez.</p>
-      <p>Notre relevé est <strong>privé, à votre nom, réponse par réponse, avec le plan pour corriger</strong>.</p>
-    </article>
-    <article class="qa">
-      <h3>«&nbsp;Faut-il être technique pour s'en servir&nbsp;?&nbsp;»</h3>
-      <p>Non. Le Relevé est en français, sans jargon&nbsp;: vous lisez ce que l'IA a répondu, comme un client le lirait.</p>
-      <p>Si vous lancez le chantier, chaque correction est <strong>exécutable par vous, par votre webmaster, ou par nous</strong>. Rien ne vous oblige à revenir vers nous.</p>
-    </article>
-    <article class="qa">
-      <h3>«&nbsp;Et le Relevé va conclure qu'il faut vous acheter autre chose, c'est ça&nbsp;?&nbsp;»</h3>
-      <p>Le Relevé ne conclut rien&nbsp;: il montre ce que l'IA a répondu. C'est vous qui jugez s'il y a quelque chose à corriger.</p>
-      <p>Si vous voulez nous confier le chantier, on en parle — mais rien ne part de lui-même&nbsp;: <strong>c'est vous qui le demandez, ou personne</strong>. Le Relevé, lui, reste offert quoi qu'il arrive.</p>
+      <h3>«&nbsp;Le Relevé va conclure qu'il faut vous acheter autre chose&nbsp;?&nbsp;»</h3>
+      <p>Le Relevé ne conclut rien&nbsp;: il montre ce que l'IA a répondu. C'est vous qui jugez. <strong>Le chantier, c'est vous qui le demandez, ou personne.</strong></p>
     </article>
   </div>
+  <p class="temps-pied">Pour aller plus loin&nbsp;: <a href="etudes/visibilite-ia-architectes-geneve.html">notre étude publiée sur les architectes genevois</a>, quatorze relevés horodatés, et <a href="verificateur.html">le vérificateur en 1 minute</a>.</p>
 </section>
 
 <div class="wrap">
   <div class="final">
     <span class="eyebrow">Commander</span>
     <h2 class="d2 duo" style="margin-top:24px"><span class="f">Savoir où vous en êtes,</span> <b>avant vos concurrents.</b></h2>
-    <p class="lead">Le Relevé est offert, sur une page web à votre nom. Sans engagement&nbsp;: aucune carte, aucune reconduction, rien ne se déclenche derrière. Une visio reste possible si vous voulez en parler.</p>
     <div class="cta">
       <a class="btn btn-p" href="#commander"><svg class="ar" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg>Demander mon Relevé</a>
       <a class="btn btn-o" href="#reserver">En parler en visio (30 min)</a>
     </div>
     <div class="sign">
       <span class="av" aria-hidden="true">AT</span>
-      <p><strong>Alexandre Tranchant</strong> — c'est moi qui vous envoie le Relevé, qui réponds à vos questions et qui vous accompagne. Une question sur le protocole, un délai, un secteur&nbsp;? <a href="mailto:contact@up2front.com">contact@up2front.com</a>, je réponds le jour même du lundi au vendredi.</p>
+      <p><strong>Alexandre Tranchant</strong> — c'est moi qui vous envoie le Relevé et qui réponds à vos questions. <a href="mailto:contact@up2front.com">contact@up2front.com</a>, je réponds le jour même du lundi au vendredi.</p>
     </div>
   </div>
 </div>
@@ -934,12 +754,10 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,6vw,72px) 0 40px;marg
 {"@type":"ListItem","position":1,"name":"Up2Front","item":"https://up2front.com/"},
 {"@type":"ListItem","position":2,"name":"Visibilité IA","item":"https://up2front.com/visibilite-ia.html"}]},
 {"@type":"FAQPage","@id":"https://up2front.com/visibilite-ia.html#faq","mainEntity":[
-{"@type":"Question","name":"Peut-on mesurer soi-même sa visibilité dans les moteurs de réponse ?","acceptedAnswer":{"@type":"Answer","text":"Oui : le protocole est publié. Le Relevé Up2Front est offert ; ce qu'il vous épargne, c'est la discipline : session neutre, heure notée, deuxième passage quelques heures plus tard. L'erreur courante est de poser la question une seule fois, alors qu'un passage unique ne prouve rien."}},
-{"@type":"Question","name":"Pourquoi ne pas poser la question une seule fois ?","acceptedAnswer":{"@type":"Answer","text":"Parce qu'une fois ne prouve rien. La même question posée quatre fois en une heure au même moteur a produit trois formats de réponse incompatibles et trois premières places différentes. Une réponse unique vend une photographie en la faisant passer pour un état."}},
-{"@type":"Question","name":"Et si je sors déjà bien dans les réponses générées ?","acceptedAnswer":{"@type":"Answer","text":"Le Relevé indique sur quel moteur vous sortez et à côté de qui, ce qui évite de perdre cette position par accident. Dans l'étude genevoise, aucun bureau n'atteint la moitié des relevés."}},
-{"@type":"Question","name":"Un relevé de visibilité IA n'est-il pas périmé au bout d'un mois ?","acceptedAnswer":{"@type":"Answer","text":"Le classement bouge, mais ce qui le décide bouge beaucoup plus lentement : avis, ancienneté, affiliations, spécialisation affichée. L'analyse du chantier s'attache au mécanisme et non au seul instantané, et l'horodatage à la minute rend chaque mesure comparable dans le temps."}},
-{"@type":"Question","name":"La visibilité dans les moteurs de réponse, est-ce du SEO ?","acceptedAnswer":{"@type":"Answer","text":"Non. Le SEO travaille le rang dans une liste de liens. Ici on mesure ce qu'une machine dit d'une entreprise quand elle répond à sa place, sans clic. Les moteurs ne se recoupent pas non plus entre eux : dans l'étude genevoise, les trois premiers de Gemini n'apparaissent pas dans la réponse de Google AI Mode, et inversement."}},
-{"@type":"Question","name":"Faut-il des compétences techniques pour lire le Relevé ?","acceptedAnswer":{"@type":"Answer","text":"Non. Le Relevé est en français, sans jargon : on y lit ce que l'IA a répondu, comme un client le lirait."}}]}
+{"@type":"Question","name":"Peut-on mesurer soi-même sa visibilité dans les moteurs de réponse ?","acceptedAnswer":{"@type":"Answer","text":"Oui, la méthode est publiée. Le Relevé Up2Front, offert, épargne la discipline : session neutre, heure notée, deuxième passage quelques heures plus tard. Un passage unique ne prouve rien."}},
+{"@type":"Question","name":"Et si je sors déjà bien dans les réponses de l'IA ?","acceptedAnswer":{"@type":"Answer","text":"Le Relevé indique sur quel moteur vous sortez et à côté de qui, ce qui évite de perdre cette place par accident."}},
+{"@type":"Question","name":"La visibilité dans les moteurs de réponse, est-ce du SEO ?","acceptedAnswer":{"@type":"Answer","text":"Non. Le SEO travaille le rang dans une liste de liens. Ici on mesure ce qu'une machine dit d'une entreprise quand elle répond à sa place, sans clic."}},
+{"@type":"Question","name":"Le Relevé conclut-il qu'il faut acheter autre chose ?","acceptedAnswer":{"@type":"Answer","text":"Non. Le Relevé montre ce que l'IA a répondu ; c'est l'entreprise qui juge. Le chantier n'existe que si elle le demande."}}]}
 ]}
 </script>
 
@@ -989,6 +807,44 @@ f.addEventListener('submit',function(e){
   .then(function(r){ if(!r.ok) throw 0; reussi(d); })
   .catch(function(){ repli(d,'L\'envoi n\'a pas abouti, votre demande n\'est pas perdue :'); });
 });
+})();
+</script>
+
+<script>
+/* Animations de la version courte : la question se tape, les réponses arrivent, les noms se surlignent.
+   Sans JavaScript ou avec « réduire les animations », tout est affiché d'emblée. */
+(function(){
+var reduit=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function quand(el,fn){ if(!el) return; if(reduit||!('IntersectionObserver' in window)){fn();return;}
+  var io=new IntersectionObserver(function(e){ if(e[0].isIntersecting){io.disconnect();fn();} },{threshold:.3}); io.observe(el); }
+var conv=document.querySelector('[data-conv]');
+if(conv){
+  var t=conv.querySelector('[data-type]'), txt=t.getAttribute('data-type'), reps=conv.querySelectorAll('.rep');
+  function montrer(){ conv.classList.add('vu');
+    reps.forEach(function(r,i){ setTimeout(function(){ r.classList.add('lu'); }, reduit?0:700+i*380); });
+    setTimeout(function(){ conv.classList.add('fini'); }, reduit?0:700+reps.length*380+500); }
+  if(reduit){ conv.classList.add('vu','fini'); reps.forEach(function(r){r.classList.add('lu');}); }
+  else {
+    var tn=document.createTextNode(''), c=document.createElement('span'); c.className='caret';
+    t.textContent=''; t.appendChild(tn); t.appendChild(c);
+    quand(conv,function(){ var i=0; (function tape(){
+      if(i<=txt.length){ tn.nodeValue=txt.slice(0,i++); setTimeout(tape,26+Math.random()*34); }
+      else setTimeout(function(){ c.remove(); montrer(); },350);
+    })(); });
+  }
+}
+if(conv){
+  var marks=conv.querySelectorAll('mark[data-n]');
+  function allume(n){ conv.classList.toggle('survol',!!n); marks.forEach(function(m){ m.classList.toggle('x', !!n && m.dataset.n===n); }); }
+  marks.forEach(function(m){
+    m.addEventListener('mouseenter',function(){ allume(m.dataset.n); });
+    m.addEventListener('focus',function(){ allume(m.dataset.n); });
+    m.addEventListener('mouseleave',function(){ allume(null); });
+    m.addEventListener('blur',function(){ allume(null); });
+  });
+}
+var temps=document.querySelector('.temps');
+quand(temps,function(){ temps.classList.add('vu'); });
 })();
 </script>
 
