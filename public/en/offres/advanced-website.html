@@ -29,81 +29,100 @@
 <link rel="stylesheet" href="../../assets/polices/polices.css">
 <link rel="stylesheet" href="../../assets/u2f.css">
 <link rel="stylesheet" href="../../assets/u2f-pages.css">
-<script type="application/ld+json">{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": [
-        "Organization",
-        "ProfessionalService"
-      ],
-      "@id": "https://up2front.com/#organisation",
-      "name": "Up2Front",
-      "url": "https://up2front.com/",
-      "email": "contact@up2front.com",
-      "logo": "https://up2front.com/icone-512.png",
-      "image": "https://up2front.com/og-image.png",
-      "description": "Professional website design for Swiss SMEs. Firm packages from CHF 290, delivered from 2 days.",
-      "foundingDate": "2026",
-      "founder": {
-        "@type": "Person",
-        "name": "Maxime Pilloud"
-      },
-      "areaServed": {
-        "@type": "Country",
-        "name": "Switzerland"
-      },
-      "knowsLanguage": [
-        "fr",
-        "en",
-        "de",
-        "it"
-      ],
-      "currenciesAccepted": "CHF",
-      "priceRange": "CHF 290 – CHF 690"
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": [
+    "Organization",
+    "ProfessionalService"
+   ],
+   "@id": "https://up2front.com/#organisation",
+   "name": "Up2Front",
+   "alternateName": "Up2Front Genève",
+   "url": "https://up2front.com/",
+   "email": "contact@up2front.com",
+   "logo": "https://up2front.com/icone-512.png",
+   "image": "https://up2front.com/og-image.png",
+   "description": "Geneva web agency: fixed-price professional websites for Swiss SMEs (from CHF 290, delivered from 2 days) and measurement of how businesses appear in AI answer engines (Google AI Mode, ChatGPT, Gemini).",
+   "foundingDate": "2026",
+   "founder": {
+    "@type": "Person",
+    "@id": "https://up2front.com/#maxime-pilloud",
+    "name": "Maxime Pilloud",
+    "jobTitle": "Fondateur"
+   },
+   "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Genève",
+    "postalCode": "1205",
+    "addressCountry": "CH"
+   },
+   "areaServed": {
+    "@type": "Country",
+    "name": "Suisse"
+   },
+   "knowsLanguage": [
+    "fr",
+    "en",
+    "de",
+    "it"
+   ],
+   "knowsAbout": [
+    "Création de sites web",
+    "Visibilité dans les moteurs de réponse IA",
+    "Generative Engine Optimization (GEO)",
+    "Google AI Mode",
+    "ChatGPT",
+    "Référencement naturel (SEO)"
+   ],
+   "currenciesAccepted": "CHF",
+   "priceRange": "CHF 290 – CHF 690"
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://up2front.com/#site",
+   "url": "https://up2front.com/",
+   "name": "Up2Front",
+   "inLanguage": "fr-CH",
+   "publisher": {
+    "@id": "https://up2front.com/#organisation"
+   }
+  },
+  {
+   "@type": "Service",
+   "@id": "https://up2front.com/offres/advanced-website.html#offre",
+   "name": "Site Étendu",
+   "serviceType": "Création de site web",
+   "description": "Up to seven pages, in three languages, with a language switcher and hreflang tags on every page. Twenty-one pages produced and proofread.",
+   "url": "https://up2front.com/offres/advanced-website.html",
+   "provider": {
+    "@id": "https://up2front.com/#organisation"
+   },
+   "areaServed": {
+    "@type": "Country",
+    "name": "Switzerland"
+   },
+   "offers": {
+    "@type": "Offer",
+    "price": "690",
+    "priceCurrency": "CHF",
+    "url": "https://up2front.com/offres/advanced-website-commande.html",
+    "availability": "https://schema.org/InStock",
+    "deliveryLeadTime": {
+     "@type": "QuantitativeValue",
+     "value": 5,
+     "unitCode": "DAY"
     },
-    {
-      "@type": "WebSite",
-      "@id": "https://up2front.com/#site",
-      "url": "https://up2front.com/",
-      "name": "Up2Front",
-      "inLanguage": "fr-CH",
-      "publisher": {
-        "@id": "https://up2front.com/#organisation"
-      }
-    },
-    {
-      "@type": "Service",
-      "@id": "https://up2front.com/offres/advanced-website.html#offre",
-      "name": "Site Étendu",
-      "serviceType": "Création de site web",
-      "description": "Up to seven pages, in three languages, with a language switcher and hreflang tags on every page. Twenty-one pages produced and proofread.",
-      "url": "https://up2front.com/offres/advanced-website.html",
-      "provider": {
-        "@id": "https://up2front.com/#organisation"
-      },
-      "areaServed": {
-        "@type": "Country",
-        "name": "Switzerland"
-      },
-      "offers": {
-        "@type": "Offer",
-        "price": "690",
-        "priceCurrency": "CHF",
-        "url": "https://up2front.com/offres/advanced-website-commande.html",
-        "availability": "https://schema.org/InStock",
-        "deliveryLeadTime": {
-          "@type": "QuantitativeValue",
-          "value": 5,
-          "unitCode": "DAY"
-        },
-        "seller": {
-          "@id": "https://up2front.com/#organisation"
-        }
-      }
+    "seller": {
+     "@id": "https://up2front.com/#organisation"
     }
-  ]
-}</script>
+   }
+  }
+ ]
+}
+</script>
 </head>
 <body>
 <a class="saut-contenu" href="#contenu">Skip to content</a>

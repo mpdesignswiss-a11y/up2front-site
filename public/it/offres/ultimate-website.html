@@ -29,81 +29,100 @@
 <link rel="stylesheet" href="../../assets/polices/polices.css">
 <link rel="stylesheet" href="../../assets/u2f.css">
 <link rel="stylesheet" href="../../assets/u2f-pages.css">
-<script type="application/ld+json">{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": [
-        "Organization",
-        "ProfessionalService"
-      ],
-      "@id": "https://up2front.com/#organisation",
-      "name": "Up2Front",
-      "url": "https://up2front.com/",
-      "email": "contact@up2front.com",
-      "logo": "https://up2front.com/icone-512.png",
-      "image": "https://up2front.com/og-image.png",
-      "description": "Creazione di siti web professionali per le PMI svizzere. Pacchetti a prezzo fisso da CHF 290, consegna da 2 giorni.",
-      "foundingDate": "2026",
-      "founder": {
-        "@type": "Person",
-        "name": "Maxime Pilloud"
-      },
-      "areaServed": {
-        "@type": "Country",
-        "name": "Svizzera"
-      },
-      "knowsLanguage": [
-        "fr",
-        "en",
-        "de",
-        "it"
-      ],
-      "currenciesAccepted": "CHF",
-      "priceRange": "CHF 290 – CHF 690"
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": [
+    "Organization",
+    "ProfessionalService"
+   ],
+   "@id": "https://up2front.com/#organisation",
+   "name": "Up2Front",
+   "alternateName": "Up2Front Genève",
+   "url": "https://up2front.com/",
+   "email": "contact@up2front.com",
+   "logo": "https://up2front.com/icone-512.png",
+   "image": "https://up2front.com/og-image.png",
+   "description": "Agenzia web di Ginevra: siti professionali a prezzo fisso per le PMI svizzere (da CHF 290, consegna da 2 giorni) e misurazione della visibilità delle aziende nei motori di risposta IA (Google AI Mode, ChatGPT, Gemini).",
+   "foundingDate": "2026",
+   "founder": {
+    "@type": "Person",
+    "@id": "https://up2front.com/#maxime-pilloud",
+    "name": "Maxime Pilloud",
+    "jobTitle": "Fondateur"
+   },
+   "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Genève",
+    "postalCode": "1205",
+    "addressCountry": "CH"
+   },
+   "areaServed": {
+    "@type": "Country",
+    "name": "Suisse"
+   },
+   "knowsLanguage": [
+    "fr",
+    "en",
+    "de",
+    "it"
+   ],
+   "knowsAbout": [
+    "Création de sites web",
+    "Visibilité dans les moteurs de réponse IA",
+    "Generative Engine Optimization (GEO)",
+    "Google AI Mode",
+    "ChatGPT",
+    "Référencement naturel (SEO)"
+   ],
+   "currenciesAccepted": "CHF",
+   "priceRange": "CHF 290 – CHF 690"
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://up2front.com/#site",
+   "url": "https://up2front.com/",
+   "name": "Up2Front",
+   "inLanguage": "fr-CH",
+   "publisher": {
+    "@id": "https://up2front.com/#organisation"
+   }
+  },
+  {
+   "@type": "Service",
+   "@id": "https://up2front.com/offres/ultimate-website.html#offre",
+   "name": "Site Complet",
+   "serviceType": "Création de site web",
+   "description": "Fino a cinque pagine, con navigazione, link interni e metadati propri di ogni pagina. Tutto quello che contiene la Landing Pro, in versione multipagina.",
+   "url": "https://up2front.com/offres/ultimate-website.html",
+   "provider": {
+    "@id": "https://up2front.com/#organisation"
+   },
+   "areaServed": {
+    "@type": "Country",
+    "name": "Svizzera"
+   },
+   "offers": {
+    "@type": "Offer",
+    "price": "490",
+    "priceCurrency": "CHF",
+    "url": "https://up2front.com/offres/ultimate-website-commande.html",
+    "availability": "https://schema.org/InStock",
+    "deliveryLeadTime": {
+     "@type": "QuantitativeValue",
+     "value": 3,
+     "unitCode": "DAY"
     },
-    {
-      "@type": "WebSite",
-      "@id": "https://up2front.com/#site",
-      "url": "https://up2front.com/",
-      "name": "Up2Front",
-      "inLanguage": "fr-CH",
-      "publisher": {
-        "@id": "https://up2front.com/#organisation"
-      }
-    },
-    {
-      "@type": "Service",
-      "@id": "https://up2front.com/offres/ultimate-website.html#offre",
-      "name": "Site Complet",
-      "serviceType": "Création de site web",
-      "description": "Fino a cinque pagine, con navigazione, link interni e metadati propri di ogni pagina. Tutto quello che contiene la Landing Pro, in versione multipagina.",
-      "url": "https://up2front.com/offres/ultimate-website.html",
-      "provider": {
-        "@id": "https://up2front.com/#organisation"
-      },
-      "areaServed": {
-        "@type": "Country",
-        "name": "Svizzera"
-      },
-      "offers": {
-        "@type": "Offer",
-        "price": "490",
-        "priceCurrency": "CHF",
-        "url": "https://up2front.com/offres/ultimate-website-commande.html",
-        "availability": "https://schema.org/InStock",
-        "deliveryLeadTime": {
-          "@type": "QuantitativeValue",
-          "value": 3,
-          "unitCode": "DAY"
-        },
-        "seller": {
-          "@id": "https://up2front.com/#organisation"
-        }
-      }
+    "seller": {
+     "@id": "https://up2front.com/#organisation"
     }
-  ]
-}</script>
+   }
+  }
+ ]
+}
+</script>
 </head>
 <body>
 <a class="saut-contenu" href="#contenu">Vai al contenuto</a>
