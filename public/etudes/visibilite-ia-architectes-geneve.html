@@ -20,7 +20,7 @@
   :root{
     --bg:#010104; --bg-2:#0A0A0D; --bg-3:#121216;
     --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.16);
-    --txt:#fff; --txt-2:#9C9CA2; --txt-3:#6A6A72;
+    --txt:#fff; --txt-2:#9C9CA2; --txt-3:#8A8A93;
     --accent:#CFFE25; --perplexity:#A78BC4; --pos:#6FAF8B; --neg:#C4685E; --blue:#7E9CC4;
     --sans:"Mona Sans Variable","Mona Sans",-apple-system,"Segoe UI",system-ui,sans-serif;
   }
@@ -180,11 +180,11 @@
 
   @media(max-width:760px){
     .wrap{padding:0 22px}
-    .stats,.worlds,.blocks{grid-template-columns:1fr}
+    .stats,.worlds,.worlds.three,.blocks{grid-template-columns:1fr}
     .rev{grid-template-columns:1fr;gap:8px}
     .rev span{text-align:left}
     .meta{gap:26px}
-    table{font-size:12.5px}
+    table{font-size:12.5px;display:block;overflow-x:auto;max-width:100%}
     .dock{left:12px;right:12px;bottom:12px;transform:translateY(140%);
       padding:12px 12px 12px 18px;gap:12px}
     .dock.on{transform:translateY(0)}
