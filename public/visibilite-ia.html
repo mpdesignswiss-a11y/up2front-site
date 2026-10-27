@@ -258,8 +258,46 @@ section{padding:clamp(66px,9vw,116px) 0}
 .plan li{display:grid;grid-template-columns:auto 1fr;gap:11px;font-size:14.5px;line-height:1.5}
 .plan li i{font-style:normal;width:17px;height:17px;border-radius:50%;background:rgba(1,1,4,.14);
   display:grid;place-items:center;font-size:10px;margin-top:2px}
-.plan .btn{margin-top:auto;width:100%}
+.plan>.btn{margin-top:auto;width:100%}
 .plan .legal{margin-top:16px;font-size:12.5px;line-height:1.5;color:rgba(1,1,4,.6)}
+.plan .legal a{text-decoration:underline;text-underline-offset:2px;color:#010104}
+/* ---------- formulaire de demande ---------- */
+.dem{display:grid;gap:12px;margin-top:auto}
+.dem-t{font-size:16px;font-weight:600;letter-spacing:-.025em;margin-bottom:2px}
+.ch2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.ch2{grid-template-columns:1fr}}
+.ch{display:grid;gap:6px;font-size:13px;font-weight:500;letter-spacing:-.01em;color:rgba(1,1,4,.78)}
+.ch input{font:inherit;font-size:16px;font-weight:400;color:#010104;background:rgba(255,255,255,.55);
+  border:1px solid rgba(1,1,4,.18);border-radius:14px;padding:13px 15px;width:100%;
+  transition:border-color .25s,background .25s,box-shadow .25s}
+.ch input::placeholder{color:rgba(1,1,4,.42)}
+.ch input:hover{background:rgba(255,255,255,.72)}
+.ch input:focus{outline:none;background:#fff;border-color:#010104;box-shadow:0 0 0 3px rgba(1,1,4,.12)}
+.ch input[aria-invalid="true"]{border-color:#B3261E;box-shadow:0 0 0 3px rgba(179,38,30,.14)}
+.plus{border-top:1px solid rgba(1,1,4,.14);padding-top:12px}
+.plus summary{cursor:pointer;font-size:13.5px;font-weight:500;list-style:none;display:flex;align-items:center;gap:8px}
+.plus summary::-webkit-details-marker{display:none}
+.plus summary::before{content:"+";width:18px;height:18px;border-radius:50%;background:rgba(1,1,4,.12);
+  display:grid;place-items:center;font-size:13px;transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.plus[open] summary::before{transform:rotate(45deg)}
+.plus summary em{font-style:normal;font-weight:400;color:rgba(1,1,4,.55)}
+.plus[open]{display:grid;gap:14px}
+.dem[hidden],.ok[hidden]{display:none}
+#commander{scroll-margin-top:84px}
+.pot{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.dem .btn{margin-top:6px;width:100%}
+.dem .btn[disabled]{opacity:.6;cursor:progress;transform:none}
+.dem .err{font-size:13.5px;line-height:1.5;color:#7A1A14;background:rgba(255,255,255,.6);
+  border-radius:12px;padding:10px 14px}
+.dem .err a{text-decoration:underline;font-weight:500}
+.ok{margin-top:auto;display:grid;gap:12px;padding:6px 0;animation:okIn .7s cubic-bezier(.16,1,.3,1)}
+.ok-i{width:46px;height:46px;border-radius:50%;background:#010104;color:var(--lime);display:grid;place-items:center}
+.ok-i svg{width:22px;height:22px;stroke-dasharray:24;stroke-dashoffset:24;animation:okTrait .6s .25s cubic-bezier(.16,1,.3,1) forwards}
+.ok h4{font-size:26px;font-weight:500;letter-spacing:-.04em}
+.ok p{font-size:14.5px;line-height:1.55}
+@keyframes okIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes okTrait{to{stroke-dashoffset:0}}
+@media(prefers-reduced-motion:reduce){.ok,.ok-i svg{animation:none;stroke-dashoffset:0}}
 
 /* ---------- reconnaissance ---------- */
 .reco{margin-top:clamp(28px,3vw,40px);background:var(--bg-2);border:1px solid var(--line);
@@ -672,18 +710,34 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,6vw,72px) 0 40px;marg
     <div class="plan">
       <span class="pop">Offert</span>
       <h3>Le Relevé de visibilité IA</h3>
-      <p class="sub">Ce que les moteurs de réponse recommandent quand on leur demande un professionnel de votre métier dans votre ville.</p>
+      <p class="sub">La question qu'un client poserait, posée à Google AI Mode, ChatGPT et Gemini, deux fois à quelques heures d'écart. Chaque réponse datée à la minute, sur une page privée à votre nom.</p>
       <div class="amount"><b>Offert</b><span>sur une page web à votre nom<br>sans carte, sans engagement</span></div>
-      <h4>Ce que vous recevez :</h4>
-      <ul>
-        <li><i>✓</i>La question qu'un client poserait</li>
-        <li><i>✓</i>Trois moteurs&nbsp;: Google AI Mode, ChatGPT, Gemini</li>
-        <li><i>✓</i>Deux passages, à quelques heures d'écart</li>
-        <li><i>✓</i>Chaque réponse conservée et datée à la minute</li>
-        <li><i>✓</i>Une page privée, à votre nom</li>
-      </ul>
-      <a class="btn btn-w" href="mailto:contact@up2front.com?subject=Mon%20Relev%C3%A9%20de%20visibilit%C3%A9%20IA%20%E2%80%94%20offert&amp;body=Bonjour%2C%0A%0AJe%20souhaite%20recevoir%20mon%20Relev%C3%A9%20offert.%0A%0AEntreprise%20%3A%0AActivit%C3%A9%20exacte%20%3A%0AVille%20ou%20zone%20%3A%0ASite%20web%20%3A%0ALa%20question%20qu'un%20client%20vous%20poserait%20(facultatif)%20%3A%0A%0ACordialement%2C%0A"><svg class="ar" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg>Demander mon Relevé</a>
-      <p class="legal">Écrivez-nous votre entreprise, votre métier et votre ville&nbsp;: c'est tout ce qu'il faut. Vous voulez en parler d'abord&nbsp;? <a href="#reserver">Réservez 30 minutes en visio</a>, si vous le souhaitez.</p>
+      <form class="dem" id="demande" novalidate>
+        <p class="dem-t">Cinq champs, une minute.</p>
+        <div class="ch2">
+          <label class="ch"><span>Prénom et nom</span><input name="nom" autocomplete="name" required></label>
+          <label class="ch"><span>E-mail professionnel</span><input name="email" type="email" autocomplete="email" inputmode="email" required></label>
+        </div>
+        <label class="ch"><span>Entreprise</span><input name="entreprise" autocomplete="organization" required></label>
+        <div class="ch2">
+          <label class="ch"><span>Votre métier</span><input name="metier" placeholder="ex. installateur de pompes à chaleur" required></label>
+          <label class="ch"><span>Ville ou zone</span><input name="ville" autocomplete="address-level2" placeholder="ex. Genève" required></label>
+        </div>
+        <details class="plus"><summary>Ajouter votre site ou la question d'un client <em>facultatif</em></summary>
+          <label class="ch"><span>Site web</span><input name="site" type="url" inputmode="url" autocomplete="url" placeholder="https://"></label>
+          <label class="ch"><span>La question qu'un client vous poserait</span><input name="question" placeholder="ex. qui installe une PAC rapidement à Genève ?"></label>
+        </details>
+        <input type="checkbox" name="botcheck" class="pot" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn btn-w" type="submit"><svg class="ar" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg><span class="lbl">Demander mon Relevé</span></button>
+        <p class="err" role="alert" hidden></p>
+        <p class="legal">Ces informations servent uniquement à préparer votre Relevé et à vous l'envoyer (<a href="legal/confidentialite.html">confidentialité</a>). Vous préférez un e-mail&nbsp;? <a class="mail-repli" href="mailto:contact@up2front.com">contact@up2front.com</a> · ou <a href="#reserver">30 minutes en visio</a>.</p>
+      </form>
+      <div class="ok" id="demande-ok" hidden tabindex="-1">
+        <span class="ok-i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
+        <h4>C'est reçu.</h4>
+        <p>Nous posons la question <b class="ok-q"></b> aux trois moteurs, puis la reposons quelques heures plus tard. Votre page arrive à <b class="ok-m"></b>.</p>
+        <p class="legal">Une précision à ajouter&nbsp;? Écrivez à <a href="mailto:contact@up2front.com">contact@up2front.com</a>.</p>
+      </div>
     </div>
     <div class="grid">
       <article class="card">
@@ -831,7 +885,7 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,6vw,72px) 0 40px;marg
     <h2 class="d2 duo" style="margin-top:24px"><span class="f">Savoir où vous en êtes,</span> <b>avant vos concurrents.</b></h2>
     <p class="lead">Le Relevé est offert, sur une page web à votre nom. Sans engagement&nbsp;: aucune carte, aucune reconduction, rien ne se déclenche derrière. Une visio reste possible si vous voulez en parler.</p>
     <div class="cta">
-      <a class="btn btn-p" href="mailto:contact@up2front.com?subject=Mon%20Relev%C3%A9%20de%20visibilit%C3%A9%20IA%20%E2%80%94%20offert&amp;body=Bonjour%2C%0A%0AJe%20souhaite%20recevoir%20mon%20Relev%C3%A9%20offert.%0A%0AEntreprise%20%3A%0AActivit%C3%A9%20exacte%20%3A%0AVille%20ou%20zone%20%3A%0ASite%20web%20%3A%0ALa%20question%20qu'un%20client%20vous%20poserait%20(facultatif)%20%3A%0A%0ACordialement%2C%0A"><svg class="ar" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg>Demander mon Relevé</a>
+      <a class="btn btn-p" href="#commander"><svg class="ar" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg>Demander mon Relevé</a>
       <a class="btn btn-o" href="#reserver">En parler en visio (30 min)</a>
     </div>
     <div class="sign">
@@ -887,6 +941,55 @@ footer{border-top:1px solid var(--line);padding:clamp(48px,6vw,72px) 0 40px;marg
 {"@type":"Question","name":"La visibilité dans les moteurs de réponse, est-ce du SEO ?","acceptedAnswer":{"@type":"Answer","text":"Non. Le SEO travaille le rang dans une liste de liens. Ici on mesure ce qu'une machine dit d'une entreprise quand elle répond à sa place, sans clic. Les moteurs ne se recoupent pas non plus entre eux : dans l'étude genevoise, les trois premiers de Gemini n'apparaissent pas dans la réponse de Google AI Mode, et inversement."}},
 {"@type":"Question","name":"Faut-il des compétences techniques pour lire le Relevé ?","acceptedAnswer":{"@type":"Answer","text":"Non. Le Relevé est en français, sans jargon : on y lit ce que l'IA a répondu, comme un client le lirait."}}]}
 ]}
+</script>
+
+<script>
+/* Demande de Relevé : envoi sur la page, vers le webhook Make (UE), qui écrit à Max.
+   Make répond « Accepted » avec CORS ouvert (testé le 27.10.2026). En cas d'échec, on propose un e-mail déjà rempli. */
+(function(){
+var RELEVE_ENDPOINT = 'https://hook.eu1.make.com/fdrxp4ou3c8bfmihvss17rh1lodf5sa2';
+var f=document.getElementById('demande'); if(!f) return;
+var ok=document.getElementById('demande-ok'), err=f.querySelector('.err'), btn=f.querySelector('button[type=submit]');
+var q=new URLSearchParams(location.search);
+['entreprise','metier','ville','site'].forEach(function(k){ if(q.get(k)) f.elements[k].value=q.get(k); });
+document.querySelectorAll('a[href="#commander"]').forEach(function(a){
+  a.addEventListener('click',function(){ setTimeout(function(){ var e=[].find.call(f.querySelectorAll('input[required]'),function(i){return !i.value.trim();}); if(e) e.focus({preventScroll:true}); },650); });
+});
+function data(){ var d={}; ['nom','email','entreprise','metier','ville','site','question'].forEach(function(k){ d[k]=f.elements[k].value.trim(); }); return d; }
+function mailto(d){
+  var b='Bonjour,\n\nJe souhaite recevoir mon Relevé offert.\n\nNom : '+d.nom+'\nEntreprise : '+d.entreprise+'\nMétier : '+d.metier+'\nVille ou zone : '+d.ville+'\nSite web : '+(d.site||'—')+'\nQuestion d\'un client : '+(d.question||'—')+'\n\nCordialement,\n'+d.nom;
+  return 'mailto:contact@up2front.com?subject='+encodeURIComponent('Mon Relevé de visibilité IA — '+d.entreprise)+'&body='+encodeURIComponent(b);
+}
+function verifier(){
+  var premier=null;
+  f.querySelectorAll('input[required]').forEach(function(i){
+    var bad=!i.value.trim()||(i.type==='email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(i.value.trim()));
+    i.setAttribute('aria-invalid',bad?'true':'false'); if(bad&&!premier) premier=i;
+  });
+  if(premier){ err.hidden=false; err.textContent=premier.type==='email'&&premier.value?'Cette adresse e-mail semble incomplète.':'Il manque : '+premier.closest('.ch').querySelector('span').textContent.toLowerCase()+'.'; premier.focus(); return false; }
+  err.hidden=true; return true;
+}
+f.addEventListener('input',function(e){ if(e.target.getAttribute('aria-invalid')==='true') e.target.setAttribute('aria-invalid','false'); });
+function reussi(d){
+  ok.querySelector('.ok-q').textContent='« '+(d.question||('quel est le meilleur '+d.metier+' à '+d.ville+' ?'))+' »';
+  ok.querySelector('.ok-m').textContent=d.email;
+  f.hidden=true; ok.hidden=false; ok.focus();
+}
+function repli(d,msg){
+  err.hidden=false; err.innerHTML=msg+' <a href="'+mailto(d).replace(/"/g,'&quot;')+'">Envoyer par e-mail, déjà rempli</a>.';
+  btn.disabled=false; btn.querySelector('.lbl').textContent='Demander mon Relevé';
+}
+f.addEventListener('submit',function(e){
+  e.preventDefault(); if(f.elements.botcheck.checked) return; if(!verifier()) return;
+  var d=data();
+  if(!RELEVE_ENDPOINT){ location.href=mailto(d); return; }
+  btn.disabled=true; btn.querySelector('.lbl').textContent='Envoi…';
+  fetch(RELEVE_ENDPOINT,{method:'POST',
+    body:new URLSearchParams(Object.assign({},d,{source:'visibilite-ia',page:location.href,recu:new Date().toISOString()}))})
+  .then(function(r){ if(!r.ok) throw 0; reussi(d); })
+  .catch(function(){ repli(d,'L\'envoi n\'a pas abouti, votre demande n\'est pas perdue :'); });
+});
+})();
 </script>
 
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>

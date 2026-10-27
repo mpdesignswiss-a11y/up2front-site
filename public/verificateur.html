@@ -392,12 +392,12 @@ input:focus-visible{outline-offset:2px}
 /* =========================================================================
    Vérificateur de visibilité IA — Up2Front
    Teaser 100% autonome : calcule un SCORE DE PRÉPARATION (/100) côté client,
-   puis capture l'e-mail (Web3Forms → contact@up2front.com) pour déclencher le
+   puis capture l'e-mail (webhook Make, UE → e-mail à Max) pour déclencher le
    vrai relevé. Aucun appel LLM ici. DA native : Mona Sans, fond #010104, lime #CFFE25.
    ========================================================================= */
-/* Clé publique Web3Forms (faite pour vivre côté client, ce n'est pas un secret).
-   Les demandes arrivent sur contact@up2front.com. */
-var WEB3FORMS_KEY = 'a5a08ec1-eccc-40ed-b291-78ad8011fb4b';
+/* Webhook Make (zone UE) : chaque demande part par e-mail à Max.
+   Même point d'entrée que le formulaire de la page Visibilité IA. */
+var RELEVE_ENDPOINT = 'https://hook.eu1.make.com/fdrxp4ou3c8bfmihvss17rh1lodf5sa2';
 
 var SIGNALS = [
   { id:'ciblage', w:25, title:'Une page qui dit votre métier ET votre ville',
@@ -551,29 +551,24 @@ function setCalendly(){
   document.getElementById('calendly').href = cal + '?' + cp.toString();
 }
 
-/* Envoi du lead via Web3Forms → e-mail sur contact@up2front.com (pas d'appel Make ici). */
+/* Envoi du lead vers le webhook Make (UE) : répond « Accepted », CORS ouvert. */
 function sendLead(){
+  if(document.getElementById('botcheck').checked) return;
   var detail = SIGNALS.map(function(s){
     return s.title+' : '+Math.round(s.w*s.options[state.answers[s.id]].v)+'/'+s.w;
   }).join(' · ');
   var payload = {
-    access_key: WEB3FORMS_KEY,
-    subject: 'Nouveau relevé demandé — '+state.metier+' à '+state.ville,
-    from_name: 'Vérificateur visibilité IA — Up2Front',
+    source: 'verificateur-visibilite-ia',
     email: state.email,
-    replyto: state.email,
+    nom: '',
+    entreprise: state.nom || '—', site: state.site || '',
     metier: state.metier, ville: state.ville,
-    entreprise: state.nom || '—', site: state.site || '—',
     score_preparation: state.score + '/100',
     detail: detail,
-    source: 'verificateur-visibilite-ia',
-    botcheck: document.getElementById('botcheck').checked
+    page: location.href, recu: new Date().toISOString()
   };
-  if(!WEB3FORMS_KEY || WEB3FORMS_KEY.indexOf('COLLE_TA_CLE') === 0){ console.log('LEAD (clé Web3Forms à renseigner) →', payload); return; }
-  fetch('https://api.web3forms.com/submit', {
-    method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
-    body: JSON.stringify(payload)
-  }).catch(function(){ /* la confirmation reste affichée quoi qu'il arrive */ });
+  fetch(RELEVE_ENDPOINT, { method:'POST', body: new URLSearchParams(payload) })
+    .catch(function(){ /* la confirmation reste affichée ; le lien e-mail de la page reste disponible */ });
 }
 
 function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
