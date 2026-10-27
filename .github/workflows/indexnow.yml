@@ -1,0 +1,61 @@
+name: Signaler les pages modifiées (IndexNow)
+
+# Après chaque publication, signale à Bing (et aux moteurs du protocole IndexNow)
+# les pages de public/ qui viennent de changer. Gratuit, sans compte.
+# Workflow séparé : s'il échoue, le site reste en ligne (deploy.yml n'en dépend pas).
+# Bing alimente aussi la recherche web de ChatGPT et de Copilot.
+
+on:
+  workflow_run:
+    workflows: ["Publier sur GitHub Pages"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      tout:
+        description: "Signaler toutes les pages du sitemap"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  signaler:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Lister et envoyer les adresses
+        env:
+          TOUT: ${{ inputs.tout }}
+        run: |
+          set -e
+          CLE=$(ls public | grep -E '^[0-9a-f]{32}\.txt$' | head -1 | sed 's/\.txt$//')
+          [ -n "$CLE" ] || { echo "Pas de fichier de clé IndexNow"; exit 0; }
+          if [ "$TOUT" = "true" ]; then
+            grep -o '<loc>[^<]*</loc>' public/sitemap.xml | sed 's/<[^>]*>//g' > urls.txt
+          else
+            git diff --name-only HEAD~1 HEAD -- 'public/*.html' 'public/**/*.html' \
+              | sed -e 's#^public/##' -e 's#index\.html$##' -e 's#^#https://up2front.com/#' > urls.txt || true
+          fi
+          sort -u urls.txt -o urls.txt
+          echo "Adresses à signaler :"; cat urls.txt
+          [ -s urls.txt ] || { echo "Rien à signaler"; exit 0; }
+          python3 - "$CLE" <<'PY'
+          import json, sys, urllib.request
+          cle = sys.argv[1]
+          urls = [u.strip() for u in open("urls.txt") if u.strip()][:10000]
+          corps = json.dumps({"host": "up2front.com", "key": cle,
+                              "keyLocation": f"https://up2front.com/{cle}.txt", "urlList": urls}).encode()
+          req = urllib.request.Request("https://api.indexnow.org/indexnow", data=corps,
+                                       headers={"Content-Type": "application/json; charset=utf-8"})
+          try:
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  print("IndexNow :", r.status, len(urls), "adresses")
+          except urllib.error.HTTPError as e:
+              print("IndexNow a répondu", e.code, e.read()[:300])
+          PY
