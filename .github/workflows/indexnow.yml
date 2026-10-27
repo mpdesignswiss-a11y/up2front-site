@@ -58,4 +58,5 @@ jobs:
                   print("IndexNow :", r.status, len(urls), "adresses")
           except urllib.error.HTTPError as e:
               print("IndexNow a répondu", e.code, e.read()[:300])
+              sys.exit(1)
           PY
