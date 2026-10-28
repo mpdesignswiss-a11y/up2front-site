@@ -251,7 +251,7 @@ def page(p):
     bc["itemListElement"].append({"@type": "ListItem", "position": len(ariane) + 1, "name": p["court"], "item": url})
     main = {"@type": p.get("type", "Article"), "@id": url + "#page", "headline": p["titre"], "name": p["titre"],
             "description": p["desc"], "url": url, "inLanguage": "en" if en else "fr-CH", "datePublished": p.get("publie", MAJ),
-            "dateModified": MAJ, "author": {"@type": "Person", "@id": MAX, "name": "Maxime Pilloud"},
+            "dateModified": p.get("maj", MAJ), "author": {"@type": "Person", "@id": MAX, "name": "Maxime Pilloud"},
             "publisher": {"@id": ORG}, "mainEntityOfPage": url}
     if p.get("type") == "DefinedTermSet":
         main = {"@type": "DefinedTermSet", "@id": url + "#glossaire", "name": p["titre"], "description": p["desc"],
@@ -287,8 +287,11 @@ def page(p):
         alternates = (f'\n<link rel="alternate" hreflang="fr" href="{SITE + fr_p}">'
                       f'\n<link rel="alternate" hreflang="en" href="{SITE + en_p}">'
                       f'\n<link rel="alternate" hreflang="x-default" href="{SITE + fr_p}">')
+    maj = p.get("maj", MAJ)
+    mois = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"]
+    maj_txt = f"{int(maj[8:])} {mois[int(maj[5:7])-1]} {maj[:4]}"
     date_html = (f'<span>By <b>Maxime Pilloud</b>, Up2Front</span><span>Updated <b><time datetime="{MAJ}">27 October 2026</time></b></span>' if en
-                 else f'<span>Par <b>Maxime Pilloud</b>, Up2Front</span><span>Mis à jour le <b><time datetime="{MAJ}">{MAJ_TXT}</time></b></span>')
+                 else f'<span>Par <b>Maxime Pilloud</b>, Up2Front</span><span>Mis à jour le <b><time datetime="{maj}">{maj_txt}</time></b></span>')
     return f'''<!DOCTYPE html>
 <html lang="{"en" if en else "fr-CH"}">
 <head>
@@ -308,7 +311,7 @@ def page(p):
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta property="article:modified_time" content="{MAJ}">
+<meta property="article:modified_time" content="{p.get('maj', MAJ)}">
 <link rel="icon" href="{rel(depth, "favicon.svg")}" type="image/svg+xml">
 <link rel="icon" href="{rel(depth, "favicon-32x32.png")}" sizes="32x32">
 <link rel="apple-touch-icon" href="{rel(depth, "apple-touch-icon.png")}">

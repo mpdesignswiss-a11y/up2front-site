@@ -377,7 +377,7 @@ PAGES.append(dict(
 
 # =====================================================================================
 PAGES.append(dict(
-    path="etudes/index.html", court="Études", type="CollectionPage",
+    path="etudes/index.html", court="Études", type="CollectionPage", maj="2026-10-28",
     title="Études de visibilité IA en Suisse romande | Up2Front",
     titre="Études de visibilité IA en Suisse romande",
     desc="Ce que Google AI Mode, ChatGPT et Gemini répondent vraiment, métier par métier, en Suisse romande. Relevés datés à la minute, méthode publiée, limites écrites.",
@@ -389,11 +389,12 @@ PAGES.append(dict(
     <div class="pole">
       <a href="{R}etudes/visibilite-ia-architectes-geneve.html"><b>Architectes à Genève</b><span>15 septembre 2026 · 4 moteurs · Google a répondu trois fois, et jamais la même chose.</span></a>
       <a href="{R}etudes/pompes-a-chaleur-geneve-ia-octobre-2026.html"><b>Pompes à chaleur à Genève</b><span>27 octobre 2026 · 3 moteurs · 180 réponses : la première source est ge.ch, pas un installateur.</span></a>
+      <a href="{R}etudes/informatique-pme-geneve-ia-octobre-2026.html"><b>Informatique et cybersécurité pour PME à Genève</b><span>27 et 28 octobre 2026 · 3 moteurs · 96 réponses : 14 prestataires sur 16 jamais nommés.</span></a>
       <a href="{R}visibilite-ia/ce-que-les-ia-disent-d-up2front.html"><b>Up2Front, mesuré par Up2Front</b><span>Chaque mois · 3 moteurs · octobre 2026 : 0 réponse sur 12.</span></a>
     </div>
 
     <h2>En préparation</h2>
-    <p>Installateurs solaires en Suisse romande, fiduciaires et informatique pour PME. Les chiffres publiés seront agrégés ; seules les entreprises bien citées par les moteurs seront nommées.</p>
+    <p>Installateurs solaires en Suisse romande, fiduciaires, piscinistes et menuisiers. Les chiffres publiés seront agrégés ; seules les entreprises bien citées par les moteurs seront nommées.</p>
 
     <h2>Comment nous travaillons</h2>
     <p>Une question de client, en session neuve, à plusieurs moteurs, avec au moins deux passages espacés. Chaque réponse est conservée mot pour mot. Voir <a href="{R}visibilite-ia/methode.html">la méthode</a>.</p>''',
@@ -471,6 +472,67 @@ PAGES.append(dict(
     sources=["stgall"],
     sources_extra=[("Relevé Up2Front du 27 octobre 2026 (Google AI Mode, ChatGPT, Gemini), 180 réponses archivées mot pour mot", "https://up2front.com/etudes/pompes-a-chaleur-geneve-ia-octobre-2026.html"),
                    ("République et canton de Genève, « Installer ou remplacer un chauffage : pompe à chaleur »", "https://www.ge.ch/installer-remplacer-chauffage/pompe-chaleur")],
+))
+
+# =====================================================================================
+PAGES.append(dict(
+    path="etudes/informatique-pme-geneve-ia-octobre-2026.html", court="Informatique pour PME à Genève",
+    ariane=[("Études", "etudes/")], type="Report", publie="2026-10-28", maj="2026-10-28",
+    title="Informatique et cybersécurité pour PME à Genève : ce que répondent les IA — étude, octobre 2026 | Up2Front",
+    titre="Informatique et cybersécurité pour PME à Genève : ce que Google AI Mode, ChatGPT et Gemini répondent (octobre 2026)",
+    desc="96 réponses IA analysées les 27 et 28 octobre 2026 : quand une PME genevoise cherche un informaticien ou un spécialiste en cybersécurité, les moteurs nomment 163 entreprises, mais 14 des 16 prestataires étudiés n'apparaissent jamais.",
+    eyebrow="Étude · informatique et cybersécurité · Genève",
+    h1="Informatique pour PME à Genève : <em>ce que répondent les IA</em>",
+    chapo="Nous avons posé 16 questions de dirigeants de PME genevoises à trois moteurs de réponse, une fois le soir et une fois le lendemain matin. Voici qui ils nomment, quelles sources ils lisent et à quel point leurs réponses tiennent.",
+    reponse="Les <strong>27 et 28 octobre 2026</strong>, 16 questions sur l'informatique et la cybersécurité d'une PME à Genève ont produit <strong>96 réponses</strong> de Google AI Mode, ChatGPT et Gemini. Les moteurs y nomment <strong>163 entreprises différentes</strong>, environ <strong>4,5 par réponse</strong>. Mais <strong>14 des 16 prestataires genevois étudiés n'ont été nommés dans aucune réponse</strong>. Contrairement au chauffage, les moteurs lisent ici surtout <strong>les sites des prestataires eux-mêmes</strong>, très peu les annuaires. Et leurs réponses sont stables : un seul cas sur vingt-quatre a changé d'un passage à l'autre.",
+    corps='''    <h2>Le protocole</h2>
+    <ul>
+      <li><strong>16 questions</strong> formulées comme un dirigeant de PME les poserait (« informaticien pour une petite entreprise à Genève », « entreprise pour faire un test d'intrusion dans une PME à Genève », « prestataire informatique pour une régie immobilière à Genève »…), chacune pensée pour le créneau d'un prestataire genevois réel.</li>
+      <li><strong>3 moteurs</strong> : Google AI Mode, ChatGPT et Gemini (version Flash-Lite, interrogée par programme).</li>
+      <li><strong>2 passages</strong> : le 27 octobre entre 20h05 et 20h20, puis le 28 octobre entre 6h17 et 6h28, heure de Genève, en session neuve, sans historique.</li>
+      <li>Chaque réponse est <strong>conservée mot pour mot</strong>, avec l'heure à la minute, puis relue par une personne avant analyse.</li>
+    </ul>
+
+    <h2>Ce que nous avons trouvé</h2>
+    <h3>1. Beaucoup de noms, mais une poignée revient sans cesse</h3>
+    <p>Sur 96 réponses, <strong>163 entreprises différentes</strong> sont nommées, environ 4,5 par réponse. Google AI Mode est le plus généreux (5,2 noms en moyenne), Gemini le plus avare (3,8). Pourtant la moitié de ces entreprises (82) n'apparaît qu'une seule fois, alors que le prestataire le plus cité revient dans <strong>28 réponses sur 96</strong>. Quelques acteurs captent l'essentiel des recommandations.</p>
+
+    <h3>2. 14 prestataires étudiés sur 16 n'apparaissent jamais</h3>
+    <p>Pour chacun des 16 prestataires genevois dont nous avions reformulé la question type, nous avons regardé s'il était nommé dans les six réponses le concernant :</p>
+    <div class="tab"><table>
+      <thead><tr><th>Moteur</th><th>Réponses où le prestataire visé est nommé</th><th>Réponses qui citent au moins une source</th></tr></thead>
+      <tbody>
+        <tr><td>ChatGPT</td><td class="num">3 sur 32 (9 %)</td><td class="num">32 sur 32</td></tr>
+        <tr><td>Google AI Mode</td><td class="num">2 sur 32 (6 %)</td><td class="num">27 sur 32</td></tr>
+        <tr><td>Gemini</td><td class="num">1 sur 32 (3 %)</td><td class="num">18 sur 32</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Gemini n'a nommé aucune entreprise dans 5 réponses sur 32 : il a refusé de recommander ou s'en est tenu à des conseils généraux.</p>
+
+    <h3>3. Les moteurs lisent les sites des prestataires, pas les annuaires</h3>
+    <p>Dans le chauffage, la première source était la page de l'État de Genève. Ici, c'est l'inverse : la grande majorité des 182 sites cités sont ceux de prestataires informatiques. L'annuaire local.ch ou search.ch n'apparaît que dans <strong>8 réponses sur 96</strong>, et une page officielle (ge.ch, admin.ch, centre national pour la cybersécurité) dans <strong>4</strong>. Le site du prestataire visé par la question n'était cité que dans <strong>6 réponses</strong>.</p>
+    <p>Pour un prestataire informatique, cela veut dire que son propre site fait presque tout le travail : une page claire par service (infogérance, test d'intrusion, sauvegarde, formation au phishing), avec la clientèle visée (PME, études d'avocats, régies, pharmacies) et la ville, pèse plus qu'une fiche d'annuaire.</p>
+
+    <h3>4. Des réponses stables d'un jour à l'autre</h3>
+    <p>Pour chaque prestataire et chaque moteur, nous avons comparé les deux passages, espacés d'environ dix heures. Dans <strong>2 cas sur 48 (4 %)</strong> seulement, le prestataire était nommé à un passage et absent à l'autre, contre près d'un cas sur cinq dans notre étude sur les pompes à chaleur. Dans ce métier, une absence mesurée deux fois a donc de bonnes chances d'être durable.</p>
+
+    <h2>Ce qu'un prestataire peut faire, sans payer personne</h2>
+    <ol>
+      <li>Poser lui-même la question de ses clients aux trois moteurs, deux fois, en suivant <a href="{R}visibilite-ia/methode.html">notre méthode</a>.</li>
+      <li>Écrire une page par service et par type de client, avec Genève et les communes desservies, plutôt qu'une seule page « services ».</li>
+      <li>Rendre visibles ses preuves : certifications, labels, secteurs servis, nom des responsables.</li>
+      <li>Remesurer dans trois mois, avec les mêmes questions.</li>
+    </ol>
+
+    <h2>Limites</h2>
+    <p>Deux passages sur deux jours, un seul canton, des questions en français. Gemini a été interrogé dans sa version Flash-Lite, plus économe que celle de l'application grand public. Les 16 questions visaient chacune le créneau d'un prestataire précis : ce n'est pas un classement du marché genevois. <strong>Nous ne publions aucun nom d'entreprise avec un score</strong> : chaque prestataire concerné peut demander son propre relevé, offert, avec les réponses complètes.</p>''',
+    faq=[
+        ("Quels prestataires informatiques les IA recommandent-elles aux PME de Genève ?", "Dans 96 réponses relevées les 27 et 28 octobre 2026, Google AI Mode, ChatGPT et Gemini nomment 163 entreprises différentes, environ 4,5 par réponse. Quelques acteurs reviennent très souvent, et 14 des 16 prestataires genevois étudiés n'ont été nommés dans aucune réponse."),
+        ("Quelles sources les IA lisent-elles pour recommander un informaticien à Genève ?", "Surtout les sites des prestataires eux-mêmes. Les annuaires local.ch et search.ch n'apparaissent que dans 8 réponses sur 96, et les pages officielles dans 4."),
+        ("Les réponses des IA sont-elles stables dans l'informatique ?", "Oui, davantage que dans le chauffage : entre deux passages espacés d'environ dix heures, seuls 2 cas sur 48 ont changé (4 %), contre près d'un sur cinq pour les pompes à chaleur."),
+    ],
+    sources=["stgall"],
+    sources_extra=[("Relevé Up2Front des 27 et 28 octobre 2026 (Google AI Mode, ChatGPT, Gemini), 96 réponses archivées mot pour mot", "https://up2front.com/etudes/informatique-pme-geneve-ia-octobre-2026.html")],
 ))
 
 # versions anglaises
